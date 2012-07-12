@@ -1,0 +1,41 @@
+body { 
+	margin: 0px; 
+	background: #fff;
+}
+
+a { text-decoration: none; }
+
+a img { border: none; }
+
+img { display: block }
+
+.main-container {
+	margin-top: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	overflow-x: hidden;
+}
+
+.header {
+	background: url(../img/header-pattern.png) repeat-x center;
+	height: 39px;
+	width: 100%;
+	text-align: center;
+	background-color: #1a191a;
+	padding-top: 10px;
+}
+
+.global-title {
+	width: 66px;
+	height: 27px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media all and (min-width: 1024px) {
+	.main-container { width: 1024px; }
+}
+
+@media all and (max-width: 1024px) {
+	.main-container { width: 100%; }
+}

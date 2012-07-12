@@ -1,0 +1,56 @@
+.thumb {
+	margin-top: 2px;
+	float: left;
+}
+
+.thumb img {
+	max-width: 100%;
+}
+
+.thumb-list {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	margin-bottom: 2px;
+	display: none;
+}
+
+.map {
+	width: 100%;
+	height: 400px;
+}
+
+.masonry,
+.masonry .masonry-brick {
+	-webkit-transition-duration: 0.3s;
+	   -moz-transition-duration: 0.3s;
+		-ms-transition-duration: 0.3s;
+	 	 -o-transition-duration: 0.3s;
+			transition-duration: 0.3s;
+}
+
+.masonry {
+	-webkit-transition-property: height, width;
+	   -moz-transition-property: height, width;
+		-ms-transition-property: height, width;
+		 -o-transition-property: height, width;
+			transition-property: height, width;
+}
+
+.masonry .masonry-brick {
+	-webkit-transition-property: left, right, top;
+	   -moz-transition-property: left, right, top;
+		-ms-transition-property: left, right, top;
+		 -o-transition-property: left, right, top;
+			transition-property: left, right, top;
+}
+
+@media all and (min-width: 1024px) {
+	.main-image {
+		width: 1024px;
+		height: 341px;
+	}
+}
+
+@media all and (max-width: 1024px) {
+	.main-image { width: 100%; }
+}
