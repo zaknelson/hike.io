@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+	<meta name="viewport" content="width=device-width"></meta>
+	<title><%= @title %></title>
+	<link href="<%= @public_base_path %>//favicon.png" rel="icon" type="image/x-icon"></link>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<link href="<%= @public_base_path %>/css/layout.css" rel="stylesheet" type="text/css"></link>
+	<%= yield_content :head %>
+</head>
+<body>
+<div>
+	<div class="header">
+		<div>
+			<a href="/">
+				<img class="global-title" src="<%= @public_base_path %>/img/title.png"></img>
+			</a>
+		</div>
+	</div>
+	<div class="main-container">
+		<%= yield %>
+	</div>
+</div>
+</body>
+</html>

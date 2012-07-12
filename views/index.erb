@@ -1,0 +1,17 @@
+<% content_for :head do %>
+	<script src="<%= @public_base_path %>/js/index.js" type="text/javascript"></script>
+	<link href="<%= @public_base_path %>/css/index.css" rel="stylesheet" type="text/css"></link>
+<% end %>
+
+<div>
+	<img src="<%= @public_base_path %>/img/configure-button.png" class="configure-button"></div>
+	<div id="preview-list">
+		<% for preview in @preview_list %>
+			<a href="/hikes/<%= preview.id %>">
+				<div class="preview">
+					<img src="<%= @hike_images_path %>/<%= preview.main_image %>"></img>
+				</div>
+			</a>
+		<% end %>
+	</div>
+</div>
