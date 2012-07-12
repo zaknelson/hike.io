@@ -4,7 +4,6 @@
 			var gutterWidth = 2;
 			var imageWidth = 340;
 
-			$(".loading").css("display", "none");
 			$(".thumb-list").fadeIn("slow");
 
 			$(".thumb-list").masonry({
