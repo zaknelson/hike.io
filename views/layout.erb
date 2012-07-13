@@ -7,7 +7,7 @@
 	<title><%= @title %></title>
 	<link href="<%= @public_base_path %>/favicon.png" rel="icon" type="image/x-icon"></link>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<link href="<%= @public_base_path %>/css/layout.css" rel="stylesheet" type="text/css"></link>
+	<link href="<%= @css_dir %>/layout.css" rel="stylesheet" type="text/css"></link>
 	<%= yield_content :head %>
 </head>
 <body>
@@ -15,7 +15,7 @@
 	<div class="header">
 		<div>
 			<a href="/">
-				<img class="global-title" src="<%= @public_base_path %>/img/title.png"></img>
+				<img class="global-title" src="<%= @img_dir %>/title.png"></img>
 			</a>
 		</div>
 	</div>

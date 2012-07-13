@@ -1,15 +1,15 @@
 <% content_for :head do %>
-	<script src="<%= @public_base_path %>/js/index.js" type="text/javascript"></script>
-	<link href="<%= @public_base_path %>/css/index.css" rel="stylesheet" type="text/css"></link>
+	<script src="<%= @js_dir %>/index.js" type="text/javascript"></script>
+	<link href="<%= @css_dir %>/index.css" rel="stylesheet" type="text/css"></link>
 <% end %>
 
 <div>
-	<img src="<%= @public_base_path %>/img/configure-button.png" class="configure-button"></div>
+	<img src="<%= @img_dir %>/configure-button.png" class="configure-button"></div>
 	<div id="preview-list">
-		<% for preview in @preview_list %>
-			<a href="/hikes/<%= preview.id %>">
+		<% for entry in @popular_entry_list %>
+			<a href="/<%= entry.id %>">
 				<div class="preview">
-					<img src="<%= @hike_images_path %>/<%= preview.main_image %>"></img>
+					<img src="<%= @entry_img_dir %>/<%= entry.id %>/<%= entry.id %>-landscape.jpg"></img>
 				</div>
 			</a>
 		<% end %>

@@ -45,12 +45,12 @@
 }
 
 @media all and (min-width: 1024px) {
-	.main-image {
+	.landscape-image {
 		width: 1024px;
 		height: 341px;
 	}
 }
 
 @media all and (max-width: 1024px) {
-	.main-image { width: 100%; }
+	.landscape-image { width: 100%; }
 }

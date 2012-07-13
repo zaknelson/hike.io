@@ -1,18 +1,18 @@
 <% content_for :head do %>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/2.1.04/jquery.masonry.min.js" type="text/javascript"></script>
-	<script src="<%= @public_base_path %>/js/entry.js" type="text/javascript"></script>
-	<link href="<%= @public_base_path %>/css/entry.css" rel="stylesheet" type="text/css"></link>
+	<script src="<%= @js_dir %>/entry.js" type="text/javascript"></script>
+	<link href="<%= @css_dir %>/entry.css" rel="stylesheet" type="text/css"></link>
 <% end %>
 
 <div class="container">
 	<div>
-		<img class="main-image" src="<%= @hike_images_path %>/<%= @entry.main_image %>"></img>
+		<img class="landscape-image" src="<%= @entry_img_dir %>/<%= @entry.id %>/<%= @entry.id %>-landscape.jpg"></img>
 	</div>
 
 	<div class="thumb-list">
-		<% for thumb in @entry.thumbs %>
+		<% for picture in @entry.pictures %>
 				<div class="thumb">
-					<img src="<%= @hike_images_path %>/<%= thumb.image %>" width="<%= thumb.width %>"></img>
+					<img src="<%= @entry_img_dir %>/<%= @entry.id %>/<%= picture.id %>-thumb.jpg"></img>
 				</div>
 		<% end %>
 	</div>
