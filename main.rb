@@ -86,9 +86,9 @@ class HikeApp < Sinatra::Base
 
 	before do
 		if settings.environment == :development
-			@entry_img_dir = "/hike-img"
+			@entry_img_dir = "/hike-images"
 		else
-			@entry_img_dir = "http://assets.hike.io/hike-img"
+			@entry_img_dir = "http://assets.hike.io/hike-images"
 		end
 
 		@img_dir = "/images"
