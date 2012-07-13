@@ -1,15 +1,11 @@
-<% content_for :head do %>
-	<script src="<%= @js_dir %>/index.js" type="text/javascript"></script>
-	<link href="<%= @css_dir %>/index.css" rel="stylesheet" type="text/css"></link>
-<% end %>
+<% content_for :head do %><% end %>
 
 <div>
-	<img src="<%= @img_dir %>/configure-button.png" class="configure-button"></div>
 	<div id="preview-list">
 		<% for entry in @popular_entry_list %>
 			<a href="/<%= entry.id %>">
 				<div class="preview">
-					<img src="<%= @entry_img_dir %>/<%= entry.id %>/<%= entry.id %>-landscape.jpg"></img>
+					<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-landscape.jpg", {:class => "landscape-image"} %>
 				</div>
 			</a>
 		<% end %>

@@ -17,7 +17,7 @@ img { display: block }
 }
 
 .header {
-	background: url(../img/header-pattern.png) repeat-x center;
+	background: url(/images/header-pattern.png?embed) repeat-x center;
 	height: 39px;
 	width: 100%;
 	text-align: center;
@@ -25,11 +25,14 @@ img { display: block }
 	padding-top: 10px;
 }
 
-.global-title {
+.title {
+	background: url(/images/title.png?embed);
+	background-size: 100%;
 	width: 66px;
 	height: 27px;
 	margin-right: auto;
 	margin-left: auto;
+
 }
 
 @media all and (min-width: 1024px) {
