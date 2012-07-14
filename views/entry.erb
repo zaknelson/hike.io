@@ -1,18 +1,14 @@
 <% content_for :head do %><% end %>
 
-<div class="container">
+<div>
 	<div>
 		<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "landscape-image"} %>
 	</div>
-
-	<div class="thumb-list">
+	<div class="photo-thumb-list">
 		<% for picture in @entry.pictures %>
-				<div class="thumb">
+				<div class="photo-thumb">
 					<%= img "#{@entry_img_dir}/#{@entry.id}/#{picture.id}-thumb.jpg" %>
 				</div>
 		<% end %>
-	</div>
-	<div class="text-container">
-
 	</div>
 </div>

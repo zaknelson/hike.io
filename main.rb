@@ -5,10 +5,12 @@ require "sinatra/base"
 require "sinatra/content_for"
 
 class Entry
-	attr_accessor :id, :name, :pictures, :map
+	attr_accessor :id, :name, :location, :distance, :pictures, :map
 
-	def initialize(options)
+	def initialize options
 		@id = options[:id]
+		@location = options[:location]
+		@distance = options[:distance]
 		@name = options[:name]
 		@pictures = options[:pictures]
 		@map = options[:map]
@@ -18,7 +20,7 @@ end
 class Map
 	attr_accessor :zoom_level, :longitude, :latitude
 
-	def initialize(options)
+	def initialize options
 		@zoom_level = options[:zoom_level]
 		@longitude = options[:longitude]
 		@latitude = options[:latitude]
@@ -28,7 +30,7 @@ end
 class Picture
 	attr_accessor :id
 
-	def initialize(options)
+	def initialize options
 		@id = options[:id]
 	end
 end
@@ -45,7 +47,7 @@ class HikeApp < Sinatra::Base
 		prebuild true
 
 		js :app, '/js/app.js', [
-		  '/js/*.js'
+			'/js/*.js'
 		]
 
 		css :app, '/css/app.css', [
@@ -70,18 +72,47 @@ class HikeApp < Sinatra::Base
 		end
 
 		def popular_list
-			return [Entry.new({:id => "scotchmans-peak", :name => "Scotchman's Peak", :pictures => pictures, :map => map}), 
-					Entry.new({:id => "king-arthurs-seat", :name => "King Arthur's Seat", :pictures => pictures, :map => map}),
-					Entry.new({:id => "north-kaibab-trail", :name => "North Kaibab Trail", :pictures => pictures, :map => map}),
-					Entry.new({:id => "mt-kilamanjaro", :name => "Mt. Kilamanjaro", :pictures => pictures, :map => map})]
+			return [Entry.new({
+						:id => "scotchmans-peak", 
+						:name => "Scotchman's Peak",
+						:location => "North Idaho, USA", 
+						:distance => 10, 
+						:pictures => pictures, 
+						:map => map}), 
+					Entry.new({
+						:id => "king-arthurs-seat", 
+						:name => "King Arthur's Seat", 
+						:location => "Edinburgh, Scotland", 
+						:distance => 3, 
+						:pictures => pictures, 
+						:map => map}),
+					Entry.new({
+						:id => "north-kaibab-trail", 
+						:name => "North Kaibab Trail", 
+						:location => "Grand Canyon, USA", 
+						:distance => 15, 
+						:pictures => pictures, 
+						:map => map}),
+					Entry.new({:id => "mt-kilamanjaro", 
+						:location => "North Idaho, USA", 
+						:name => "Mt. Kilamanjaro", 
+						:location => "Tanzania", 
+						:distance => 50, 
+						:pictures => pictures, 
+						:map => map})]
 		end
 
 		def find_entry id
 			popular_list.select { |entry|
 				entry.id == id
 			}[0]
-		end	
+		end
 
+		def distance_string distance
+			# Distance is in km (that's right).
+			miles = (distance * 0.621371).round(1)
+			"#{miles} mi."
+		end
 	end
 
 	before do

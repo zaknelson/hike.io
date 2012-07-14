@@ -1,46 +1,41 @@
-.configure-button {
-	float: right;
-	height: 20px;
-	width: 20px;
-	margin-top: -35px;
-	margin-right: 12px;
+.preview-box-list {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	display: none;
 }
 
-@-webkit-keyframes rotating {
-	from{
-		-webkit-transform: rotate(0deg);
-	}
-	to{
-		-webkit-transform: rotate(360deg);
-	}
+.preview-box {
+	font-family: arial, sans-serif;
+	margin-bottom: 1px;
 }
 
-@-moz-keyframes rotating {
-	from{
-		-moz-transform: rotate(0deg);
-	}
-	to{
-		-moz-transform: rotate(360deg);
-	}
+.preview-box:hover { cursor: pointer; }
+
+.preview-box-footer {
+	padding: 10px;
+	margin-top: -55px;
+	height: 35px;
+	position: relative;
+	background-color:rgba(0, 0, 0, 0.7);
 }
 
-.configure-button:hover {
-	cursor: pointer;
-		-webkit-animation: rotating 3s linear infinite;
-		-moz-animation: rotating 3s linear infinite;
+.preview-box-footer-left { float: left; }
+
+.preview-box-footer-right { float: right; }
+
+.preview-box-title {
+	font-size: 15px;
+	font-weight: bold;
+	color: #fff;
+	padding-bottom: 3px;
 }
 
-.preview img {
-	margin-bottom: 2px;
+.preview-box-location {
+	font-size: 12px;
+	color: #ccc;
 }
 
-@media all and (min-width: 1024px) {
-	.preview img {
-		width: 1024px;
-		height: 341px;
-	}
-}
-
-@media all and (max-width: 1024px) {
-	.preview img { width: 100%; }
+.preview-box-distance {
+	font-size: 12px;
+	color: #ccc;
 }

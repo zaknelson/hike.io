@@ -1,13 +1,26 @@
 <% content_for :head do %><% end %>
 
 <div>
-	<div id="preview-list">
+	<div class="preview-box-list">
 		<% for entry in @popular_entry_list %>
-			<a href="/<%= entry.id %>">
-				<div class="preview">
-					<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-landscape.jpg", {:class => "landscape-image"} %>
+			<div id="preview-box-<%= entry.id %>" class="preview-box">
+				<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-preview.jpg", {:class => "preview-box-img"} %>
+				<div class="preview-box-footer">
+					<div class="preview-box-footer-left">
+						<div class="preview-box-title">
+							<%= entry.name %>
+						</div>
+						<div class="preview-box-location">
+							<%= entry.location %>
+						</div>
+					</div>
+					<div class="preview-box-footer-right">
+						<div class="preview-box-distance">
+							<%= distance_string entry.distance %>
+						</div>
+					</div>
 				</div>
-			</a>
+			</div>
 		<% end %>
 	</div>
 </div>
