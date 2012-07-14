@@ -26,6 +26,10 @@
 				}
 			});
 		});
+
+		// Sometimes the imageLoaded doesn't fire for cached images. By manually reset the src 
+		// tag of the first image, we will always trigger an imageLoaded event.
+		$(".thumb-list img:first").attr("src", $(".thumb-list img").attr("src"));
 	});
 }
 )();
