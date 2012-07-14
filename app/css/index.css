@@ -13,8 +13,8 @@
 
 .preview-box-footer {
 	padding: 10px;
-	margin-top: -55px;
-	height: 35px;
+	margin-top: -51px;
+	height: 31px;
 	position: relative;
 	background-color:rgba(0, 0, 0, 0.6);
 }
@@ -27,15 +27,18 @@
 	font-size: 15px;
 	font-weight: bold;
 	color: #fff;
-	padding-bottom: 3px;
+	padding-bottom: 4px;
+	line-height: 15px;
 }
 
 .preview-box-location {
 	font-size: 12px;
+	line-height: 12px;
 	color: #ccc;
 }
 
 .preview-box-distance {
 	font-size: 12px;
+	line-height: 12px;
 	color: #ccc;
 }
