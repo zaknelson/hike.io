@@ -34,7 +34,7 @@
 
 			// Sometimes the imageLoaded doesn't fire for cached images. By manually reset the src 
 			// tag of the first image, we will always trigger an imageLoaded event.
-			$(".preview-box-list img:first").attr("src", $(".preview-box-list img").attr("src"));
+			$(".preview-box-list img:first").attr("src", $(".preview-box-list img:first").attr("src"));
 
 		});
 	};
