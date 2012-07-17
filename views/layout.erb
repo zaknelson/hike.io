@@ -18,24 +18,25 @@ https://github.com/zaknelson/hike.io/
 	<meta name="viewport" content="width=device-width"></meta>
 	<title><%= @title %></title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/2.1.04/jquery.masonry.min.js" type="text/javascript"></script>
 	<%= css :app %>
-	<%= js  :app %>
 	<%= yield_content :head %>
 </head>
 <body>
-<div>
-	<div class="header div-shadow-light">
-		<div>
-			<a href="/">
-				<div class="title"></div>
-			</a>
+	<div>
+		<div class="header div-shadow-light">
+			<div>
+				<a href="/">
+					<div class="title"></div>
+				</a>
+			</div>
+		</div>
+		<div class="main-container">
+			<%= yield %>
 		</div>
 	</div>
-	<div class="main-container">
-		<%= yield %>
-	</div>
-</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/2.1.04/jquery.masonry.min.js" type="text/javascript"></script>
+	<%= js  :app %>
 </body>
 </html>
