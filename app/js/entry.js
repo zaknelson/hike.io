@@ -1,10 +1,10 @@
 (function() {
 	var setupMasonry = function() {
-		//$(".photo-thumb-list").imagesLoaded(function() {
+		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;
 
-			$(".photo-thumb-list").fadeIn("fast");
+			
 
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
@@ -25,11 +25,9 @@
 					return box_width;
 				}
 			});
-		//});
+		});
 
-		// Sometimes the imageLoaded doesn't fire for cached images. By manually reset the src 
-		// tag of the first image, we will always trigger an imageLoaded event.
-		//$(".photo-thumb-list img:first").attr("src", $(".photo-thumb-list img:first").attr("src"));
+		$(".photo-thumb-list").fadeIn("fast");
 	};
 
 	$(window).load(function() {
