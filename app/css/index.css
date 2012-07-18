@@ -7,6 +7,12 @@
 .preview-box {
 	font-family: arial, sans-serif;
 	margin-bottom: 1px;
+	background-color: #fff;
+	opacity: .99;
+}
+
+.preview-box:hover {
+	opacity: .94;
 }
 
 .preview-box:hover { cursor: pointer; }
