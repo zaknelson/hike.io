@@ -1,0 +1,86 @@
+#!/bin/bash
+
+#
+# Process all the images in ./input
+#
+
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+input_folder=$current_dir/input
+backup_folder=$current_dir/backup
+output_folder=$current_dir/output
+temp_folder=$current_dir/temp
+
+entry_properties_file=$input_folder/entry.properties
+landscape_folder=$input_folder/landscape
+photos_folder=$input_folder/photos
+preview_folder=$input_folder/preview
+
+# Ensure input has the correct structure and has at least one file in it
+if 	[ ! $entry_properties_file ] 	||
+	[ ! -d $preview_folder ] 		|| [ ! "$(ls -A $preview_folder/*)" ] || 
+	[ ! -d $photos_folder ] 		|| [ ! "$(ls -A $photos_folder/*)" ] || 
+	[ ! -d $landscape_folder ] 		|| [ ! "$(ls -A $landscape_folder/*)" ]; then
+
+	echo "ERROR: Input folder does not have the correct directory structure, should be:"
+	echo
+	echo "  input/"
+	echo "     entry.properties"
+	echo "     landscape/"
+	echo "         my-landscape.jpg"
+	echo "     preview/"
+	echo "         my-preview.jpg"
+	echo "     photos/"
+	echo "         my-photo1.jpg"
+	echo "         my-photo2.jpg"
+	echo "         ..."
+	exit 1
+fi
+
+# Run the entry.properties file to retrieve the variables from it
+. $entry_properties_file
+
+# Make sure all the necessary properties have been set
+if [ -z "$entry_id" ]; then
+	echo "ERROR: entry.properties file does not have the variable entry_id defined."
+	exit 1
+fi
+
+# Clean temp folder
+rm -rf $temp_folder
+mkdir $temp_folder
+
+# Clean output folder
+rm -rf $output_folder
+mkdir $output_folder
+cp $input_folder/.gitignore $output_folder
+
+function magickConvert {
+	convert -resize $1^ \
+	-gravity Center	\
+	-crop $1+0+0 \
+	-strip \
+	-quality 95 \
+	-interlace plane \
+	$2 $3
+}
+
+# Handle landscape
+landscape_file=$landscape_folder/$(ls $landscape_folder | head -1)
+magickConvert 1024x341 $landscape_file $output_folder/$entry_id-landscape.jpg
+
+# Handle preview
+preview_file=$preview_folder/$(ls $preview_folder | head -1)
+magickConvert 350x350 $preview_file $output_folder/$entry_id-preview.jpg
+
+# Handle photos
+for f in $photos_folder/*.*
+do
+	filename=$(basename "$f")
+	filename="${filename%.*}"
+	magickConvert 350x350 "$f" $output_folder/$entry_id-$filename.jpg
+done
+
+# Remove temp folder
+rm -rf $temp_folder
+
+exit 0
