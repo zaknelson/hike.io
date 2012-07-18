@@ -1,13 +1,16 @@
 (function() {
-	var setupPreviewMasonry = function() {
-		console.log("setting up preview masonry");
+	var setupMasonry = function() {
+
+		if (!($(".preview-box-list").length))
+			return;
+
 		$(".preview-box-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;
 
-			console.log("preview loaded.");
-			$(".preview-box-list").fadeIn("fast");
+			console.log("Previews loaded.");
 
+			$(".preview-box-list").fadeIn("fast");
 			$(".preview-box-list").masonry({
 				itemSelector: ".preview-box",
 				gutterWidth: gutterWidth,
@@ -43,7 +46,7 @@
 	};
 
 	$(document).ready(function() {
-		setupPreviewMasonry();
+		setupMasonry();
 		setupPreviewClickHandler();
 	});
 }

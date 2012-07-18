@@ -1,11 +1,15 @@
 (function() {
-	var setupPhotoMasonry = function() {
-		console.log("setting up photo masonry");
+	var setupMasonry = function() {
+
+		if (!($(".photo-thumb-list").length))
+			return;
+
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;
 
-			console.log("photos loaded.");
+			console.log("Photos loaded.");
+
 			$(".photo-thumb-list").fadeIn("fast");
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
@@ -32,7 +36,7 @@
 	};
 
 	$(document).ready(function() {
-		setupPhotoMasonry();
+		setupMasonry();
 	});
 }
 )();
