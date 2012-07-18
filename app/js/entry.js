@@ -1,5 +1,6 @@
 (function() {
 	var setupPhotoMasonry = function() {
+		console.log("setting up photo masonry");
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;

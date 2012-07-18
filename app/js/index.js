@@ -1,5 +1,6 @@
 (function() {
 	var setupPreviewMasonry = function() {
+		console.log("setting up preview masonry");
 		$(".preview-box-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;
