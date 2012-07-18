@@ -4,8 +4,8 @@
 			var gutterWidth = 1;
 			var imageWidth = 340;
 
-			
-
+			console.log("photos loaded.");
+			$(".photo-thumb-list").fadeIn("fast");
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
 				gutterWidth: gutterWidth,
@@ -27,7 +27,7 @@
 			});
 		});
 
-		$(".photo-thumb-list").fadeIn("fast");
+
 	};
 
 	$(window).load(function() {

@@ -4,7 +4,8 @@
 			var gutterWidth = 1;
 			var imageWidth = 340;
 
-			
+			console.log("preview loaded.");
+			$(".preview-box-list").fadeIn("fast");
 
 			$(".preview-box-list").masonry({
 				itemSelector: ".preview-box",
@@ -32,8 +33,6 @@
 				}
 			});
 		});
-
-		$(".preview-box-list").fadeIn("fast");
 	};
 
 	var setupPreviewClickHandler = function() {
