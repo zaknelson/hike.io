@@ -1,5 +1,5 @@
 (function() {
-	var setupMasonry = function() {
+	var setupPhotoMasonry = function() {
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 1;
 			var imageWidth = 340;
@@ -31,7 +31,7 @@
 	};
 
 	$(window).load(function() {
-		setupMasonry();
+		setupPhotoMasonry();
 	});
 }
 )();
