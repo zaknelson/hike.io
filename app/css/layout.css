@@ -27,18 +27,18 @@ img { display: block }
 
 .header {
 	background: url(/images/header-pattern.png?embed) repeat-x center;
-	height: 39px;
+	height: 30px;
 	width: 100%;
 	text-align: center;
 	background-color: #1a191a;
-	padding-top: 10px;
+	padding-top: 8px;
 }
 
 .title {
 	background: url(/images/title.png?embed);
 	background-size: 100%;
-	width: 66px;
-	height: 27px;
+	width: 56px;
+	height: 23px;
 	margin-right: auto;
 	margin-left: auto;
 
