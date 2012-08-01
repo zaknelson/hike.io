@@ -76,6 +76,7 @@
 .map {
 	margin-right: auto;
 	margin-left: auto;
+	width: 100%;
 }
 
 /* TODO: is there a way to avoid having to manually set the width here? */
