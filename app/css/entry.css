@@ -1,5 +1,68 @@
+.entry-wrapper {
+	padding: 10px;
+}
+
+.section-separator {
+	height: 0px;
+	margin: 30px;
+	opacity: .5;
+}
+
+.overview-div {
+	margin-top: 20px;
+	margin-bottom: 40px;
+	margin-left: 10px;
+	width: 100%;
+}
+
+.overview-left {
+	float: left;
+}
+
+.overview-right {
+	float: right;
+}
+
+.overview-header {
+	margin-bottom: 25px;
+}
+
+.overview-title {
+	font-family: "facitweb", sans-serif;
+	font-style: normal;
+	font-weight: 300;
+	font-size: 50px;
+	line-height: 60px;
+	color: #444;
+	margin:0px;
+}
+
+.overview-location {
+	font-family: "facitweb", sans-serif;
+	font-style: normal;
+	font-weight: 200;
+	font-size: 24px;
+	color: #444;
+	line-height: 40px;
+	margin:0px;
+}
+
+.overview-description {
+	font-family: "facitweb", sans-serif;
+	width: 60%;
+	font-weight: 200;
+	font-size: 15px;
+}
+
+.photos-div {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.photo-landscape { width: 100%; }
+
 .photo-thumb {
-	margin-top: 1px;
+	margin-top: 10px;
 	float: left;
 }
 
@@ -8,8 +71,24 @@
 .photo-thumb-list {
 	overflow-x: hidden;
 	overflow-y: hidden;
-	margin-bottom: 1px;
 	display: none;
 }
 
-.landscape-image { width: 100%; }
+.map {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* TODO: is there a way to avoid having to manually set the width here? */
+@media all and (min-width: 600px) {
+	.map-header-box-icon {
+		width : 16px !important;
+	}
+}
+
+@media all and (max-width: 600px) {
+	.map-header-box-icon {
+		width : 30px !important;
+	}
+}
+

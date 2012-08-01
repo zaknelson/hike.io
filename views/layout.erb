@@ -19,24 +19,35 @@ https://github.com/zaknelson/hike.io/
 	<title><%= @title %></title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
 	<%= css :app %>
-	<%= yield_content :head %>
+	<script type="text/javascript" src="//use.typekit.net/jce4miw.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
-<body>
+<body class="no-touch">
 	<div>
-		<div class="header div-shadow-light">
-			<div>
+		<div class="header shadow-light">
+			<div class="header-box">
 				<a href="/">
-					<div class="title"></div>
+					<%= render_svg("#{@img_dir}/logo.svg", {:class => "header-box-icon"}) %>
 				</a>
 			</div>
+			<div class="header-separator"></div>
+			<%= yield_content :header %>		
 		</div>
 		<div class="main-container">
 			<%= yield %>
 		</div>
 	</div>
 
+	<footer>
+
+	</footer>
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/2.1.04/jquery.masonry.min.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.2/jquery.scrollTo.min.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.0.6/jquery.fancybox.pack.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+	
 	<%= js  :app %>
 </body>
 </html>

@@ -11,11 +11,11 @@
 	opacity: .99;
 }
 
-.preview-box:hover {
+.no-touch .preview-box:hover {
 	opacity: .94;
 }
 
-.preview-box:hover { cursor: pointer; }
+.no-touch .preview-box:hover { cursor: pointer; }
 
 .preview-box-footer {
 	padding: 10px;

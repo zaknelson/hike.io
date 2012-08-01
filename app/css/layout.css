@@ -1,6 +1,7 @@
 body { 
-	margin: 0px; 
-	background: url(/images/background-pattern.png?embed);
+	margin: 0px;
+	-webkit-font-smoothing: antialiased;
+	background-color: #fff;
 }
 
 a {
@@ -12,36 +13,76 @@ a img { border: none; }
 
 img { display: block }
 
+::selection {
+	background: rgba(0, 0, 0, 0.0);
+}
+
+h1::selection, h2::selection, h3::selection, p::selection {
+	background:#444;
+	color:#fff;
+}
+
 .main-container {
-	margin-top: 0px;
+	margin-top: 50px;
 	margin-right: auto;
 	margin-left: auto;
 	overflow-x: hidden;
 }
 
-.div-shadow-light {
+.shadow-light {
 	box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-	-moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+	-moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
 	-webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 }
 
 .header {
-	background: url(/images/header-pattern.png?embed) repeat-x center;
-	height: 30px;
 	width: 100%;
-	text-align: center;
-	background-color: #1a191a;
-	padding-top: 8px;
+	position:fixed;
+	top:0;
+	z-index: 100;
+	display:block;
+	background: url(/images/header-pattern.png?embed) repeat-x center;
 }
 
-.title {
-	background: url(/images/title.png?embed);
-	background-size: 100%;
-	width: 56px;
-	height: 23px;
-	margin-right: auto;
-	margin-left: auto;
+.header-separator {
+	background: url(/images/header-separator.png?embed) repeat-y center;
+	width: 2px;
+	height: 50px;
+	float: left;
+}
 
+.header-box {
+	background: url(/images/header-pattern.png?embed) repeat-x center;
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	float: left;
+	padding-right: 15px;
+	padding-left: 15px;
+	opacity: .55;
+	cursor: pointer;
+	min-width: 25px;
+
+}
+
+.no-touch .header-box:hover {
+	opacity: .8;
+}
+
+.header-box-icon {
+	margin-top: 11px;
+	float:left;
+	height: 30px;
+	width: 30px;
+}
+
+.header-box-text {
+	font-family: "facitweb", sans-serif;
+	font-style: normal;
+	font-weight: 200;
+	font-size: 16px;
+	color: #222;
+	padding-left: 8px;
 }
 
 .masonry,
@@ -69,10 +110,25 @@ img { display: block }
 			transition-property: left, right, top;
 }
 
-@media all and (min-width: 1024px) {
-	.main-container { width: 1024px; }
+@media all and (min-width: 960px) {
+	.main-container { width: 960px; }
 }
 
-@media all and (max-width: 1024px) {
+@media all and (max-width: 960px) {
 	.main-container { width: 100%; }
 }
+
+
+@media all and (min-width: 600px) {
+	.header-box-text { 
+		display: inline; 
+	}
+}
+
+@media all and (max-width: 600px) {
+	.header-box-text { 
+		display: none;
+	}
+}
+
+

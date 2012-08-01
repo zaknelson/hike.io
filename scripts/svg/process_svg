@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#
+# Process Adobe Illustrator SVG into format easily digestable by the browser. Assumes a 100 x 100 viewBox.
+#
+
+# Ensure input has the correct structure and has at least one file in it
+if 	[ ! $1 ]; then
+	echo "usage: process_svg source_file.svg [other_source_file.svg ...]"
+	exit 1
+fi
+
+temp_file=.temp
+
+echo '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" enable-background="new 0 0 100 100">' > $temp_file
+tail -n +6 $1 >> $temp_file
+
+mv -f $temp_file $1
+
+exit 0

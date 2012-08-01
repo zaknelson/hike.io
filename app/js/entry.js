@@ -5,7 +5,7 @@
 			return;
 
 		$(".photo-thumb-list").imagesLoaded(function() {
-			var gutterWidth = 1;
+			var gutterWidth = 10;
 			var imageWidth = 340;
 
 			console.log("Photos loaded.");
@@ -31,12 +31,40 @@
 				}
 			});
 		});
+	};
 
+	var setupNaviationFor = function(navigationDiv, contentDiv) {
+		navigationDiv.click(function(){
+			$('.scroll-to-hack-div').height(1);
+			$("body").scrollTo(contentDiv, 700, {"axis":"y", "offset":-60, "onAfter": function() {
+				$('.scroll-to-hack-div').height(0);
+			}}) ;
+		});
+	};
 
+	var setupNaviation = function(navigationDiv, contentDiv) {
+		setupNaviationFor
+		setupNaviationFor($(".header-box-photos"), $(".photos-div"));
+		setupNaviationFor($(".header-box-map"), $(".map-div"));
+	};
+
+	var setupFancybox = function() {
+		$(".fancybox-thumbs").fancybox({
+			padding: 10,
+			nextEffect : "none",
+			prevEffect : "none",
+			closeEffect : "none",
+			closeBtn : true,
+			arrows : false,
+			keys : true,
+			nextClick : true
+		});
 	};
 
 	$(document).ready(function() {
 		setupMasonry();
+		setupNaviation();
+		setupFancybox();
 	});
 }
 )();
