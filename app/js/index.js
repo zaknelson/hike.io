@@ -5,8 +5,10 @@
 			return;
 
 		$(".preview-box-list").imagesLoaded(function() {
-			var gutterWidth = 1;
-			var imageWidth = 340;
+			var gutterWidth = 2;
+
+			var one_column_threshold = 450;
+			var two_column_threshold = 340;
 
 			console.log("Previews loaded.");
 
@@ -25,14 +27,19 @@
 					var two_column_width = Math.floor((containerWidth - gutterWidth) / 2);
 					var three_column_width = Math.floor((containerWidth - 2 * gutterWidth) / 3);
 					
-					if (one_column_width <= imageWidth) {
+					if (one_column_width <= one_column_threshold) {
 						box_width = one_column_width;
-					} else if (two_column_width <= imageWidth) {
+					} else if (two_column_width <= two_column_threshold) {
 						box_width = two_column_width;
 					} else {
 						box_width = three_column_width;
 					}
 					$(".preview-box img").width(box_width);
+
+					if (box_width != one_column_width) {
+						$(".featured-box img").width(box_width * 2 + gutterWidth);
+					}
+					
 					return box_width;
 				}
 			});

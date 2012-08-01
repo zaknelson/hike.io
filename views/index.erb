@@ -1,7 +1,27 @@
 <% content_for :header do %><% end %>
 
-<div>
+<div class="index-wrapper">
 	<div class="preview-box-list">
+
+		<div id="preview-box-<%= @featured_entry.id %>" class="preview-box featured-box">
+			<%= img "#{@entry_img_dir}/#{@featured_entry.id}/#{@featured_entry.id}-preview-large.jpg", {:class => "preview-box-img"} %>
+				<div class="preview-box-footer">
+					<div class="preview-box-footer-left">
+						<div class="preview-box-title">
+							<%= @featured_entry.name %>
+						</div>
+						<div class="preview-box-location">
+							<%= @featured_entry.location %>
+						</div>
+					</div>
+					<div class="preview-box-footer-right">
+						<div class="preview-box-distance">
+							<%= distance_string @featured_entry.distance %>
+						</div>
+					</div>
+				</div>
+		</div>
+
 		<% for entry in @popular_entry_list %>
 			<div id="preview-box-<%= entry.id %>" class="preview-box">
 				<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-preview.jpg", {:class => "preview-box-img"} %>

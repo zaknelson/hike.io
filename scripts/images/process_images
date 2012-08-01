@@ -84,14 +84,15 @@ magickConvertCrop 1920x640 $landscape_file $entry_output_folder/$entry_id-landsc
 
 # Handle preview
 preview_file=$preview_folder/$(ls $preview_folder | head -1)
-magickConvert 350x350 $preview_file $entry_output_folder/$entry_id-preview.jpg
+magickConvert 450x $preview_file $entry_output_folder/$entry_id-preview.jpg
+magickConvertCrop 809x500 $preview_file $entry_output_folder/$entry_id-preview-large.jpg
 
 # Handle photos
 for f in $photos_folder/*.*
 do
 	filename=$(basename "$f")
 	filename="${filename%.*}"
-	magickConvertCrop 350x350 "$f" $entry_output_folder/$entry_id-$filename-thumb.jpg
+	magickConvertCrop 450x450 "$f" $entry_output_folder/$entry_id-$filename-thumb.jpg
 	magickConvert 1200x1200 "$f" $entry_output_folder/$entry_id-$filename.jpg
 done
 

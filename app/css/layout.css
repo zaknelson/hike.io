@@ -1,8 +1,10 @@
 body { 
 	margin: 0px;
 	-webkit-font-smoothing: antialiased;
-	background-color: #fff;
+	background-color: none;
 }
+
+
 
 a {
 	color: #000;

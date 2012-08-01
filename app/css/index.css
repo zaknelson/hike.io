@@ -1,3 +1,8 @@
+.index-wrapper {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
 .preview-box-list {
 	overflow-x: hidden;
 	overflow-y: hidden;
@@ -6,7 +11,7 @@
 
 .preview-box {
 	font-family: arial, sans-serif;
-	margin-bottom: 1px;
+	margin-bottom: 2px;
 	background-color: #fff;
 	opacity: .99;
 }

@@ -80,43 +80,75 @@ class HikeApp < Sinatra::Base
 			Map.new({:zoom_level => 8, :latitude => 47.315, :longitude => -121.730})
 		end
 
+		def all_entries
+			[Entry.new({
+				:id => "scotchmans-peak", 
+				:name => "Scotchman's Peak",
+				:location => "North Idaho, USA", 
+				:distance => 10,
+				:elevation_gain => 1000,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({
+				:id => "king-arthurs-seat", 
+				:name => "King Arthur's Seat", 
+				:location => "Edinburgh, Scotland", 
+				:distance => 3,
+				:elevation_gain => 1000,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({
+				:id => "north-kaibab-trail", 
+				:name => "North Kaibab Trail", 
+				:location => "Grand Canyon, USA", 
+				:distance => 15,
+				:elevation_gain => 1000,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({
+				:id => "lake-22", 
+				:name => "Lake 22", 
+				:location => "Washington, USA", 
+				:distance => 18,
+				:elevation_gain => 2500,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({
+				:id => "pikes-peak", 
+				:name => "Pike's Peak", 
+				:location => "Colorado, USA", 
+				:distance => 30,
+				:elevation_gain => 3000,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({
+				:id => "snoqualmie-middle-fork", 
+				:name => "Snoqualmie Middle Fork", 
+				:location => "Washington, USA", 
+				:distance => 11,
+				:elevation_gain => 4352,
+				:pictures => pictures, 
+				:map => map}),
+			Entry.new({:id => "mt-kilamanjaro", 
+				:location => "North Idaho, USA", 
+				:name => "Mt. Kilamanjaro", 
+				:location => "Tanzania", 
+				:distance => 50,
+				:elevation_gain => 1000,
+				:pictures => pictures, 
+				:map => map})]
+		end
+
+		def featured_entry 
+			all_entries[0];
+		end
+
 		def popular_list
-			return [Entry.new({
-						:id => "scotchmans-peak", 
-						:name => "Scotchman's Peak",
-						:location => "North Idaho, USA", 
-						:distance => 10,
-						:elevation_gain => 1000,
-						:pictures => pictures, 
-						:map => map}), 
-					Entry.new({
-						:id => "king-arthurs-seat", 
-						:name => "King Arthur's Seat", 
-						:location => "Edinburgh, Scotland", 
-						:distance => 3,
-						:elevation_gain => 1000,
-						:pictures => pictures, 
-						:map => map}),
-					Entry.new({
-						:id => "north-kaibab-trail", 
-						:name => "North Kaibab Trail", 
-						:location => "Grand Canyon, USA", 
-						:distance => 15,
-						:elevation_gain => 1000,
-						:pictures => pictures, 
-						:map => map}),
-					Entry.new({:id => "mt-kilamanjaro", 
-						:location => "North Idaho, USA", 
-						:name => "Mt. Kilamanjaro", 
-						:location => "Tanzania", 
-						:distance => 50,
-						:elevation_gain => 1000,
-						:pictures => pictures, 
-						:map => map})]
+			all_entries[1..-1]
 		end
 
 		def find_entry id
-			popular_list.select { |entry|
+			all_entries.select { |entry|
 				entry.id == id
 			}[0]
 		end
@@ -187,6 +219,7 @@ class HikeApp < Sinatra::Base
 
 	get "/" do
 		@title = "hike.io - Beautiful Hikes"
+		@featured_entry = featured_entry
 		@popular_entry_list = popular_list
 		erb :index
 	end
