@@ -4,6 +4,7 @@ GEM
     backports (2.6.1)
     eventmachine (0.12.10)
     jsmin (1.0.1)
+    newrelic_rpm (3.4.1)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -31,6 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  newrelic_rpm (= 3.4.1)
   sinatra (= 1.3.2)
   sinatra-assetpack (= 0.0.11)
   sinatra-contrib (= 1.3.1)

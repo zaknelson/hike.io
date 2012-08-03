@@ -4,6 +4,10 @@ require 'sinatra/assetpack'
 require "sinatra/base" 
 require "sinatra/content_for"
 
+configure :production do
+  require "newrelic_rpm"
+end
+
 class Entry
 	attr_accessor :id, :name, :location, :distance, :elevation_gain, :pictures, :map
 
