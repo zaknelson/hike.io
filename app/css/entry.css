@@ -29,7 +29,6 @@
 }
 
 .overview-title {
-	font-family: "facitweb", sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	color: #444;
@@ -37,7 +36,6 @@
 }
 
 .overview-location {
-	font-family: "facitweb", sans-serif;
 	font-style: normal;
 	font-weight: 200;
 	font-size: 24px;
@@ -47,8 +45,6 @@
 }
 
 .overview-description {
-	font-family: "facitweb", sans-serif;
-
 	font-weight: 200;
 	font-size: 15px;
 }
