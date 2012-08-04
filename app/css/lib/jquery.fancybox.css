@@ -90,7 +90,7 @@
 #fancybox-loading div {
 	width: 44px;
 	height: 44px;
-	background: url('/images/loader.gif?embed') center center no-repeat;
+	background: url('/images/loader-black.gif?embed') center center no-repeat;
 }
 
 .fancybox-close {
