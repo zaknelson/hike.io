@@ -15,7 +15,11 @@ https://github.com/zaknelson/hike.io/
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-	<meta name="viewport" content="width=device-width"></meta>
+	<% if is_iPhone? %>
+		<meta name="viewport" content="width=450"></meta>
+	<% else %>
+		<meta name="viewport" content="width=device-width"></meta>
+	<% end %>
 	<title><%= @title %></title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
 	<%= css :app %>
@@ -23,13 +27,26 @@ https://github.com/zaknelson/hike.io/
 <body class="no-touch">
 	<div>
 		<div class="header shadow-light">
-			<div class="header-box">
+			<div>
 				<a href="/">
-					<%= render_svg("#{@img_dir}/logo.svg", {:class => "header-box-icon"}) %>
+					<div class="header-div">
+						<%= render_svg("#{@img_dir}/logo.svg", {:class => "header-div-icon"}) %>
+					</div>
 				</a>
+				<div class="header-separator"></div>
 			</div>
-			<div class="header-separator"></div>
+			<div class="header-right">
+				<div class="header-separator"></div>
+				<div class="header-div header-div-search" >
+						<%= render_svg("#{@img_dir}/search.svg", {:class => "header-div-icon"}) %>
+				</div>
+			</div>
 			<%= yield_content :header %>		
+		</div>
+		<div class="sub-header">
+			<div class="search-input-div header-right shadow-light">
+				<input type="text" class="search-input"></input>
+			</div>
 		</div>
 		<div class="main-container">
 			<%= yield %>

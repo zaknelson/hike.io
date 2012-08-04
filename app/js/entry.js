@@ -43,9 +43,8 @@
 	};
 
 	var setupNaviation = function(navigationDiv, contentDiv) {
-		setupNaviationFor
-		setupNaviationFor($(".header-box-photos"), $(".photos-div"));
-		setupNaviationFor($(".header-box-map"), $(".map-div"));
+		setupNaviationFor($(".header-div-photos"), $(".photos-div"));
+		setupNaviationFor($(".header-div-map"), $(".map-div"));
 	};
 
 	var setupFancybox = function() {

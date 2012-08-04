@@ -24,7 +24,7 @@ h1::selection, h2::selection, h3::selection, p::selection {
 }
 
 .main-container {
-	margin-top: 50px;
+	margin-top: 45px;
 	margin-right: auto;
 	margin-left: auto;
 	overflow-x: hidden;
@@ -38,52 +38,84 @@ h1::selection, h2::selection, h3::selection, p::selection {
 
 .header {
 	width: 100%;
-	position:fixed;
-	top:0;
+	position: fixed;
+	top: 0px;
 	z-index: 100;
 	display:block;
 	background: url(/images/header-pattern.png?embed) repeat-x center;
 }
 
+.header-right {
+	float: right;
+}
+
 .header-separator {
 	background: url(/images/header-separator.png?embed) repeat-y center;
 	width: 2px;
-	height: 50px;
+	height: 45px;
 	float: left;
 }
 
-.header-box {
+.header-div {
 	background: url(/images/header-pattern.png?embed) repeat-x center;
 	text-align: center;
-	height: 50px;
-	line-height: 50px;
+	height: 45px;
+	line-height: 45px;
 	float: left;
-	padding-right: 15px;
-	padding-left: 15px;
+	padding-right: 12px;
+	padding-left: 12px;
 	opacity: .55;
 	cursor: pointer;
-	min-width: 25px;
-
+	min-width: 45px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 }
 
-.no-touch .header-box:hover {
+.no-touch .header-div:hover {
 	opacity: .8;
 }
 
-.header-box-icon {
-	margin-top: 11px;
+.header-div-icon {
+	margin-top: 9px;
 	float:left;
-	height: 30px;
-	width: 30px;
+	height: 27px;
+	width: 27px;
 }
 
-.header-box-text {
-	font-family: "facitweb", sans-serif;
+.header-div-text {
 	font-style: normal;
 	font-weight: 200;
 	font-size: 16px;
 	color: #222;
 	padding-left: 8px;
+}
+
+.sub-header {
+	width: 100%;
+	position: fixed;
+	top: 42px;
+	z-index: 99;
+	display:block;
+}
+
+.search-input-div {
+	display: none;
+	background: url(/images/header-pattern.png?embed) repeat-x center;
+	padding: 10px;
+	padding-top: 12px;
+	-moz-border-radius: 0px 0px 0px 5px;
+	-webkit-border-radius: 0px 0px 0px 5px;
+	-khtml-border-radius: 0px 0px 0px 5px;
+	border-radius: 0px 0px 0px 5px;
+}
+
+.search-input {
+	height: 24px;
+	line-height: 20px;
+	font-size: 18px;
+	font-weight: 200;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .masonry,
@@ -121,13 +153,13 @@ h1::selection, h2::selection, h3::selection, p::selection {
 
 
 @media all and (min-width: 600px) {
-	.header-box-text { 
+	.header-div-text { 
 		display: inline; 
 	}
 }
 
 @media all and (max-width: 600px) {
-	.header-box-text { 
+	.header-div-text { 
 		display: none;
 	}
 }

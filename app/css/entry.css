@@ -77,7 +77,7 @@
 
 /* TODO: is there a way to avoid having to manually set the width here? */
 @media all and (min-width: 600px) {
-	.map-header-box-icon {
+	.map-header-div-icon {
 		width : 16px !important;
 	}
 	
@@ -92,7 +92,7 @@
 }
 
 @media all and (max-width: 600px) {
-	.map-header-box-icon {
+	.map-header-div-icon {
 		width : 30px !important;
 	}
 

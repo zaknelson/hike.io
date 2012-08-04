@@ -209,6 +209,10 @@ class HikeApp < Sinatra::Base
 				 ua.include? "MSIE 8")
 		end
 
+		def is_iPhone?
+			request.user_agent.include? "iPhone"
+		end
+
 	end
 
 	before do

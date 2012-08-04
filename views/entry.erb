@@ -1,12 +1,12 @@
 <% content_for :header do %>
-	<div class="header-box header-box-photos">
-		<%= render_svg("#{@img_dir}/photos.svg", {:class => "header-box-icon"}) %>
-		<span class="header-box-text">Photos</span>
+	<div class="header-div header-div-photos">
+		<%= render_svg("#{@img_dir}/photos.svg", {:class => "header-div-icon"}) %>
+		<span class="header-div-text">Photos</span>
 	</div>
 	<div class="header-separator"></div>
-	<div class="header-box header-box-map" >
-		<%= render_svg("#{@img_dir}/map.svg", {:class => "header-box-icon map-header-box-icon"}) %>
-		<span class="header-box-text map-header-box-text">Map</span>
+	<div class="header-div header-div-map" >
+		<%= render_svg("#{@img_dir}/map.svg", {:class => "header-div-icon map-header-div-icon"}) %>
+		<span class="header-div-text map-header-div-text">Map</span>
 	</div>
 	<div class="header-separator"></div>
 <% end %>
