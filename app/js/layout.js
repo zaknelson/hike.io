@@ -8,8 +8,12 @@ _gaq.push(["_trackPageview"]);
 	ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
 	var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
 
+	var isTouch = function() {
+		return ("ontouchstart" in document);
+	}
+
 	var disableNonTouchFeatures = function() {
-		if ("ontouchstart" in document) {
+		if (isTouch()) {
     		$("body").removeClass("no-touch");
 		}
 	};
@@ -20,11 +24,26 @@ _gaq.push(["_trackPageview"]);
 
 	var toggleSearchBox = function() {
 		if (isSearchActive()) {
-			$(".search-input-div").css("display", "none");
+			if (isTouch()) {
+				$(".search-input-div").css("display", "none");
+			} else {
+				$(".search-input-div").animate({
+					marginTop: "-55px"
+				}, 100, function() {
+					$(".search-input-div").css("display", "none");
+				});
+			}
 			$(".search-input").val("");
 			$(".search-input").blur();
 		} else {
 			$(".search-input-div").css("display", "block");
+			if (isTouch()) {
+				$(".search-input-div").css("margin-top", "0px");
+			} else {
+				$(".search-input-div").animate({
+					marginTop: "0px"
+				}, 100);
+			}
 			$(".search-input").focus();
 		}
 	}
