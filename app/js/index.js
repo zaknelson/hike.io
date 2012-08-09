@@ -1,9 +1,5 @@
 (function() {
 	var setupMasonry = function() {
-
-		if (!($(".preview-box-list").length))
-			return;
-
 		$(".preview-box-list").imagesLoaded(function() {
 			var gutterWidth = 2;
 
@@ -52,10 +48,18 @@
 		});
 	};
 
+	var setupMap = function(navigationDiv, contentDiv) {
+		$(".header-div-map").click(function(event) {
+			alert("ASDF")
+		});
+	};
 
 	$(document).ready(function() {
-		setupMasonry();
-		setupPreviewClickHandler();
+		if ($("#index-page").length) {
+			setupMasonry();
+			setupPreviewClickHandler();
+			setupMap();
+		}	
 	});
 }
 )();
