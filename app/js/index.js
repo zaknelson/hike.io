@@ -1,4 +1,9 @@
 (function() {
+
+	var PHOTOS_INDEX = 0;
+	var MAP_INDEX = 1;
+	var viewIndex = PHOTOS_INDEX;
+
 	var setupMasonry = function() {
 		$(".preview-box-list").imagesLoaded(function() {
 			var gutterWidth = 2;
@@ -48,17 +53,63 @@
 		});
 	};
 
-	var setupMap = function(navigationDiv, contentDiv) {
+	var setupMapNavigation = function() {
 		$(".header-div-map").click(function(event) {
-			alert("ASDF")
+			if (MAP_INDEX == viewIndex) {
+				return;
+			}
+			viewIndex = MAP_INDEX;
+
+			$(".map-fullscreen").css("display", "block");
+			$(".preview-box-list").css("display", "none");
+			
+			var locations = [new google.maps.LatLng(48.18896, -116.081362),
+							 new google.maps.LatLng(55.94300, -3.161),
+							 new google.maps.LatLng(-3.066465, 37.350666),
+							 new google.maps.LatLng(38.8406, -105.0442)]
+
+			var bounds = new google.maps.LatLngBounds(locations[0], locations[0]);
+
+			var mapOptions = {
+				zoom: 4,
+				center: locations[0],
+				mapTypeId: google.maps.MapTypeId.TERRAIN
+			}
+			var map = new google.maps.Map($(".map-fullscreen")[0], mapOptions);
+
+			for (var i = 0; i < locations.length; i++) {
+				bounds.extend(locations[i]);
+				var marker = new google.maps.Marker({
+					position: locations[i],
+					map: map
+				});
+			}
+			map.fitBounds(bounds);
 		});
+	};
+
+	var setupPhotosNavigation = function() {
+		$(".header-div-photos").click(function(event) {
+			if (PHOTOS_INDEX == viewIndex) {
+				return;
+			}
+			viewIndex = PHOTOS_INDEX;
+
+			$(".map-fullscreen").css("display", "none");
+			$(".preview-box-list").css("display", "block");
+		});
+	};
+
+	var setupNavigation = function() {
+		setupMapNavigation();
+		setupPhotosNavigation();
 	};
 
 	$(document).ready(function() {
 		if ($("#index-page").length) {
 			setupMasonry();
 			setupPreviewClickHandler();
-			setupMap();
+			setupNavigation();
 		}	
 	});
 }

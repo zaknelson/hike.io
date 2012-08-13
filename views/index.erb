@@ -1,4 +1,9 @@
 <% content_for :header do %>
+	<div class="header-div header-div-photos">
+		<%= render_svg("#{@img_dir}/photos.svg", {:class => "header-div-icon"}) %>
+		<span class="header-div-text">Photos</span>
+	</div>
+	<div class="header-separator"></div>
 	<div class="header-div header-div-map" >
 		<%= render_svg("#{@img_dir}/map.svg", {:class => "header-div-icon map-header-div-icon"}) %>
 		<span class="header-div-text map-header-div-text">Map</span>
@@ -6,8 +11,8 @@
 	<div class="header-separator"></div>
 <% end %>
 
-<div id="index-page"/>
-<div class="wrapper">
+<div id="index-page"></div>
+<div class="index-wrapper">
 	<div class="preview-box-list">
 		<div id="preview-box-<%= @featured_entry.id %>" class="preview-box featured-box">
 			<%= img "#{@entry_img_dir}/#{@featured_entry.id}/#{@featured_entry.id}-preview-large.jpg", {:class => "preview-box-img"} %>
@@ -49,4 +54,5 @@
 			</div>
 		<% end %>
 	</div>
+	<div class="map-fullscreen"></div>
 </div>

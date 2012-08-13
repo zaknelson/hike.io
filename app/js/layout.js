@@ -26,15 +26,17 @@ _gaq.push(["_trackPageview"]);
 		if (isSearchActive()) {
 			if (isTouch()) {
 				$(".search-input-div").css("display", "none");
+				$(".search-input").val("");
+				$(".search-input").blur();
 			} else {
 				$(".search-input-div").animate({
 					marginTop: "-55px"
 				}, 100, function() {
 					$(".search-input-div").css("display", "none");
+					$(".search-input").val("");
+					$(".search-input").blur();
 				});
 			}
-			$(".search-input").val("");
-			$(".search-input").blur();
 		} else {
 			$(".search-input-div").css("display", "block");
 			if (isTouch()) {

@@ -40,7 +40,7 @@ h1::selection, h2::selection, h3::selection, p::selection {
 	width: 100%;
 	position: fixed;
 	top: 0px;
-	z-index: 100;
+	z-index: 1000;
 	display:block;
 	background: url(/images/header-pattern.png?embed) repeat-x center;
 }
