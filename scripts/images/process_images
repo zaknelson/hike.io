@@ -90,8 +90,8 @@ function processEntryFolder {
 
 	# Handle landscape
 	landscape_file=$landscape_folder/$(ls $landscape_folder | head -1)
-	magickConvertCrop 960x480 $landscape_file $entry_output_folder/$entry_id-landscape-thumb.jpg
-	magickConvertCrop 1920x960 $landscape_file $entry_output_folder/$entry_id-landscape.jpg
+	magickConvertCrop 1024x480 $landscape_file $entry_output_folder/$entry_id-landscape-thumb.jpg
+	magickConvertCrop 2048x960 $landscape_file $entry_output_folder/$entry_id-landscape.jpg
 
 	# Handle preview
 	preview_file=$preview_folder/$(ls $preview_folder | head -1)

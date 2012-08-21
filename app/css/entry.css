@@ -8,11 +8,21 @@
 	opacity: .5;
 }
 
+.header-landscape-div-footer {
+	padding-left: 10px;
+	position: relative;
+	background-color:rgba(0, 0, 0, 0.5);
+}
+
+.header-landscape-title {
+	font-style: normal;
+	font-weight: 800;
+	color: #eee;
+	margin:0px;
+}
+
 .overview-div {
-	margin-top: 20px;
 	margin-bottom: 40px;
-	margin-left: 10px;
-	margin-right: 10px
 	width: 100%;
 }
 
@@ -24,29 +34,10 @@
 	float: right;
 }
 
-.overview-header {
-	margin-bottom: 25px;
-}
-
-.overview-title {
-	font-style: normal;
-	font-weight: 800;
-	color: #444;
-	margin:0px;
-}
-
-.overview-location {
-	font-style: normal;
-	font-weight: 200;
-	font-size: 24px;
-	color: #444;
-	line-height: 40px;
-	margin:0px;
-}
-
 .overview-description {
 	font-weight: 200;
-	font-size: 15px;
+	font-size: 18px;
+	color: #222;
 }
 
 .photos-div {
@@ -75,7 +66,6 @@
 	width: 100%;
 }
 
-
 @media all and (min-width: 600px) {
 	/* TODO: is there a way to avoid having to manually set the width here? */
 	.map-header-div-icon {
@@ -86,9 +76,14 @@
 		width: 60%;
 	}
 
-	.overview-title {
-		font-size: 60px;
-		line-height: 70px;
+	.header-landscape-title {
+		font-size: 50px;
+		line-height: 60px;
+	}
+
+	.header-landscape-div-footer {
+		margin-top: -60px;
+		height: 60px;
 	}
 }
 
@@ -101,9 +96,13 @@
 		width: 100%;
 	}
 
-	.overview-title {
-		font-size: 40px;
-		line-height: 50px;
+	.header-landscape-title {
+		font-size: 35px;
+		line-height: 40px;
+	}
+	.header-landscape-div-footer {
+		margin-top: -40px;
+		height: 40px;
 	}
 }
 

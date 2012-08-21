@@ -13,22 +13,20 @@
 
 <div id="entry-page"></div>
 <div class="wrapper">
-	<div class="overview-div">
-		<div class="overview-header">
-			<h1 class="overview-title"><%= @entry.name %></h1>
-			<h2 class="overview-location"><%= @entry.location %></h2>
+
+	<div>
+		<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "photo-landscape shadow-light"} %>
+		<div class="header-landscape-div-footer">
+			<h1 class="header-landscape-title"><%= @entry.name %></h1>
 		</div>
+	</div>
+	<div class="overview-div">
 		<p class="overview-description">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus. Duis diam nisl, consectetur egestas ornare vitae, viverra a metus.
 		</p>
 	</div>
 
 	<div class="photos-div">
-		<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg" %>">
-			<div>
-				<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "photo-landscape shadow-light"} %>
-			</div>
-		</a>
 		<div class="photo-thumb-list">
 			<% for picture in @entry.pictures %>
 				<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.id}/#{picture.id}.jpg" %>">

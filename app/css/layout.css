@@ -86,8 +86,8 @@ h1::selection, h2::selection, h3::selection, p::selection {
 .header-div-text {
 	font-style: normal;
 	font-weight: 200;
-	font-size: 16px;
-	color: #222;
+	font-size: 18px;
+	color: #111;
 	padding-left: 8px;
 }
 
@@ -143,11 +143,11 @@ h1::selection, h2::selection, h3::selection, p::selection {
 			transition-property: left, right, top;
 }
 
-@media all and (min-width: 960px) {
-	.main-container { width: 960px; }
+@media all and (min-width: 1024px) {
+	.main-container { width: 1024px; }
 }
 
-@media all and (max-width: 960px) {
+@media all and (max-width: 1024px) {
 	.main-container { width: 100%; }
 }
 
