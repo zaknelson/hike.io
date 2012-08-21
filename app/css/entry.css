@@ -30,7 +30,7 @@
 
 .overview-title {
 	font-style: normal;
-	font-weight: 300;
+	font-weight: 800;
 	color: #444;
 	margin:0px;
 }
@@ -75,8 +75,9 @@
 	width: 100%;
 }
 
-/* TODO: is there a way to avoid having to manually set the width here? */
+
 @media all and (min-width: 600px) {
+	/* TODO: is there a way to avoid having to manually set the width here? */
 	.map-header-div-icon {
 		width : 16px !important;
 	}
@@ -86,8 +87,8 @@
 	}
 
 	.overview-title {
-		font-size: 50px;
-		line-height: 60px;
+		font-size: 60px;
+		line-height: 70px;
 	}
 }
 

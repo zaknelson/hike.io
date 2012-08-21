@@ -30,11 +30,11 @@
 	};
 
 	var setupNaviationFor = function(navigationDiv, contentDiv) {
-		navigationDiv.click(function(){
+		navigationDiv.click(function() {
 			$(".scroll-to-hack-div").height(1);
 			$("body").scrollTo(contentDiv, 700, {"axis":"y", "offset":-60, "onAfter": function() {
 				$(".scroll-to-hack-div").height(0);
-			}}) ;
+			}});
 		});
 	};
 
