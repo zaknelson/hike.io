@@ -1,0 +1,18 @@
+.search-input-div {
+	display: none;
+	margin-top: -55px;
+	background: url(/images/header-pattern.png?embed) repeat-x center;
+	padding: 13px 9px 9px 9px;
+	-moz-border-radius: 0px 0px 0px 5px;
+	-webkit-border-radius: 0px 0px 0px 5px;
+	-khtml-border-radius: 0px 0px 0px 5px;
+	border-radius: 0px 0px 0px 5px;
+}
+
+.search-input {
+	height: 22px;
+	line-height: 20px;
+	font-size: 18px;
+	font-weight: 200;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
