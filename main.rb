@@ -1,3 +1,5 @@
+#! /usr/bin/ruby
+
 require "rubygems"
 require "sinatra"
 require 'sinatra/assetpack'
