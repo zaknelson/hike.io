@@ -1,7 +1,7 @@
 body { 
 	margin: 0px;
 	-webkit-font-smoothing: antialiased;
-	background-color: none;
+	background-image: url(/images/background.png);
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 

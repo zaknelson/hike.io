@@ -4,7 +4,7 @@
 	top: 0px;
 	z-index: 1000;
 	display:block;
-	background: url(/images/header-pattern.png?embed) repeat-x center;
+	background-color: #fff;
 }
 
 .header-right {
@@ -19,14 +19,14 @@
 }
 
 .header-div {
-	background: url(/images/header-pattern.png?embed) repeat-x center;
+		background-color: #fff;
 	text-align: center;
 	height: 45px;
 	line-height: 45px;
 	float: left;
 	padding-right: 12px;
 	padding-left: 12px;
-	opacity: .55;
+	opacity: .65;
 	cursor: pointer;
 	min-width: 45px;
 	box-sizing:border-box;
