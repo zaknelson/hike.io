@@ -29,6 +29,24 @@
 					<%= img "#{@entry_img_dir}/#{@entry.id}/#{picture.id}-thumb.jpg", {:class => "overview-facts-thumb"} %>
 					<% break %>
 				<% end %>
+				<table>
+					<tr>
+						<td>Hike</td>
+						<td><%= @entry.name %></td>
+					</tr>
+					<tr>
+						<td>Location</td>
+						<td><%= @entry.location %></td>
+					</tr>
+					<tr>
+						<td>Distance</td>
+						<td><%= distance_string @entry.distance %></td>
+					</tr>
+					<tr>
+						<td>Elevation gain</td>
+						<td><%= elevation_string @entry.elevation_gain %></td>
+					</tr>
+				</table>	
 			</div>
 		</div>
 	</div>
