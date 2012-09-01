@@ -36,16 +36,16 @@
 .preview-box-footer-right { float: right; }
 
 .preview-box-title {
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: bold;
 	color: #fff;
 	padding-bottom: 4px;
-	line-height: 15px;
+	line-height: 16px;
 }
 
 .preview-box-location {
-	font-size: 12px;
-	line-height: 12px;
+	font-size: 13px;
+	line-height: 13px;
 	color: #ccc;
 }
 

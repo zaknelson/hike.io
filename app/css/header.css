@@ -4,7 +4,7 @@
 	top: 0px;
 	z-index: 1000;
 	display:block;
-	background-color: #fff;
+	background-color: #fff;	
 }
 
 .header-right {
@@ -19,7 +19,7 @@
 }
 
 .header-div {
-		background-color: #fff;
+	background-color: #fff;
 	text-align: center;
 	height: 45px;
 	line-height: 45px;
@@ -46,6 +46,7 @@
 }
 
 .header-div-text {
+	font-family: sans-serif;
 	font-style: normal;
 	font-weight: 200;
 	font-size: 18px;

@@ -1,6 +1,7 @@
 .wrapper {
 	padding-left: 10px;
 	padding-right: 10px;
+	font-family: "Optima", sans-serif;
 }
 
 .section-separator {
@@ -16,8 +17,6 @@
 }
 
 .header-landscape-title {
-	font-style: normal;
-	font-weight: 800;
 	color: #fff;
 	margin: 0px;
 }
@@ -28,22 +27,10 @@
 	height: 500px;
 }
 
-.overview-facts {
-	float: right;
-	padding-top: 15px;
-	padding-right: 30px;
-	width: 300px;
-	margin-left: -100%;
-}
-
-.overview-facts-thumb {
-	width: 275px;
-	padding: 25px;
-}
-
 .overview-description {
 	font-weight: 200;
 	font-size: 18px;
+	line-height: 24px;
 	color: #222;
 	margin-top: 0px;
 	float: left;
@@ -84,12 +71,12 @@
 
 	.header-landscape-title {
 		font-size: 50px;
-		line-height: 60px;
+		line-height: 55px;
 	}
 
 	.header-landscape-div-footer {
-		margin-top: -60px;
-		height: 60px;
+		margin-top: -55px;
+		height: 55px;
 	}
 }
 
@@ -110,11 +97,6 @@
 	.overview-description {
 		margin-right: 0px;
 		width: 100%;
-	}
-
-	.overview-facts {
-		float: none;
-    	margin: 0px auto;
 	}
 }
 
