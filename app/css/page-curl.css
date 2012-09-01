@@ -1,0 +1,44 @@
+.page-curl {
+	position: relative;
+	float: left;
+	padding: 0;
+	border: 1px solid #efefef;
+	margin: 0 30px 30px 0;
+	background: #fff;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; 
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+}
+
+
+.page-curl:before,
+.page-curl:after {
+	content: '';
+	z-index: -1;
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	width: 70%;
+	max-width: 300px; /* avoid rotation causing ugly appearance at large container widths */
+	max-height: 100px;
+	height: 55%;
+	-webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+	-webkit-transform: skew(-15deg) rotate(-6deg);
+	-moz-transform: skew(-15deg) rotate(-6deg);
+	-ms-transform: skew(-15deg) rotate(-6deg);
+	-o-transform: skew(-15deg) rotate(-6deg);
+	transform: skew(-15deg) rotate(-6deg);
+}
+
+
+.page-curl:after {
+	left: auto;
+	right: 10px;
+	-webkit-transform: skew(15deg) rotate(6deg);
+	-moz-transform: skew(15deg) rotate(6deg);
+	-ms-transform: skew(15deg) rotate(6deg);
+	-o-transform: skew(15deg) rotate(6deg);
+	transform: skew(15deg) rotate(6deg);
+}

@@ -1,5 +1,6 @@
-.entry-wrapper {
-	padding: 10px;
+.wrapper {
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .section-separator {
@@ -17,27 +18,36 @@
 .header-landscape-title {
 	font-style: normal;
 	font-weight: 800;
-	color: #eee;
-	margin:0px;
+	color: #efefef;
+	margin: 0px;
 }
 
 .overview-div {
 	margin-bottom: 40px;
 	width: 100%;
+	height: 500px;
 }
 
-.overview-left {
-	float: left;
-}
-
-.overview-right {
+.overview-facts {
 	float: right;
+	padding-top: 15px;
+	padding-right: 30px;
+	width: 300px;
+	margin-left: -100%;
+}
+
+.overview-facts-thumb {
+	width: 275px;
+	padding: 25px;
 }
 
 .overview-description {
 	font-weight: 200;
 	font-size: 18px;
 	color: #222;
+	margin-top: 0px;
+	float: left;
+	margin-right: 350px;
 }
 
 .photos-div {
@@ -71,10 +81,6 @@
 	.map-header-div-icon {
 		width : 16px !important;
 	}
-	
-	.overview-description {
-		width: 60%;
-	}
 
 	.header-landscape-title {
 		font-size: 50px;
@@ -92,10 +98,6 @@
 		width : 30px !important;
 	}
 
-	.overview-description {
-		width: 100%;
-	}
-
 	.header-landscape-title {
 		font-size: 35px;
 		line-height: 40px;
@@ -103,6 +105,16 @@
 	.header-landscape-div-footer {
 		margin-top: -40px;
 		height: 40px;
+	}
+
+	.overview-description {
+		margin-right: 0px;
+		width: 100%;
+	}
+
+	.overview-facts {
+		float: none;
+    	margin: 0px auto;
 	}
 }
 
