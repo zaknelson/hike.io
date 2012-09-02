@@ -21,7 +21,10 @@
 <div class="wrapper">
 	<div class="overview-div">
 		<div class="overview-description">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus. Duis diam nisl, consectetur egestas ornare vitae, viverra a metus.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+			<p>Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.</p>
+			<p>Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>
+
 		</div>
 		<div class="overview-facts">
 			<div class="overview-facts-div page-curl">
@@ -51,7 +54,10 @@
 		</div>
 	</div>
 
+	<hr class="section-separator"/>
+
 	<div class="photos-div">
+		<h2>Photos</h2>
 		<div class="photo-thumb-list">
 			<% for picture in @entry.pictures %>
 				<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.id}/#{picture.id}.jpg" %>">
@@ -66,6 +72,7 @@
 	<hr class="section-separator"/>
 
 	<div class="map-div">
+		<h2>Getting there</h2>
 		<img src="http://maps.googleapis.com/maps/api/staticmap?center=48.171352,-116.097336&zoom=10&size=640x640&maptype=terrain&sensor=true&scale=1" class="map"></img>
 	</div>
 

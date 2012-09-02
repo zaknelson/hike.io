@@ -1,10 +1,10 @@
 .header {
 	width: 100%;
-	position: fixed;
-	top: 0px;
-	z-index: 1000;
 	display:block;
-	background-color: #fff;	
+	background-color: #fff;
+	height: 45px;
+	z-index: 100;
+	position: relative;
 }
 
 .header-right {
@@ -46,7 +46,6 @@
 }
 
 .header-div-text {
-	font-family: sans-serif;
 	font-style: normal;
 	font-weight: 200;
 	font-size: 18px;

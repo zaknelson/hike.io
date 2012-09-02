@@ -1,12 +1,18 @@
 .wrapper {
 	padding-left: 10px;
 	padding-right: 10px;
-	font-family: "Optima", sans-serif;
+	color: #333;
+}
+
+.wrapper h2 {
+	font-weight: bold;
+	font-size: 36px;
+	margin: 10px;
 }
 
 .section-separator {
 	height: 0px;
-	margin: 30px;
+	margin: 10px;
 	opacity: .5;
 }
 
@@ -17,6 +23,7 @@
 }
 
 .header-landscape-title {
+	font-weight: 600;
 	color: #fff;
 	margin: 0px;
 }
@@ -24,12 +31,12 @@
 .overview-div {
 	margin-bottom: 40px;
 	width: 100%;
-	height: 500px;
+	height: 470px;
 }
 
 .overview-description {
 	font-weight: 200;
-	font-size: 18px;
+	font-size: 20px;
 	line-height: 24px;
 	color: #222;
 	margin-top: 0px;
@@ -39,7 +46,7 @@
 
 .photos-div {
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 
 .photo-landscape { width: 100%; }
@@ -57,10 +64,17 @@
 	display: none;
 }
 
+.map-div {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
 .map {
 	margin-right: auto;
 	margin-left: auto;
-	width: 100%;
+	width: 400px;
+	height: 400px;
+	float: left;
 }
 
 @media all and (min-width: 600px) {
@@ -70,7 +84,7 @@
 	}
 
 	.header-landscape-title {
-		font-size: 50px;
+		font-size: 40px;
 		line-height: 55px;
 	}
 
