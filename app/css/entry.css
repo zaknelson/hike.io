@@ -7,12 +7,12 @@
 .wrapper h2 {
 	font-weight: bold;
 	font-size: 36px;
-	margin: 10px;
+	margin: 0px 10px 0px 10px;
 }
 
 .section-separator {
 	height: 0px;
-	margin: 10px;
+	margin: 0px 10px 0px 10px;
 	opacity: .5;
 }
 
@@ -37,12 +37,12 @@
 
 .overview-description {
 	font-weight: 200;
-	font-size: 20px;
-	line-height: 24px;
 	color: #222;
 	margin-top: 0px;
 	float: left;
 	margin-right: 350px;
+			font-size: 18px;
+		line-height: 22px;
 }
 
 .photos-div {
@@ -112,6 +112,8 @@
 	.overview-description {
 		margin-right: 0px;
 		width: 100%;
+		font-size: 16px;
+		line-height: 20px;
 	}
 }
 
