@@ -6,17 +6,18 @@ body {
 }
 
 a {
-	color: #000;
+	color: #39C;;
 	text-decoration: none;
+ }
+
+ a:hover {
+ 	color: #069;
+ 	text-decoration: underline;
  }
 
 a img { border: none; }
 
 img { display: block }
-
-footer {
-
-}
 
 ::selection {
 	background: rgba(0, 0, 0, 0.0);

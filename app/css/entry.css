@@ -7,7 +7,7 @@
 .wrapper h2 {
 	font-weight: bold;
 	font-size: 36px;
-	margin: 0px 10px 0px 10px;
+	margin: 0px;
 }
 
 .section-separator {
@@ -37,12 +37,12 @@
 
 .overview-description {
 	font-weight: 200;
+	font-size: 18px;
+	line-height: 22px;
 	color: #222;
 	margin-top: 0px;
-	float: left;
 	margin-right: 350px;
-			font-size: 18px;
-		line-height: 22px;
+	float: left;
 }
 
 .photos-div {
@@ -71,11 +71,21 @@
 }
 
 .map {
-	margin-right: auto;
-	margin-left: auto;
-	width: 400px;
-	height: 400px;
-	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	left: 50%;
+	margin-left: 0px;
+	width: 100%;
+}
+
+@media all and (min-width: 720px) {
+	.map {
+		position: absolute;
+		margin-left: -350px;
+		width: 700px;
+		height: 700px;
+		padding-bottom: 10px;
+	}
 }
 
 @media all and (min-width: 600px) {
