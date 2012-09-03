@@ -49,6 +49,10 @@
 						<td>Elevation gain</td>
 						<td><%= elevation_string @entry.elevation_gain %></td>
 					</tr>
+					<tr>
+						<td>Lat / Lon</td>
+						<td><a href="https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A" target="_blank"><%= @entry.map.latitude %>, <%= @entry.map.longitude %></a<</td>
+					</tr>
 				</table>	
 			</div>
 		</div>
@@ -70,8 +74,17 @@
 	</div>
 
 	<div class="map-div">
-		<h2>Getting there</h2>
-		<img src="http://maps.googleapis.com/maps/api/staticmap?center=48.171352,-116.097336&zoom=10&size=640x640&maptype=terrain&sensor=true&scale=1" class="map"></img>
+		<h2>Map</h2>
+		<div>
+			<div>
+				<a href="https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A" target="_blank">
+					<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-topographic-map.jpg", {:class => "map"} %>
+				</a>
+			</div>
+			<div>
+
+			</div>
+		</div>
 	</div>
 
 	<!-- see http://stackoverflow.com/questions/7826868/fixed-position-navbar-only-clickable-once-in-mobile-safari-on-ios5 -->

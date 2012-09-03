@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#
+# Prefetches a togographic U.S. map from ESRI (http://www.arcgis.com/home/webmap/viewer.html?webmap=4ee3622f0bfd41eea55ffa83aaf31a9f)
+# Ideally I would use their embed API but it's not sufficient for a number of reasons:
+#   - It doesn't behave well on resize (doesn't clip from center)
+#   - Changes zoom level based initial browser size (especially problematic since only zoom level look decent)
+#   - Slow response times
+#
+
+if [ ! $1 ] || 
+   [ ! $2 ]; then
+	echo "usage: get_map <latitude> <longitude>"
+	exit 1
+fi
+
+# These numbers are used to to create the viewport based on given lat / long.
+# Even though we're want a square viewport, we use these special numbers because
+# of the specific projection used on the maps.
+VERTICAL_OFFSET=.0257
+HORIZONTAL_OFFSET=.0472
+
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+phantom_js=$current_dir/lib/phantomjs
+rasterize_js=$current_dir/rasterize.js
+center_latitude=$1
+center_longitude=$2
+
+top=`echo $center_latitude + $VERTICAL_OFFSET | bc`
+left=`echo $center_longitude - $HORIZONTAL_OFFSET | bc`
+bottom=`echo $center_latitude - $VERTICAL_OFFSET | bc`
+right=`echo $center_longitude + $HORIZONTAL_OFFSET | bc`
+
+$phantom_js $rasterize_js "http://www.arcgis.com/home/webmap/embedViewer.html?webmap=4ee3622f0bfd41eea55ffa83aaf31a9f&extent=$left,$bottom,$right,$top" temp.png
+convert -strip -quality 90 temp.png map.jpg
+
+rm temp.png
+
+exit 0
