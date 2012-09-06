@@ -8,45 +8,41 @@ _gaq.push(["_trackPageview"]);
 	ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
 	var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
 
-	var isTouch = function() {
-		return ("ontouchstart" in document);
-	}
-
 	var disableNonTouchFeatures = function() {
-		if (isTouch()) {
+		if (Modernizr.touch) {
     		$("body").removeClass("no-touch");
 		}
 	};
 
 	var isSearchActive = function() {
-		return $(".search-input-div").css("display") != "none"
+		return $(".search-div").css("display") != "none"
 	}
 
 	var toggleSearchBox = function() {
 		if (isSearchActive()) {
-			if (isTouch()) {
-				$(".search-input-div").css("display", "none");
-				$(".search-input").val("");
-				$(".search-input").blur();
+			if (Modernizr.touch) {
+				$(".search-div").css("display", "none");
+				$(".search-div > input").val("");
+				$(".search-div > input").blur();
 			} else {
-				$(".search-input-div").animate({
+				$(".search-div").animate({
 					marginTop: "-55px"
 				}, 100, function() {
-					$(".search-input-div").css("display", "none");
-					$(".search-input").val("");
-					$(".search-input").blur();
+					$(".search-div").css("display", "none");
+					$(".search-div > input").val("");
+					$(".search-div > input").blur();
 				});
 			}
 		} else {
-			$(".search-input-div").css("display", "block");
-			if (isTouch()) {
-				$(".search-input-div").css("margin-top", "0px");
+			$(".search-div").css("display", "block");
+			if (Modernizr.touch) {
+				$(".search-div").css("margin-top", "0px");
 			} else {
-				$(".search-input-div").animate({
+				$(".search-div").animate({
 					marginTop: "0px"
 				}, 100);
 			}
-			$(".search-input").focus();
+			$(".search-div > input").focus();
 		}
 	}
 
@@ -56,7 +52,7 @@ _gaq.push(["_trackPageview"]);
 			return false;
 		});
 
-		$(".search-input").keyup(function(e) {
+		$(".search-div > input").keyup(function(e) {
 			switch (e.keyCode) {
 				case 27: // esc
 				case 13: // return
@@ -68,7 +64,7 @@ _gaq.push(["_trackPageview"]);
 		});
 
 		$("body").click(function(event) {
-			if (isSearchActive() && !$(event.target).closest(".search-input-div").length) {
+			if (isSearchActive() && !$(event.target).closest(".search-div").length) {
 				toggleSearchBox();
 			}
 		});

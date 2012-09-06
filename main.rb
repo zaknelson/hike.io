@@ -2,9 +2,12 @@
 
 require "rubygems"
 require "sinatra"
-require 'sinatra/assetpack'
 require "sinatra/base" 
+require "sinatra/assetpack"
 require "sinatra/content_for"
+require "sinatra/partial"
+require "sass"
+require "compass"
 
 configure :production do
   require "newrelic_rpm"
@@ -44,12 +47,28 @@ end
 
 class HikeApp < Sinatra::Base
 
-	#content_for
+	set :root, File.dirname(__FILE__)
+
+	# sinatra-partial setup
+	register Sinatra::Partial
+	set :partial_template_engine, :erb
+
+	# Sass setup 
+	set :sass, Compass.sass_engine_options
+	set :sass, { :load_paths => sass[:load_paths] + [ "#{HikeApp.root}/app/css" ] }
+	set :scss, sass
+
+	# content_for setup
 	helpers Sinatra::ContentFor
 
-	#assetpack setup
-	set :root, File.dirname(__FILE__)
+	# AssetPack setup
 	register Sinatra::AssetPack
+
+	Compass.configuration do |config|
+		config.project_path = File.dirname(__FILE__)
+		config.sass_dir = "#{HikeApp.root}/app/css" 
+	end
+
 	assets {
 		prebuild true
 
@@ -62,6 +81,9 @@ class HikeApp < Sinatra::Base
 			"/css/*.css",
 			"/css/lib/*.css"
 		]
+
+		js_compression  :jsmin      # Optional
+   		css_compression :sass       # Optional
 	}
 
 	helpers do
@@ -201,7 +223,6 @@ class HikeApp < Sinatra::Base
 		end
 
 		def supports_svg?
-
 			# Naughty, naughty, sniffing the user agent. I'm not happy with any of the polyfills, 
 			# and really would like to use svgs for icons, so it must be done.
 			ua = request.user_agent
@@ -236,10 +257,13 @@ class HikeApp < Sinatra::Base
 
 	get "/:entry_id", :provides => 'html' do
 		@entry = find_entry params[:entry_id]
-		puts  params[:entry_id]
 		pass unless @entry
 		@title = @entry.name
 		erb :entry
+	end
+
+	get "/css/app.css" do
+ 		puts "ASDFASDFASDFADSF"
 	end
 
 	 # start the server if ruby file executed directly

@@ -1,57 +1,21 @@
 <% content_for :header do %>
 	<div class="header-div header-div-photos">
-		<%= render_svg("#{@img_dir}/photos.svg", {:class => "header-div-icon"}) %>
+		<%= render_svg("#{@img_dir}/photos.svg") %>
 		<span class="header-div-text">Photos</span>
 	</div>
 	<div class="header-separator"></div>
 	<div class="header-div header-div-map" >
-		<%= render_svg("#{@img_dir}/map.svg", {:class => "header-div-icon map-header-div-icon"}) %>
-		<span class="header-div-text map-header-div-text">Map</span>
+		<%= render_svg("#{@img_dir}/map.svg", {:class => "map-header-div-icon"}) %>
+		<span class="map-header-div-text">Map</span>
 	</div>
 	<div class="header-separator"></div>
 <% end %>
 
-<div id="index-page"></div>
-<div class="index-wrapper">
-	<div class="preview-box-list">
-		<div id="preview-box-<%= @featured_entry.id %>" class="preview-box featured-box">
-			<%= img "#{@entry_img_dir}/#{@featured_entry.id}/#{@featured_entry.id}-preview-large.jpg", {:class => "preview-box-img"} %>
-				<div class="preview-box-footer">
-					<div class="preview-box-footer-left">
-						<div class="preview-box-title">
-							<%= @featured_entry.name %>
-						</div>
-						<div class="preview-box-location">
-							<%= @featured_entry.location %>
-						</div>
-					</div>
-					<div class="preview-box-footer-right">
-						<div class="preview-box-distance">
-							<%= distance_string @featured_entry.distance %>
-						</div>
-					</div>
-				</div>
-		</div>
-
+<div class="index-page">
+	<div class="preview-list">
+		<%= partial "partials/preview", :locals => { :entry => @featured_entry, :is_featured => true } %>
 		<% for entry in @popular_entry_list %>
-			<div id="preview-box-<%= entry.id %>" class="preview-box">
-				<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-preview.jpg", {:class => "preview-box-img"} %>
-				<div class="preview-box-footer">
-					<div class="preview-box-footer-left">
-						<div class="preview-box-title">
-							<%= entry.name %>
-						</div>
-						<div class="preview-box-location">
-							<%= entry.location %>
-						</div>
-					</div>
-					<div class="preview-box-footer-right">
-						<div class="preview-box-distance">
-							<%= distance_string entry.distance %>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%= partial "partials/preview", :locals => { :entry => entry } %>
 		<% end %>
 	</div>
 	<div class="map-fullscreen"></div>

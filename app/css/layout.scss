@@ -1,3 +1,6 @@
+@import "_globals";
+@import "compass/css3/box-shadow";
+
 body { 
 	margin: 0px;
 	-webkit-font-smoothing: antialiased;
@@ -6,7 +9,7 @@ body {
 }
 
 a {
-	color: #39C;;
+	color: #39c;
 	text-decoration: none;
  }
 
@@ -17,7 +20,7 @@ a {
 
 a img { border: none; }
 
-img { display: block }
+img { display: block; }
 
 ::selection {
 	background: rgba(0, 0, 0, 0.0);
@@ -32,18 +35,13 @@ h1::selection, h2::selection, h3::selection, p::selection {
 	margin-right: auto;
 	margin-left: auto;
 	overflow-x: hidden;
+	width: $container-width;
 }
 
 .shadow-light {
-	box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-	-moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-	-webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+	@include box-shadow(0 1px 3px rgba(34, 25, 25, 0.4));
 }
 
-@media all and (min-width: 1024px) {
-	.main-container { width: 1024px; }
-}
-
-@media all and (max-width: 1024px) {
+@media all and (max-width: $container-width) {
 	.main-container { width: 100%; }
 }

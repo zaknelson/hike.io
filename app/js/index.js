@@ -5,7 +5,7 @@
 	var viewIndex = PHOTOS_INDEX;
 
 	var setupMasonry = function() {
-		$(".preview-box-list").imagesLoaded(function() {
+		$(".preview-list").imagesLoaded(function() {
 			var gutterWidth = 2;
 
 			var one_column_threshold = 450;
@@ -13,9 +13,9 @@
 
 			console.log("Previews loaded.");
 
-			$(".preview-box-list").fadeIn("fast");
-			$(".preview-box-list").masonry({
-				itemSelector: ".preview-box",
+			$(".preview-list").fadeIn("fast");
+			$(".preview-list").masonry({
+				itemSelector: ".preview",
 				gutterWidth: gutterWidth,
 				isAnimated: true,
 				animationOptions: {
@@ -35,7 +35,7 @@
 					} else {
 						box_width = three_column_width;
 					}
-					$(".preview-box img").width(box_width);
+					$(".preview img").width(box_width);
 
 					if (box_width != one_column_width) {
 						$(".featured-box img").width(box_width * 2 + gutterWidth);
@@ -48,8 +48,8 @@
 	};
 
 	var setupPreviewClickHandler = function() {
-		$(".preview-box").click(function(event) {
-			window.location.href = $(event.currentTarget).attr("id").split("preview-box-")[1];
+		$(".preview").click(function(event) {
+			window.location.href = $(event.currentTarget).attr("id").split("preview-")[1];
 		});
 	};
 
@@ -61,7 +61,7 @@
 			viewIndex = MAP_INDEX;
 
 			$(".map-fullscreen").css("display", "block");
-			$(".preview-box-list").css("display", "none");
+			$(".preview-list").css("display", "none");
 			
 			var locations = [new google.maps.LatLng(48.18896, -116.081362),
 							 new google.maps.LatLng(55.94300, -3.161),
@@ -96,7 +96,7 @@
 			viewIndex = PHOTOS_INDEX;
 
 			$(".map-fullscreen").css("display", "none");
-			$(".preview-box-list").css("display", "block");
+			$(".preview-list").css("display", "block");
 		});
 	};
 
@@ -106,7 +106,7 @@
 	};
 
 	$(document).ready(function() {
-		if ($("#index-page").length) {
+		if ($(".index-page").length) {
 			setupMasonry();
 			setupPreviewClickHandler();
 			setupNavigation();

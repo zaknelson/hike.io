@@ -1,0 +1,14 @@
+@import "compass/css3/transition";
+
+.masonry,
+.masonry .masonry-brick {
+	@include transition-duration(0.3s);
+}
+
+.masonry {
+	@include transition-property(height, width);
+}
+
+.masonry .masonry-brick {
+	@include transition-property(left, right, top);
+}

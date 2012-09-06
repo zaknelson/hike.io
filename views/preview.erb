@@ -1,0 +1,27 @@
+<div id="preview-<%= entry.id %>" class="preview">
+	
+	<% if defined? is_featured and is_featured %>
+		<div class="featured-box">
+			<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-preview-large.jpg" %>
+	<% else %>
+		<div>
+			<%= img "#{@entry_img_dir}/#{entry.id}/#{entry.id}-preview.jpg" %>
+	<% end %>
+		
+			<div class="preview-footer">
+				<div>
+					<div class="title">
+						<%= entry.name %>
+					</div>
+					<div class="location">
+						<%= entry.location %>
+					</div>
+				</div>
+				<div>
+					<div class="preview-distance">
+						<%= distance_string entry.distance %>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>

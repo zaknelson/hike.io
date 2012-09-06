@@ -2,7 +2,13 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (2.6.1)
+    chunky_png (1.2.6)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
     eventmachine (0.12.10)
+    fssm (0.2.9)
     jsmin (1.0.1)
     newrelic_rpm (3.4.1)
     rack (1.4.1)
@@ -10,6 +16,7 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
+    sass (3.2.1)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
@@ -26,13 +33,18 @@ GEM
       rack-test
       sinatra (~> 1.3.0)
       tilt (~> 1.3)
+    sinatra-partial (0.3.2)
+      sinatra
     tilt (1.3.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  compass (= 0.12.2)
   newrelic_rpm (= 3.4.1)
+  sass (= 3.2.1)
   sinatra (= 1.3.2)
   sinatra-assetpack (= 0.0.11)
   sinatra-contrib (= 1.3.1)
+  sinatra-partial (= 0.3.2)

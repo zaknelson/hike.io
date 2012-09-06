@@ -57,7 +57,7 @@
 	};
 
 	$(document).ready(function() {
-		if ($("#entry-page").length) {
+		if ($(".entry-page").length) {
 			setupMasonry();
 			setupNaviation();
 			setupFancybox();

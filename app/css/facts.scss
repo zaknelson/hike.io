@@ -1,0 +1,40 @@
+@import "_globals";
+
+$facts-width: 300px;
+$facts-padding: 25px;
+
+.overview-facts {
+	float: right;
+	padding-top: 15px;
+	padding-right: 30px;
+	width: 300px;
+	margin-left: -100%;
+
+	img {
+		width: $facts-width - $facts-padding;
+	}
+
+	div {
+		padding: $facts-padding;
+	}
+
+	table {
+		padding-top: 20px;
+		width: 100%;
+
+		tr td:first-child {
+			font-weight: bold;
+		}
+
+		tr td:nth-child(2) {
+			font-weight: 200;
+		}
+	}
+}
+
+@media all and (max-width: $mobile-width) {
+	.overview-facts {
+		float: none;
+		margin: 0px auto;
+	}
+}

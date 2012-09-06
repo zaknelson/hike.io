@@ -1,0 +1,15 @@
+@import "_globals";
+@import "compass/css3/border-radius";
+
+.search-div {
+	display: none;
+	margin-top: -$header-height;
+	background-color: #fff;
+	padding: 13px 9px 9px 9px;
+	@include border-radius(0px 0px 0px 5px);
+
+	input {
+		height: 22px;
+		font-size: 16px;
+	}
+}
