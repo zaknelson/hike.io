@@ -5,58 +5,30 @@
 	</div>
 	<div class="header-separator"></div>
 	<div class="header-div header-div-map" >
-		<%= render_svg("#{@img_dir}/map.svg", {:class => "map-header-div-icon"}) %>
-		<span class="map-header-div-text">Map</span>
+		<%= render_svg("#{@img_dir}/map.svg") %>
+		<span>Map</span>
 	</div>
 	<div class="header-separator"></div>
 <% end %>
 
-<div class="entry-page">
-	<div>
-		<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "photo-landscape shadow-light"} %>
-		<div class="header-landscape-div-footer">
-			<h1 class="header-landscape-title"><%= @entry.name %></h1>
+<article class="entry-page">
+	<div class="header-landscape">
+		<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "shadow-light"} %>
+		<div>
+			<h1><%= @entry.name %></h1>
 		</div>
 	</div>
-	<div class="wrapper">
-		<div class="overview-div">
+	<div class="content">
+		<section class="overview-section">
 			<div class="overview-description">
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
 				<p>Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.</p>
 				<p>Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>
 			</div>
-			<div class="overview-facts">
-				<div class="page-curl">
-					<% for picture in @entry.pictures %>
-						<%= img "#{@entry_img_dir}/#{@entry.id}/#{picture.id}-thumb.jpg"%>
-						<% break %>
-					<% end %>
-					<table>
-						<tr>
-							<td>Hike</td>
-							<td><%= @entry.name %></td>
-						</tr>
-						<tr>
-							<td>Location</td>
-							<td><%= @entry.location %></td>
-						</tr>
-						<tr>
-							<td>Distance</td>
-							<td><%= distance_string @entry.distance %></td>
-						</tr>
-						<tr>
-							<td>Elevation gain</td>
-							<td><%= elevation_string @entry.elevation_gain %></td>
-						</tr>
-						<tr>
-							<td>Lat / Lon</td>
-							<td><a href="https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A" target="_blank"><%= @entry.map.latitude %>, <%= @entry.map.longitude %></a<</td>
-						</tr>
-					</table>	
-				</div>
-			</div>
-		</div>
-		<div class="photos-div">
+			<%= partial("partials/facts", :locals => { :entry => @entry })%>
+		</section>
+
+		<section class="photos-section">
 			<h2>Photos</h2>
 			<div class="photo-thumb-list">
 				<% for picture in @entry.pictures %>
@@ -67,24 +39,19 @@
 					</a>
 				<% end %>
 			</div>
-		</div>
+		</section>
 
-		<div class="map-div">
+		<section class="map-section">
 			<h2>Map</h2>
 			<div>
-				<div>
-					<a href="https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A" target="_blank">
-						<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-topographic-map.jpg", {:class => "map"} %>
-					</a>
-				</div>
-				<div>
-
-				</div>
+				<a href="https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A" target="_blank">
+					<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-topographic-map.jpg", {:class => "map"} %>
+				</a>
 			</div>
-		</div>
+		</section>
 
 		<!-- see http://stackoverflow.com/questions/7826868/fixed-position-navbar-only-clickable-once-in-mobile-safari-on-ios5 -->
 		<div class="scroll-to-hack-div">
 		</div>
 	</div>
-</div>
+</article>
