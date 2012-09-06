@@ -1,20 +1,18 @@
 @import "_globals";
 
-$facts-width: 300px;
 $facts-padding: 25px;
 
 .overview-facts {
 	float: right;
-	padding-top: 15px;
-	padding-right: 30px;
-	width: 300px;
+	width: $facts-width;
 	margin-left: -100%;
+	margin-right: $facts-padding + 10;
 
 	img {
 		width: $facts-width - $facts-padding;
 	}
 
-	div {
+	> div {
 		padding: $facts-padding;
 	}
 

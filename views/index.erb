@@ -1,22 +1,22 @@
 <% content_for :header do %>
 	<div class="header-div header-div-photos">
 		<%= render_svg("#{@img_dir}/photos.svg") %>
-		<span class="header-div-text">Photos</span>
+		<span>Photos</span>
 	</div>
 	<div class="header-separator"></div>
 	<div class="header-div header-div-map" >
 		<%= render_svg("#{@img_dir}/map.svg", {:class => "map-header-div-icon"}) %>
-		<span class="map-header-div-text">Map</span>
+		<span>Map</span>
 	</div>
 	<div class="header-separator"></div>
 <% end %>
 
-<div class="index-page">
+<article class="index-page">
 	<div class="preview-list">
-		<%= partial "partials/preview", :locals => { :entry => @featured_entry, :is_featured => true } %>
+		<%= partial("partials/preview", :locals => { :entry => @featured_entry, :is_featured => true })%>
 		<% for entry in @popular_entry_list %>
-			<%= partial "partials/preview", :locals => { :entry => entry } %>
+			<%= partial("partials/preview", :locals => { :entry => entry })%>
 		<% end %>
 	</div>
 	<div class="map-fullscreen"></div>
-</div>
+</article>
