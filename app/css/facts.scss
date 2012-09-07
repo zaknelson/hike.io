@@ -5,11 +5,15 @@ $facts-padding: 25px;
 .overview-facts {
 	float: right;
 	width: $facts-width;
-	margin-left: -100%;
-	margin-right: $facts-padding + 10;
+	font-weight: 200;
+	font-size: 16px;
+	line-height: 24px;
+	color: #222;
+	margin: 0px 25px 20px 20px;
+	display: inline;
 
 	img {
-		width: $facts-width - $facts-padding;
+		width: $facts-width - $facts-padding * 2;
 	}
 
 	> div {
@@ -30,9 +34,9 @@ $facts-padding: 25px;
 	}
 }
 
+
 @media all and (max-width: $mobile-width) {
 	.overview-facts {
-		float: none;
-		margin: 0px auto;
+		display: inline;
 	}
 }

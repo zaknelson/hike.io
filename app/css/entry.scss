@@ -1,6 +1,10 @@
 @import "_globals";
 @import "compass/css3/box-sizing";
 
+$map-dimensions: 700px;
+$section-padding: 20px;
+$section-padding-mobile: 10px;
+
 .entry-page {
 
 	.header-landscape {
@@ -18,7 +22,7 @@
 		}
 
 		h1 {
-			font-weight: 600;
+			font-weight: bold;
 			color: #fff;
 			margin: 0px;
 			padding-top: 3px;
@@ -40,7 +44,7 @@
 	}
 
 	.content {
-		padding: 0px 20px;
+		padding: 0px $section-padding;
 		color: #333;
 
 		h2 {
@@ -50,79 +54,78 @@
 		}
 
 		section {
-			margin: 20px 0px;
+			margin: $section-padding 0px;
 			overflow: auto; 
-		}
-
-		.overview-section {
-
-			.overview-description {
-				font-weight: 200;
-				font-size: 18px;
-				line-height: 22px;
-				color: #222;
-				margin-right: $facts-width + 50;
-				float: left;
-
-				p {
-					margin-top: 0px;
-				}
-			}
-
-			@media all and (max-width: $mobile-width) {
-				.overview-description {
-					margin-right: 0px;
-					font-size: 16px;
-					line-height: 20px;
-				}
-			}
-		}
-
-		.photos-section {
-
-			.photo-thumb-list {
-				overflow-x: hidden;
-				overflow-y: hidden;
-				display: none;
-
-				.photo-thumb {
-					margin-bottom: 10px;
-
-					img {
-						max-width: 100%;
-					}
-				}
-			}
-		}
-
-		.map-section {
-
-			.map {
-				left: 50%;
-				margin-left: 0px;
-				width: 100%;
-			}
 		}
 	}
 
 	@media all and (max-width: $mobile-width) {
 		.content {
-			padding: 0px 10px;
+			padding: 0px $section-padding-mobile;
 		}
 	}
 
+	.overview-section {
+
+		.overview-description {
+			font-weight: 200;
+			font-size: 18px;
+			line-height: 24px;
+			color: #222;
+			float: left;
+
+			p {
+				margin-top: 0px;
+			}
+		}
+
+		@media all and (max-width: $mobile-width) {
+			.overview-description {
+				margin-right: 0px;
+				font-size: 16px;
+				line-height: 20px;
+			}
+		}
+	}
+
+	.photos-section {
+
+		.photo-thumb-list {
+			overflow-x: hidden;
+			overflow-y: hidden;
+			display: none;
+
+			.photo-thumb {
+				margin-bottom: 10px;
+
+				img {
+					max-width: 100%;
+				}
+			}
+		}
+	}
+
+	.map-section {
+
+		.map {
+			left: 50%;
+			margin-left: 0px;
+			width: 100%;
+		}
+
+		@media all and (min-width: $map-dimensions + 2 * $section-padding) {
+			.map {
+				position: absolute;
+				margin-left: - $map-dimensions / 2;
+				width: $map-dimensions;
+				height: $map-dimensions;
+			}
+		}
+	}
 }
 
 
 
-	@media all and (min-width: 720px) {
-		.map {
-			position: absolute;
-			margin-left: -350px;
-			width: 700px;
-			height: 700px;
-			padding-bottom: 10px;
-		}
-	}
+
 
 
