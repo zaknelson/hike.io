@@ -189,7 +189,8 @@ class HikeApp < Sinatra::Base
 
 		def elevation_string elevation
 			feet = (elevation * 3.28084).round(0)
-			"#{feet} ft."
+			sign = "+" unless (feet < 0)
+			"#{sign}#{feet} ft."
 		end
 
 		# Assumes the svg file has already passed through the process_svg script
