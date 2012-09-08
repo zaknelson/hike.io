@@ -1,15 +1,13 @@
 @import "_globals";
 
 $facts-padding: 25px;
+$facts-mobile-width: 550px;
 
 .overview-facts {
 	float: right;
 	width: $facts-width;
-	font-weight: 200;
-	font-size: 16px;
-	line-height: 24px;
-	color: #222;
-	margin: 0px 25px 20px 20px;
+	margin: 0px 25px 0px 20px;
+
 	display: inline;
 
 	img {
@@ -22,7 +20,11 @@ $facts-padding: 25px;
 
 	table {
 		padding-top: 20px;
-		width: 100%;
+		font-weight: 200;
+		font-size: 16px;
+		line-height: 24px;
+		color: #222;
+
 
 		tr td:first-child {
 			font-weight: bold;
@@ -30,13 +32,49 @@ $facts-padding: 25px;
 
 		tr td:nth-child(2) {
 			font-weight: 200;
+			padding-left: 15px;
 		}
 	}
 }
 
 
-@media all and (max-width: $mobile-width) {
+@media all and (max-width: $facts-mobile-width) {
+
 	.overview-facts {
-		display: inline;
+		width: 100%;
+		margin: 0px;
+
+		img {
+			width: 100px;
+			float: left;
+			margin-right: 10px;
+
+		}
+
+		> div {
+			padding: 10px;
+			width: 350px;
+			max-width: $facts-width;
+			position: relative;
+
+			left: 50%;
+			margin-left: -175px;
+			margin-right: 10px;
+		}
+
+		table {
+			font-size: 14px;
+			line-height: 16px;
+			padding-top: 10px;
+
+
+			tr:first-child {
+				display:none;
+			}
+
+			tr td:nth-child(2) {
+				padding-left: 5px;
+			}
+		}
 	}
 }
