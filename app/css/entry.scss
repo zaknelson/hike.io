@@ -1,7 +1,8 @@
 @import "_vars";
+@import "_mixins";
 @import "compass/css3/box-sizing";
 
-$map-dimensions: 700px;
+$map-dimensions: 800px;
 $section-padding: 20px;
 $section-padding-mobile: 10px;
 $header-landscape-footer-height: 55px;
@@ -109,17 +110,12 @@ $header-landscape-footer-height-mobile: 40px;
 	.map-section {
 
 		.map {
-			left: 50%;
-			margin-left: 0px;
-			width: 100%;
+			@include center-percentage(100%);
 		}
 
 		@media all and (min-width: $map-dimensions + 2 * $section-padding) {
 			.map {
-				position: absolute;
-				margin-left: - $map-dimensions / 2;
-				width: $map-dimensions;
-				height: $map-dimensions;
+				@include center-relative($map-dimensions);
 			}
 		}
 	}
