@@ -9,9 +9,7 @@ $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 
 .entry-page {
-
 	.header-landscape {
-
 		img {
 			width: 100%;
 		}
@@ -68,7 +66,6 @@ $header-landscape-footer-height-mobile: 40px;
 	}
 
 	.overview-section {
-
 		.overview-description {
 			font-weight: 200;
 			font-size: 18px;
@@ -91,7 +88,6 @@ $header-landscape-footer-height-mobile: 40px;
 	}
 
 	.photos-section {
-
 		.photo-thumb-list {
 			overflow-x: hidden;
 			overflow-y: hidden;
@@ -108,7 +104,6 @@ $header-landscape-footer-height-mobile: 40px;
 	}
 
 	.map-section {
-
 		.map {
 			@include center-percentage(100%);
 		}
@@ -120,9 +115,3 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 	}
 }
-
-
-
-
-
-
