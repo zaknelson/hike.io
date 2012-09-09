@@ -8,16 +8,15 @@
 			if (Modernizr.touch) {
 				$(".search-div").css("display", "none");
 				$(".search-div > input").val("");
-				$(".search-div > input").blur();
 			} else {
 				$(".search-div").animate({
 					marginTop: "-55px"
 				}, 100, function() {
 					$(".search-div").css("display", "none");
 					$(".search-div > input").val("");
-					$(".search-div > input").blur();
 				});
 			}
+			$(".search-div > input").blur();
 		} else {
 			$(".search-div").css("display", "block");
 			if (Modernizr.touch) {
