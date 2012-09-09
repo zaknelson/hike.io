@@ -10,7 +10,7 @@
 				$(".search-div > input").val("");
 			} else {
 				$(".search-div").animate({
-					marginTop: "-55px"
+					marginTop: -$("header").height()
 				}, 100, function() {
 					$(".search-div").css("display", "none");
 					$(".search-div > input").val("");
