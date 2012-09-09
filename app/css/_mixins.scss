@@ -5,8 +5,8 @@
 
 @mixin center-relative($width) {
 	position: relative;
-	left: 50%;
 	margin-left: - $width / 2;
+	width: $width;
 }
 
 @mixin center-percentage($pencentage) {
