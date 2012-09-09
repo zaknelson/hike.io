@@ -28,12 +28,13 @@ class Entry
 end
 
 class Map
-	attr_accessor :zoom_level, :longitude, :latitude
+	attr_accessor :longitude, :latitude, :href
 
 	def initialize options
 		@zoom_level = options[:zoom_level]
 		@longitude = options[:longitude]
 		@latitude = options[:latitude]
+		@href = options[:href]
 	end
 end
 
@@ -105,7 +106,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		def map
-			Map.new({:zoom_level => 8, :latitude => 47.315, :longitude => -121.730})
+			Map.new({:latitude => 48.177534, :longitude => -116.089783, :href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"})
 		end
 
 		def all_entries
