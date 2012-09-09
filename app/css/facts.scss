@@ -1,4 +1,5 @@
-@import "_globals";
+@import "_vars";
+@import "_mixins";
 
 $facts-padding: 25px;
 $facts-mobile-width: 550px;
@@ -53,20 +54,14 @@ $facts-mobile-width: 550px;
 
 		> div {
 			padding: 10px;
-			width: 350px;
-			max-width: $facts-width;
-			position: relative;
-
-			left: 50%;
-			margin-left: -175px;
-			margin-right: 10px;
+			width: $facts-width;
+			@include center-relative($facts-width + 25px);
 		}
 
 		table {
 			font-size: 14px;
 			line-height: 16px;
 			padding-top: 10px;
-
 
 			tr:first-child {
 				display:none;

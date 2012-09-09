@@ -1,9 +1,11 @@
-@import "_globals";
+@import "_vars";
 @import "compass/css3/box-sizing";
 
 $map-dimensions: 700px;
 $section-padding: 20px;
 $section-padding-mobile: 10px;
+$header-landscape-footer-height: 55px;
+$header-landscape-footer-height-mobile: 40px;
 
 .entry-page {
 
@@ -17,8 +19,8 @@ $section-padding-mobile: 10px;
 			padding-left: 10px;
 			position: relative;
 			background-color:rgba(0, 0, 0, 0.5);
-			margin-top: -55px;
-			height: 55px;
+			margin-top: - $header-landscape-footer-height;
+			height: $header-landscape-footer-height;
 		}
 
 		h1 {
@@ -26,19 +28,19 @@ $section-padding-mobile: 10px;
 			color: #fff;
 			margin: 0px;
 			padding-top: 3px;
-			font-size: 40px;
-			line-height: 55px;	
+			font-size: $header-landscape-footer-height - 10;
+			line-height: $header-landscape-footer-height;	
 		}
 
 		@media all and (max-width: $mobile-width) {
 			div {
-				margin-top: -40px;
-				height: 40px;		
+				margin-top: - $header-landscape-footer-height-mobile;
+				height: $header-landscape-footer-height-mobile;		
 			}
 
 			h1 {
-				font-size: 35px;
-				line-height: 40px;
+				font-size: $header-landscape-footer-height-mobile - 5;
+				line-height: $header-landscape-footer-height-mobile;
 			}
 		}
 	}
@@ -55,7 +57,6 @@ $section-padding-mobile: 10px;
 
 		section {
 			margin: $section-padding 0px;
-			overflow: auto; 
 		}
 	}
 

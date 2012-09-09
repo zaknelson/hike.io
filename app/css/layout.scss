@@ -1,4 +1,5 @@
-@import "_globals";
+@import "_vars";
+@import "_mixins";
 @import "compass/css3/box-shadow";
 
 body { 
@@ -6,6 +7,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	background-image: url(/images/background.png);
 	font-family: "facitweb", sans-serif;
+	min-width: 300px;
 }
 
 a {
@@ -32,10 +34,9 @@ h1::selection, h2::selection, h3::selection, p::selection {
 }
 
 .main-container {
-	margin-right: auto;
-	margin-left: auto;
 	overflow-x: hidden;
 	width: $container-width;
+	@include center();
 }
 
 .shadow-light {

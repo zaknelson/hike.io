@@ -1,0 +1,11 @@
+@mixin center() {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@mixin center-relative($width) {
+	position: relative;
+	left: 50%;
+	margin-left: - $width / 2;
+}
+
