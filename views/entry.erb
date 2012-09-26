@@ -13,7 +13,7 @@
 
 <article class="entry-page">
 	<div class="header-landscape">
-		<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-landscape.jpg", {:class => "shadow-light"} %>
+		<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-landscape.jpg", {:class => "shadow-light"} %>
 		<div>
 			<h1><%= @entry.name %></h1>
 		</div>
@@ -35,10 +35,10 @@
 		<section class="photos-section">
 			<h2>Photos</h2>
 			<div class="photo-thumb-list">
-				<% for picture in @entry.pictures %>
-					<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.id}/#{picture.id}.jpg" %>">
+				<% for picture in @entry.photos %>
+					<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.string_id}/#{picture.id}.jpg" %>">
 						<div class="photo-thumb shadow-light">
-							<%= img "#{@entry_img_dir}/#{@entry.id}/#{picture.id}-thumb.jpg" %>
+							<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}-thumb.jpg" %>
 						</div>
 					</a>
 				<% end %>
@@ -48,8 +48,8 @@
 		<section class="map-section">
 			<h2>Map</h2>
 			<div>
-				<a href="<%= @entry.map.href %>" target="_blank">
-					<%= img "#{@entry_img_dir}/#{@entry.id}/#{@entry.id}-topographic-map.jpg", {:class => "map"} %>
+				<a href="<%= @entry.locations.first.map_href %>" target="_blank">
+					<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-topographic-map.jpg", {:class => "map"} %>
 				</a>
 			</div>
 		</section>

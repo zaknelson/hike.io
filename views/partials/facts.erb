@@ -1,7 +1,8 @@
 <div class="overview-facts">
 	<div class="page-curl">
-		<% for picture in entry.pictures %>
-			<%= img "#{@entry_img_dir}/#{entry.id}/#{picture.id}-thumb.jpg", {:class => "shadow-light"} %>
+
+		<% for picture in entry.photos #TODO use proper "facts" photo rather than just the first thumb %>
+			<%= img "#{@entry_img_dir}/#{entry.string_id}/#{picture.path}-thumb.jpg", {:class => "shadow-light"} %>
 			<% break %>
 		<% end %>
 		<table>
@@ -11,7 +12,7 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td><%= entry.location %></td>
+				<td><%= entry.locations.first.name %></td>
 			</tr>
 			<tr>
 				<td>Distance</td>
@@ -24,7 +25,7 @@
 			<tr>
 				<td>Lat / Lon</td>
 				<td>
-					<a href="<%= entry.map.href %>" target="_blank"><%= "%0.3f" % entry.map.latitude %>, <%= "%0.3f" % entry.map.longitude %></a>
+					<a href="<%= entry.locations.first.map_href %>" target="_blank"><%= "%0.3f" % entry.locations.first.latitude %>, <%= "%0.3f" % entry.locations.first.longitude %></a>
 				</td>
 			</tr>
 		</table>

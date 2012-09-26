@@ -1,49 +1,22 @@
 #! /usr/bin/ruby
 
 require "rubygems"
+require "compass"
+require "sass"
 require "sinatra"
 require "sinatra/base" 
 require "sinatra/assetpack"
 require "sinatra/content_for"
 require "sinatra/partial"
-require "sass"
-require "compass"
 
 configure :production do
-  require "newrelic_rpm"
+	require "newrelic_rpm"
 end
 
-class Entry
-	attr_accessor :id, :name, :location, :distance, :elevation_gain, :pictures, :map
+require_relative "server/model/database"
 
-	def initialize options
-		@id = options[:id]
-		@location = options[:location]
-		@distance = options[:distance]
-		@elevation_gain = options[:elevation_gain]
-		@name = options[:name]
-		@pictures = options[:pictures]
-		@map = options[:map]
-	end
-end
-
-class Map
-	attr_accessor :longitude, :latitude, :href
-
-	def initialize options
-		@zoom_level = options[:zoom_level]
-		@longitude = options[:longitude]
-		@latitude = options[:latitude]
-		@href = options[:href]
-	end
-end
-
-class Picture
-	attr_accessor :id
-
-	def initialize options
-		@id = options[:id]
-	end
+configure :development do
+	require "server/model/seeds"
 end
 
 class HikeApp < Sinatra::Base
@@ -83,8 +56,8 @@ class HikeApp < Sinatra::Base
 			"/css/lib/*.css"
 		]
 
-		js_compression  :jsmin      # Optional
-   		css_compression :sass       # Optional
+		js_compression  :jsmin
+   		css_compression :sass
 	}
 
 	helpers do
@@ -178,7 +151,7 @@ class HikeApp < Sinatra::Base
 
 		def find_entry id
 			all_entries.select { |entry|
-				entry.id == id
+				entry[:string_id] == id
 			}[0]
 		end
 
@@ -252,20 +225,16 @@ class HikeApp < Sinatra::Base
 
 	get "/" do
 		@title = "hike.io - Beautiful Hikes"
-		@featured_entry = featured_entry
-		@popular_entry_list = popular_list
+		@featured_entry = Entry.first
+		@entries = Entry.where(:id => @featured_entry.id).invert
 		erb :index
 	end
 
 	get "/:entry_id", :provides => 'html' do
-		@entry = find_entry params[:entry_id]
+		@entry = Entry[:string_id => params[:entry_id]]
 		pass unless @entry
 		@title = @entry.name
 		erb :entry
-	end
-
-	get "/css/app.css" do
- 		puts "ASDFASDFASDFADSF"
 	end
 
 	 # start the server if ruby file executed directly
