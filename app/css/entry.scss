@@ -66,6 +66,8 @@ $header-landscape-footer-height-mobile: 40px;
 	}
 
 	.overview-section {
+		overflow: auto;
+
 		.overview-description {
 			font-weight: 200;
 			font-size: 18px;

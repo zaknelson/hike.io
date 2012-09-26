@@ -32,15 +32,18 @@
 	var setupNaviationFor = function(navigationDiv, contentDiv) {
 		navigationDiv.click(function() {
 			$(".scroll-to-hack-div").height(1);
-			$("body").scrollTo(contentDiv, 700, {"axis":"y", "offset":-60, "onAfter": function() {
-				$(".scroll-to-hack-div").height(0);
-			}});
+			var offset = contentDiv.offset();
+			$("html, body").animate({
+				scrollTop: offset.top - parseInt(contentDiv.css("margin-top")),
+				scrollLeft: offset.left
+			});
+
 		});
 	};
 
 	var setupNaviation = function() {
-		setupNaviationFor($(".header-div-photos"), $(".photos-div"));
-		setupNaviationFor($(".header-div-map"), $(".map-div"));
+		setupNaviationFor($(".header-div-photos"), $(".photos-section"));
+		setupNaviationFor($(".header-div-map"), $(".map-section"));
 	};
 
 	var setupFancybox = function() {
