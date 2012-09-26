@@ -9,14 +9,15 @@ require "sinatra/assetpack"
 require "sinatra/content_for"
 require "sinatra/partial"
 
+require_relative "server/model/database"
+require_relative "server/view/localize"
+
 configure :production do
 	require "newrelic_rpm"
 end
 
-require_relative "server/model/database"
-
 configure :development do
-	require "server/model/seeds"
+	require_relative "server/model/seeds"
 end
 
 class HikeApp < Sinatra::Base
@@ -64,107 +65,6 @@ class HikeApp < Sinatra::Base
 
 		def root
 			File.dirname(__FILE__)
-		end
-		
-		def pictures
-			[Picture.new({:id => "scotchmans-peak-trees"}),
-			 Picture.new({:id => "scotchmans-peak-mountain-goat"}),
-			 Picture.new({:id => "scotchmans-peak-wildflower"}),
-			 Picture.new({:id => "scotchmans-peak-meadow"}),
-			 Picture.new({:id => "scotchmans-peak-pend-orielle"}),
-			 Picture.new({:id => "scotchmans-peak-zak"}),
-			 Picture.new({:id => "scotchmans-peak-mountain-goat-cliff"}),
-			 Picture.new({:id => "scotchmans-peak-hikers"}),
-			 Picture.new({:id => "scotchmans-peak-dead-tree"})]
-		end
-
-		def map
-			Map.new({:latitude => 48.177534, :longitude => -116.089783, :href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"})
-		end
-
-		def all_entries
-			[Entry.new({
-				:id => "scotchmans-peak", 
-				:name => "Scotchman's Peak",
-				:location => "North Idaho, USA", 
-				:distance => 10,
-				:elevation_gain => 1000,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({
-				:id => "king-arthurs-seat", 
-				:name => "King Arthur's Seat", 
-				:location => "Edinburgh, Scotland", 
-				:distance => 3,
-				:elevation_gain => 1000,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({
-				:id => "north-kaibab-trail", 
-				:name => "North Kaibab Trail", 
-				:location => "Grand Canyon, USA", 
-				:distance => 15,
-				:elevation_gain => 1000,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({
-				:id => "lake-22", 
-				:name => "Lake 22", 
-				:location => "Washington, USA", 
-				:distance => 18,
-				:elevation_gain => 2500,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({
-				:id => "pikes-peak", 
-				:name => "Pike's Peak", 
-				:location => "Colorado, USA", 
-				:distance => 30,
-				:elevation_gain => 3000,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({
-				:id => "snoqualmie-middle-fork", 
-				:name => "Snoqualmie Middle Fork", 
-				:location => "Washington, USA", 
-				:distance => 11,
-				:elevation_gain => 4352,
-				:pictures => pictures, 
-				:map => map}),
-			Entry.new({:id => "mt-kilamanjaro", 
-				:location => "North Idaho, USA", 
-				:name => "Mt. Kilamanjaro", 
-				:location => "Tanzania", 
-				:distance => 50,
-				:elevation_gain => 1000,
-				:pictures => pictures, 
-				:map => map})]
-		end
-
-		def featured_entry 
-			all_entries[0];
-		end
-
-		def popular_list
-			all_entries[1..-1]
-		end
-
-		def find_entry id
-			all_entries.select { |entry|
-				entry[:string_id] == id
-			}[0]
-		end
-
-		def distance_string distance
-			# Distance is in km (that's right).
-			miles = (distance * 0.621371).round(1)
-			"#{miles} mi."
-		end
-
-		def elevation_string elevation
-			feet = (elevation * 3.28084).round(0)
-			sign = "+" unless (feet < 0)
-			"#{sign}#{feet} ft."
 		end
 
 		# Assumes the svg file has already passed through the process_svg script
