@@ -9,8 +9,8 @@
 	width: $width;
 }
 
-@mixin center-percentage($pencentage) {
-	left: $pencentage / 2;
+@mixin center-percentage($percentage) {
+	left: $percentage / 2;
 	margin-left: 0px;
-	width: $pencentage;
+	width: $percentage;
 }
