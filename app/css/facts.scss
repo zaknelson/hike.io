@@ -49,7 +49,11 @@ $facts-mobile-width: 575px;
 		> div {
 			padding: 10px;
 			width: $facts-width;
-			@include center-relative($facts-width + 20px);
+			max-width: $facts-width;
+			position: relative;
+
+			left: 50%;
+			margin-left: -$facts-width / 2 - 10px;
 		}
 
 		table {
