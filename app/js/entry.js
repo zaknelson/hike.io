@@ -34,8 +34,7 @@
 			$(".scroll-to-hack-div").height(1);
 			var offset = contentDiv.offset();
 			$("html, body").animate({
-				scrollTop: offset.top - parseInt(contentDiv.css("margin-top")),
-				scrollLeft: offset.left
+				scrollTop: offset.top - parseInt(contentDiv.css("margin-top"))
 			});
 
 		});
