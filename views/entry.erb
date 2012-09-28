@@ -36,7 +36,7 @@
 			<h2>Photos</h2>
 			<div class="photo-thumb-list">
 				<% for picture in @entry.photos %>
-					<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.string_id}/#{picture.id}.jpg" %>">
+					<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}.jpg" %>">
 						<div class="photo-thumb shadow-light">
 							<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}-thumb.jpg" %>
 						</div>
