@@ -137,7 +137,7 @@ class HikeApp < Sinatra::Base
 		@featured_entry = Entry.first if page == 1
 
 		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 3)
+		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 4)
 		erb :index
 	end
 
