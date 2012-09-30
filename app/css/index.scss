@@ -15,12 +15,16 @@ $preview-subtext-font-size: 13px;
 
 	.preview {
 		margin-bottom: 2px;
+
+		img {
+			width: 100%;
+		}
 	}
 
 	.preview-footer {
+		height: 31px;
 		padding: 10px;
 		margin-top: -51px;
-		height: 31px;
 		position: relative;
 		background-color:rgba(0, 0, 0, 0.6);
 
@@ -38,7 +42,7 @@ $preview-subtext-font-size: 13px;
 		line-height: $preview-titletext-font-size;
 		font-weight: bold;
 		padding-bottom: 4px;
-		color: #fff;
+		color: #fff;	
 	}
 
 	.preview-location {

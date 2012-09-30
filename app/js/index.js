@@ -35,10 +35,10 @@
 					} else {
 						box_width = three_column_width;
 					}
-					$(".preview img").width(box_width);
+					$(".preview > div").width(box_width);
 
 					if (box_width != one_column_width) {
-						$(".featured-box img").width(box_width * 2 + gutterWidth);
+						$(".featured-box").width(box_width * 2 + gutterWidth);
 					}
 					
 					return box_width;
