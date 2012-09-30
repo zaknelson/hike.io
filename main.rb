@@ -1,6 +1,7 @@
 #! /usr/bin/ruby
 
 require "rubygems"
+
 require "compass"
 require "sass"
 require "sinatra"
@@ -8,6 +9,8 @@ require "sinatra/base"
 require "sinatra/assetpack"
 require "sinatra/content_for"
 require "sinatra/partial"
+require "will_paginate"
+require "will_paginate/sequel"
 
 require_relative "server/model/database"
 require_relative "server/view/localize"
@@ -24,6 +27,9 @@ class HikeApp < Sinatra::Base
 
 	set :root, File.dirname(__FILE__)
 
+	# will_paginate setup
+	register WillPaginate::Sinatra
+
 	# sinatra-partial setup
 	register Sinatra::Partial
 	set :partial_template_engine, :erb
@@ -39,6 +45,7 @@ class HikeApp < Sinatra::Base
 	# AssetPack setup
 	register Sinatra::AssetPack
 
+	# Compass setup
 	Compass.configuration do |config|
 		config.project_path = File.dirname(__FILE__)
 		config.sass_dir = "#{HikeApp.root}/app/css" 
@@ -123,11 +130,24 @@ class HikeApp < Sinatra::Base
 		@img_dir = "/images"
 	end
 
-	get "/" do
+	def request_index
+		page = params[:page] ? Integer(params[:page]) : 1
+
 		@title = "hike.io - Beautiful Hikes"
-		@featured_entry = Entry.first
-		@entries = Entry.where(:id => @featured_entry.id).invert
+		@featured_entry = Entry.first if page == 1
+
+		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
+		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 3)
 		erb :index
+	end
+
+	get "/", :provides => 'html' do
+		request_index
+	end
+
+	# need to support post due to infinite scrolling bug, see https://github.com/paulirish/infinite-scroll/issues/215
+	post "/", :provides => 'html' do
+		request_index
 	end
 
 	get "/:entry_id", :provides => 'html' do

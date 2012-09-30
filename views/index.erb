@@ -13,10 +13,15 @@
 
 <article class="index-page">
 	<div class="preview-list">
-		<%= partial("partials/preview", :locals => { :entry => @featured_entry, :is_featured => true })%>
+		<% if @featured_entry %>
+			<%= partial("partials/preview", :locals => { :entry => @featured_entry, :is_featured => true })%>
+		<% end %>
 		<% for entry in @entries %>
 			<%= partial("partials/preview", :locals => { :entry => entry })%>
 		<% end %>
+	</div>
+	<div class="pagination-links">
+		<%= will_paginate @entries %>
 	</div>
 	<div class="map-fullscreen"></div>
 </article>
