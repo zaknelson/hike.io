@@ -11,6 +11,5 @@
 
 @mixin center-percentage($percentage) {
 	left: $percentage / 2;
-	margin-left: 0px;
 	width: $percentage;
 }
