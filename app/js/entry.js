@@ -10,12 +10,7 @@
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
 				gutterWidth: gutterWidth,
-				isAnimated: true,
-				animationOptions: {
-					duration: 3,
-					easing: "linear",
-					queue: false
-				},
+				isAnimated: false,
 				columnWidth: function(containerWidth) {
 					if (Math.floor((containerWidth - gutterWidth) / 2) <= imageWidth) {
 						box_width = Math.floor((containerWidth - gutterWidth) / 2);

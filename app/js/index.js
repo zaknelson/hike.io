@@ -17,12 +17,7 @@
 			$(".preview-list").masonry({
 				itemSelector: ".preview",
 				gutterWidth: gutterWidth,
-				isAnimated: true,
-				animationOptions: {
-					duration: 0,
-					easing: "linear",
-					queue: false
-				},
+				isAnimated: false,
 				columnWidth: function(containerWidth) {
 					var one_column_width = containerWidth;
 					var two_column_width = Math.floor((containerWidth - gutterWidth) / 2);
