@@ -27,6 +27,8 @@ $preview-subtext-font-size: 13px;
 		margin-top: -51px;
 		position: relative;
 		background-color:rgba(0, 0, 0, 0.6);
+		white-space: nowrap;
+		overflow: hidden;
 
 		> div:first-child {
 			float: left;
