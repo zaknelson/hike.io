@@ -30,7 +30,7 @@
 		}
 	}
 
-	var setupSearch = function() {
+	var initSearch = function() {
 		$(".header-div-search").click(function(event) {
 			toggleSearchBox();
 			return false;
@@ -55,7 +55,7 @@
 	}
 
 	$(document).ready(function() {
-		setupSearch();
+		initSearch();
 	});
 }
 )();

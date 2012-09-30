@@ -4,7 +4,7 @@
 	var MAP_INDEX = 1;
 	var viewIndex = PHOTOS_INDEX;
 
-	var setupMasonry = function() {
+	var initMasonry = function() {
 		$(".preview-list").imagesLoaded(function() {
 			var gutterWidth = 2;
 
@@ -47,13 +47,13 @@
 		});
 	};
 
-	var setupPreviewClickHandler = function() {
+	var initPreviewClickHandler = function() {
 		$(".preview").click(function(event) {
 			window.location.href = $(event.currentTarget).attr("id").split("preview-")[1];
 		});
 	};
 
-	var setupMapNavigation = function() {
+	var initMapNavigation = function() {
 		$(".header-div-map").click(function(event) {
 			if (MAP_INDEX == viewIndex) {
 				return;
@@ -88,7 +88,7 @@
 		});
 	};
 
-	var setupPhotosNavigation = function() {
+	var initPhotosNavigation = function() {
 		$(".header-div-photos").click(function(event) {
 			if (PHOTOS_INDEX == viewIndex) {
 				return;
@@ -100,16 +100,16 @@
 		});
 	};
 
-	var setupNavigation = function() {
-		setupMapNavigation();
-		setupPhotosNavigation();
+	var initNavigation = function() {
+		initMapNavigation();
+		initPhotosNavigation();
 	};
 
 	$(document).ready(function() {
 		if ($(".index-page").length) {
-			setupMasonry();
-			setupPreviewClickHandler();
-			setupNavigation();
+			initMasonry();
+			initPreviewClickHandler();
+			initNavigation();
 		}	
 	});
 }

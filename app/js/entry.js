@@ -1,5 +1,5 @@
 (function() {
-	var setupMasonry = function() {
+	var initMasonry = function() {
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 10;
 			var imageWidth = 340;
@@ -29,7 +29,7 @@
 		});
 	};
 
-	var setupNaviationFor = function(navigationDiv, contentDiv) {
+	var initNaviationFor = function(navigationDiv, contentDiv) {
 		navigationDiv.click(function() {
 			$(".scroll-to-hack-div").height(1);
 			var offset = contentDiv.offset();
@@ -40,12 +40,12 @@
 		});
 	};
 
-	var setupNaviation = function() {
-		setupNaviationFor($(".header-div-photos"), $(".photos-section"));
-		setupNaviationFor($(".header-div-map"), $(".map-section"));
+	var initNaviation = function() {
+		initNaviationFor($(".header-div-photos"), $(".photos-section"));
+		initNaviationFor($(".header-div-map"), $(".map-section"));
 	};
 
-	var setupFancybox = function() {
+	var initFancybox = function() {
 		$(".fancybox-thumbs").fancybox({
 			padding: 10,
 			nextEffect : "none",
@@ -60,9 +60,9 @@
 
 	$(document).ready(function() {
 		if ($(".entry-page").length) {
-			setupMasonry();
-			setupNaviation();
-			setupFancybox();
+			initMasonry();
+			initNaviation();
+			initFancybox();
 		}
 	});
 }
