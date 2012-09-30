@@ -34,7 +34,7 @@ img { display: block; }
 	background: rgba(0, 0, 0, 0.0);
 }
 
-h1::selection, h2::selection, h3::selection, p::selection {
+h1::selection, h2::selection, h3::selection, p::selection, td::selection, a::selection {
 	background:#444;
 	color:#fff;
 }
