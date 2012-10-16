@@ -125,7 +125,7 @@
 	}
 
 	$(document).ready(function() {
-		if ($(".index-page").length) {
+		if ($(".discover-page").length) {
 			initMasonry();
 			initPreviewClickHandler();
 			initNavigation();
