@@ -6,36 +6,70 @@
 	position: absolute;
 	width: $container-width;
 	height:100%;
+	background: url(../landing-page-images/the-narrows.jpg) no-repeat center center fixed;
+	@include background-size(cover);
 
-	> div {
-		height: 100%;
-		background: url(../landing-page-images/the-narrows.jpg) no-repeat center center fixed;
-		@include background-size(cover);
+	.banner {
+		width: 100%;
+		background-color:rgba(0, 0, 0, 0.6);
 
-		> div {
-			width: 100%;
-			background-color:rgba(0, 0, 0, 0.6);
+		h1 {
+			margin: 0px;
+			padding: 15px 0px 0px 20px;
+			font-size: 60px;
+			color: white;
+		}
 
+		h2 {
+			margin: -10px 0px 0px 0px;
+			padding: 0px 0px 15px 22px;
+			font-weight: 100;
+			color: white;
+		}
+
+		@media all and (max-width: $mobile-width) {
 			h1 {
-				margin: 0px;
-				padding: 15px 0px 0px 20px;
-				font-size: 60px;
-				color: white;
+				font-size: 40px;
 			}
-
 			h2 {
-				margin: -10px 0px 0px 0px;
-				padding: 0px 0px 15px 22px;
-				font-weight: 100;
-				color: white;
+				font-size: 20px;
 			}
+		}
+	}
 
-			@media all and (max-width: $mobile-width) {
-				h1 {
-					font-size: 40px;
-				}
-				h2 {
-					font-size: 20px;
+	.non-banner {
+		position: absolute;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+
+		width: 100%;
+		text-align: center;
+
+		/* http://stackoverflow.com/questions/11316651/margin-auto-0-not-working-on-ipad-safari */
+		> div {
+			padding-bottom: 15%;
+			display:table;
+			table-layout:fixed;
+			height:100%;
+			width:100%;
+
+			> div {
+				display:table-cell;
+				text-align:center;
+				vertical-align:middle;
+				width:100%;
+				position:relative;
+				
+				input { 
+					border: 3px solid rgba(1, 1, 1, 0.3);
+					border-radius: 3px 3px 3px 3px;
+					font-size: 18px;
+					font-weight: 300;
+					padding: 7px;
+					width: 500px;
+					max-width: 80%;
 				}
 			}
 		}
