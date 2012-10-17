@@ -1,0 +1,47 @@
+@import "_vars";
+@import "_mixins";
+@import "compass/css3/background-size";
+
+.index-page {
+	position: absolute;
+	width: $container-width;
+	height:100%;
+
+	> div {
+		height: 100%;
+		background: url(../landing-page-images/the-narrows.jpg) no-repeat center center fixed;
+		@include background-size(cover);
+
+		> div {
+			width: 100%;
+			background-color:rgba(0, 0, 0, 0.6);
+
+			h1 {
+				margin: 0px;
+				padding: 15px 0px 0px 20px;
+				font-size: 60px;
+				color: white;
+			}
+
+			h2 {
+				margin: -10px 0px 0px 0px;
+				padding: 0px 0px 15px 22px;
+				font-weight: 100;
+				color: white;
+			}
+
+			@media all and (max-width: $mobile-width) {
+				h1 {
+					font-size: 40px;
+				}
+				h2 {
+					font-size: 20px;
+				}
+			}
+		}
+	}
+}
+
+@media all and (max-width: $container-width) {
+	.index-page { width: 100%; }
+}

@@ -2,12 +2,19 @@
 @import "_mixins";
 @import "compass/css3/box-shadow";
 
+html { height: 100%; }
+
 body { 
 	margin: 0px;
 	-webkit-font-smoothing: antialiased;
 	background-image: url(/images/background.png);
 	font-family: "facitweb", sans-serif;
 	min-width: 300px;
+	height: 100%;
+}
+
+body > div {
+	height: 100%;
 }
 
 a {

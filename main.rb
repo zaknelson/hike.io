@@ -123,31 +123,32 @@ class HikeApp < Sinatra::Base
 	before do
 		if settings.environment == :development
 			@entry_img_dir = "/hike-images"
+			@landing_page_img_dir = "/landing-page-images"
 		else
 			@entry_img_dir = "http://assets.hike.io/hike-images"
+			@landing_page_img_dir = "http://assets.hike.io/landing-page-images"
 		end
 
 		@img_dir = "/images"
 	end
 
-	def request_index
-		page = params[:page] ? Integer(params[:page]) : 1
 
-		@title = "hike.io - Beautiful Hikes"
-		@featured_entry = Entry.first if page == 1
-
-		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 4)
-		erb :index
-	end
+	#
+	# Routes
+	#
 
 	get "/", :provides => 'html' do
-		request_index
+		@hide_header = true;
+		erb :index;
+	end
+
+	get "/all", :provides => 'html' do
+		request_photo_stream
 	end
 
 	# need to support post due to infinite scrolling bug, see https://github.com/paulirish/infinite-scroll/issues/215
-	post "/", :provides => 'html' do
-		request_index
+	post "/all", :provides => 'html' do
+		request_photo_stream
 	end
 
 	get "/:entry_id", :provides => 'html' do
@@ -155,6 +156,22 @@ class HikeApp < Sinatra::Base
 		pass unless @entry
 		@title = @entry.name
 		erb :entry
+	end
+
+
+	#
+	# Helper functions
+	#
+
+	def request_photo_stream
+		page = params[:page] ? Integer(params[:page]) : 1
+
+		@title = "hike.io - Beautiful Hikes"
+		@featured_entry = Entry.first if page == 1
+
+		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
+		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 4)
+		erb :photo_stream
 	end
 
 	 # start the server if ruby file executed directly
