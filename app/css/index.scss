@@ -39,8 +39,8 @@
 
 	.non-banner {
 		position: absolute;
-		top:0;
-		bottom:0;
+		top:10%;
+		bottom:20%;
 		left:0;
 		right:0;
 
@@ -49,7 +49,6 @@
 
 		/* http://stackoverflow.com/questions/11316651/margin-auto-0-not-working-on-ipad-safari */
 		> div {
-			padding-bottom: 15%;
 			display:table;
 			table-layout:fixed;
 			height:100%;
