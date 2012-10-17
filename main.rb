@@ -60,6 +60,7 @@ class HikeApp < Sinatra::Base
 		]
 
 		css :app, "/css/app.css", [
+			"/css/reset.css",
 			"/css/*.css",
 			"/css/lib/*.css"
 		]

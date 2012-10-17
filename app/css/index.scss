@@ -14,16 +14,16 @@
 		background-color:rgba(0, 0, 0, 0.6);
 
 		h1 {
-			margin: 0px;
-			padding: 15px 0px 0px 20px;
+			padding: 20px 0px 0px 20px;
 			font-size: 60px;
 			color: white;
+			font-weight: bold;
 		}
 
 		h2 {
-			margin: -10px 0px 0px 0px;
 			padding: 0px 0px 15px 22px;
 			font-weight: 100;
+			font-size: 30px;
 			color: white;
 		}
 
@@ -61,7 +61,7 @@
 				vertical-align:middle;
 				width:100%;
 				position:relative;
-				
+
 				input { 
 					border: 3px solid rgba(1, 1, 1, 0.3);
 					border-radius: 3px 3px 3px 3px;
