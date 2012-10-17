@@ -4,7 +4,7 @@
 $preview-titletext-font-size: 16px;
 $preview-subtext-font-size: 13px;
 
-.discover-page {
+.photo-stream-page {
 	.preview-list {
 		width:100%;
 		height:100%;
@@ -80,7 +80,7 @@ $preview-subtext-font-size: 13px;
 	}
 }
 
-.no-touch .discover-page .preview:hover {
+.no-touch .photo-stream-page .preview:hover {
 	opacity: .95;
 	cursor: pointer;
 }

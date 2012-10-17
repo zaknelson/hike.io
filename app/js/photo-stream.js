@@ -125,7 +125,7 @@
 	}
 
 	$(document).ready(function() {
-		if ($(".discover-page").length) {
+		if ($(".photo-stream-page").length) {
 			initMasonry();
 			initPreviewClickHandler();
 			initNavigation();
