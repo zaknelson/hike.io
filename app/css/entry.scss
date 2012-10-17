@@ -78,6 +78,10 @@ $header-landscape-footer-height-mobile: 40px;
 			p {
 				margin-bottom: 15px;
 			}
+
+			p:last-child {
+				margin-bottom: 0px;
+			}
 		}
 
 		@media all and (max-width: $mobile-width) {
