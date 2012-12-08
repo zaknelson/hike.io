@@ -12,6 +12,7 @@ require "sinatra/partial"
 require "will_paginate"
 require "will_paginate/sequel"
 
+require_relative "server/controller/search"
 require_relative "server/model/database"
 require_relative "server/view/localize"
 
@@ -138,21 +139,38 @@ class HikeApp < Sinatra::Base
 	# Routes
 	#
 
-	get "/", :provides => 'html' do
-		@hide_header = true;
-		erb :index;
+	get "/", :provides => "html" do
+		if (params["q"])
+			@query = params["q"]
+
+			search_executor = SearchExecutor.new
+			search_executor.query = @query
+			@best_entry = search_executor.execute
+
+			if @best_entry
+				redirect "/#{@best_entry.string_id}"
+			else 
+				@title = "Unable to find hike for #{@query}"
+				erb :search
+			end
+			
+		else
+			@hide_header = true
+			@hide_main_container = true
+			erb :index
+		end
 	end
 
-	get "/all", :provides => 'html' do
+	get "/all", :provides => "html" do
 		request_photo_stream
 	end
 
 	# need to support post due to infinite scrolling bug, see https://github.com/paulirish/infinite-scroll/issues/215
-	post "/all", :provides => 'html' do
+	post "/all", :provides => "html" do
 		request_photo_stream
 	end
 
-	get "/:entry_id", :provides => 'html' do
+	get "/:entry_id", :provides => "html" do
 		@entry = Entry[:string_id => params[:entry_id]]
 		pass unless @entry
 		@title = @entry.name
