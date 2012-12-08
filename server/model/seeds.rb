@@ -25,6 +25,9 @@ migration "seed scotchman peak" do
 	entry.add_photo(Photo.create(:path => "scotchman-peak-zak"))
 	entry.add_photo(Photo.create(:path => "scotchman-peak-hikers"))
 	entry.add_photo(Photo.create(:path => "scotchman-peak-dead-tree"))
+
+	entry.add_keyword(Keyword.create(:keyword => "Scotchman"))
+	entry.add_keyword(Keyword.create(:keyword => "Peak"))
 end
 
 migration "seed mt kilamanjaro" do
@@ -135,9 +138,4 @@ migration "seed snoqualmie middle fork" do
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"
 		))
 end
-
-
-
-
-
 
