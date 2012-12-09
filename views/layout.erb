@@ -17,8 +17,6 @@ https://github.com/zaknelson/hike.io/
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
 	<% if is_iPhone? %>
 		<meta name="viewport" content="width=400"></meta>
-	<% else %>
-		<meta name="viewport" content="width=device-width"></meta>
 	<% end %>
 	<title><%= @title %></title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
@@ -38,7 +36,6 @@ https://github.com/zaknelson/hike.io/
 </head>
 <body class="no-touch">
 	<div>
-		<%if not @hide_header %>
 		<header class="shadow-light">
 			<div>
 				<a href="/">
@@ -48,15 +45,17 @@ https://github.com/zaknelson/hike.io/
 				</a>
 				<div class="header-separator"></div>
 			</div>
+			<%if not @hide_search_header %>
 			<div class="header-right">
 				<div class="header-separator"></div>
 				<div class="header-div header-div-search" >
 					<%= render_svg("#{@img_dir}/search.svg") %>
 				</div>
 			</div>
+			<% end %>
 			<%= yield_content :header %>
 		</header>
-		<% end %>
+		
 		<noscript>
 			<h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1>
 		</noscript>

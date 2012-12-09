@@ -155,7 +155,7 @@ class HikeApp < Sinatra::Base
 			end
 			
 		else
-			@hide_header = true
+			@hide_search_header = true
 			@hide_main_container = true
 			@title = "hike.io - Beautiful Hikes"
 			erb :index
