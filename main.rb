@@ -157,6 +157,7 @@ class HikeApp < Sinatra::Base
 		else
 			@hide_header = true
 			@hide_main_container = true
+			@title = "hike.io - Beautiful Hikes"
 			erb :index
 		end
 	end
@@ -183,9 +184,7 @@ class HikeApp < Sinatra::Base
 	#
 
 	def request_photo_stream
-		page = params[:page] ? Integer(params[:page]) : 1
-
-		@title = "hike.io - Beautiful Hikes"
+		page = params[:page] ? Integer(params[:page]) : 1		
 		@featured_entry = Entry.first if page == 1
 
 		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
