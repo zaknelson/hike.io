@@ -32,8 +32,8 @@ end
 
 migration "seed mt kilamanjaro" do
 	entry = Entry.create(
-		:string_id => "mt-kilamanjaro",
-		:name => "Mt. Kilamanjaro",
+		:string_id => "mt-kilimanjaro",
+		:name => "Mt. Kilimanjaro",
 		:distance => 50,
 		:elevation_gain => 10500,
 		:creation_time => Time.now,
@@ -46,6 +46,8 @@ migration "seed mt kilamanjaro" do
 		:longitude => -120.089783,
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"
 		))
+
+	entry.add_keyword(Keyword.create(:keyword => "Kilimanjaro"))
 end
 
 migration "seed lake 22" do
