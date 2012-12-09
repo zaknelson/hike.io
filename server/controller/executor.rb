@@ -15,6 +15,6 @@ class Executor
 	end
 
 	def output
-		puts "Executor.get_results, this method should be overriden"
+		puts "Executor.output, this method should be overriden"
 	end
 end
