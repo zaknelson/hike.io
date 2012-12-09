@@ -1,0 +1,17 @@
+/* Typekit specific classes to workaround flashing text issue */
+
+.wf-loading h1, .wf-loading h2, .wf-loading h3, .wf-loading li, .wf-loading p {
+	opacity: 0;
+}
+
+.ie.wf-loading h1, .ie.wf-loading h2, .ie.wf-loading h3, .ie.wf-loading li, .ie.wf-loading p {
+	visibility: hidden;
+}
+
+.wf-active h1, .wf-active h2, .wf-active h3, .wf-active li, .wf-active p {
+	opacity: 1;
+}
+
+.ie.wf-active h1, .ie.wf-active h2, .ie.wf-active h3, .ie.wf-active li, .ie.wf-active p {
+	visibility: visible;
+}
