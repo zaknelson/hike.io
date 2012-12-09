@@ -40,7 +40,7 @@
 			switch (e.keyCode) {
 				case 27: // esc
 				case 13: // return
-					toggleSearchBox();
+					window.location.href = "/?q=" + $(".search-div > input").val();
 					break;
 				default:
 					break;
