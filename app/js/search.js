@@ -40,7 +40,11 @@
 			switch (e.keyCode) {
 				case 27: // esc
 				case 13: // return
-					window.location.href = "/?q=" + $(".search-div > input").val();
+					var query = $.trim($(".search-div > input").val());
+					if (query.length > 0) {
+						window.location.href = "/?q=" + query;
+					}
+					
 					break;
 				default:
 					break;
