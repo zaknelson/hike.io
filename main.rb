@@ -173,7 +173,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/map", :provides => "html" do
-		@title = "hike.io - Map"
+		@title = "Map - hike.io"
 		@hide_main_container = true
 		erb :map
 	end
@@ -181,7 +181,7 @@ class HikeApp < Sinatra::Base
 	get "/:entry_id", :provides => "html" do
 		@entry = Entry[:string_id => params[:entry_id]]
 		pass unless @entry
-		@title = @entry.name
+		@title = "#{@entry.name} - hike.io"
 		erb :entry
 	end
 
@@ -191,7 +191,7 @@ class HikeApp < Sinatra::Base
 	#
 
 	def request_photo_stream
-		@title = "hike.io - Discover"
+		@title = "Discover - hike.io"
 		page = params[:page] ? Integer(params[:page]) : 1		
 		@featured_entry = Entry.first if page == 1
 
