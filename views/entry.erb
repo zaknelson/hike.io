@@ -1,16 +1,3 @@
-<% content_for :header do %>
-	<div class="header-div header-div-photos">
-		<%= render_svg("#{@img_dir}/photos.svg") %>
-		<span>Photos</span>
-	</div>
-	<div class="header-separator"></div>
-	<div class="header-div header-div-map" >
-		<%= render_svg("#{@img_dir}/map.svg") %>
-		<span>Map</span>
-	</div>
-	<div class="header-separator"></div>
-<% end %>
-
 <article class="entry-page">
 	<div class="header-landscape">
 		<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-landscape.jpg", {:class => "shadow-light"} %>
@@ -53,9 +40,5 @@
 				</a>
 			</div>
 		</section>
-
-		<!-- see http://stackoverflow.com/questions/7826868/fixed-position-navbar-only-clickable-once-in-mobile-safari-on-ios5 -->
-		<div class="scroll-to-hack-div">
-		</div>
 	</div>
 </article>

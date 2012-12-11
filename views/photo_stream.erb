@@ -1,16 +1,3 @@
-<% content_for :header do %>
-	<div class="header-div header-div-photos">
-		<%= render_svg("#{@img_dir}/photos.svg") %>
-		<span>Photos</span>
-	</div>
-	<div class="header-separator"></div>
-	<div class="header-div header-div-map" >
-		<%= render_svg("#{@img_dir}/map.svg", {:class => "map-header-div-icon"}) %>
-		<span>Map</span>
-	</div>
-	<div class="header-separator"></div>
-<% end %>
-
 <article class="photo-stream-page">
 	<div class="preview-list">
 		<% if @featured_entry %>
@@ -23,5 +10,4 @@
 	<div class="pagination-links">
 		<%= will_paginate @entries %>
 	</div>
-	<div class="map-fullscreen"></div>
 </article>

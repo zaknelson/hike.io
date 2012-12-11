@@ -59,19 +59,6 @@ $preview-subtext-font-size: 13px;
 		color: #ccc;
 	}
 
-	.map-fullscreen {
-		width: auto;
-		height: auto;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		margin-top: $header-height;
-		z-index: $header-z-index - 1;
-		display: none;
-	}
-
 	.pagination-links {
 		padding: 20px;
 		text-align: center;

@@ -157,18 +157,23 @@ class HikeApp < Sinatra::Base
 		else
 			@hide_search_header = true
 			@hide_main_container = true
-			@title = "hike.io - Beautiful Hikes"
+			@title = "hike.io - Find beautiful hikes"
 			erb :index
 		end
 	end
 
-	get "/all", :provides => "html" do
+	get "/discover", :provides => "html" do
 		request_photo_stream
 	end
 
 	# need to support post due to infinite scrolling bug, see https://github.com/paulirish/infinite-scroll/issues/215
-	post "/all", :provides => "html" do
+	post "/discover", :provides => "html" do
 		request_photo_stream
+	end
+
+	get "/map", :provides => "html" do
+		@hide_main_container = true
+		erb :map
 	end
 
 	get "/:entry_id", :provides => "html" do

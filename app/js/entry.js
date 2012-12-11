@@ -24,22 +24,6 @@
 		});
 	};
 
-	var initNaviationFor = function(navigationDiv, contentDiv) {
-		navigationDiv.click(function() {
-			$(".scroll-to-hack-div").height(1);
-			var offset = contentDiv.offset();
-			$("html, body").animate({
-				scrollTop: offset.top - parseInt(contentDiv.css("margin-top"))
-			});
-
-		});
-	};
-
-	var initNaviation = function() {
-		initNaviationFor($(".header-div-photos"), $(".photos-section"));
-		initNaviationFor($(".header-div-map"), $(".map-section"));
-	};
-
 	var initFancybox = function() {
 		$(".fancybox-thumbs").fancybox({
 			padding: 10,
@@ -56,7 +40,6 @@
 	$(document).ready(function() {
 		if ($(".entry-page").length) {
 			initMasonry();
-			initNaviation();
 			initFancybox();
 		}
 	});

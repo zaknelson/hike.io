@@ -14,8 +14,18 @@ _gaq.push(["_trackPageview"]);
 		}
 	};
 
+	var initNavigation = function () {
+		$(".header-div-photo-stream").click(function() {
+			window.location.href = "/discover";
+		});
+		$(".header-div-map").click(function() {
+			window.location.href = "/map";
+		});
+	}
+
 	$(document).ready(function() {
 		disableNonTouchFeatures();
+		initNavigation();
 	});
 }
 )();
