@@ -132,6 +132,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		@img_dir = "/images"
+		@title = "hike.io"
 	end
 
 
@@ -172,6 +173,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/map", :provides => "html" do
+		@title = "hike.io - Map"
 		@hide_main_container = true
 		erb :map
 	end
@@ -189,6 +191,7 @@ class HikeApp < Sinatra::Base
 	#
 
 	def request_photo_stream
+		@title = "hike.io - Discover"
 		page = params[:page] ? Integer(params[:page]) : 1		
 		@featured_entry = Entry.first if page == 1
 
