@@ -1,2 +1,2 @@
-require './main'
+require './server'
 run HikeApp
