@@ -6,6 +6,8 @@ var connectionString = process.env.DATABASE_URL || "postgres://localhost/hikeio"
 var client = new pg.Client(connectionString);
 client.connect();
 
+io.set("log level", 2);
+
 io.sockets.on("connection", function (socket) {
 	socket.on("get-hikes-in-bounds", function (data) {
 
