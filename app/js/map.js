@@ -22,11 +22,6 @@
 		}
 
 		map = new google.maps.Map($(".map-page")[0], mapOptions);
-
-		$(".map-page").resize(function() {
-			console.log("Resizing map")
-			google.maps.event.trigger(map, "resize");
-		});
 	};
 
 	var compareLatLng = function(a, b) {
@@ -38,14 +33,18 @@
 	};
 
 	var handleGetHikesInBoundsResponse = function(data) {
-		var i = 0, j = 0;
+		var i = 0;
+		var j = 0;
 		var newMarkers = [];
 		while (i != data.length || j != markers.length) {
-			var newLatLng = null, oldMarker = null, oldLatLng = null;;
+			var newLatLng = null;
+			var oldMarker = null;
+			var oldLatLng = null;
 
 			if (i < data.length) {
 				newLatLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
 			}
+
 			if (j < markers.length) {
 				oldMarker = markers[j];
 				oldLatLng = oldMarker.getPosition();
@@ -77,8 +76,8 @@
 				j++;
 			}
 		}
-			markers = newMarkers;
-	}
+		markers = newMarkers;
+	};
 
 	var initSocketIo = function() {
 		var socket = io.connect(location.protocol + "//" + location.hostname + ":8080");
