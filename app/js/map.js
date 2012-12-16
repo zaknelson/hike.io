@@ -84,9 +84,15 @@
 		google.maps.event.addListener(map, "idle", function() {
 			var mapBounds = map.getBounds();
 			var northEast = mapBounds.getNorthEast();
-			var northEastLatLng = { latitude: northEast.lat(), longitude: northEast.lng() };
+			var northEastLatLng = { 
+				latitude: northEast.lat(), 
+				longitude: northEast.lng() 
+			};
 			var southWest = mapBounds.getSouthWest();
-			var southWestLatLng = { latitude: southWest.lat(), longitude: southWest.lng() };
+			var southWestLatLng = { 
+				latitude: southWest.lat(), 
+				longitude: southWest.lng() 
+			};
 			socket.emit("get-hikes-in-bounds", { ne:northEastLatLng, sw:southWestLatLng });
 		});
 		
