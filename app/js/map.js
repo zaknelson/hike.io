@@ -1,7 +1,26 @@
 (function() {
 
-	var map = null;
-	var markers = [];
+	var map;
+	var markers;
+	var defaultMarker;
+	var hoverMarker;
+
+	var initIcons = function() {
+		defaultMarker = {
+			path: google.maps.SymbolPath.CIRCLE,
+			fillOpacity: 1,
+			fillColor: "ff6262",
+			strokeWeight: 1.0,
+			scale: 4
+		};
+		hoverMarker = {
+			path: google.maps.SymbolPath.CIRCLE,
+			fillOpacity: 1,
+			fillColor: "ffff33",
+			strokeWeight: 1.0,
+			scale: 5
+		};
+	};
 
 	var initMap = function() {
 		// Default to a central view of the US
@@ -22,6 +41,7 @@
 		}
 
 		map = new google.maps.Map($(".map-page")[0], mapOptions);
+		markers = [];
 	};
 
 	var compareLatLng = function(a, b) {
@@ -32,17 +52,31 @@
 		else 							{ return 0;  }
 	};
 
-	var handleGetHikesInBoundsResponse = function(data) {
+	var addMarkerEvents = function(marker, entryData) {
+		google.maps.event.addListener(marker, "mouseover", function() {
+			marker.setIcon(hoverMarker);
+		});
+				
+		google.maps.event.addListener(marker, "mouseout", function() {
+			marker.setIcon(defaultMarker);
+		});
+
+		google.maps.event.addListener(marker, "click", function() {
+			window.location.href = entryData.string_id;
+		});
+	};
+
+	var handleGetHikesInBoundsResponse = function(reponseData) {
 		var i = 0;
 		var j = 0;
 		var newMarkers = [];
-		while (i != data.length || j != markers.length) {
+		while (i != reponseData.length || j != markers.length) {
 			var newLatLng = null;
 			var oldMarker = null;
 			var oldLatLng = null;
 
-			if (i < data.length) {
-				newLatLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
+			if (i < reponseData.length) {
+				newLatLng = new google.maps.LatLng(reponseData[i].latitude, reponseData[i].longitude);
 			}
 
 			if (j < markers.length) {
@@ -53,16 +87,11 @@
 			if (!oldLatLng || (newLatLng && compareLatLng(newLatLng, oldLatLng) < 0)) {
 				// This is a brand new marker, add it
 				var marker = new google.maps.Marker({
-					icon: {
-						path: google.maps.SymbolPath.CIRCLE,
-						fillOpacity: 1,
-						fillColor: "ff6262",
-						strokeWeight: 1.0, 
-						scale: 4
-					  },
+					icon: defaultMarker,
 					map: map,
 					position: newLatLng
 				});
+				addMarkerEvents(marker, reponseData[i]);
 				newMarkers.push(marker);
 				i++;
 			} else if (!newLatLng || (oldLatLng && compareLatLng(newLatLng, oldLatLng) > 0)) {
@@ -103,6 +132,7 @@
 
 	$(document).ready(function() {
 		if ($(".map-page").length) {
+			initIcons();
 			initMap();
 			initSocketIo();
 		}
