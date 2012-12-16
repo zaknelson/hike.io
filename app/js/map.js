@@ -3,25 +3,6 @@
 	var map = null;
 	var markers = [];
 
-	var leftJoinSortedMarkers = function(a, b) {
-		var ai = 0;
-		var bi = 0;
-		var result = new Array();
-
-		while (ai < a.length && bi < b.length) {
-			 if		 (a[ai].lat() < b[bi].lat()) { ai++; }
-			 else if (a[ai].lat() > b[bi].lat()) { bi++; }
-			 else if (a[ai].lng() < b[bi].lng()) { ai++; }
-			 else if (a[ai].lng() > b[bi].lng()) { bi++; }
-			 else {
-				 result.push(a[ai]);
-				 ai++;
-				 bi++;
-			 }
-		}
-		return result;
-	};
-
 	var initMap = function() {
 		// Default to a central view of the US
 		var centerLatLng = new google.maps.LatLng(39.833333, -98.583333);
@@ -73,8 +54,15 @@
 			if (!oldLatLng || (newLatLng && compareLatLng(newLatLng, oldLatLng) < 0)) {
 				// This is a brand new marker, add it
 				var marker = new google.maps.Marker({
-					position: newLatLng,
-					map: map
+					icon: {
+						path: google.maps.SymbolPath.CIRCLE,
+						fillOpacity: 1,
+						fillColor: "ff6262",
+						strokeWeight: 1.0, 
+						scale: 4
+					  },
+					map: map,
+					position: newLatLng
 				});
 				newMarkers.push(marker);
 				i++;
@@ -93,15 +81,13 @@
 	}
 
 	var initSocketIo = function() {
-		var socket = io.connect("http://localhost:8080");
-		
+		var socket = io.connect(location.protocol + "//" + location.hostname + ":8080");
 		google.maps.event.addListener(map, "idle", function() {
 			var mapBounds = map.getBounds();
 			var northEast = mapBounds.getNorthEast();
-			var northEastLatLng = { lat: northEast.lat(), lng: northEast.lng() };
+			var northEastLatLng = { latitude: northEast.lat(), longitude: northEast.lng() };
 			var southWest = mapBounds.getSouthWest();
-			var southWestLatLng = { lat: southWest.lat(), lng: southWest.lng() };
-			console.log("get-hikes-in-bounds", southWestLatLng, northEastLatLng);
+			var southWestLatLng = { latitude: southWest.lat(), longitude: southWest.lng() };
 			socket.emit("get-hikes-in-bounds", { ne:northEastLatLng, sw:southWestLatLng });
 		});
 		

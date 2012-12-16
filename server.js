@@ -9,10 +9,9 @@ client.connect();
 io.sockets.on("connection", function (socket) {
 	socket.on("get-hikes-in-bounds", function (data) {
 
-		// Longitude is tricky because it can jump from 179 to -179 across the international date line, 
-		// so we can't rely on simple ranges
+		// Longitude is tricky because it can jump from 179 to -179 across the international date line
 		var longitudeWhereClause;
-		if (data.sw.lng < data.ne.lng) {
+		if (data.sw.longitude < data.ne.longitude) {
 			longitudeWhereClause = "(locations.longitude >= $3 AND locations.longitude <= $4)";
 		} else {
 			longitudeWhereClause = "(locations.longitude >= $3 OR locations.longitude <= $4)";
@@ -26,7 +25,7 @@ io.sockets.on("connection", function (socket) {
 								  entries_locations.location_id = locations.id AND \
 								  entries_locations.entry_id = entries.id \
 							ORDER BY locations.latitude, locations.longitude;";
-		client.query(queryString, [ data.sw.lat, data.ne.lat, data.sw.lng, data.ne.lng] , function(err, result) {
+		client.query(queryString, [ data.sw.latitude, data.ne.latitude, data.sw.longitude, data.ne.longitude] , function(err, result) {
 			if (!result) {
 				console.log(err);
 				return;
