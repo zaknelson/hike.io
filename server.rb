@@ -56,6 +56,7 @@ class HikeApp < Sinatra::Base
 		prebuild true
 
 		js :app, "/js/app.js", [
+			"/js/layout.js",
 			"/js/*.js",
 			"/js/lib/*.js"
 		]
