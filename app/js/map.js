@@ -42,6 +42,7 @@
 
 		map = new google.maps.Map($(".map-page")[0], mapOptions);
 		markers = [];
+
 	};
 
 	var compareLatLng = function(a, b) {
@@ -53,15 +54,19 @@
 	};
 
 	var addMarkerEvents = function(marker, entryData) {
-		google.maps.event.addListener(marker, "mouseover", function() {
-			marker.setIcon(hoverMarker);
+		var mapTooltip = null;
+		google.maps.event.addListener(marker, "mouseover", function(event) {
+			mapTooltip = new window.io.hike.MapTooltip(entryData, marker);
 		});
 				
-		google.maps.event.addListener(marker, "mouseout", function() {
-			marker.setIcon(defaultMarker);
+		google.maps.event.addListener(marker, "mouseout", function(event) {
+			if (mapTooltip) {
+				mapTooltip.destroy();
+				mapTooltip = null;
+			}
 		});
 
-		google.maps.event.addListener(marker, "click", function() {
+		google.maps.event.addListener(marker, "click", function(event) {
 			window.location.href = entryData.string_id;
 		});
 	};
