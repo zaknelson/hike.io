@@ -1,6 +1,7 @@
 @import "_vars";
 @import "_mixins";
 @import "compass/css3/background-size";
+@import "compass/css3/border-radius";
 
 .index-page {
 	width: 100%;
@@ -74,7 +75,7 @@
 
 				input { 
 					border: 3px solid rgba(1, 1, 1, 0.3);
-					border-radius: 3px 3px 3px 3px;
+					@include border-radius(2px, 2px);
 					font-size: 18px;
 					font-weight: 300;
 					padding: 7px;
