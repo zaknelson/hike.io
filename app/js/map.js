@@ -57,6 +57,7 @@
 		var mapTooltip = null;
 		google.maps.event.addListener(marker, "mouseover", function(event) {
 			mapTooltip = new window.io.hike.MapTooltip(entryData, marker);
+			marker.setIcon(hoverMarker);
 		});
 				
 		google.maps.event.addListener(marker, "mouseout", function(event) {
@@ -64,6 +65,7 @@
 				mapTooltip.destroy();
 				mapTooltip = null;
 			}
+			marker.setIcon(defaultMarker);
 		});
 
 		google.maps.event.addListener(marker, "click", function(event) {

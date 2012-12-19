@@ -11,39 +11,35 @@
 	
 	MapTooltip.prototype.onAdd = function() {
 		this.div = $("<div></div>");
-		this.div.css("position", "absolute");
-		this.div.css("background", "black");
-
-		this.getPanes().overlayLayer.appendChild(this.div[0]);
+		this.div.addClass("tooltip");
+		this.getPanes().floatShadow.appendChild(this.div[0]);
 	};
 
 	MapTooltip.prototype.draw = function() {
-		var width = 100;
-		var height = 100;
+		this.div.text(this.entryData.name);
 		var buffer = 10;
+		var width = this.div.outerWidth();
+		var height = this.div.outerHeight();
 
 		var overlayProjection = this.getProjection();
 		var markerPosition = overlayProjection.fromLatLngToContainerPixel(this.marker.getPosition());
 		
-		// The default location of the tooltip is centered, below the marker. If that
+		// The default location of the tooltip is anchored to the bottom-right of the marker. If that
 		// location would render the tooltip off the screen, relocate it.
-		var tooltipPosition = { y: markerPosition.y + height / 2 + buffer, x: markerPosition.x - width / 2 };
+		var containerOffset = $(this.marker.getMap().getDiv()).offset();
+		var tooltipOffset = { 
+			top: containerOffset.top + markerPosition.y + buffer, 
+			left: containerOffset.left + markerPosition.x + buffer 
+		};
 
-		if (tooltipPosition.y + height + buffer > $(document).height()) {
-			tooltipPosition.y = markerPosition.y - height / 2 - buffer;
+		if (tooltipOffset.top + height + buffer > $(document).height()) {
+			tooltipOffset.top = tooltipOffset.top - height - buffer * 2;
 		}
 
-		if (tooltipPosition.x + width + buffer > $(document).width()) {
-			tooltipPosition.x = markerPosition.x - width - buffer;
+		if (tooltipOffset.left + width + buffer > $(document).width()) {
+			tooltipOffset.left = markerPosition.x - width - buffer;
 		}
-
-		if (tooltipPosition.x - buffer < 0) {
-			tooltipPosition.x = markerPosition.x + buffer;
-		}
-
-		this.div.offset({ top: tooltipPosition.y, left: tooltipPosition.x });
-		this.div.width(width);
-		this.div.height(height);
+		this.div.offset(tooltipOffset);		
 	};
 
 	MapTooltip.prototype.onRemove = function() {

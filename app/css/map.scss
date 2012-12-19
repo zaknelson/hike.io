@@ -1,7 +1,20 @@
 @import "_vars";
 @import "_mixins";
+@import "compass/css3/border-radius";
 
 .map-page {
-	width: 100%;
-	height: 100%;
+	position: absolute;
+	top: $header-height;
+	bottom:0;
+	left:0;
+	right:0;
+
+	.tooltip {
+		position: absolute;
+		background-color: #fefefe;
+		padding: 10px;
+		max-width: 300px;
+		font-weight: bold;
+		@include border-radius(2px, 2px);
+	}
 }
