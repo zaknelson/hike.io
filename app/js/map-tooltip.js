@@ -4,14 +4,12 @@
 		this.entryData = entryData;
 		this.marker = marker;
 		this.setMap(this.marker.getMap());
-		this.div = null;
 	};
 
 	MapTooltip.prototype = new google.maps.OverlayView();
 	
 	MapTooltip.prototype.onAdd = function() {
-		this.div = $("<div></div>");
-		this.div.addClass("tooltip");
+		this.div = $(".tooltip").clone();
 		this.getPanes().floatShadow.appendChild(this.div[0]);
 	};
 
@@ -39,11 +37,12 @@
 		if (tooltipOffset.left + width + buffer > $(document).width()) {
 			tooltipOffset.left = markerPosition.x - width - buffer;
 		}
-		this.div.offset(tooltipOffset);		
+		this.div.css("display", "block");
+		this.div.offset(tooltipOffset);
 	};
 
 	MapTooltip.prototype.onRemove = function() {
-		this.div.remove();
+		this.div.remove()
 		this.div = null;
 	};
 

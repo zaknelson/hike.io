@@ -40,7 +40,7 @@
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		}
 
-		map = new google.maps.Map($(".map-page")[0], mapOptions);
+		map = new google.maps.Map($(".map-container")[0], mapOptions);
 		markers = [];
 
 	};
