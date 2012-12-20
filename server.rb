@@ -165,12 +165,13 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/discover", :provides => "html" do
-		request_photo_stream
-	end
+		@title = "Discover - hike.io"
+		page = params[:page] ? Integer(params[:page]) : 1		
+		@featured_entry = Entry.first if page == 1
 
-	# need to support post due to infinite scrolling bug, see https://github.com/paulirish/infinite-scroll/issues/215
-	post "/discover", :provides => "html" do
-		request_photo_stream
+		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
+		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 2)
+		erb :photo_stream
 	end
 
 	get "/map", :provides => "html" do
@@ -184,21 +185,6 @@ class HikeApp < Sinatra::Base
 		pass unless @entry
 		@title = "#{@entry.name} - hike.io"
 		erb :entry
-	end
-
-
-	#
-	# Helper functions
-	#
-
-	def request_photo_stream
-		@title = "Discover - hike.io"
-		page = params[:page] ? Integer(params[:page]) : 1		
-		@featured_entry = Entry.first if page == 1
-
-		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@entries = Entry.where(:id => @featured_entry.id).invert.paginate(page, 4)
-		erb :photo_stream
 	end
 
 	 # start the server if ruby file executed directly
