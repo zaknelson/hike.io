@@ -38,9 +38,13 @@
 		});
 	};
 
+	var navigateToEntry = function(preview) {
+		window.location.href = preview.attr("id").split("preview-")[1];
+	}
+
 	var initPreviewClickHandler = function() {
 		$(".preview").click(function(event) {
-			window.location.href = $(event.currentTarget).attr("id").split("preview-")[1];
+			navigateToEntry($(event.currentTarget));
 		});
 	};
 
@@ -57,6 +61,9 @@
 			}},
 			function(newElements) {
 				$(newElements).css({opacity: 0});
+				$(newElements).click(function(event) {
+					navigateToEntry($(event.currentTarget));
+				});
 				$(newElements).imagesLoaded(function() {
 					$(newElements).animate({opacity: 1}, "fast", function() {
 						$(newElements).css("opacity", "");
