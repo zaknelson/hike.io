@@ -58,7 +58,9 @@
 			function(newElements) {
 				$(newElements).css({opacity: 0});
 				$(newElements).imagesLoaded(function() {
-					$(newElements).animate({opacity: 1});
+					$(newElements).animate({opacity: 1}, "fast", function() {
+						$(newElements).css("opacity", "");
+					});
 					$(".preview-list").masonry("reload");
 				});
 			} 
