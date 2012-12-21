@@ -41,9 +41,7 @@ a img { border: none; }
 
 img { display: block; }
 
-img::selection {
-	background: rgba(0, 0, 0, 0.0);
-}
+img::selection { background: rgba(0, 0, 0, 0.0); }
 
 h1 {
 	font-size: 48px;
