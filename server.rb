@@ -158,7 +158,6 @@ class HikeApp < Sinatra::Base
 			
 		else
 			@hide_search_header = true
-			@hide_main_container = true
 			@title = "hike.io - Find beautiful hikes"
 			erb :index
 		end
@@ -176,7 +175,6 @@ class HikeApp < Sinatra::Base
 
 	get "/map", :provides => "html" do
 		@title = "Map - hike.io"
-		@hide_main_container = true
 		erb :map
 	end
 

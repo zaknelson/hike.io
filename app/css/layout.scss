@@ -55,7 +55,7 @@ h1::selection, h2::selection, h3::selection, p::selection, td::selection, a::sel
 	color:#fff;
 }
 
-.main-container {
+.default-container {
 	overflow-x: hidden;
 	width: $container-width;
 	@include center();
@@ -66,5 +66,5 @@ h1::selection, h2::selection, h3::selection, p::selection, td::selection, a::sel
 }
 
 @media all and (max-width: $container-width) {
-	.main-container { width: 100%; }
+	.default-container { width: 100%; }
 }

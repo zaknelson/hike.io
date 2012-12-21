@@ -76,13 +76,7 @@ https://github.com/zaknelson/hike.io/
 				<input type="text" placeholder="Hike or location..."></input>
 			</div>
 		</div>
-		<%if not @hide_main_container %>
-		<div class="main-container">
-		<% end %>
-			<%= yield %>
-		<%if not @hide_main_container %>
-		</div>
-		<% end %>
+		<%= yield %>
 	</div>
 
 	<footer>
