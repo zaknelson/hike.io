@@ -3,6 +3,7 @@
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 10;
 			var maxColumnWidth = 340;
+			var minBoxes = 2;
 			$(".photo-thumb-list").fadeIn("fast");
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
@@ -10,6 +11,9 @@
 				isAnimated: false,
 				columnWidth: function(containerWidth) {
 					var boxes = Math.ceil(containerWidth / maxColumnWidth);
+					if (boxes < minBoxes) {
+						boxes = minBoxes;
+					}
 					var box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".photo-thumb").width(box_width);
 					return box_width;
