@@ -98,9 +98,9 @@ class HikeApp < Sinatra::Base
 			# Add any attributes provided
 			if attributes
 				attr_str = ""
-				attributes.each { |key, value|
+				attributes.each do |key, value|
 					attr_str += "#{key}=\"#{value}\" "
-				}
+				end
 				render_str.insert(4, " #{attr_str}");
 			end
 
@@ -147,15 +147,14 @@ class HikeApp < Sinatra::Base
 
 			search_executor = SearchExecutor.new
 			search_executor.query = @query
-			@best_entry = search_executor.execute
+			@entries = search_executor.execute
 
-			if @best_entry
-				redirect "/#{@best_entry.string_id}"
-			else 
+			if @entries.length == 0
 				@title = "Unable to find hike for #{@query}"
-				erb :search
+			elsif @entries.length == 1
+				redirect "/#{@entries[0].string_id}"
 			end
-			
+			erb :search
 		else
 			@hide_search_header = true
 			@title = "hike.io - Find beautiful hikes"
