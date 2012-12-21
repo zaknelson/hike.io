@@ -39,12 +39,13 @@
 		$(".search-div > input").keyup(function(e) {
 			switch (e.keyCode) {
 				case 27: // esc
+					toggleSearchBox();
+					break;
 				case 13: // return
 					var query = $.trim($(".search-div > input").val());
 					if (query.length > 0) {
 						window.location.href = "/?q=" + query;
 					}
-					
 					break;
 				default:
 					break;
