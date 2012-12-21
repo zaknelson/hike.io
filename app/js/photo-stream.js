@@ -3,27 +3,16 @@
 	var initMasonry = function() {
 		$(".preview-list").imagesLoaded(function() {
 			var gutterWidth = 2;
-			var max_desired_column_width = 350;
-			var max_width_for_one_column = 400;
-			var max_width_for_two_column = 680;
-
+			var max_column_width = 350;
 			$(".preview-list").fadeIn("fast");
 			$(".preview-list").masonry({
 				itemSelector: ".preview",
 				gutterWidth: gutterWidth,
 				isAnimated: false,
 				columnWidth: function(containerWidth) {
-					var boxes = 0;
-					if (containerWidth <= max_width_for_one_column) {
-						boxes = 1;
-					} else if (containerWidth <= max_width_for_two_column) {
-						boxes = 2;
-					} else {
-						boxes = Math.ceil(containerWidth / max_desired_column_width);
-					}
-					box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
+					var boxes = Math.ceil(containerWidth / max_column_width);
+					var box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".preview > div").width(box_width);
-
 					if (boxes != 1) {
 						$(".featured-box").width(box_width * 2 + gutterWidth);
 					}
