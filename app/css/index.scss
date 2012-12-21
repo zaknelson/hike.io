@@ -51,38 +51,20 @@
 	}
 
 	.content {
-		position: relative;
+		position: absolute;
 		top:30%;
-		left:0;
-		right:0;
 
 		width: 100%;
 		text-align: center;
 
-		/* http://stackoverflow.com/questions/11316651/margin-auto-0-not-working-on-ipad-safari */
-		> div {
-			display:table;
-			table-layout:fixed;
-			height:100%;
-			width:100%;
-
-			> div {
-				display:table-cell;
-				text-align:center;
-				vertical-align:middle;
-				width:100%;
-				position:relative;
-
-				input { 
-					border: 3px solid rgba(1, 1, 1, 0.3);
-					@include border-radius(2px, 2px);
-					font-size: 18px;
-					font-weight: 200;
-					padding: 7px;
-					width: 500px;
-					max-width: 80%;
-				}
-			}
+		input { 
+			border: 3px solid rgba(1, 1, 1, 0.3);
+			@include border-radius(2px, 2px);
+			font-size: 18px;
+			font-weight: 200;
+			padding: 7px;
+			width: 500px;
+			max-width: 80%;
 		}
 	}
 }
