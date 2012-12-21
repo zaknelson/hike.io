@@ -41,18 +41,13 @@ a img { border: none; }
 
 img { display: block; }
 
-::selection {
+img::selection {
 	background: rgba(0, 0, 0, 0.0);
 }
 
 h1 {
 	font-size: 48px;
 	font-weight: bold;
-}
-
-h1::selection, h2::selection, h3::selection, p::selection, td::selection, a::selection {
-	background:#444;
-	color:#fff;
 }
 
 .default-container {
