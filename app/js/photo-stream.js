@@ -21,14 +21,12 @@
 					} else {
 						boxes = Math.ceil(containerWidth / max_desired_column_width);
 					}
-
 					box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".preview > div").width(box_width);
 
 					if (boxes != 1) {
 						$(".featured-box").width(box_width * 2 + gutterWidth);
 					}
-					
 					return box_width;
 				}
 			});
