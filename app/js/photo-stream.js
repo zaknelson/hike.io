@@ -3,14 +3,14 @@
 	var initMasonry = function() {
 		$(".preview-list").imagesLoaded(function() {
 			var gutterWidth = 2;
-			var max_column_width = 350;
+			var maxColumnWidth = 350;
 			$(".preview-list").fadeIn("fast");
 			$(".preview-list").masonry({
 				itemSelector: ".preview",
 				gutterWidth: gutterWidth,
 				isAnimated: false,
 				columnWidth: function(containerWidth) {
-					var boxes = Math.ceil(containerWidth / max_column_width);
+					var boxes = Math.ceil(containerWidth / maxColumnWidth);
 					var box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".preview > div").width(box_width);
 					if (boxes != 1) {
