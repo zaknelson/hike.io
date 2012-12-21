@@ -2,21 +2,15 @@
 	var initMasonry = function() {
 		$(".photo-thumb-list").imagesLoaded(function() {
 			var gutterWidth = 10;
-			var imageWidth = 340;
-
-			console.log("Photos loaded.");
-
+			var maxColumnWidth = 340;
 			$(".photo-thumb-list").fadeIn("fast");
 			$(".photo-thumb-list").masonry({
 				itemSelector: ".photo-thumb",
 				gutterWidth: gutterWidth,
 				isAnimated: false,
 				columnWidth: function(containerWidth) {
-					if (Math.floor((containerWidth - gutterWidth) / 2) <= imageWidth) {
-						box_width = Math.floor((containerWidth - gutterWidth) / 2);
-					} else {
-						box_width = Math.floor((containerWidth - 2 * gutterWidth) / 3);
-					}	
+					var boxes = Math.ceil(containerWidth / maxColumnWidth);
+					var box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".photo-thumb").width(box_width);
 					return box_width;
 				}
