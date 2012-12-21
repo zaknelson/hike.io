@@ -3,11 +3,9 @@
 	var initMasonry = function() {
 		$(".preview-list").imagesLoaded(function() {
 			var gutterWidth = 2;
-
-			var one_column_threshold = 450;
-			var two_column_threshold = 340;
-
-			console.log("Previews loaded.");
+			var max_desired_column_width = 350;
+			var max_width_for_one_column = 400;
+			var max_width_for_two_column = 680;
 
 			$(".preview-list").fadeIn("fast");
 			$(".preview-list").masonry({
@@ -15,20 +13,19 @@
 				gutterWidth: gutterWidth,
 				isAnimated: false,
 				columnWidth: function(containerWidth) {
-					var one_column_width = containerWidth;
-					var two_column_width = Math.floor((containerWidth - gutterWidth) / 2);
-					var three_column_width = Math.floor((containerWidth - 2 * gutterWidth) / 3);
-					
-					if (one_column_width <= one_column_threshold) {
-						box_width = one_column_width;
-					} else if (two_column_width <= two_column_threshold) {
-						box_width = two_column_width;
+					var boxes = 0;
+					if (containerWidth <= max_width_for_one_column) {
+						boxes = 1;
+					} else if (containerWidth <= max_width_for_two_column) {
+						boxes = 2;
 					} else {
-						box_width = three_column_width;
+						boxes = Math.ceil(containerWidth / max_desired_column_width);
 					}
+
+					box_width = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 					$(".preview > div").width(box_width);
 
-					if (box_width != one_column_width) {
+					if (boxes != 1) {
 						$(".featured-box").width(box_width * 2 + gutterWidth);
 					}
 					
