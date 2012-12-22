@@ -7,6 +7,9 @@ class SearchExecutor < Executor
 	attr_accessor :search_results
 	attr_accessor :word_weight
 
+	WORD_MATCH_THRESHOLD = 0.35
+	BEST_WORD_THRESHOLD = 0.4
+
 	def validate
 		# Do nothing, anyone can perform run this executor
 	end
@@ -20,7 +23,7 @@ class SearchExecutor < Executor
 			keywords = Keyword.fetch("
 				SELECT *, similarity(?, keyword) AS similarity 
 				FROM keywords 
-				WHERE similarity(?, keyword) >= .35", word, word).all
+				WHERE similarity(?, keyword) >= ?", word, word, WORD_MATCH_THRESHOLD).all
 			keywords.each do |keyword|
 				keyword.entries.each do |entry|
 
@@ -48,7 +51,7 @@ class SearchExecutor < Executor
 
 	def output
 		if 	@search_results.length > 1 and
-			@search_results[0].relevance >= @search_results[1].relevance + 0.4 * @word_weight
+			@search_results[0].relevance >= @search_results[1].relevance + BEST_WORD_THRESHOLD * @word_weight
 			@search_results[0..0]
 		else
 			@search_results
