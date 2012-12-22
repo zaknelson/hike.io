@@ -1,4 +1,5 @@
 class Executor
+	attr_accessor :logger
 
 	def execute
 		validate

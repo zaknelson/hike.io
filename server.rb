@@ -52,6 +52,11 @@ class HikeApp < Sinatra::Base
 		config.sass_dir = "#{HikeApp.root}/app/css" 
 	end
 
+	# logging setup
+	configure :production, :development do
+    	enable :logging
+	end
+
 	assets {
 		prebuild true
 
@@ -146,14 +151,17 @@ class HikeApp < Sinatra::Base
 			@query = params["q"]
 
 			search_executor = SearchExecutor.new
+			search_executor.logger = logger
 			search_executor.query = @query
-			@entries = search_executor.execute
+			@search_results = search_executor.execute
 
-			if @entries.length == 0
+			if @search_results.length == 0
 				@title = "Unable to find hike for #{@query}"
-			elsif @entries.length == 1
-				redirect "/#{@entries[0].string_id}"
+			elsif @search_results.length == 1
+				redirect "/#{@search_results[0].entry.string_id}"
 			end
+
+			@title = "Search - hike.io"
 			erb :search
 		else
 			@hide_search_header = true

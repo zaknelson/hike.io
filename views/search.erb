@@ -1,12 +1,12 @@
 <article class="search-page">
-	<% if @entries.length == 0 %>
+	<% if @search_results.length == 0 %>
 	<h1>Unable to find hike "<%= @query %>"</h1>
-	<% elsif @entries.length > 0 %>
+	<% elsif @search_results.length > 0 %>
 	<h1>Did you mean?</h1>
 	<ul>
-		<% @entries.each do |entry| %>
+		<% @search_results.each do |search_result| %>
 			<li style="list-style-type: disc;">
-				<a href="/<%= entry.string_id %>"><%= entry.name %></a>
+				<a href="/<%= search_result.entry.string_id %>"><%= search_result.entry.name %></a>
 			</li>
 		<% end %>
 	</ul>
