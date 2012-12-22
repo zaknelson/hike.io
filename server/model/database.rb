@@ -4,10 +4,6 @@ require "sinatra/sequel"
 
 database = Sequel.connect(ENV["DATABASE_URL"] || "postgres://localhost/hikeio")
 
-if not ENV["DATABASE_URL"] and not system("psql -h localhost -l | grep -q hikeio")
-	system('psql -h localhost -c "CREATE DATABASE hikeio"')
-end
-
 migration "create pg_trgm extension" do
 	database.run "CREATE EXTENSION IF NOT EXISTS pg_trgm"
 end

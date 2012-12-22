@@ -1,2 +1,3 @@
+psql -h localhost -l | grep -q hikeio || psql -h localhost -c "CREATE DATABASE hikeio"
 npm start &
 ./server.rb
