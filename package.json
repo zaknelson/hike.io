@@ -1,12 +1,15 @@
 {
-  "name": "hike.io",
-  "version": "1.0.0",
-  "dependencies": {
-    "socket.io": "0.9.11",
-    "pg": "0.7.2"
-  },
-  "engines": {
-    "node": "0.8.x",
-    "npm": "1.1.x"
-  }
+	"name": "hike.io",
+	"version": "1.0.0",
+	"dependencies": {
+		"socket.io": "0.9.11",
+		"pg": "0.7.2"
+	},
+	"engines": {
+		"node": "0.8.x",
+		"npm": "1.1.x"
+	},
+	"scripts": {
+		"start": "node ./server/server"
+	}
 }
