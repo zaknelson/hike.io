@@ -8,6 +8,7 @@ end
 
 task :clean do
 	`psql -q -h localhost -c "DROP DATABASE hikeio" > /dev/null 2>&1`
+	`rm -rf .sass-cache`
 end
 
 task :run => [:build] do
