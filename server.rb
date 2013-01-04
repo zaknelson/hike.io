@@ -156,9 +156,7 @@ class HikeApp < Sinatra::Base
 			search_executor.query = @query
 			@search_results = search_executor.execute
 
-			if @search_results.length == 0
-				@title = "Unable to find hike for #{@query}"
-			elsif @search_results.length == 1
+			if search_executor.has_best_result
 				redirect "/#{@search_results[0].entry.string_id}"
 			end
 

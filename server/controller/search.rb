@@ -1,13 +1,23 @@
+require "logger"
+
 require_relative "executor"
+require_relative "../model/database"
 require_relative "../model/search_result"
 require_relative "../utils/keyword_utils"
 
 class SearchExecutor < Executor
+
+	# Input
 	attr_accessor :query
+	attr_accessor :logger
+
+	# Output
 	attr_accessor :search_results
+
+	# Internal
 	attr_accessor :word_weight
 
-	WORD_MATCH_THRESHOLD = 0.35
+	WORD_MATCH_THRESHOLD = 0.30
 	BEST_WORD_THRESHOLD = 0.4
 
 	def validate
@@ -50,12 +60,13 @@ class SearchExecutor < Executor
 	end
 
 	def output
-		if 	@search_results.length > 1 and
-			@search_results[0].relevance >= @search_results[1].relevance + BEST_WORD_THRESHOLD * @word_weight
-			@search_results[0..0]
-		else
-			@search_results
-		end
+		@search_results
+	end
+
+	def has_best_result
+	 	@search_results.length == 1 or 
+			(@search_results.length > 1 and 
+				@search_results[0].relevance >= @search_results[1].relevance + BEST_WORD_THRESHOLD * @word_weight)
 	end
 
 	def sort_search_results
