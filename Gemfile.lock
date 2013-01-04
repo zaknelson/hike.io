@@ -9,6 +9,7 @@ GEM
       sass (~> 3.1)
     eventmachine (0.12.10)
     fssm (0.2.9)
+    humanize (1.1.0)
     jsmin (1.0.1)
     newrelic_rpm (3.4.1)
     pg (0.14.1)
@@ -48,6 +49,7 @@ PLATFORMS
 
 DEPENDENCIES
   compass (= 0.12.2)
+  humanize (= 1.1.0)
   newrelic_rpm (= 3.4.1)
   pg (= 0.14.1)
   sass (= 3.2.1)
