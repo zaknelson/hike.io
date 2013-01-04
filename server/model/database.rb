@@ -2,7 +2,7 @@ require "rubygems"
 require "sinatra"
 require "sinatra/sequel"
 
-database = Sequel.connect(ENV["DATABASE_URL"] || "postgres://localhost/hikeio")
+set :database, ENV["DATABASE_URL"] || "postgres://localhost/hikeio"
 
 migration "create pg_trgm extension" do
 	database.run "CREATE EXTENSION IF NOT EXISTS pg_trgm"
