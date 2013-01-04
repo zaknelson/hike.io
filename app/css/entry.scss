@@ -93,6 +93,12 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 	}
 
+	@media all and (max-width: $mobile-width) {
+		.overview-section {
+			margin-top: 10px !important;
+		}
+	}
+
 	.photos-section {
 		.photo-thumb-list {
 			overflow-x: hidden;

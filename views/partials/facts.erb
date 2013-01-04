@@ -1,5 +1,5 @@
 <div class="overview-facts">
-	<div class="page-curl">
+	<div class="page-curl shadow-bottom">
 
 		<% for picture in entry.photos #TODO use proper "facts" photo rather than just the first thumb %>
 			<%= img "#{@entry_img_dir}/#{entry.string_id}/#{picture.path}-thumb.jpg", {:class => "shadow-light"} %>

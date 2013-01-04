@@ -1,42 +1,87 @@
 .page-curl {
-	position: relative;
-	float: left;
-	padding: 0;
-	border: 1px solid #efefef;
-	margin: 0px 15px 15px 15px;
 	background: #fff;
-	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
-	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; 
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	margin: 10px auto;
+	padding: 15px;
+	position: relative;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; 
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
 }
 
-.page-curl:before,
-.page-curl:after {
-	content: '';
-	z-index: -1;
+.page-curl:before, .page-curl:after {
+	background: none;
+	bottom: 12px;
+	-moz-box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+	content: "";
+	height: 10px;
+	left: 12px;
 	position: absolute;
-	left: 10px;
-	bottom: 10px;
-	width: 70%;
-	max-width: 300px; /* avoid rotation causing ugly appearance at large container widths */
-	max-height: 100px;
-	height: 55%;
-	-webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-	-webkit-transform: skew(-15deg) rotate(-6deg);
-	-moz-transform: skew(-15deg) rotate(-6deg);
-	-ms-transform: skew(-15deg) rotate(-6deg);
-	-o-transform: skew(-15deg) rotate(-6deg);
-	transform: skew(-15deg) rotate(-6deg);
+	width: 40%;
+	z-index: -1;
+	-moz-transform: skew(-4deg) rotate(-4deg);
+	-webkit-transform: skew(-4deg) rotate(-4deg);
+	transform: skew(-4deg) rotate(-4deg);
 }
 
 .page-curl:after {
+	-moz-transform: skew(4deg) rotate(4deg);
+	-webkit-transform: skew(4deg) rotate(4deg);
+	transform: skew(4deg) rotate(4deg);
 	left: auto;
-	right: 10px;
-	-webkit-transform: skew(15deg) rotate(6deg);
-	-moz-transform: skew(15deg) rotate(6deg);
-	-ms-transform: skew(15deg) rotate(6deg);
-	-o-transform: skew(15deg) rotate(6deg);
-	transform: skew(15deg) rotate(6deg);
+	right: 12px;
+}
+
+.page-curl.shadow-left {
+	background: -moz-linear-gradient(0deg, #F5F5F5 0%, #FFF 50%) !important;
+	background: -ms-linear-gradient(0deg, #F5F5F5 0%, #FFF 50%) !important;
+	background: -webkit-linear-gradient(0deg, #F5F5F5 0%, #FFF 50%) !important;
+	background: linear-gradient(0deg, #F5F5F5 0%, #FFF 50%) !important;
+}
+
+.page-curl.shadow-right {
+	background: -moz-linear-gradient(0deg, #FFF 50%, #F5F5F5 100%) !important;
+	background: -ms-linear-gradient(0deg, #FFF 50%, #F5F5F5 100%) !important;
+	background: -webkit-linear-gradient(0deg, #FFF 50%, #F5F5F5 100%) !important;
+	background: linear-gradient(0deg, #FFF 50%, #F5F5F5 100%) !important;
+}
+
+.shadow-bottom:before, .shadow-bottom:after {
+	top: auto;
+	bottom: 12px;
+	-moz-box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 10px 12px rgba(0, 0, 0, 0.5);
+}
+
+.shadow-left:after {
+	display: none;
+}
+
+.shadow-right:before {
+	display: none;
+}
+
+.shadow-top-bottom.shadow-left:after {
+	display: block;
+	bottom: auto;
+	top: 15px;
+	right: auto;
+	left: 12px;
+	-moz-box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
+}
+
+.shadow-top-bottom.shadow-right:before {
+	display: block;
+	bottom: auto;
+	top: 15px;
+	right: 12px;
+	left: auto;
+	-moz-box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.5);
 }

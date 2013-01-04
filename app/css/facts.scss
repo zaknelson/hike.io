@@ -7,7 +7,7 @@ $facts-mobile-width: 575px;
 .overview-facts {
 	float: right;
 	width: $facts-width;
-	margin: 0px 25px 0px 15px;
+	margin: 0px 15px 15px 15px;
 
 	img {
 		width: $facts-width - $facts-padding * 2;
@@ -45,17 +45,13 @@ $facts-mobile-width: 575px;
 		img {
 			width: 100px;
 			float: left;
-			margin-right: 10px;
+			margin-right: 15px;
 		}
 
 		> div {
-			padding: 10px;
-			width: $facts-width;
-			max-width: $facts-width;
+			padding: 10px 10px 20px 10px;
+			width: 80%;
 			position: relative;
-
-			left: 50%;
-			margin-left: -$facts-width / 2 - 10px;
 		}
 
 		table {
