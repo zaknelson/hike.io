@@ -11,4 +11,4 @@ Setup
 3. Install and open [Postgres.app](http://postgresapp.com)
 4. `npm install`
 5. `bundle install`
-6. `./hike-io`
+6. `rake`
