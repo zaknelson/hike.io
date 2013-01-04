@@ -116,14 +116,15 @@ class HikeApp < Sinatra::Base
 			# Naughty, naughty, sniffing the user agent. I'm not happy with any of the polyfills, 
 			# and really would like to use svgs for icons, so it must be done.
 			ua = request.user_agent
-			not (ua.include? "Android 2" or 
+			not (not ua or
+				 ua.include? "Android 2" or 
 				 ua.include? "MSIE 6" 	 or 
 				 ua.include? "MSIE 7" 	 or 
 				 ua.include? "MSIE 8")
 		end
 
 		def is_iPhone?
-			request.user_agent.include? "iPhone"
+			request.user_agent && (request.user_agent.include? "iPhone")
 		end
 
 	end
