@@ -13,7 +13,7 @@ end
 
 task :run => [:build] do
 	sh "npm start &"
-	sh "ruby server.rb"
+	sh "ruby server/server.rb"
 end
 
 task :test => [:build] do

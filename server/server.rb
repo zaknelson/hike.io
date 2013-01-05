@@ -12,21 +12,24 @@ require "sinatra/partial"
 require "will_paginate"
 require "will_paginate/sequel"
 
-require_relative "server/controller/search"
-require_relative "server/model/database"
-require_relative "server/view/localize"
+require_relative "controller/search"
+require_relative "model/database"
+require_relative "view/localize"
 
 configure :production do
 	require "newrelic_rpm"
 end
 
 configure :development do
-	require_relative "server/model/seeds"
+	require_relative "model/seeds"
 end
 
 class HikeApp < Sinatra::Base
 
-	set :root, File.dirname(__FILE__)
+	set :root, "#{File.dirname(__FILE__)}/../client"
+
+	# erb setup
+	set :views, "#{HikeApp.root}/html"
 
 	# will_paginate setup
 	register WillPaginate::Sinatra
@@ -37,7 +40,7 @@ class HikeApp < Sinatra::Base
 
 	# Sass setup 
 	set :sass, Compass.sass_engine_options
-	set :sass, { :load_paths => sass[:load_paths] + [ "#{HikeApp.root}/app/css" ] }
+	set :sass, { :load_paths => sass[:load_paths] + [ "#{HikeApp.root}/css" ] }
 	set :scss, sass
 
 	# content_for setup
@@ -49,7 +52,7 @@ class HikeApp < Sinatra::Base
 	# Compass setup
 	Compass.configuration do |config|
 		config.project_path = File.dirname(__FILE__)
-		config.sass_dir = "#{HikeApp.root}/app/css" 
+		config.sass_dir = "#{HikeApp.root}/css" 
 	end
 
 	# logging setup
@@ -59,6 +62,10 @@ class HikeApp < Sinatra::Base
 
 	assets {
 		prebuild true
+
+		serve '/js',     from: 'js'
+		serve '/css',    from: 'css'
+		serve '/images', from: 'images'
 
 		js :app, "/js/app.js", [
 			"/js/layout.js",
@@ -72,14 +79,13 @@ class HikeApp < Sinatra::Base
 			"/css/lib/*.css"
 		]
 
-		js_compression  :jsmin
+		js_compression :jsmin
    		css_compression :sass
 	}
 
 	helpers do
-
 		def root
-			File.dirname(__FILE__)
+			"#{File.dirname(__FILE__)}/../client"
 		end
 
 		# Assumes the svg file has already passed through the process_svg script
@@ -88,7 +94,7 @@ class HikeApp < Sinatra::Base
 			render_str = ""
 
 			if supports_svg?
-				render_str = File.open("#{root}/app/#{path}", "rb").read
+				render_str = File.open("#{root}/#{path}", "rb").read
 			else
 				# Remove the extension
 				arr = path.split(".")

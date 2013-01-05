@@ -1,6 +1,6 @@
 require "rack/test"
 require "test/unit"
-require_relative "../../server"
+require_relative "../server"
 
 class RoutesTest < Test::Unit::TestCase
 
