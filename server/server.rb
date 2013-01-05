@@ -90,22 +90,16 @@ class HikeApp < Sinatra::Base
 
 		# Assumes the svg file has already passed through the process_svg script
 		def render_svg(path, attributes=nil)
-
 			render_str = ""
-
 			if supports_svg?
 				render_str = File.open("#{root}/#{path}", "rb").read
 			else
-				# Remove the extension
+				# Remove the extension, and use the backup png
 				arr = path.split(".")
 				arr.pop
-
-				# Assumes we have a backup png
 				path = arr.join(".") + ".png"
-
 				render_str = img path;
 			end
-
 			# Add any attributes provided
 			if attributes
 				attr_str = ""
@@ -114,7 +108,6 @@ class HikeApp < Sinatra::Base
 				end
 				render_str.insert(4, " #{attr_str}");
 			end
-
 			render_str
 		end
 
@@ -129,7 +122,7 @@ class HikeApp < Sinatra::Base
 				 ua.include? "MSIE 8")
 		end
 
-		def is_iPhone?
+		def is_iphone?
 			request.user_agent && (request.user_agent.include? "iPhone")
 		end
 

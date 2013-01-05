@@ -14,11 +14,8 @@ class SearchExecutor < Executor
 	# Output
 	attr_accessor :search_results
 
-	# Internal
-	attr_accessor :word_weight
-
-	WORD_MATCH_THRESHOLD = 0.30
-	BEST_WORD_THRESHOLD = 0.4
+	KEYWORD_MATCH_THRESHOLD = 0.30
+	BEST_KEYWORD_THRESHOLD = 0.4
 
 	def validate
 		# Do nothing, anyone can perform run this executor
@@ -26,30 +23,11 @@ class SearchExecutor < Executor
 
 	def run
 		@search_results = []
-		result_set = {}
-		words = KeywordUtils.new.sanitize_to_keywords @query
-		@word_weight = 1.0 / words.length
-		words.each do |word|
-			keywords = Keyword.fetch("
-				SELECT *, similarity(?, keyword) AS similarity 
-				FROM keywords 
-				WHERE similarity(?, keyword) >= ?", word, word, WORD_MATCH_THRESHOLD).all
-			keywords.each do |keyword|
-				keyword.entries.each do |entry|
-
-					if result_set[entry.id]
-						search_result = result_set[entry.id]
-					else
-						search_result = SearchResult.new
-						search_result.entry = entry
-						search_result.relevance = 0
-						@search_results.push search_result
-					end
-
-					search_result.relevance += word_weight * keyword[:similarity]
-					result_set[entry.id] = search_result
-				end
-			end
+		@entry_search_result_hash = {}
+		keywords = KeywordUtils.new.sanitize_to_keywords @query
+		@word_weight = 1.0 / keywords.length
+		keywords.each do |keyword|
+			search_for_keyword keyword
 		end
 		sort_search_results
 
@@ -66,7 +44,30 @@ class SearchExecutor < Executor
 	def has_best_result
 	 	@search_results.length == 1 or 
 			(@search_results.length > 1 and 
-				@search_results[0].relevance >= @search_results[1].relevance + BEST_WORD_THRESHOLD * @word_weight)
+				@search_results[0].relevance >= @search_results[1].relevance + BEST_KEYWORD_THRESHOLD * @word_weight)
+	end
+
+	def search_for_keyword query_keyword
+		db_keywords = Keyword.fetch("
+			SELECT *, similarity(?, keyword) AS similarity 
+			FROM keywords 
+			WHERE similarity(?, keyword) >= ?", query_keyword, query_keyword, KEYWORD_MATCH_THRESHOLD).all
+		db_keywords.each do |db_keyword|
+			db_keyword.entries.each do |entry|
+
+				if @entry_search_result_hash[entry.id]
+					search_result = @entry_search_result_hash[entry.id]
+				else
+					search_result = SearchResult.new
+					search_result.entry = entry
+					search_result.relevance = 0
+					@search_results.push search_result
+				end
+
+				search_result.relevance += @word_weight * db_keyword[:similarity]
+				@entry_search_result_hash[entry.id] = search_result
+			end
+		end
 	end
 
 	def sort_search_results
