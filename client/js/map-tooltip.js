@@ -1,5 +1,6 @@
 (function() {
-
+	"use strict";
+	
 	var MapTooltip = function (entryData, marker) {
 		this.entryData = entryData;
 		this.marker = marker;
@@ -25,9 +26,9 @@
 		// The default location of the tooltip is anchored to the bottom-right of the marker. If that
 		// location would render the tooltip off the screen, relocate it.
 		var containerOffset = $(this.marker.getMap().getDiv()).offset();
-		var tooltipOffset = { 
-			top: containerOffset.top + markerPosition.y + buffer, 
-			left: containerOffset.left + markerPosition.x + buffer 
+		var tooltipOffset = {
+			top: containerOffset.top + markerPosition.y + buffer,
+			left: containerOffset.left + markerPosition.x + buffer
 		};
 
 		if (tooltipOffset.top + height + buffer > $(document).height()) {
@@ -42,7 +43,7 @@
 	};
 
 	MapTooltip.prototype.onRemove = function() {
-		this.div.remove()
+		this.div.remove();
 		this.div = null;
 	};
 

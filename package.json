@@ -2,6 +2,7 @@
 	"name": "hike.io",
 	"version": "1.0.0",
 	"dependencies": {
+		"jshint": "0.9.1",
 		"socket.io": "0.9.11",
 		"pg": "0.7.2"
 	},

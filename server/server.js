@@ -1,5 +1,7 @@
+"use strict";
+
 var io = require("socket.io").listen(8080);
-var pg = require('pg');
+var pg = require("pg");
 
 var connectionString = process.env.DATABASE_URL || "postgres://localhost/hikeio";
 
@@ -22,12 +24,11 @@ io.sockets.on("connection", function (socket) {
 		var queryString =  "SELECT entries.string_id, entries.name, locations.latitude, locations.longitude \
 							FROM locations, entries_locations, entries \
 							WHERE locations.latitude >= $1 AND \
-								  locations.latitude <= $2 AND "
-								  + longitudeWhereClause + " AND \
-								  entries_locations.location_id = locations.id AND \
-								  entries_locations.entry_id = entries.id \
+								locations.latitude <= $2 AND " + longitudeWhereClause + " AND \
+								entries_locations.location_id = locations.id AND \
+								entries_locations.entry_id = entries.id \
 							ORDER BY locations.latitude, locations.longitude;";
-		client.query(queryString, [ data.sw.latitude, data.ne.latitude, data.sw.longitude, data.ne.longitude] , function(err, result) {
+		client.query(queryString, [data.sw.latitude, data.ne.latitude, data.sw.longitude, data.ne.longitude], function(err, result) {
 			if (!result) {
 				console.log(err);
 				return;

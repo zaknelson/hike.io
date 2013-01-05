@@ -12,8 +12,12 @@ task :clean do
 end
 
 task :run => [:build] do
-	sh "npm start &"
-	sh "ruby server/server.rb"
+	system "npm start &"
+	system "ruby server/server.rb"
+end
+
+task :static do
+	system "node_modules/jshint/bin/hint --config config/jshint.json ."
 end
 
 task :test => [:build] do

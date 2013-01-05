@@ -1,0 +1,24 @@
+{
+	"multistr": true,
+	"camelcase": true,
+	"eqeqeq": true,
+	"forin": true,
+	"immed": true,
+	"indent": 4,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"nonew": true,
+	"quotmark": true,
+	"regexp": true,
+	"unused": true,
+	"strict": true,
+	"trailing": true,
+
+	"predef": ["google", "io", "Modernizr", "phantom"],
+	"browser": true,
+	"jquery": true,
+	"node": true,
+
+	"white": false
+}

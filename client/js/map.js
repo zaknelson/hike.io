@@ -1,5 +1,6 @@
 (function() {
-
+	"use strict";
+	
 	var map;
 	var markers;
 	var defaultMarker;
@@ -38,7 +39,7 @@
 			zoom: zoomLevel,
 			center: centerLatLng,
 			mapTypeId: google.maps.MapTypeId.TERRAIN
-		}
+		};
 
 		map = new google.maps.Map($(".map-container")[0], mapOptions);
 		markers = [];
@@ -46,21 +47,21 @@
 	};
 
 	var compareLatLng = function(a, b) {
-		if (a.lat() < b.lat()) 			{ return -1; }
-		else if (a.lat() > b.lat()) 	{ return 1;  }
-		else if (a.lng() < b.lng()) 	{ return -1; }
-		else if (a.lng() > b.lng()) 	{ return 1;  }
-		else 							{ return 0;  }
+		if (a.lat() < b.lat())			{	return -1;	}
+		else if (a.lat() > b.lat())		{	return 1;	}
+		else if (a.lng() < b.lng())		{	return -1;	}
+		else if (a.lng() > b.lng())		{	return 1;	}
+		else							{	return 0;	}
 	};
 
 	var addMarkerEvents = function(marker, entryData) {
 		var mapTooltip = null;
-		google.maps.event.addListener(marker, "mouseover", function(event) {
+		google.maps.event.addListener(marker, "mouseover", function() {
 			mapTooltip = new window.io.hike.MapTooltip(entryData, marker);
 			marker.setIcon(hoverMarker);
 		});
 				
-		google.maps.event.addListener(marker, "mouseout", function(event) {
+		google.maps.event.addListener(marker, "mouseout", function() {
 			if (mapTooltip) {
 				mapTooltip.destroy();
 				mapTooltip = null;
@@ -68,7 +69,8 @@
 			marker.setIcon(defaultMarker);
 		});
 
-		google.maps.event.addListener(marker, "click", function(event) {
+		google.maps.event.addListener(marker, "click", function() {
+			/*jshint camelcase:false */
 			window.location.href = entryData.string_id;
 		});
 	};
@@ -77,7 +79,7 @@
 		var i = 0;
 		var j = 0;
 		var newMarkers = [];
-		while (i != reponseData.length || j != markers.length) {
+		while (i !== reponseData.length || j !== markers.length) {
 			var newLatLng = null;
 			var oldMarker = null;
 			var oldLatLng = null;
@@ -120,16 +122,16 @@
 		google.maps.event.addListener(map, "idle", function() {
 			var mapBounds = map.getBounds();
 			var northEast = mapBounds.getNorthEast();
-			var northEastLatLng = { 
-				latitude: northEast.lat(), 
-				longitude: northEast.lng() 
+			var northEastLatLng = {
+				latitude: northEast.lat(),
+				longitude: northEast.lng()
 			};
 			var southWest = mapBounds.getSouthWest();
-			var southWestLatLng = { 
-				latitude: southWest.lat(), 
-				longitude: southWest.lng() 
+			var southWestLatLng = {
+				latitude: southWest.lat(),
+				longitude: southWest.lng()
 			};
-			socket.emit("get-hikes-in-bounds", { ne:northEastLatLng, sw:southWestLatLng });
+			socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
 		});
 		
 		socket.on("get-hikes-in-bounds", function (data) {
