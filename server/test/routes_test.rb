@@ -29,6 +29,16 @@ class RoutesTest < Test::Unit::TestCase
 		assert last_response.ok?
 	end
 
+	def test_photo_stream_page1_ok
+		get "/discover?page=1"
+		assert last_response.ok?
+	end
+
+	def test_photo_stream_page2_ok
+		get "/discover?page=2"
+		assert last_response.ok?
+	end
+
 	def test_missing_entry_not_found
 		get "/some-missing-entry"
 		assert last_response.not_found?
