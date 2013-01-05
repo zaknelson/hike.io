@@ -17,11 +17,16 @@ task :run => [:build] do
 end
 
 task :static do
-	puts "-----jshint----"
-	system "node_modules/jshint/bin/hint --config config/jshint.json ."
-	puts
-	puts "-----roodi-----"
-	system "roodi --config=config/roodi.yml server/**/**/**/**/**/**/**/**/**/**/*.rb"
+	output = `node_modules/jshint/bin/hint --config config/jshint.json .`
+	if not $?.success?
+		puts "----- jshint errors -----"
+		puts output
+	end
+	output = `roodi --config=config/roodi.yml server/**/**/**/**/**/**/**/**/**/**/*.rb`
+	if not $?.success?
+		puts "----- roodi errors -----"
+		puts output
+	end
 end
 
 task :test => [:build] do
