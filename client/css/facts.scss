@@ -11,6 +11,7 @@ $facts-mobile-width: 575px;
 
 	img {
 		width: $facts-width - $facts-padding * 2;
+		margin-bottom: 10px;
 	}
 
 	> div {
@@ -18,7 +19,6 @@ $facts-mobile-width: 575px;
 	}
 
 	table {
-		margin-top: 10px;
 		margin-left: 10px;
 		font-weight: 200;
 		font-size: 16px;
@@ -32,7 +32,10 @@ $facts-mobile-width: 575px;
 		tr td:nth-child(2) {
 			font-weight: 200;
 			padding-left: 15px;
-			padding-top: 6px;
+		}
+
+		tr:not(:first-child) td {
+			padding-top: 5px;
 		}
 	}
 }

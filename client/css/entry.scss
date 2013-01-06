@@ -49,8 +49,6 @@ $header-landscape-footer-height-mobile: 40px;
 		color: #333;
 
 		h2 {
-			font-weight: bold;
-			font-size: 36px;
 			padding-bottom: 10px;
 		}
 
@@ -70,6 +68,7 @@ $header-landscape-footer-height-mobile: 40px;
 		margin-top: 12px !important;
 
 		.overview-description {
+			width: 100%;
 			font-weight: 200;
 			font-size: 16px;
 			line-height: 24px;

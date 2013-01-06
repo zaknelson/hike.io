@@ -13,6 +13,7 @@ migration "create entries table" do
 		primary_key :id
 		String :string_id,				:null => false, :unique => true
 		String :name, 					:null => false
+		String :description 			#optional
 		Float :distance, 				:null => false
 		Float :elevation_gain,			:null => false
 		Time :creation_time, 			:null => false
@@ -37,6 +38,7 @@ migration "create location table" do
 		Float :latitude,				:null => false
 		Float :longitude,				:null => false
 		String :map_href,				:null => false
+		String :map_image				#optional
 
 		unique [:latitude, :longitude]
 	end

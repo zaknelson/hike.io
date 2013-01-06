@@ -9,36 +9,38 @@
 		<section class="overview-section">
 			<div class="overview-description">
 				<%= partial("partials/facts", :locals => { :entry => @entry })%>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-				<p>Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.</p>
-				<p>Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-				Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.
-				Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>
-			</div>
-			
-		</section>
-
-		<section class="photos-section">
-			<h2>Photos</h2>
-			<div class="photo-thumb-list">
-				<% for picture in @entry.photos %>
-					<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}.jpg" %>">
-						<div class="photo-thumb shadow-light">
-							<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}-thumb.jpg" %>
-						</div>
-					</a>
+				<% if @entry.description %>
+					<%= @entry.description %>
+				<% else %>
+					<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@entry.string_id}/edit" %>">editing this page</a>.</p>
 				<% end %>
 			</div>
 		</section>
 
-		<section class="map-section">
-			<h2>Map</h2>
-			<div>
-				<a href="<%= @entry.locations.first.map_href %>" target="_blank">
-					<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-topographic-map.jpg", {:class => "map"} %>
-				</a>
-			</div>
-		</section>
+		<% if @entry.photos.length > 0 %>
+			<section class="photos-section">
+				<h2>Photos</h2>
+				<div class="photo-thumb-list">
+					<% for picture in @entry.photos %>
+						<a class="fancybox-thumbs" rel="photos" href="<%= "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}.jpg" %>">
+							<div class="photo-thumb shadow-light">
+								<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{picture.path}-thumb.jpg" %>
+							</div>
+						</a>
+					<% end %>
+				</div>
+			</section>
+		<% end %>
+
+		<% if @entry.locations.first.map_image %>
+			<section class="map-section">
+				<h2>Map</h2>
+				<div>
+					<a href="<%= @entry.locations.first.map_href %>" target="_blank">
+						<%= img "@entry.locations.first.map_image", {:class => "map"} %>
+					</a>
+				</div>
+			</section>
+		<% end %>
 	</div>
 </article>
