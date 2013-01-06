@@ -3,7 +3,7 @@
 @import "compass/css3/box-sizing";
 
 $map-dimensions: 800px;
-$section-padding: 20px;
+$section-padding: 10px;
 $section-padding-mobile: 10px;
 $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
@@ -67,10 +67,11 @@ $header-landscape-footer-height-mobile: 40px;
 
 	.overview-section {
 		overflow: auto;
+		margin-top: 12px !important;
 
 		.overview-description {
 			font-weight: 200;
-			font-size: 18px;
+			font-size: 16px;
 			line-height: 24px;
 			color: #222;
 			float: left;
