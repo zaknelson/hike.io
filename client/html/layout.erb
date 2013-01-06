@@ -15,15 +15,11 @@ https://github.com/zaknelson/hike.io/
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-	<% if is_iphone? %>
-		<meta name="viewport" content="width=500"></meta>
-	<% else %>
-		<meta name="viewport" content="width=device-width"></meta>
-	<% end %>
+	<meta id="viewport" name="viewport" content="width=device-width"></meta>
 	<title><%= @title %></title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
 	<style>
-		/* Typekit specific classes to workaround flashing text issue, these must be loaded very early*/
+		/* Typekit specific classes to workaround flashing text issue, these must be loaded very early */
 		h1, h2, h3, li, p {
 			opacity: 0;
 		}
@@ -31,7 +27,25 @@ https://github.com/zaknelson/hike.io/
 			opacity: 1;
 		}
 	</style>
+	<script type="text/javascript">
+		var updateViewport = function() {
+			var minWidth = 450;
+			var width = screen.width
+			if (width < minWidth) {
+				var viewport = document.getElementById("viewport");
+				viewport.content = "width=" + minWidth;
+				updated = true;
+			}
+		};
+		updateViewport();
 
+		// Workaround for bug http://stackoverflow.com/questions/5021090/screen-width-android
+		var userAgent = navigator.userAgent.toLowerCase();
+		var isAndroidVersionWithBug = userAgent.indexOf("android 2.2") > -1 || userAgent.indexOf("android 2.3") > -1;
+		if (isAndroidVersionWithBug) {
+			setTimeout(updateViewport, 300);
+		}
+	</script>
 	<script type="text/javascript" src="//use.typekit.net/jce4miw.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<%= css :app %>
