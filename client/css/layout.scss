@@ -58,6 +58,8 @@ h3 {
 	line-height: 28px;
 }
 
+*:focus {outline: none;}
+
 .default-container {
 	overflow-x: hidden;
 	width: $container-width;

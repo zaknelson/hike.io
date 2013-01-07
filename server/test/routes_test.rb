@@ -39,6 +39,16 @@ class RoutesTest < Test::Unit::TestCase
 		assert last_response.ok?
 	end
 
+	def test_entry_ok
+		get "/scotchman-peak"
+		assert last_response.ok?
+	end
+
+	def test_entry_edit_ok
+		get "/scotchman-peak/edit"
+		assert last_response.ok?
+	end
+
 	def test_missing_entry_not_found
 		get "/some-missing-entry"
 		assert last_response.not_found?

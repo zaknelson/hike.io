@@ -8,11 +8,11 @@
 		<table>
 			<tr>
 				<td>Hike</td>
-				<td><%= entry.name %></td>
+				<td class="facts-entry-name" <% if editing %>contenteditable="true"<% end %>><p><%= entry.name %></p></td>
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td><%= entry.locations.first.name %></td>
+				<td <% if editing %>contenteditable="true"<% end %>><%= entry.locations.first.name %></td>
 			</tr>
 			<tr>
 				<td>Distance</td>

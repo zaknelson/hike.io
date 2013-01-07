@@ -17,7 +17,7 @@ task :run => [:build] do
 end
 
 task :static do
-	output = `node_modules/jshint/bin/hint --config config/jshint.json .`
+	output = `node_modules/jshint/bin/hint --config config/jshint.json client/js/*.js server/*.js`
 	if not $?.success?
 		puts "----- jshint errors -----"
 		puts output

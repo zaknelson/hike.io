@@ -185,6 +185,14 @@ class HikeApp < Sinatra::Base
 		erb :entry
 	end
 
+	get "/:entry_id/edit", :provides => "html" do
+		@entry = Entry[:string_id => params[:entry_id]]
+		pass unless @entry
+		@title = "Editing #{@entry.name} - hike.io"
+		@editing = true
+		erb :entry
+	end
+
 	 # start the server if ruby file executed directly
 	run! if app_file == $0
 end

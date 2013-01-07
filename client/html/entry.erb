@@ -1,16 +1,19 @@
-<article class="default-container entry-page">
+
+<article class="default-container entry-page <% if @editing %>editing<% end %>">
 	<div class="header-landscape">
 		<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-landscape.jpg", {:class => "shadow-light"} %>
 		<div>
-			<h1><%= @entry.name %></h1>
+			<h1 class="header-entry-name" <% if @editing %>contenteditable="true"<% end %>><%= @entry.name %></h1>
 		</div>
 	</div>
 	<div class="content">
 		<section class="overview-section">
 			<div class="overview-description">
-				<%= partial("partials/facts", :locals => { :entry => @entry })%>
+				<%= partial("partials/facts", :locals => { :entry => @entry, :editing =>  @editing })%>
 				<% if @entry.description %>
 					<%= @entry.description %>
+				<% elsif @editing %>
+					<p <% if @editing %>contenteditable="true"<% end %>>Click to add a description</p>
 				<% else %>
 					<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@entry.string_id}/edit" %>">editing this page</a>.</p>
 				<% end %>
