@@ -1,4 +1,9 @@
 
+<% if @editing %>
+	<div class="edit-banner">
+		<h3>You are editing this page</h3>
+	</div>
+<% end %>
 <article class="default-container entry-page <% if @editing %>editing<% end %>">
 	<div class="header-landscape">
 		<%= img "#{@entry_img_dir}/#{@entry.string_id}/#{@entry.string_id}-landscape.jpg", {:class => "shadow-light"} %>
