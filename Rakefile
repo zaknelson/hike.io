@@ -13,7 +13,7 @@ end
 
 task :run => [:build] do
 	system "npm start &"
-	system "ruby server/server.rb"
+	system "rackup -p 4567"
 end
 
 task :static do

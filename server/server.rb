@@ -125,94 +125,6 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	before do
-		if settings.environment == :development
-			@hike_img_dir = "/hike-images"
-			@landing_page_img_dir = "/landing-page-images"
-		else
-			@hike_img_dir = "http://assets.hike.io/hike-images"
-			@landing_page_img_dir = "http://assets.hike.io/landing-page-images"
-		end
-
-		@img_dir = "/images"
-		@title = "hike.io"
-	end
-
-
-	#
-	# Routes
-	#
-
-	get "/", :provides => "html" do
-		if (params["q"])
-			@query = params["q"]
-
-			search_executor = SearchExecutor.new
-			search_executor.logger = logger
-			search_executor.query = @query
-			@search_results = search_executor.execute
-
-			if search_executor.has_best_result
-				redirect "/#{@search_results[0].hike.string_id}"
-			end
-
-			@title = "Search - hike.io"
-			erb :search
-		else
-			@hide_search_header = true
-			@title = "hike.io - Find beautiful hikes"
-			erb :index
-		end
-	end
-
-	get "/discover", :provides => "html" do
-		@title = "Discover - hike.io"
-		page = params[:page] ? Integer(params[:page]) : 1		
-		@featured_hike = Hike.first if page == 1
-
-		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@hikes = Hike.where(:id => Hike.first.id).invert.paginate(page, 4)
-		erb :photo_stream
-	end
-
-	get "/map", :provides => "html" do
-		@title = "Map - hike.io"
-		erb :map
-	end
-
-	get "/api/v1/hikes", :provides => "json" do
-		Hike.all.to_json
-	end
-
-	get "/api/v1/hikes/:hike_id", :provides => "json" do
-		hike = get_hike_from_id params[:hike_id]
-		hike.to_json if hike
-	end
-
-	put "/api/v1/hikes/:hike_id", :provides => "json" do
-		hike = get_hike_from_id params[:hike_id]
-		if hike
-			hike.from_json request.body.string, :fields => ["name", "description"]
-			hike.save_changes
-			hike.to_json
-		end
-	end
-
-	get "/:hike_id", :provides => "html" do
-		@hike = Hike[:string_id => params[:hike_id]]
-		pass unless @hike
-		@title = "#{@hike.name} - hike.io"
-		erb :hike
-	end
-
-	get "/:hike_id/edit", :provides => "html" do
-		@hike = Hike[:string_id => params[:hike_id]]
-		pass unless @hike
-		@title = "Editing #{@hike.name} - hike.io"
-		@editing = true
-		erb :hike
-	end
-
 	def get_hike_from_id hike_id
 		hike = Hike[:string_id => hike_id]
 		if not hike and KeywordUtils.new.is_word_integer? hike_id
@@ -220,7 +132,7 @@ class HikeApp < Sinatra::Base
 		end
 		hike
 	end
-
-	 # start the server if ruby file executed directly
-	run! if app_file == $0
 end
+
+require_relative "routes/api_routes"
+require_relative "routes/html_routes"
