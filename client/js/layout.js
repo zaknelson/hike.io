@@ -6,10 +6,6 @@ _gaq.push(["_trackPageview"]);
 
 (function() {
 	"use strict";
-
-	// Namespace
-	window.io = window.io || {};
-	window.io.hike = window.io.hike || {};
 	
 	// Google analytics
 	var ga = document.createElement("script");
