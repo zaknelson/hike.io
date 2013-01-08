@@ -1,14 +1,9 @@
 require "rack/test"
 require "test/unit"
-require_relative "../server"
+require_relative "../test_case"
+require_relative "../../routes/html_routes"
 
-class RoutesTest < Test::Unit::TestCase
-
-	include Rack::Test::Methods
-
-	def app
-		HikeApp
-	end
+class HtmlRoutesTest < HikeAppTestCase
 
 	def setup
 		header "Accept", "text/html" 

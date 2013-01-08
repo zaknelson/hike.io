@@ -1,3 +1,5 @@
+require_relative "../server"
+
 class HikeApp < Sinatra::Base
 
 	before do

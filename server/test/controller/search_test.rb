@@ -1,10 +1,9 @@
 require "rack/test"
 require "test/unit"
+require_relative "../test_case"
 require_relative "../../../server/controller/search"
 
-class SearchExecutorTest < Test::Unit::TestCase
-
-	include Rack::Test::Methods
+class SearchExecutorTest < HikeAppTestCase
 
 	SCOTCHMAN_PEAK_ID	= "scotchman-peak"
 	PIKES_PEAK_ID		= "pikes-peak"
@@ -58,6 +57,7 @@ class SearchExecutorTest < Test::Unit::TestCase
 	def test_multiple_exact_matches
 		@executor.query = "Peak"
 		search_results = @executor.execute
+		assert !@executor.has_best_result
 		assert_equal search_results.length, 2
 		assert_equal search_results[0].hike.string_id, SCOTCHMAN_PEAK_ID
 		assert_equal search_results[1].hike.string_id, PIKES_PEAK_ID
@@ -90,5 +90,4 @@ class SearchExecutorTest < Test::Unit::TestCase
 		assert_equal search_results[0].relevance, relevance if relevance
 		assert_equal search_results[0].hike.string_id, string_id
 	end
-
 end
