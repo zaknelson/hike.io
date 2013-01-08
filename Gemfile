@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "compass", "0.12.2"
+gem "json", "1.7.6"
 gem "humanize", "1.1.0"
 gem "newrelic_rpm", "3.4.1"
 gem "pg", "0.14.1"

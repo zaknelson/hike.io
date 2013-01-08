@@ -53,6 +53,12 @@
 			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
 			//hikeJson.distance
 			//hikeJson.elevation_gain
+			$.ajax({
+				url: "/api/v1/hikes/" + hikeJson.string_id,
+				type: "PUT",
+				data: JSON.stringify(hikeJson),
+				dataType: "json"
+			});
 			console.log(hikeJson);
 		});
 	};

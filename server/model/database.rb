@@ -2,6 +2,8 @@ require "rubygems"
 require "sinatra"
 require "sinatra/sequel"
 
+Sequel::Model.plugin :json_serializer, :naked => true
+
 set :database, ENV["DATABASE_URL"] || "postgres://localhost/hikeio"
 
 migration "create pg_trgm extension" do

@@ -3,6 +3,7 @@
 require "rubygems"
 
 require "compass"
+require "json"
 require "sass"
 require "sinatra"
 require "sinatra/base" 
@@ -178,8 +179,22 @@ class HikeApp < Sinatra::Base
 		erb :map
 	end
 
-	get "/api/v1/hikes", :provides => "html" do
+	get "/api/v1/hikes", :provides => "json" do
+		Hike.all.to_json
+	end
 
+	get "/api/v1/hikes/:hike_id", :provides => "json" do
+		hike = get_hike_from_id params[:hike_id]
+		hike.to_json if hike
+	end
+
+	put "/api/v1/hikes/:hike_id", :provides => "json" do
+		hike = get_hike_from_id params[:hike_id]
+		if hike
+			hike.from_json request.body.string, :fields => ["name", "description", "location"]
+			hike.save_changes
+			hike.to_json
+		end
 	end
 
 	get "/:hike_id", :provides => "html" do
@@ -189,8 +204,6 @@ class HikeApp < Sinatra::Base
 		erb :hike
 	end
 
-
-
 	get "/:hike_id/edit", :provides => "html" do
 		@hike = Hike[:string_id => params[:hike_id]]
 		pass unless @hike
@@ -199,7 +212,13 @@ class HikeApp < Sinatra::Base
 		erb :hike
 	end
 
-
+	def get_hike_from_id hike_id
+		hike = Hike[:string_id => hike_id]
+		if not hike and KeywordUtils.new.is_word_integer? hike_id
+			hike = Hike[:id => Integer(hike_id)]
+		end
+		hike
+	end
 
 	 # start the server if ruby file executed directly
 	run! if app_file == $0
