@@ -8,19 +8,19 @@
 		<table>
 			<tr>
 				<td>Hike</td>
-				<td class="facts-hike-name" <% if editing %>contenteditable="true"<% end %>><p><%= hike.name %></p></td>
+				<td class="facts-hike-name single-line" <% if editing %>contenteditable="true"<% end %>><p><%= hike.name %></p></td>
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td <% if editing %>contenteditable="true"<% end %>><%= hike.locations.first.name %></td>
+				<td class="facts-hike-location single-line" <% if editing %>contenteditable="true"<% end %>><%= hike.locations.first.name %></td>
 			</tr>
 			<tr>
 				<td>Distance</td>
-				<td><%= distance_string hike.distance %></td>
+				<td class="facts-hike-distance single-line" data-io-hike-distance-kilometers="<%= hike.distance %>"></td>
 			</tr>
 			<tr>
 				<td>Elevation</td>
-				<td><%= elevation_string hike.elevation_gain %></td>
+				<td class="facts-hike-elevation single-line" data-io-hike-distance-meters="<%= hike.elevation_gain %>"></td>
 			</tr>
 			<tr>
 				<td>Lat / Lon</td>

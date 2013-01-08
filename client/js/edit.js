@@ -19,7 +19,7 @@
 			}
 		});
 
-		$("h1,td[contenteditable]").keypress(function(event) {
+		$(".single-line[contenteditable]").keypress(function(event) {
 			if (event.keyCode === 13) { // return
 				event.preventDefault();
 				$(event.target).blur();
