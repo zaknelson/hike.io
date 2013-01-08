@@ -2,6 +2,10 @@
 <% if @editing %>
 	<div class="edit-banner">
 		<h3>You are editing this page</h3>
+		<div>
+			<button type="button" class="save-button btn">Save</button>
+			<button type="button" class="cancel-button btn">Cancel</button>
+		</div>
 	</div>
 <% end %>
 <article class="default-container entry-page <% if @editing %>editing<% end %>">
@@ -13,15 +17,15 @@
 	</div>
 	<div class="content">
 		<section class="overview-section">
-			<div class="overview-description">
+			<div>
 				<%= partial("partials/facts", :locals => { :entry => @entry, :editing =>  @editing })%>
-				<% if @entry.description %>
-					<%= @entry.description %>
-				<% elsif @editing %>
-					<p <% if @editing %>contenteditable="true"<% end %>>Click to add a description</p>
-				<% else %>
-					<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@entry.string_id}/edit" %>">editing this page</a>.</p>
-				<% end %>
+				<div class="overview-description" <% if @editing %>contenteditable="true"<% end %>>
+					<% if @entry.description %>
+						<%= @entry.description %>
+					<% elsif not @editing %>
+						<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@entry.string_id}/edit" %>">editing this page</a>.</p>
+					<% end %>
+				<div>
 			</div>
 		</section>
 

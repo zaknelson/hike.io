@@ -2,13 +2,15 @@
 	"use strict";
 
 	var edited;
+	var savedSinceLastEdit;
 
 	var initEditableFields = function() {
 		$("[contenteditable]").on("blur keyup paste", function(event) {
 			var target = $(this);
 			if (event.type === "paste") {
 				var pasteData = event.originalEvent.clipboardData.getData("text/plain");
-				replaceSelectedText(pasteData);
+				var utils = new window.io.hike.ContentEditableUtils();
+				utils.replaceSelectedText(pasteData);
 				event.preventDefault();
 			}
 			if (target.data("before") !== target.html()) {
@@ -40,9 +42,38 @@
 		$(".facts-entry-name").change(entryNamedChanged);
 	};
 
-	var preventBackspaceFromNavigating = function() {
-		$(document).bind("keydown", function(event) {
-			if (event.keyCode === 8) {
+	var initSaveButton = function() {
+		$(".save-button").click(function() {
+			/*jshint camelcase:false */
+			var utils = new window.io.hike.ContentEditableUtils();
+
+			var entryJson = {};
+			entryJson.string_id = window.location.pathname.split(/\//)[1];
+			entryJson.name = $(".header-entry-name").text();
+			entryJson.description = utils.getTextFromContentEditable($(".overview-description"));
+			//entryJson.distance
+			//entryJson.elevation_gain
+			console.log(entryJson);
+		});
+	};
+
+	var initCancelButton = function() {
+		$(".cancel-button").click(function() {
+			window.location.href = window.location.href.replace(/\/edit/, "");
+		});
+	};
+
+	var initFocus = function() {
+		if ($(".overview-description").text().trim() === "") {
+			$(".overview-description").focus();
+		}
+	};
+
+	var initGlobalKeyBindings = function() {
+		$(document).keydown(function(event) {
+			if (event.keyCode === 8) { // delete
+
+				// Disable delete from accidentally navigating away from the page
 				var target = event.srcElement || event.target;
 				if (target === document.body) {
 					event.preventDefault();
@@ -51,27 +82,10 @@
 		});
 	};
 
-	var replaceSelectedText = function(replacementText) {
-		var range = null;
-		if (window.getSelection) {
-			var selection = window.getSelection();
-			console.log(selection)
-			if (selection.rangeCount) {
-				range = selection.getRangeAt(0);
-				range.deleteContents();
-				range.insertNode(document.createTextNode(replacementText));
-				selection.addRange(range);
-				selection.collapseToEnd();
-			}
-		} else if (document.selection && document.selection.createRange) {
-			range = document.selection.createRange();
-			range.text = replacementText;
-		}
-	};
-
 	var setEdited = function(isEdited) {
 		edited = isEdited;
 		if (isEdited) {
+			setSavedSinceLastEdit(false);
 			//window.onbeforeunload = function(event) {
 			//	return "You have unsaved changes.";
 		} else {
@@ -79,12 +93,20 @@
 		}
 	};
 
+	var setSavedSinceLastEdit = function(isSavedSinceLastEdit) {
+		savedSinceLastEdit = isSavedSinceLastEdit;
+	};
+
 	$(document).ready(function() {
 		if ($(".entry-page.editing").length) {
 			initEditableFields();
 			initEntryNameBinding();
-			preventBackspaceFromNavigating();
+			initSaveButton();
+			initCancelButton();
+			initFocus();
+			initGlobalKeyBindings();
 			setEdited(false);
+			setSavedSinceLastEdit(true);
 		}
 	});
 }

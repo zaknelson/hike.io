@@ -13,11 +13,25 @@ $edit-banner-height: 50px;
 		color: white;
 		line-height: $edit-banner-height;
 		margin-left: 10px;
+		display: inline;
+		font-size: 20px;
+		padding-left: 154px;
+		font-weight: bold;
+	}
+
+	div {
+		float: right;
+		display: inline;
+		padding: 8px 8px;
 	}
 }
 
 @media all and (max-width: $mobile-width) {
 	.edit-banner {
 		text-align: left;
+
+		h3 {
+			padding-left: 0px;
+		}
 	}
 }
