@@ -192,7 +192,7 @@ class HikeApp < Sinatra::Base
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = get_hike_from_id params[:hike_id]
 		if hike
-			hike.from_json request.body.string, :fields => ["name", "description", "location"]
+			hike.from_json request.body.string, :fields => ["name", "description"]
 			hike.save_changes
 			hike.to_json
 		end
