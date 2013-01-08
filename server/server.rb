@@ -15,7 +15,6 @@ require "will_paginate/sequel"
 
 require_relative "controller/search"
 require_relative "model/database"
-require_relative "view/localize"
 
 configure :production do
 	require "newrelic_rpm"
