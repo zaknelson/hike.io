@@ -30,7 +30,7 @@
 		else if ($.browser.mozilla || $.browser.opera || $.browser.msie) {
 			pre.find("br").replaceWith("\n");
 		}
-		return pre.text();
+		return pre.text().trim();
 	};
 
 	// Export
