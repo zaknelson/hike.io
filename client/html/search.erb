@@ -6,7 +6,7 @@
 	<ul>
 		<% @search_results.each do |search_result| %>
 			<li style="list-style-type: disc;">
-				<a href="/<%= search_result.entry.string_id %>"><%= search_result.entry.name %></a>
+				<a href="/<%= search_result.hike.string_id %>"><%= search_result.hike.name %></a>
 			</li>
 		<% end %>
 	</ul>

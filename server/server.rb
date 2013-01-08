@@ -125,10 +125,10 @@ class HikeApp < Sinatra::Base
 
 	before do
 		if settings.environment == :development
-			@entry_img_dir = "/hike-images"
+			@hike_img_dir = "/hike-images"
 			@landing_page_img_dir = "/landing-page-images"
 		else
-			@entry_img_dir = "http://assets.hike.io/hike-images"
+			@hike_img_dir = "http://assets.hike.io/hike-images"
 			@landing_page_img_dir = "http://assets.hike.io/landing-page-images"
 		end
 
@@ -151,7 +151,7 @@ class HikeApp < Sinatra::Base
 			@search_results = search_executor.execute
 
 			if search_executor.has_best_result
-				redirect "/#{@search_results[0].entry.string_id}"
+				redirect "/#{@search_results[0].hike.string_id}"
 			end
 
 			@title = "Search - hike.io"
@@ -166,10 +166,10 @@ class HikeApp < Sinatra::Base
 	get "/discover", :provides => "html" do
 		@title = "Discover - hike.io"
 		page = params[:page] ? Integer(params[:page]) : 1		
-		@featured_entry = Entry.first if page == 1
+		@featured_hike = Hike.first if page == 1
 
 		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@entries = Entry.where(:id => Entry.first.id).invert.paginate(page, 4)
+		@hikes = Hike.where(:id => Hike.first.id).invert.paginate(page, 4)
 		erb :photo_stream
 	end
 
@@ -178,20 +178,28 @@ class HikeApp < Sinatra::Base
 		erb :map
 	end
 
-	get "/:entry_id", :provides => "html" do
-		@entry = Entry[:string_id => params[:entry_id]]
-		pass unless @entry
-		@title = "#{@entry.name} - hike.io"
-		erb :entry
+	get "/api/v1/hikes", :provides => "html" do
+
 	end
 
-	get "/:entry_id/edit", :provides => "html" do
-		@entry = Entry[:string_id => params[:entry_id]]
-		pass unless @entry
-		@title = "Editing #{@entry.name} - hike.io"
-		@editing = true
-		erb :entry
+	get "/:hike_id", :provides => "html" do
+		@hike = Hike[:string_id => params[:hike_id]]
+		pass unless @hike
+		@title = "#{@hike.name} - hike.io"
+		erb :hike
 	end
+
+
+
+	get "/:hike_id/edit", :provides => "html" do
+		@hike = Hike[:string_id => params[:hike_id]]
+		pass unless @hike
+		@title = "Editing #{@hike.name} - hike.io"
+		@editing = true
+		erb :hike
+	end
+
+
 
 	 # start the server if ruby file executed directly
 	run! if app_file == $0

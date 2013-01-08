@@ -1,31 +1,31 @@
 <div class="overview-facts">
 	<div class="page-curl shadow-bottom">
 
-		<% for picture in entry.photos #TODO use proper "facts" photo rather than just the first thumb %>
-			<%= img "#{@entry_img_dir}/#{entry.string_id}/#{picture.path}-thumb.jpg", {:class => "shadow-light"} %>
+		<% for picture in hike.photos #TODO use proper "facts" photo rather than just the first thumb %>
+			<%= img "#{@hike_img_dir}/#{hike.string_id}/#{picture.path}-thumb.jpg", {:class => "shadow-light"} %>
 			<% break %>
 		<% end %>
 		<table>
 			<tr>
 				<td>Hike</td>
-				<td class="facts-entry-name" <% if editing %>contenteditable="true"<% end %>><p><%= entry.name %></p></td>
+				<td class="facts-hike-name" <% if editing %>contenteditable="true"<% end %>><p><%= hike.name %></p></td>
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td <% if editing %>contenteditable="true"<% end %>><%= entry.locations.first.name %></td>
+				<td <% if editing %>contenteditable="true"<% end %>><%= hike.locations.first.name %></td>
 			</tr>
 			<tr>
 				<td>Distance</td>
-				<td><%= distance_string entry.distance %></td>
+				<td><%= distance_string hike.distance %></td>
 			</tr>
 			<tr>
 				<td>Elevation</td>
-				<td><%= elevation_string entry.elevation_gain %></td>
+				<td><%= elevation_string hike.elevation_gain %></td>
 			</tr>
 			<tr>
 				<td>Lat / Lon</td>
 				<td>
-					<a href="<%= entry.locations.first.map_href %>" target="_blank"><%= "%0.3f" % entry.locations.first.latitude %>, <%= "%0.3f" % entry.locations.first.longitude %></a>
+					<a href="<%= hike.locations.first.map_href %>" target="_blank"><%= "%0.3f" % hike.locations.first.latitude %>, <%= "%0.3f" % hike.locations.first.longitude %></a>
 				</td>
 			</tr>
 		</table>

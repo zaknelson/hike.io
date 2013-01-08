@@ -39,22 +39,22 @@ class RoutesTest < Test::Unit::TestCase
 		assert last_response.ok?
 	end
 
-	def test_entry_ok
+	def test_hike_ok
 		get "/scotchman-peak"
 		assert last_response.ok?
 	end
 
-	def test_entry_edit_ok
+	def test_hike_edit_ok
 		get "/scotchman-peak/edit"
 		assert last_response.ok?
 	end
 
-	def test_missing_entry_not_found
-		get "/some-missing-entry"
+	def test_missing_hike_not_found
+		get "/some-missing-hike"
 		assert last_response.not_found?
 	end
 
-	def test_good_query_redirects_to_entry
+	def test_good_query_redirects_to_hike
 		get "/?q=scotchman%20peak"
 		assert last_response.redirect?
 		assert_equal last_response.location, "http://example.org/scotchman-peak"
@@ -68,8 +68,8 @@ class RoutesTest < Test::Unit::TestCase
 	end
 
 	def test_bad_query
-		get "/?q=somemissingentry"
+		get "/?q=somemissinghike"
 		assert last_response.ok?
-		assert last_response.body.include? "somemissingentry"
+		assert last_response.body.include? "somemissinghike"
 	end
 end

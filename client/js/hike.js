@@ -38,7 +38,7 @@
 	};
 
 	$(document).ready(function() {
-		if ($(".entry-page").length) {
+		if ($(".hike-page").length) {
 			initMasonry();
 			initFancybox();
 		}

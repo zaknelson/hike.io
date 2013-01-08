@@ -8,8 +8,8 @@ migration "create pg_trgm extension" do
 	database.run "CREATE EXTENSION IF NOT EXISTS pg_trgm"
 end
 
-migration "create entries table" do
-	database.create_table :entries do
+migration "create hikes table" do
+	database.create_table :hikes do
 		primary_key :id
 		String :string_id,				:null => false, :unique => true
 		String :name, 					:null => false
@@ -51,19 +51,19 @@ migration "create keywords table" do
 	end
 end
 
-migration "create entries_photos table" do
-	database.create_join_table(:entry_id => :entries, :photo_id => :photos)
+migration "create hikes_photos table" do
+	database.create_join_table(:hike_id => :hikes, :photo_id => :photos)
 end
 
-migration "create entries_locations table" do
-	database.create_join_table(:entry_id => :entries, :location_id => :locations)
+migration "create hikes_locations table" do
+	database.create_join_table(:hike_id => :hikes, :location_id => :locations)
 end
 
-migration "create entries_keywords table" do
-	database.create_join_table(:entry_id => :entries, :keyword_id => :keywords)
+migration "create hikes_keywords table" do
+	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
 end
 
-class Entry < Sequel::Model
+class Hike < Sequel::Model
 	many_to_many :photos
 	many_to_many :locations
 	many_to_many :keywords
@@ -76,5 +76,5 @@ class Location < Sequel::Model
 end
 
 class Keyword < Sequel::Model
-	many_to_many :entries
+	many_to_many :hikes
 end

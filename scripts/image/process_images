@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Process all the entries in ./input
+# Process all the hikes in ./input
 #
 
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -10,12 +10,12 @@ backup_folder=$current_dir/backup
 output_folder=$current_dir/output
 
 # Ensure input has the correct structure and has at least one file in it
-function validateEntryFolder {
-	entry_path=$1
+function validateHikeFolder {
+	hike_path=$1
 
-	landscape_folder=$entry_path/landscape
-	photos_folder=$entry_path/photos
-	preview_folder=$entry_path/preview
+	landscape_folder=$hike_path/landscape
+	photos_folder=$hike_path/photos
+	preview_folder=$hike_path/preview
 
 	if 	[ ! -d $landscape_folder ] 		|| [ ! "$(ls -A $landscape_folder/*)" ] || 
 		[ ! -d $photos_folder ] 		|| [ ! "$(ls -A $photos_folder/*)" ] || 
@@ -73,37 +73,37 @@ function clean {
 	cp $input_folder/.gitignore $output_folder
 }
 
-# Process an entry folder
-function processEntryFolder {
-	entry_path=$1
+# Process an hike folder
+function processHikeFolder {
+	hike_path=$1
 	
-	entry_id=`basename $entry_path`
-	landscape_folder=$entry_path/landscape
-	photos_folder=$entry_path/photos
-	preview_folder=$entry_path/preview
+	hike_id=`basename $hike_path`
+	landscape_folder=$hike_path/landscape
+	photos_folder=$hike_path/photos
+	preview_folder=$hike_path/preview
 
-	validateEntryFolder $entry_path
+	validateHikeFolder $hike_path
 
-	# Create folder for this entry
-	entry_output_folder=$output_folder/$entry_id
-	mkdir $entry_output_folder
+	# Create folder for this hike
+	hike_output_folder=$output_folder/$hike_id
+	mkdir $hike_output_folder
 
 	# Handle landscape
 	landscape_file=$landscape_folder/$(ls $landscape_folder | head -1)
-	magickConvertCrop 1024x341 $landscape_file $entry_output_folder/$entry_id-landscape.jpg
+	magickConvertCrop 1024x341 $landscape_file $hike_output_folder/$hike_id-landscape.jpg
 
 	# Handle preview
 	preview_file=$preview_folder/$(ls $preview_folder | head -1)
-	magickConvert 341x $preview_file $entry_output_folder/$entry_id-preview.jpg
-	magickConvertCrop 809x422 $preview_file $entry_output_folder/$entry_id-preview-large.jpg
+	magickConvert 341x $preview_file $hike_output_folder/$hike_id-preview.jpg
+	magickConvertCrop 809x422 $preview_file $hike_output_folder/$hike_id-preview-large.jpg
 
 	# Handle photos
 	for f in $photos_folder/*.*
 	do
 		filename=$(basename "$f")
 		filename="${filename%.*}"
-		magickConvertCrop 341x341 "$f" $entry_output_folder/$entry_id-$filename-thumb.jpg
-		magickConvert 1024x1024 "$f" $entry_output_folder/$entry_id-$filename.jpg
+		magickConvertCrop 341x341 "$f" $hike_output_folder/$hike_id-$filename-thumb.jpg
+		magickConvert 1024x1024 "$f" $hike_output_folder/$hike_id-$filename.jpg
 	done
 }
 
@@ -114,10 +114,10 @@ function processEntryFolder {
 
 clean
 
-for entry_path in $input_folder/*
+for hike_path in $input_folder/*
 do
-	if [ -d $entry_path ]; then
-		processEntryFolder $entry_path
+	if [ -d $hike_path ]; then
+		processHikeFolder $hike_path
 	fi
 done
 exit 0

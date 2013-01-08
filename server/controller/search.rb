@@ -23,7 +23,7 @@ class SearchExecutor < Executor
 
 	def run
 		@search_results = []
-		@entry_search_result_hash = {}
+		@hike_search_result_hash = {}
 		keywords = KeywordUtils.new.sanitize_to_keywords @query
 		@word_weight = 1.0 / keywords.length
 		keywords.each do |keyword|
@@ -33,7 +33,7 @@ class SearchExecutor < Executor
 
 		@logger.info "Search results for '#{@query}'"
 		@search_results.each do |search_result|
-			@logger.info "  #{search_result.entry.string_id} : #{search_result.relevance}"
+			@logger.info "  #{search_result.hike.string_id} : #{search_result.relevance}"
 		end
 	end
 
@@ -53,19 +53,19 @@ class SearchExecutor < Executor
 			FROM keywords 
 			WHERE similarity(?, keyword) >= ?", query_keyword, query_keyword, KEYWORD_MATCH_THRESHOLD).all
 		db_keywords.each do |db_keyword|
-			db_keyword.entries.each do |entry|
+			db_keyword.hikes.each do |hike|
 
-				if @entry_search_result_hash[entry.id]
-					search_result = @entry_search_result_hash[entry.id]
+				if @hike_search_result_hash[hike.id]
+					search_result = @hike_search_result_hash[hike.id]
 				else
 					search_result = SearchResult.new
-					search_result.entry = entry
+					search_result.hike = hike
 					search_result.relevance = 0
 					@search_results.push search_result
 				end
 
 				search_result.relevance += @word_weight * db_keyword[:similarity]
-				@entry_search_result_hash[entry.id] = search_result
+				@hike_search_result_hash[hike.id] = search_result
 			end
 		end
 	end

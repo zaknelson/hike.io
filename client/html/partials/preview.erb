@@ -1,25 +1,25 @@
-<div id="preview-<%= entry[:string_id] %>" class="preview">
+<div id="preview-<%= hike[:string_id] %>" class="preview">
 	
 	<% if defined? is_featured and is_featured %>
 		<div class="featured-box">
-			<%= img "#{@entry_img_dir}/#{entry.string_id}/#{entry.string_id}-preview-large.jpg" %>
+			<%= img "#{@hike_img_dir}/#{hike.string_id}/#{hike.string_id}-preview-large.jpg" %>
 	<% else %>
 		<div>
-			<%= img "#{@entry_img_dir}/#{entry.string_id}/#{entry.string_id}-preview.jpg" %>
+			<%= img "#{@hike_img_dir}/#{hike.string_id}/#{hike.string_id}-preview.jpg" %>
 	<% end %>
 		
 			<div class="preview-footer">
 				<div>
 					<div class="preview-title">
-						<%= entry.name %>
+						<%= hike.name %>
 					</div>
 					<div class="preview-location">
-						<%= entry.locations.first.name %>
+						<%= hike.locations.first.name %>
 					</div>
 				</div>
 				<div>
 					<div class="preview-distance">
-						<%= distance_string entry.distance %>
+						<%= distance_string hike.distance %>
 					</div>
 				</div>
 			</div>

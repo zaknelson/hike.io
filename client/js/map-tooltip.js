@@ -1,8 +1,8 @@
 (function() {
 	"use strict";
 	
-	var MapTooltip = function (entryData, marker) {
-		this.entryData = entryData;
+	var MapTooltip = function (hikeData, marker) {
+		this.hikeData = hikeData;
 		this.marker = marker;
 		this.setMap(this.marker.getMap());
 	};
@@ -15,7 +15,7 @@
 	};
 
 	MapTooltip.prototype.draw = function() {
-		this.div.text(this.entryData.name);
+		this.div.text(this.hikeData.name);
 		var buffer = 10;
 		var width = this.div.outerWidth();
 		var height = this.div.outerHeight();

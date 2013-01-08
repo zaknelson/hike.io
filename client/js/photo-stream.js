@@ -23,13 +23,13 @@
 		});
 	};
 
-	var navigateToEntry = function(preview) {
+	var navigateToHike = function(preview) {
 		window.location.href = preview.attr("id").split("preview-")[1];
 	};
 
 	var initPreviewClickHandler = function() {
 		$(".preview").click(function(event) {
-			navigateToEntry($(event.currentTarget));
+			navigateToHike($(event.currentTarget));
 		});
 	};
 
@@ -48,7 +48,7 @@
 			function(newElements) {
 				$(newElements).css({opacity: 0});
 				$(newElements).click(function(event) {
-					navigateToEntry($(event.currentTarget));
+					navigateToHike($(event.currentTarget));
 				});
 				$(newElements).imagesLoaded(function() {
 					$(newElements).animate({opacity: 1}, "fast", function() {

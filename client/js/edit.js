@@ -29,17 +29,17 @@
 		});
 	};
 
-	var initEntryNameBinding = function() {
-		var entryNamedChanged = function(event) {
-			if (event.target === $(".header-entry-name")[0]) {
-				$(".facts-entry-name").text($(".header-entry-name").text());
+	var initHikeNameBinding = function() {
+		var hikeNamedChanged = function(event) {
+			if (event.target === $(".header-hike-name")[0]) {
+				$(".facts-hike-name").text($(".header-hike-name").text());
 			} else {
-				$(".header-entry-name").text($(".facts-entry-name").text());
+				$(".header-hike-name").text($(".facts-hike-name").text());
 			}
 		};
 
-		$(".header-entry-name").change(entryNamedChanged);
-		$(".facts-entry-name").change(entryNamedChanged);
+		$(".header-hike-name").change(hikeNamedChanged);
+		$(".facts-hike-name").change(hikeNamedChanged);
 	};
 
 	var initSaveButton = function() {
@@ -47,13 +47,13 @@
 			/*jshint camelcase:false */
 			var utils = new window.io.hike.ContentEditableUtils();
 
-			var entryJson = {};
-			entryJson.string_id = window.location.pathname.split(/\//)[1];
-			entryJson.name = $(".header-entry-name").text();
-			entryJson.description = utils.getTextFromContentEditable($(".overview-description"));
-			//entryJson.distance
-			//entryJson.elevation_gain
-			console.log(entryJson);
+			var hikeJson = {};
+			hikeJson.string_id = window.location.pathname.split(/\//)[1];
+			hikeJson.name = $(".header-hike-name").text();
+			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
+			//hikeJson.distance
+			//hikeJson.elevation_gain
+			console.log(hikeJson);
 		});
 	};
 
@@ -98,9 +98,9 @@
 	};
 
 	$(document).ready(function() {
-		if ($(".entry-page.editing").length) {
+		if ($(".hike-page.editing").length) {
 			initEditableFields();
-			initEntryNameBinding();
+			initHikeNameBinding();
 			initSaveButton();
 			initCancelButton();
 			initFocus();

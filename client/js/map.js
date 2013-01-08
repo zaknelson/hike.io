@@ -54,10 +54,10 @@
 		else							{	return 0;	}
 	};
 
-	var addMarkerEvents = function(marker, entryData) {
+	var addMarkerEvents = function(marker, hikeData) {
 		var mapTooltip = null;
 		google.maps.event.addListener(marker, "mouseover", function() {
-			mapTooltip = new window.io.hike.MapTooltip(entryData, marker);
+			mapTooltip = new window.io.hike.MapTooltip(hikeData, marker);
 			marker.setIcon(hoverMarker);
 		});
 				
@@ -71,7 +71,7 @@
 
 		google.maps.event.addListener(marker, "click", function() {
 			/*jshint camelcase:false */
-			window.location.href = entryData.string_id;
+			window.location.href = hikeData.string_id;
 		});
 	};
 

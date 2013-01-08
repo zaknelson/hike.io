@@ -34,8 +34,8 @@ class SearchExecutorTest < Test::Unit::TestCase
 		# Scotchman should be ranked above Pike's Peak
 		assert !@executor.has_best_result
 		assert_equal search_results.length, 2
-		assert_equal search_results[0].entry.string_id, SCOTCHMAN_PEAK_ID
-		assert_equal search_results[1].entry.string_id, PIKES_PEAK_ID
+		assert_equal search_results[0].hike.string_id, SCOTCHMAN_PEAK_ID
+		assert_equal search_results[1].hike.string_id, PIKES_PEAK_ID
 		assert search_results[0].relevance > search_results[1].relevance
 	end
 
@@ -59,8 +59,8 @@ class SearchExecutorTest < Test::Unit::TestCase
 		@executor.query = "Peak"
 		search_results = @executor.execute
 		assert_equal search_results.length, 2
-		assert_equal search_results[0].entry.string_id, SCOTCHMAN_PEAK_ID
-		assert_equal search_results[1].entry.string_id, PIKES_PEAK_ID
+		assert_equal search_results[0].hike.string_id, SCOTCHMAN_PEAK_ID
+		assert_equal search_results[1].hike.string_id, PIKES_PEAK_ID
 		assert search_results[0].relevance = search_results[1].relevance
 	end
 
@@ -88,7 +88,7 @@ class SearchExecutorTest < Test::Unit::TestCase
 	def validate_best_result search_results, string_id, relevance = nil
 		assert @executor.has_best_result
 		assert_equal search_results[0].relevance, relevance if relevance
-		assert_equal search_results[0].entry.string_id, string_id
+		assert_equal search_results[0].hike.string_id, string_id
 	end
 
 end

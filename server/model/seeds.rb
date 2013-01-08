@@ -1,7 +1,7 @@
 require_relative "database"
 
 migration "seed scotchman peak" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "scotchman-peak",
 		:name => "Scotchman Peak",
 		:description => "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p><p>Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.</p><p>Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>",
@@ -11,7 +11,7 @@ migration "seed scotchman peak" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "North Idaho, USA",
 		:latitude => 48.177534,
 		:longitude => -116.089783,
@@ -19,21 +19,21 @@ migration "seed scotchman peak" do
 		:map_image => "scotchman-peak/scotchman-peak-topographic-map.jpg"
 		))
 
-	entry.add_photo(Photo.create(:path => "scotchman-peak-trees"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-mountain-goat"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-wildflower"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-meadow"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-pend-orielle"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-zak"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-hikers"))
-	entry.add_photo(Photo.create(:path => "scotchman-peak-dead-tree"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-trees"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-mountain-goat"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-wildflower"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-meadow"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-pend-orielle"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-zak"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-hikers"))
+	hike.add_photo(Photo.create(:path => "scotchman-peak-dead-tree"))
 
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Scotchman"))
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Scotchman"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
 end
 
 migration "seed mt kilamanjaro" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "mt-kilimanjaro",
 		:name => "Mt. Kilimanjaro",
 		:distance => 50,
@@ -42,19 +42,19 @@ migration "seed mt kilamanjaro" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Tanzania",
 		:latitude => 58.177534,
 		:longitude => -120.089783,
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"
 		))
 
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
 end
 
 migration "seed lake 22" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "lake-22",
 		:name => "Lake 22",
 		:distance => 18,
@@ -63,19 +63,19 @@ migration "seed lake 22" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Washington, USA",
 		:latitude => 58.177534,
 		:longitude => -118.089783,
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"
 		))
 
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
 end
 
 migration "seed pikes peak" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "pikes-peak",
 		:name => "Pike's Peak",
 		:distance => 28,
@@ -84,19 +84,19 @@ migration "seed pikes peak" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Colorado, USA",
 		:latitude => 58.277534,
 		:longitude => -118.289783,
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A"
 		))
 
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
-	entry.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
 end
 
 migration "seed north kaibab trail" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "north-kaibab-trail",
 		:name => "North Kaibab Trail",
 		:distance => 22,
@@ -105,7 +105,7 @@ migration "seed north kaibab trail" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Colorado, USA",
 		:latitude => 70.277534,
 		:longitude => -118.289783,
@@ -114,7 +114,7 @@ migration "seed north kaibab trail" do
 end
 
 migration "seed king arthurs seat" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "king-arthurs-seat",
 		:name => "King Arthur's Seat",
 		:distance => 22,
@@ -123,7 +123,7 @@ migration "seed king arthurs seat" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Edinburgh, Scotland",
 		:latitude => 71.277534,
 		:longitude => -118.289783,
@@ -133,7 +133,7 @@ end
 
 
 migration "seed snoqualmie middle fork" do
-	entry = Entry.create(
+	hike = Hike.create(
 		:string_id => "snoqualmie-middle-fork",
 		:name => "Snoqualmie Middle Fork",
 		:distance => 22,
@@ -142,7 +142,7 @@ migration "seed snoqualmie middle fork" do
 		:edit_time => Time.now
 		)
 
-	entry.add_location(Location.create(
+	hike.add_location(Location.create(
 		:name => "Washington, USA",
 		:latitude => 72.277534,
 		:longitude => -118.289783,

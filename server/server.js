@@ -21,12 +21,12 @@ io.sockets.on("connection", function (socket) {
 			longitudeWhereClause = "(locations.longitude >= $3 OR locations.longitude <= $4)";
 		}
 
-		var queryString =  "SELECT entries.string_id, entries.name, locations.latitude, locations.longitude \
-							FROM locations, entries_locations, entries \
+		var queryString =  "SELECT hikes.string_id, hikes.name, locations.latitude, locations.longitude \
+							FROM locations, hikes_locations, hikes \
 							WHERE locations.latitude >= $1 AND \
 								locations.latitude <= $2 AND " + longitudeWhereClause + " AND \
-								entries_locations.location_id = locations.id AND \
-								entries_locations.entry_id = entries.id \
+								hikes_locations.location_id = locations.id AND \
+								hikes_locations.hike_id = hikes.id \
 							ORDER BY locations.latitude, locations.longitude;";
 		client.query(queryString, [data.sw.latitude, data.ne.latitude, data.sw.longitude, data.ne.longitude], function(err, result) {
 			if (!result) {

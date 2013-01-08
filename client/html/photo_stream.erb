@@ -1,13 +1,13 @@
 <article class="photo-stream-page">
 	<div class="preview-list">
-		<% if @featured_entry %>
-			<%= partial("partials/preview", :locals => { :entry => @featured_entry, :is_featured => true })%>
+		<% if @featured_hike %>
+			<%= partial("partials/preview", :locals => { :hike => @featured_hike, :is_featured => true })%>
 		<% end %>
-		<% for entry in @entries %>
-			<%= partial("partials/preview", :locals => { :entry => entry })%>
+		<% for hike in @hikes %>
+			<%= partial("partials/preview", :locals => { :hike => hike })%>
 		<% end %>
 	</div>
 	<div class="pagination-links">
-		<%= will_paginate @entries %>
+		<%= will_paginate @hikes %>
 	</div>
 </article>
