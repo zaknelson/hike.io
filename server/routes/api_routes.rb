@@ -1,5 +1,7 @@
+require_relative "../server"
+
 class HikeApp < Sinatra::Base
-	
+
 	get "/api/v1/hikes", :provides => "json" do
 		Hike.all.to_json
 	end
