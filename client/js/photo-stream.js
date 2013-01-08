@@ -1,5 +1,10 @@
 (function() {
 	"use strict";
+
+	var initLocalizedStrings = function() {
+		var utils = new window.io.hike.LocalizeUtils();
+		utils.localize();
+	};
 	
 	var initMasonry = function() {
 		$(".preview-list").imagesLoaded(function() {
@@ -46,6 +51,8 @@
 				}
 			},
 			function(newElements) {
+				var utils = new window.io.hike.LocalizeUtils();
+				utils.localize($(newElements).find(".preview-distance"));
 				$(newElements).css({opacity: 0});
 				$(newElements).click(function(event) {
 					navigateToHike($(event.currentTarget));
@@ -65,6 +72,7 @@
 
 	$(document).ready(function() {
 		if ($(".photo-stream-page").length) {
+			initLocalizedStrings();
 			initMasonry();
 			initPreviewClickHandler();
 			initInfiniteScroll();

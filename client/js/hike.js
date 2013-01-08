@@ -1,5 +1,10 @@
 (function() {
 	"use strict";
+
+	var initLocalizedStrings = function() {
+		var utils = new window.io.hike.LocalizeUtils();
+		utils.localize();
+	};
 	
 	var initMasonry = function() {
 		$(".photo-thumb-list").imagesLoaded(function() {
@@ -39,6 +44,7 @@
 
 	$(document).ready(function() {
 		if ($(".hike-page").length) {
+			initLocalizedStrings();
 			initMasonry();
 			initFancybox();
 		}
