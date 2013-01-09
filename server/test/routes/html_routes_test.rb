@@ -67,4 +67,10 @@ class HtmlRoutesTest < HikeAppTestCase
 		assert last_response.ok?
 		assert last_response.body.include? "somemissinghike"
 	end
+
+	def test_trailing_slash_redirects
+		get "/scotchman-peak/"
+		assert last_response.redirect?
+		assert_equal last_response.location, "http://example.org/scotchman-peak"
+	end
 end

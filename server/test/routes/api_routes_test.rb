@@ -47,6 +47,11 @@ class ApiRoutesTest < HikeAppTestCase
 		put_data data
 	end
 
+	def test_trailing_slash_doesnt_redirect
+		get "/api/v1/hikes/"
+		assert last_response.not_found?
+	end
+
 	def put_data data
 		put "/api/v1/hikes/scotchman-peak", data.to_json
 
