@@ -36,6 +36,12 @@ class ApiRoutesTest < HikeAppTestCase
 		newName = "New name"
 		data = {:name => newName}
 		put "/api/v1/hikes/scotchman-peak", data.to_json
+
+		json = JSON.parse(last_response.body)
+		assert_equal json["string_id"], "scotchman-peak"
+		assert_equal json["name"], newName
+
+		get "/api/v1/hikes/scotchman-peak"
 		json = JSON.parse(last_response.body)
 		assert_equal json["string_id"], "scotchman-peak"
 		assert_equal json["name"], newName
