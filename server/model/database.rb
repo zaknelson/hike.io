@@ -16,6 +16,7 @@ migration "create hikes table" do
 		String :string_id,				:null => false, :unique => true
 		String :name, 					:null => false
 		String :description 			#optional
+		String :locality,				:null => false
 		Float :distance, 				:null => false
 		Float :elevation_gain,			:null => false
 		Time :creation_time, 			:null => false
@@ -33,16 +34,20 @@ migration "create photos table" do
 	end
 end
 
-migration "create location table" do
+migration "create locations table" do
 	database.create_table :locations do
 		primary_key :id
-		String :name,					:null => false
 		Float :latitude,				:null => false
 		Float :longitude,				:null => false
-		String :map_href,				:null => false
-		String :map_image				#optional
 
 		unique [:latitude, :longitude]
+	end
+end
+
+migration "create maps table" do
+	database.create_table :maps do
+		primary_key :id
+		String :image_path, 			:null => false, :unique => true
 	end
 end
 
@@ -57,9 +62,13 @@ migration "create hikes_photos table" do
 	database.create_join_table(:hike_id => :hikes, :photo_id => :photos)
 end
 
-migration "create hikes_locations table" do
-	database.create_join_table(:hike_id => :hikes, :location_id => :locations)
+migration "create hikes_maps table" do
+	database.create_join_table(:hike_id => :hikes, :map_id => :maps)
 end
+
+#migration "create hikes_locations table" do
+#	database.create_join_table(:hike_id => :hikes, :location_id => :locations)
+#end
 
 migration "create hikes_keywords table" do
 	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
@@ -67,14 +76,18 @@ end
 
 class Hike < Sequel::Model
 	many_to_many :photos
-	many_to_many :locations
+	many_to_many :maps
 	many_to_many :keywords
+	many_to_one :canonical_location, :class => :Location, :key => :id
 end
 
 class Photo < Sequel::Model
 end
 
 class Location < Sequel::Model
+end
+
+class Map < Sequel::Model
 end
 
 class Keyword < Sequel::Model

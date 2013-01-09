@@ -12,7 +12,7 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td class="facts-hike-location single-line" <% if editing %>contenteditable="true"<% end %>><%= hike.locations.first.name %></td>
+				<td class="facts-hike-location single-line" <% if editing %>contenteditable="true"<% end %>><%= hike.locality %></td>
 			</tr>
 			<tr>
 				<td>Distance</td>
@@ -35,7 +35,7 @@
 			<tr>
 				<td>Lat / Lon</td>
 				<td>
-					<a href="<%= hike.locations.first.map_href %>" target="_blank"><%= "%0.3f" % hike.locations.first.latitude %>, <%= "%0.3f" % hike.locations.first.longitude %></a>
+					<%= "%0.3f" % hike.canonical_location.latitude %>, <%= "%0.3f" % hike.canonical_location.longitude %></a>
 				</td>
 			</tr>
 		</table>
