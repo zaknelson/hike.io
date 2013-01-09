@@ -49,7 +49,7 @@
 				<h2>Map</h2>
 				<div>
 					<a href="<%= @hike.locations.first.map_href %>" target="_blank">
-						<%= img "@hike.locations.first.map_image", {:class => "map"} %>
+						<%= img "#{@hike_img_dir}/#{@hike.string_id}/#{@hike.locations.first.map_image}", {:class => "map"} %>
 					</a>
 				</div>
 			</section>

@@ -16,7 +16,7 @@ migration "seed scotchman peak" do
 		:latitude => 48.177534,
 		:longitude => -116.089783,
 		:map_href => "https://maps.google.com/maps?q=Scotchman's+Peak,+ID+83811&hl=en&sll=48.177534,-116.089783&sspn=0.489924,0.495071&t=h&hq=Scotchman's+Peak,&hnear=Clark+Fork,+Bonner,+Idaho&ie=UTF8&ll=48.166314,-116.06987&spn=0.245015,0.247536&z=12&vpsrc=6&cid=1851277074294752467&iwloc=A",
-		:map_image => "scotchman-peak/scotchman-peak-topographic-map.jpg"
+		:map_image => "scotchman-peak-topographic-map.jpg"
 		))
 
 	hike.add_photo(Photo.create(:path => "scotchman-peak-trees"))
