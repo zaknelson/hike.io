@@ -2,7 +2,7 @@
 	"use strict";
 	
 	var initLocalizedStrings = function() {
-		var utils = new window.io.hike.LocalizeUtils();
+		var utils = new window.hikeio.LocalizeUtils();
 		var localizedDistance = utils.localize($(".facts-hike-distance"));
 		$(".facts-hike-distance-value").html(localizedDistance.value);
 		$(".facts-hike-distance-units").html(localizedDistance.units);

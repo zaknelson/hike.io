@@ -46,7 +46,7 @@
 				}
 			},
 			function(newElements) {
-				var utils = new window.io.hike.LocalizeUtils();
+				var utils = new window.hikeio.LocalizeUtils();
 				var elementsToLocalize = $(newElements).find(".preview-distance");
 				elementsToLocalize.each(function(i){
 					var element = $(elementsToLocalize[i])

@@ -52,6 +52,6 @@
 	};
 
 	// Export
-	window.io.hike.MapTooltip = MapTooltip;
+	window.hikeio.MapTooltip = MapTooltip;
 }
 )();

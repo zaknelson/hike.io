@@ -25,6 +25,6 @@
 	};
 
 	// Export
-	window.io.hike.LocalizeUtils = LocalizeUtils;
+	window.hikeio.LocalizeUtils = LocalizeUtils;
 }
 )();

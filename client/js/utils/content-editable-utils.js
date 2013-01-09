@@ -34,6 +34,6 @@
 	};
 
 	// Export
-	window.io.hike.ContentEditableUtils = ContentEditableUtils;
+	window.hikeio.ContentEditableUtils = ContentEditableUtils;
 }
 )();

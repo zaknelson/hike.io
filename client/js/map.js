@@ -57,7 +57,7 @@
 	var addMarkerEvents = function(marker, hikeData) {
 		var mapTooltip = null;
 		google.maps.event.addListener(marker, "mouseover", function() {
-			mapTooltip = new window.io.hike.MapTooltip(hikeData, marker);
+			mapTooltip = new window.hikeio.MapTooltip(hikeData, marker);
 			marker.setIcon(hoverMarker);
 		});
 				
