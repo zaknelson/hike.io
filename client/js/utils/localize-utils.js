@@ -4,22 +4,14 @@
 	var LocalizeUtils = function() {
 	};
 
-	LocalizeUtils.prototype.localize = function(elements) {
-		if (typeof elements === "undefined") {
-			elements = $("[data-io-hike-distance-meters], [data-io-hike-distance-kilometers]");
+	LocalizeUtils.prototype.localize = function(element) {
+		var value = element.attr("data-io-hike-float");
+		var units = element.attr("data-io-hike-units");
+		if (units === "meters") {
+			return { value: this.metersToFeet(value), units: "ft." };
+		} else if (units === "kilometers") {
+			return { value: this.kilometersToMiles(value), units: "mi." };
 		}
-
-		var that = this;
-		elements.each(function(i) {
-			var element = $(elements[i]);
-			var meters = element.attr("data-io-hike-distance-meters");
-			var kilometers = element.attr("data-io-hike-distance-kilometers");
-			if (typeof meters !== "undefined") {
-				element.html(that.metersToFeet(meters) + " ft.")
-			} else if (typeof kilometers !== "undefined") {
-				element.html(that.kilometersToMiles(kilometers) + " mi.")
-			}
-		});
 	};
 	
 	LocalizeUtils.prototype.kilometersToMiles = function(kilometers) {
