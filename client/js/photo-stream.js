@@ -49,7 +49,7 @@
 				var utils = new window.hikeio.LocalizeUtils();
 				var elementsToLocalize = $(newElements).find(".preview-distance");
 				elementsToLocalize.each(function(i){
-					var element = $(elementsToLocalize[i])
+					var element = $(elementsToLocalize[i]);
 					var localizedDistance = utils.localize(element);
 					element.html(localizedDistance.value + " " + localizedDistance.units);
 				});

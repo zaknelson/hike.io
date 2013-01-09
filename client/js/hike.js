@@ -37,15 +37,10 @@
 		});
 	};
 
-	var initBindings = function() {
-		ko.applyBindings(new window.hikeio.HikeModel());
-	}
-
 	$(document).ready(function() {
 		if ($(".hike-page").length) {
 			initMasonry();
 			initFancybox();
-			initBindings();
 		}
 	});
 }
