@@ -42,6 +42,11 @@ class ApiRoutesTest < HikeAppTestCase
 		put_data data
 	end
 
+	def test_put_hike_name_and_description
+		data = {:name => "New name", :description => "New description"}
+		put_data data
+	end
+
 	def put_data data
 		put "/api/v1/hikes/scotchman-peak", data.to_json
 
