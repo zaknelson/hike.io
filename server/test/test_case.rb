@@ -10,7 +10,7 @@ class HikeAppTestCase < Test::Unit::TestCase
 
 	def run(*args, &block)
 		result = nil
-		Sequel::Model.db.transaction(:rollback=>:always){result = super}
+		Sequel::Model.db.transaction(:rollback => :always){ result = super }
 		result
   end
 end
