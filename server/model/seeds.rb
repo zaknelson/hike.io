@@ -12,7 +12,7 @@ migration "seed scotchman peak" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 48.177534,
 		:longitude => -116.089783
 	)
@@ -30,6 +30,8 @@ migration "seed scotchman peak" do
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
 
 	hike.add_map(Map.create(:image_path => "scotchman-peak-topographic-map.jpg"))
+
+	hike.save
 end
 
 migration "seed mt kilamanjaro" do
@@ -43,13 +45,15 @@ migration "seed mt kilamanjaro" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 58.177534,
 		:longitude => -120.089783
 	)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
+
+	hike.save
 end
 
 migration "seed lake 22" do
@@ -63,13 +67,15 @@ migration "seed lake 22" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 58.177534,
 		:longitude => -118.089783
 	)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
+
+	hike.save
 end
 
 migration "seed pikes peak" do
@@ -83,13 +89,15 @@ migration "seed pikes peak" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 58.277534,
 		:longitude => -118.289783
 	)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+
+	hike.save
 end
 
 migration "seed north kaibab trail" do
@@ -103,10 +111,12 @@ migration "seed north kaibab trail" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 70.277534,
 		:longitude => -118.289783
 	)
+
+	hike.save
 end
 
 migration "seed king arthurs seat" do
@@ -120,10 +130,12 @@ migration "seed king arthurs seat" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
+	hike.location = Location.create(
 		:latitude => 71.277534,
 		:longitude => -118.289783
 	)
+
+	hike.save
 end
 
 
@@ -138,9 +150,7 @@ migration "seed snoqualmie middle fork" do
 		:edit_time => Time.now
 	)
 
-	hike.canonical_location = Location.create(
-		:latitude => 72.277534,
-		:longitude => -118.289783
-	)
+	hike.location = Location.first
+	hike.save
 end
 

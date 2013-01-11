@@ -10,22 +10,6 @@ migration "create pg_trgm extension" do
 	database.run "CREATE EXTENSION IF NOT EXISTS pg_trgm"
 end
 
-migration "create hikes table" do
-	database.create_table :hikes do
-		primary_key :id
-		String :string_id,				:null => false, :unique => true
-		String :name, 					:null => false
-		String :description 			#optional
-		String :locality,				:null => false
-		Float :distance, 				:null => false
-		Float :elevation_gain,			:null => false
-		Time :creation_time, 			:null => false
-		Time :edit_time, 				:null => false
-
-		index :string_id
-	end
-end
-
 migration "create photos table" do
 	database.create_table :photos do
 		primary_key :id
@@ -58,6 +42,24 @@ migration "create keywords table" do
 	end
 end
 
+migration "create hikes table" do
+	database.create_table :hikes do
+		primary_key :id
+		String :string_id,					:null => false, :unique => true
+		String :name, 						:null => false
+		String :description 				#optional
+		String :locality,					:null => false
+		Float :distance, 					:null => false
+		Float :elevation_gain,				:null => false
+		Time :creation_time, 				:null => false
+		Time :edit_time, 					:null => false
+
+		foreign_key :location_id, :locations
+
+		index :string_id
+	end
+end
+
 migration "create hikes_photos table" do
 	database.create_join_table(:hike_id => :hikes, :photo_id => :photos)
 end
@@ -66,9 +68,9 @@ migration "create hikes_maps table" do
 	database.create_join_table(:hike_id => :hikes, :map_id => :maps)
 end
 
-#migration "create hikes_locations table" do
-#	database.create_join_table(:hike_id => :hikes, :location_id => :locations)
-#end
+migration "create hikes_locations table" do
+	database.create_join_table(:hike_id => :hikes, :location_id => :locations)
+end
 
 migration "create hikes_keywords table" do
 	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
@@ -78,13 +80,14 @@ class Hike < Sequel::Model
 	many_to_many :photos
 	many_to_many :maps
 	many_to_many :keywords
-	many_to_one :canonical_location, :class => :Location, :key => :id
+	many_to_one :location
 end
 
 class Photo < Sequel::Model
 end
 
 class Location < Sequel::Model
+	one_to_many :hikes
 end
 
 class Map < Sequel::Model

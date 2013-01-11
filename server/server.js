@@ -22,11 +22,10 @@ io.sockets.on("connection", function (socket) {
 		}
 
 		var queryString =  "SELECT hikes.string_id, hikes.name, locations.latitude, locations.longitude \
-							FROM locations, hikes_locations, hikes \
+							FROM hikes, locations \
 							WHERE locations.latitude >= $1 AND \
 								locations.latitude <= $2 AND " + longitudeWhereClause + " AND \
-								hikes_locations.location_id = locations.id AND \
-								hikes_locations.hike_id = hikes.id \
+								hikes.location_id = locations.id \
 							ORDER BY locations.latitude, locations.longitude;";
 		client.query(queryString, [data.sw.latitude, data.ne.latitude, data.sw.longitude, data.ne.longitude], function(err, result) {
 			if (!result) {
