@@ -1,9 +1,19 @@
-
+<% content_for :header do %>
+	<% if not @editing %>
+		<div class="header-right">
+			<div class="header-separator"></div>
+			<div class="header-div header-div-edit" >
+				<%= render_svg("#{@img_dir}/edit.svg") %>
+				<span>Edit</span>
+			</div>
+		</div>
+	<% end %>
+<% end %>
 <% if @editing %>
 	<div class="edit-banner">
 		<h3>You are editing this page</h3>
 		<div>
-			<button type="button" class="save-button btn">Save</button>
+			<button type="button" class="save-button btn disabled">Save</button>
 			<button type="button" class="cancel-button btn">Cancel</button>
 		</div>
 	</div>
@@ -48,7 +58,7 @@
 			<section class="map-section">
 				<h2>Map</h2>
 				<div>
-						<%= img "#{@hike_map_img_dir}/#{@hike.string_id}/#{@hike.maps.first.image_path}", {:class => "map"} %>
+					<%= img "#{@hike_map_img_dir}/#{@hike.string_id}/#{@hike.maps.first.image_path}", {:class => "map"} %>
 				</div>
 			</section>
 		<% end %>

@@ -1,7 +1,9 @@
 (function() {
 	"use strict";
 
-	var edited;
+	var state = {
+		edited: false
+	};
 	var savedSinceLastEdit;
 
 	var initEditableFields = function() {
@@ -9,7 +11,7 @@
 			var target = $(this);
 			if (event.type === "paste") {
 				var pasteData = event.originalEvent.clipboardData.getData("text/plain");
-				var utils = new window.io.hike.ContentEditableUtils();
+				var utils = new window.hikeio.ContentEditableUtils();
 				utils.replaceSelectedText(pasteData);
 				event.preventDefault();
 			}
@@ -23,9 +25,11 @@
 			if (event.keyCode === 13) { // return
 				event.preventDefault();
 				$(event.target).blur();
-			} else {
-				setEdited(true);
 			}
+		});
+
+		$("[contenteditable]").on("input", function(event) {
+			state.edited = true;
 		});
 	};
 
@@ -59,10 +63,10 @@
 				data: JSON.stringify(hikeJson),
 				dataType: "json",
 				success: function() {
+					state.edited = false;
 					window.location.href = window.location.href.replace(/\/edit/, "");
 				}
 			});
-			console.log(hikeJson);
 		});
 	};
 
@@ -91,15 +95,23 @@
 		});
 	};
 
-	var setEdited = function(isEdited) {
-		edited = isEdited;
-		if (isEdited) {
-			setSavedSinceLastEdit(false);
-			//window.onbeforeunload = function(event) {
-			//	return "You have unsaved changes.";
-		} else {
-			window.onbeforeunload = null;
-		}
+	var initEditWatch = function() {
+		watch(state, "edited", function() {
+			if (state.edited) {
+				$(".save-button").removeClass("disabled");
+
+				// Disable annoying alert for development
+				if (window.location.hostname !== "localhost") {
+					window.onbeforeunload = function(event) {
+						return "You have unsaved changes.";
+					};
+				}
+
+			} else {
+				$(".save-button").addClass("disabled");
+				window.onbeforeunload = null;
+			}
+		});
 	};
 
 	var setSavedSinceLastEdit = function(isSavedSinceLastEdit) {
@@ -114,7 +126,7 @@
 			initCancelButton();
 			initFocus();
 			initGlobalKeyBindings();
-			setEdited(false);
+			initEditWatch();
 			setSavedSinceLastEdit(true);
 		}
 	});
