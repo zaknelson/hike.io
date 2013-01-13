@@ -37,10 +37,18 @@
 		});
 	};
 
+	var initEditButton = function() {
+		$(".header-div-edit").click(function() {
+			window.location.href += "/edit";
+		});
+	};
+
 	$(document).ready(function() {
 		if ($(".hike-page").length) {
+
 			initMasonry();
 			initFancybox();
+			initEditButton();
 		}
 	});
 }
