@@ -45,7 +45,7 @@
 	var initSaveButton = function() {
 		$(".save-button").click(function() {
 			/*jshint camelcase:false */
-			var utils = new window.io.hike.ContentEditableUtils();
+			var utils = new window.hikeio.ContentEditableUtils();
 
 			var hikeJson = {};
 			hikeJson.string_id = window.location.pathname.split(/\//)[1];
