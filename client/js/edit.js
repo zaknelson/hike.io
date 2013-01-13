@@ -28,7 +28,7 @@
 			}
 		});
 
-		$("[contenteditable]").on("input", function(event) {
+		$("[contenteditable]").on("input", function() {
 			state.edited = true;
 		});
 	};
@@ -102,7 +102,7 @@
 
 				// Disable annoying alert for development
 				if (window.location.hostname !== "localhost") {
-					window.onbeforeunload = function(event) {
+					window.onbeforeunload = function() {
 						return "You have unsaved changes.";
 					};
 				}
