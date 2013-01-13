@@ -99,7 +99,7 @@ class HikeApp < Sinatra::Base
 				arr = path.split(".")
 				arr.pop
 				path = arr.join(".") + ".png"
-				render_str = img path;
+				render_str = img path, :width => "auto", :height => "auto";
 			end
 			# Add any attributes provided
 			if attributes

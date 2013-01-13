@@ -29,10 +29,10 @@ header {
 		opacity: .65;
 		cursor: pointer;
 
-		svg {
+		svg, img {
 			width: $icon-dimensions;
 			height: $icon-dimensions;
-			float:left;
+			float: left;
 			margin-top: 9px;
 		}
 
