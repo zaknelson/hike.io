@@ -57,7 +57,10 @@
 				url: "/api/v1/hikes/" + hikeJson.string_id,
 				type: "PUT",
 				data: JSON.stringify(hikeJson),
-				dataType: "json"
+				dataType: "json",
+				success: function() {
+					window.location.href = window.location.href.replace(/\/edit/, "");
+				}
 			});
 			console.log(hikeJson);
 		});
