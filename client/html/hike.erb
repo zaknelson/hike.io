@@ -20,7 +20,7 @@
 			<div>
 				<%= partial("partials/facts", :locals => { :hike => @hike, :editing =>  @editing })%>
 				<div class="overview-description" <% if @editing %>contenteditable="true"<% end %>>
-					<% if @hike.description %>
+					<% if @hike.description and @hike.description.length > 0 %>
 						<%= @hike.description %>
 					<% elsif not @editing %>
 						<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@hike.string_id}/edit" %>">editing this page</a>.</p>
