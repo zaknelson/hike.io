@@ -150,7 +150,8 @@ migration "seed snoqualmie middle fork" do
 		:edit_time => Time.now
 	)
 
-	hike.location = Location.first
+	# Indirectly testing whether it's possible to have two hikes with the same location (it should be possible)
+	hike.location = Location.find(:id => 2)
 	hike.save
 end
 
