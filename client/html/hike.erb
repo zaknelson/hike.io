@@ -44,13 +44,11 @@
 			</section>
 		<% end %>
 
-		<% if @hike.locations.first.map_image %>
+		<% if @hike.maps.first.image_path %>
 			<section class="map-section">
 				<h2>Map</h2>
 				<div>
-					<a href="<%= @hike.locations.first.map_href %>" target="_blank">
-						<%= img "#{@hike_img_dir}/#{@hike.string_id}/#{@hike.locations.first.map_image}", {:class => "map"} %>
-					</a>
+						<%= img "#{@hike_map_img_dir}/#{@hike.string_id}/#{@hike.maps.first.image_path}", {:class => "map"} %>
 				</div>
 			</section>
 		<% end %>
