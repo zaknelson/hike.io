@@ -29,6 +29,7 @@
 		});
 
 		$("[contenteditable]").on("input", function() {
+			$(".save-button").text("Save");
 			state.edited = true;
 		});
 	};
@@ -59,6 +60,7 @@
 				hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
 				//hikeJson.distance
 				//hikeJson.elevation_gain
+				$(".save-button").button("saving");
 				$.ajax({
 					url: "/api/v1/hikes/" + hikeJson.string_id,
 					type: "PUT",
@@ -66,15 +68,22 @@
 					dataType: "json",
 					success: function() {
 						state.edited = false;
-						window.location.href = window.location.href.replace(/\/edit/, "");
+						$(".save-button").text("Saved");
+						$(".save-button").addClass("disabled");
+					},
+					error: function(jqXhr, textStatus, errorThrown) {
+						state.edited = false;
+						log(jqXhr, textStatus, errorThrown)
+						$(".save-button").text("Error saving");
+						$(".save-button").addClass("disabled");
 					}
 				});
 			}
 		});
 	};
 
-	var initCancelButton = function() {
-		$(".cancel-button").click(function() {
+	var initDoneButton = function() {
+		$(".done-button").click(function() {
 			window.location.href = window.location.href.replace(/\/edit/, "");
 		});
 	};
@@ -126,7 +135,7 @@
 			initEditableFields();
 			initHikeNameBinding();
 			initSaveButton();
-			initCancelButton();
+			initDoneButton();
 			initFocus();
 			initGlobalKeyBindings();
 			initEditWatch();
