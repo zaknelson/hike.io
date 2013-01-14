@@ -49,24 +49,27 @@
 	var initSaveButton = function() {
 		$(".save-button").click(function() {
 			/*jshint camelcase:false */
-			var utils = new window.hikeio.ContentEditableUtils();
 
-			var hikeJson = {};
-			hikeJson.string_id = window.location.pathname.split(/\//)[1];
-			hikeJson.name = $(".header-hike-name").text();
-			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
-			//hikeJson.distance
-			//hikeJson.elevation_gain
-			$.ajax({
-				url: "/api/v1/hikes/" + hikeJson.string_id,
-				type: "PUT",
-				data: JSON.stringify(hikeJson),
-				dataType: "json",
-				success: function() {
-					state.edited = false;
-					window.location.href = window.location.href.replace(/\/edit/, "");
-				}
-			});
+			if (!$(".save-button").hasClass("disabled")) {
+				var utils = new window.hikeio.ContentEditableUtils();
+
+				var hikeJson = {};
+				hikeJson.string_id = window.location.pathname.split(/\//)[1];
+				hikeJson.name = $(".header-hike-name").text();
+				hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
+				//hikeJson.distance
+				//hikeJson.elevation_gain
+				$.ajax({
+					url: "/api/v1/hikes/" + hikeJson.string_id,
+					type: "PUT",
+					data: JSON.stringify(hikeJson),
+					dataType: "json",
+					success: function() {
+						state.edited = false;
+						window.location.href = window.location.href.replace(/\/edit/, "");
+					}
+				});
+			}
 		});
 	};
 
