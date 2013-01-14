@@ -51,34 +51,29 @@
 		$(".save-button").click(function() {
 			/*jshint camelcase:false */
 
-			if (!$(".save-button").hasClass("disabled")) {
-				var utils = new window.hikeio.ContentEditableUtils();
+			var utils = new window.hikeio.ContentEditableUtils();
 
-				var hikeJson = {};
-				hikeJson.string_id = window.location.pathname.split(/\//)[1];
-				hikeJson.name = $(".header-hike-name").text();
-				hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
-				//hikeJson.distance
-				//hikeJson.elevation_gain
-				$(".save-button").button("saving");
-				$.ajax({
-					url: "/api/v1/hikes/" + hikeJson.string_id,
-					type: "PUT",
-					data: JSON.stringify(hikeJson),
-					dataType: "json",
-					success: function() {
-						state.edited = false;
-						$(".save-button").text("Saved");
-						$(".save-button").addClass("disabled");
-					},
-					error: function(jqXhr, textStatus, errorThrown) {
-						state.edited = false;
-						log(jqXhr, textStatus, errorThrown)
-						$(".save-button").text("Error saving");
-						$(".save-button").addClass("disabled");
-					}
-				});
-			}
+			var hikeJson = {};
+			hikeJson.string_id = window.location.pathname.split(/\//)[1];
+			hikeJson.name = $(".header-hike-name").text();
+			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
+			//hikeJson.distance
+			//hikeJson.elevation_gain
+			$(".save-button").button("loading");
+			$.ajax({
+				url: "/api/v1/hikes/" + hikeJson.string_id,
+				type: "PUT",
+				data: JSON.stringify(hikeJson),
+				dataType: "json",
+				success: function() {
+					state.edited = false;
+					$(".save-button").text("Saved");
+					$(".save-button").attr("disabled");
+				},
+				error: function(jqXhr, textStatus, errorThrown) {
+					log(jqXhr, textStatus, errorThrown);
+				}
+			});
 		});
 	};
 
@@ -110,7 +105,7 @@
 	var initEditWatch = function() {
 		watch(state, "edited", function() {
 			if (state.edited) {
-				$(".save-button").removeClass("disabled");
+				$(".save-button").button("reset");
 
 				// Disable annoying alert for development
 				if (window.location.hostname !== "localhost") {
@@ -118,9 +113,8 @@
 						return "You have unsaved changes.";
 					};
 				}
-
 			} else {
-				$(".save-button").addClass("disabled");
+				$(".save-button").attr("disabled");
 				window.onbeforeunload = null;
 			}
 		});
