@@ -15,7 +15,7 @@
 	"strict": true,
 	"trailing": true,
 
-	"predef": ["google", "io", "Modernizr", "phantom", "watch"],
+	"predef": ["google", "io", "log", "Modernizr", "phantom", "watch"],
 	"browser": true,
 	"jquery": true,
 	"node": true,
