@@ -8,20 +8,26 @@
 		var value = element.attr("data-io-hike-float");
 		var units = element.attr("data-io-hike-units");
 		if (units === "meters") {
-			return { value: this.metersToFeet(value), units: "ft." };
+			return { value: this.metersToFeet(value).toFixed(), units: "ft." };
 		} else if (units === "kilometers") {
-			return { value: this.kilometersToMiles(value), units: "mi." };
+			return { value: this.kilometersToMiles(value).toFixed(1), units: "mi." };
 		}
 	};
 	
 	LocalizeUtils.prototype.kilometersToMiles = function(kilometers) {
-		var miles = kilometers * 0.621371;
-		return Math.round(miles * 10.0) / 10.0;
+		return kilometers * 0.62137;
+	};
+
+	LocalizeUtils.prototype.milesToKilometers = function(miles) {
+		return miles * 1.60934;
 	};
 
 	LocalizeUtils.prototype.metersToFeet = function(meters) {
-		var feet = meters * 3.28084;
-		return Math.round(feet);
+		return meters * 3.28084;
+	};
+
+	LocalizeUtils.prototype.feetToMeters = function(feet) {
+		return feet * 0.30480;
 	};
 
 	// Export

@@ -68,14 +68,17 @@
 	var doSave = function() {
 		/*jshint camelcase:false */
 
-		var utils = new window.hikeio.ContentEditableUtils();
+		var contentEditableUtils = new window.hikeio.ContentEditableUtils();
+		var localizeUtils = new window.hikeio.LocalizeUtils();
 
 		var hikeJson = {};
 		hikeJson.string_id = window.location.pathname.split(/\//)[1];
 		hikeJson.name = $(".header-hike-name").text();
-		hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
+		hikeJson.locality = $(".facts-hike-location").text().trim();
+		hikeJson.description = contentEditableUtils.getTextFromContentEditable($(".overview-description"));
+		hikeJson.distance = localizeUtils.milesToKilometers(parseFloat($(".facts-hike-distance-value").text()));
+		hikeJson.elevation_gain = localizeUtils.feetToMeters(parseFloat($(".facts-hike-elevation-value").text()));
 
-		//hikeJson.elevation_gain
 		$(".save-button").button("loading");
 		$.ajax({
 			url: "/api/v1/hikes/" + hikeJson.string_id,
