@@ -7,17 +7,19 @@
 	var savedSinceLastEdit;
 
 	var initEditableFields = function() {
-		$("[contenteditable]").on("blur keyup paste", function(event) {
-			var target = $(this);
-			if (event.type === "paste") {
-				var pasteData = event.originalEvent.clipboardData.getData("text/plain");
-				var utils = new window.hikeio.ContentEditableUtils();
-				utils.replaceSelectedText(pasteData);
+		$("[contenteditable]").on("blur keyup cut copy", function(event) {
+			$(event.target).trigger("change");
+		});
+
+		$("[contenteditable]").on("paste", function(event) {
+			var target = $(event.target);
+			var pastedData = null;
+			if (event.originalEvent.clipboardData) {
+				document.execCommand("insertText", false, event.originalEvent.clipboardData.getData("text/plain"));
 				event.preventDefault();
-			}
-			if (target.data("before") !== target.html()) {
-				target.data("before", target.html());
 				target.trigger("change");
+			} else {
+				event.preventDefault();
 			}
 		});
 
@@ -29,7 +31,6 @@
 		});
 
 		$("[contenteditable]").on("input", function() {
-			$(".save-button").text("Save");
 			state.edited = true;
 		});
 	};
@@ -57,7 +58,7 @@
 			hikeJson.string_id = window.location.pathname.split(/\//)[1];
 			hikeJson.name = $(".header-hike-name").text();
 			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
-			//hikeJson.distance
+
 			//hikeJson.elevation_gain
 			$(".save-button").button("loading");
 			$.ajax({
