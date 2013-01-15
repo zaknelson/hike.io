@@ -9,6 +9,7 @@
 		pre.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
 		pre.find("p").replaceWith(function() { return this.innerHTML + "<br>"; });
 		pre.find("br").replaceWith("\n");
+		pre.find("span").replaceWith(function() { return "\n" + this.innerHTML; });
 		var tempParagraphs = pre.text().trim().split("\n");
 		var resultParagraphs = [];
 		$.each(tempParagraphs, function(index, value) {
