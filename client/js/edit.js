@@ -65,34 +65,36 @@
 		$(".facts-hike-name").change(hikeNamedChanged);
 	};
 
-	var initSaveButton = function() {
-		$(".save-button").click(function() {
-			/*jshint camelcase:false */
+	var doSave = function() {
+		/*jshint camelcase:false */
 
-			var utils = new window.hikeio.ContentEditableUtils();
+		var utils = new window.hikeio.ContentEditableUtils();
 
-			var hikeJson = {};
-			hikeJson.string_id = window.location.pathname.split(/\//)[1];
-			hikeJson.name = $(".header-hike-name").text();
-			hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
+		var hikeJson = {};
+		hikeJson.string_id = window.location.pathname.split(/\//)[1];
+		hikeJson.name = $(".header-hike-name").text();
+		hikeJson.description = utils.getTextFromContentEditable($(".overview-description"));
 
-			//hikeJson.elevation_gain
-			$(".save-button").button("loading");
-			$.ajax({
-				url: "/api/v1/hikes/" + hikeJson.string_id,
-				type: "PUT",
-				data: JSON.stringify(hikeJson),
-				dataType: "json",
-				success: function() {
-					state.edited = false;
-					$(".save-button").text("Saved");
-					$(".save-button").attr("disabled");
-				},
-				error: function(jqXhr, textStatus, errorThrown) {
-					log(jqXhr, textStatus, errorThrown);
-				}
-			});
+		//hikeJson.elevation_gain
+		$(".save-button").button("loading");
+		$.ajax({
+			url: "/api/v1/hikes/" + hikeJson.string_id,
+			type: "PUT",
+			data: JSON.stringify(hikeJson),
+			dataType: "json",
+			success: function() {
+				state.edited = false;
+				$(".save-button").text("Saved");
+				$(".save-button").attr("disabled");
+			},
+			error: function(jqXhr, textStatus, errorThrown) {
+				log(jqXhr, textStatus, errorThrown);
+			}
 		});
+	};
+
+	var initSaveButton = function() {
+		$(".save-button").click(doSave);
 	};
 
 	var initDoneButton = function() {
@@ -116,6 +118,9 @@
 				if (target === document.body) {
 					event.preventDefault();
 				}
+			} else if (event.keyCode === 83 && (event.metaKey || event.ctrlKey)) {
+				doSave();
+				event.preventDefault();
 			}
 		});
 	};
