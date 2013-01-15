@@ -16,12 +16,12 @@
 			if (event.originalEvent.clipboardData) {
 				var pastedData = event.originalEvent.clipboardData.getData("text/plain");
 				if (target.hasClass("numeric")) {
-					if (($.isNumeric(pastedData) && parseFloat(pastedData) > 0) || pastedData === ".") {
+					if (($.isNumeric(pastedData) && (!target.hasClass("positive") || parseFloat(pastedData) > 0)) || pastedData === ".") {
 						// programmatically paste to ensure that result will be numeric
 						var before = target.html();
 						document.execCommand("insertText", false, pastedData);
 						var after = target.html();
-						if ($.isNumeric(after) && parseFloat(after) > 0) {
+						if ($.isNumeric(after) && (!target.hasClass("positive") || parseFloat(after) > 0)) {
 							target.trigger("change");
 						} else {
 							target.html(before);
