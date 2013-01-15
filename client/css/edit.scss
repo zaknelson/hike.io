@@ -8,30 +8,27 @@ $edit-banner-height: 50px;
 	height: $edit-banner-height;
 	background-color: #eb593c;
 	text-align: center;
+	position: relative;
 
 	h3 {
 		color: white;
 		line-height: $edit-banner-height;
 		margin-left: 10px;
 		display: inline;
-		font-size: 20px;
-		padding-left: 154px;
+		font-size: 18px;
 		font-weight: bold;
 	}
-
+	
 	div {
-		float: right;
-		display: inline;
+		position: absolute;
+		right: 0px;
 		padding: 8px 8px;
+		margin-top: -$edit-banner-height;
 	}
 }
 
 @media all and (max-width: $mobile-width) {
 	.edit-banner {
 		text-align: left;
-
-		h3 {
-			padding-left: 0px;
-		}
 	}
 }
