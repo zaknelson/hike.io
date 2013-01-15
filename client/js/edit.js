@@ -13,20 +13,37 @@
 
 		$("[contenteditable]").on("paste", function(event) {
 			var target = $(event.target);
-			var pastedData = null;
 			if (event.originalEvent.clipboardData) {
-				document.execCommand("insertText", false, event.originalEvent.clipboardData.getData("text/plain"));
-				event.preventDefault();
-				target.trigger("change");
-			} else {
-				event.preventDefault();
+				var pastedData = event.originalEvent.clipboardData.getData("text/plain");
+				if (target.hasClass("numeric")) {
+					if (($.isNumeric(pastedData) && parseFloat(pastedData) > 0) || pastedData === ".") {
+						// programmatically paste to ensure that result will be numeric
+						var before = target.html();
+						document.execCommand("insertText", false, pastedData);
+						var after = target.html();
+						if ($.isNumeric(after) && parseFloat(after) > 0) {
+							target.trigger("change");
+						} else {
+							target.html(before);
+						}
+					}
+				} else {
+					document.execCommand("insertText", false, pastedData);
+					target.trigger("change");
+				}
 			}
+			return false;
 		});
 
-		$(".single-line[contenteditable]").keypress(function(event) {
-			if (event.keyCode === 13) { // return
+		$("[contenteditable]").keypress(function(event) {
+			var target = $(event.target);
+			if (event.keyCode === 13 && target.hasClass("single-line")) { // return
 				event.preventDefault();
-				$(event.target).blur();
+				target.blur();
+			} else if (target.hasClass("numeric") &&
+				(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9 or period
+				(event.keyCode === 46 && target.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
+				return false;
 			}
 		});
 
