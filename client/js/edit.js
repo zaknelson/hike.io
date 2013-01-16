@@ -25,6 +25,7 @@
 							target.trigger("change");
 						} else {
 							target.html(before);
+							target.blur();
 						}
 					}
 				} else {
