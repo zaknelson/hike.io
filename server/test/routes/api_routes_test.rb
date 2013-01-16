@@ -33,17 +33,17 @@ class ApiRoutesTest < HikeAppTestCase
 	end
 
 	def test_put_hike_name
-		data = {:name => "New name"}
+		data = {"name" => "New name"}
 		put_data data
 	end
 
 	def test_put_hike_description
-		data = {:description => "New description"}
+		data = {"description" => "New description"}
 		put_data data
 	end
 
 	def test_put_hike_name_and_description
-		data = {:name => "New name", :description => "New description"}
+		data = {"name" => "New name", "description" => "New description"}
 		put_data data
 	end
 
@@ -57,11 +57,11 @@ class ApiRoutesTest < HikeAppTestCase
 
 		json = JSON.parse(last_response.body)
 		assert_equal json["string_id"], "scotchman-peak"
-		data.each { |key| assert_equal json[key], data[key] } 
+		data.each { |key, value| assert_equal value, json[key] } 
 		
 		get "/api/v1/hikes/scotchman-peak"
 		json = JSON.parse(last_response.body)
 		assert_equal json["string_id"], "scotchman-peak"
-		data.each { |key| assert_equal json[key], data[key] } 
+		data.each { |key, value| assert_equal value, json[key] }
 	end
 end
