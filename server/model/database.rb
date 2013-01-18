@@ -81,6 +81,26 @@ class Hike < Sequel::Model
 	many_to_many :maps
 	many_to_many :keywords
 	many_to_one :location
+
+	def to_json *a
+		super :include => { :location => { :except => :id } }, :except => :location_id
+	end
+
+	def from_json (json, opts={})
+		parsed_json = JSON.parse(json)
+		if parsed_json["location"]
+			location_hash = parsed_json["location"].symbolize_keys.to_hash
+			if self.location.hikes.length == 1 && parsed_json["location"] != self.location
+				self.location = Location.find_or_create(location_hash)
+			end
+			parsed_json.delete "location"
+		end
+		if opts[:fields]
+			set_fields(parsed_json, opts[:fields], opts)
+		else
+			set(parsed_json)
+		end
+	end
 end
 
 class Photo < Sequel::Model

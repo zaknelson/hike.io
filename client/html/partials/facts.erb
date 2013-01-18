@@ -35,7 +35,9 @@
 			<tr>
 				<td>Lat / Lon</td>
 				<td>
-					<%= "%0.3f" % hike.location.latitude %>, <%= "%0.3f" % hike.location.longitude %></a>
+					<span class="facts-hike-latitude-value single-line numeric" <% if editing %>contenteditable="true"<% end %>><%= "%0.3f" % hike.location.latitude %></span>
+					<span>,</span>
+					<span class="facts-hike-longitude-value single-line numeric" <% if editing %>contenteditable="true"<% end %>><%= "%0.3f" % hike.location.longitude %></span>
 				</td>
 			</tr>
 		</table>

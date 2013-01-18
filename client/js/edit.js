@@ -44,6 +44,16 @@
 			} else if (target.hasClass("numeric") &&
 				(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9 or period
 				(event.keyCode === 46 && target.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
+				
+				if (!target.hasClass("positive") && event.keyCode === 45) {
+					var before = target.text();
+					setTimeout(function(){
+						if (!$.isNumeric(target.text())) {
+							target.html(before);
+						}
+					});
+					return true;
+				}
 				return false;
 			}
 		});
@@ -71,14 +81,21 @@
 
 		var contentEditableUtils = new window.hikeio.ContentEditableUtils();
 		var localizeUtils = new window.hikeio.LocalizeUtils();
+		var mathUtils = new window.hikeio.MathUtils();
+
+		var decimalPlaces = 10;
 
 		var hikeJson = {};
 		hikeJson.string_id = window.location.pathname.split(/\//)[1];
 		hikeJson.name = $(".header-hike-name").text();
 		hikeJson.locality = $(".facts-hike-location").text().trim();
 		hikeJson.description = contentEditableUtils.getTextFromContentEditable($(".overview-description"));
-		hikeJson.distance = localizeUtils.milesToKilometers(parseFloat($(".facts-hike-distance-value").text()));
-		hikeJson.elevation_gain = localizeUtils.feetToMeters(parseFloat($(".facts-hike-elevation-value").text()));
+		hikeJson.distance = mathUtils.roundTo(localizeUtils.milesToKilometers(parseFloat($(".facts-hike-distance-value").text())), decimalPlaces);
+		hikeJson.elevation_gain = mathUtils.roundTo(localizeUtils.feetToMeters(parseFloat($(".facts-hike-elevation-value").text())), decimalPlaces);
+		hikeJson.location = {
+			latitude: mathUtils.roundTo($(".facts-hike-latitude-value").text(), decimalPlaces),
+			longitude: mathUtils.roundTo($(".facts-hike-longitude-value").text(), decimalPlaces)
+		};
 
 		$(".save-button").button("loading");
 		$.ajax({
