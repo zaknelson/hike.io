@@ -63,9 +63,9 @@ class HikeApp < Sinatra::Base
 	assets {
 		prebuild true
 
-		serve '/js',     from: 'js'
-		serve '/css',    from: 'css'
-		serve '/images', from: 'images'
+		serve "/js",     from: "js"
+		serve "/css",    from: "css"
+		serve "/images", from: "images"
 
 		js :app, "/js/app.js", [
 			"/js/lib/*.js",
