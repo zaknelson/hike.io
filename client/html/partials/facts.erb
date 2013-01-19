@@ -17,7 +17,7 @@
 			<tr>
 				<td>Distance</td>
 				<td>
-					<div class="facts-hike-distance" data-io-hike-float="<%= hike.distance %>" data-io-hike-units="kilometers">
+					<div class="facts-hike-distance" data-hikeio-float="<%= hike.distance %>" data-hikeio-units="kilometers">
 						<span class="facts-hike-distance-value single-line numeric positive" <% if editing %>contenteditable="true"<% end %>></span>
 						<span class="facts-hike-distance-units single-line"></span>
 					</div>
@@ -26,7 +26,7 @@
 			<tr>
 				<td>Elevation</td>
 				<td>
-					<div class="facts-hike-elevation" data-io-hike-float="<%= hike.elevation_gain %>" data-io-hike-units="meters">
+					<div class="facts-hike-elevation" data-hikeio-float="<%= hike.elevation_gain %>" data-hikeio-units="meters">
 						<span class="facts-hike-elevation-value single-line numeric positive" <% if editing %>contenteditable="true"<% end %>></span>
 						<span class="facts-hike-elevation-units"></span>
 					</div>

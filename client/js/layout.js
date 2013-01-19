@@ -34,7 +34,7 @@ _gaq.push(["_trackPageview"]);
 	var replaceSvgIfNecessary = function() {
 		if (!Modernizr.svg) {
 			$("svg").each(function() {
-				$(this).replaceWith($("<img src=" + $(this).attr("data-fallback-img-src") + "><img"));
+				$(this).replaceWith($("<img src=" + $(this).attr("data-hikeio-fallback-img-src") + "><img"));
 			});
 		}
 	};

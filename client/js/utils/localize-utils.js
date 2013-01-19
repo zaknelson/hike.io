@@ -5,8 +5,8 @@
 	};
 
 	LocalizeUtils.prototype.localize = function(element) {
-		var value = element.attr("data-io-hike-float");
-		var units = element.attr("data-io-hike-units");
+		var value = element.attr("data-hikeio-float");
+		var units = element.attr("data-hikeio-units");
 		if (units === "meters") {
 			return { value: this.metersToFeet(value).toFixed(), units: "ft." };
 		} else if (units === "kilometers") {

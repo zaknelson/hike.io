@@ -93,7 +93,7 @@ class HikeApp < Sinatra::Base
 		def render_svg(path)
 			render_str = File.open("#{root}/#{path}", "rb").read
 			img_fallback_path = path.sub(".svg", ".png")
-			render_str.sub("<svg", "<svg data-fallback-img-src=\"#{img_fallback_path}\"");
+			render_str.sub("<svg", "<svg data-hikeio-fallback-img-src=\"#{img_fallback_path}\"");
 		end
 	end
 
