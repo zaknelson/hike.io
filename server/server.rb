@@ -88,13 +88,6 @@ class HikeApp < Sinatra::Base
 		def root
 			"#{File.dirname(__FILE__)}/../client"
 		end
-
-		# Assumes the svg file has already passed through the process_svg script
-		def render_svg(path)
-			render_str = File.open("#{root}/#{path}", "rb").read
-			img_fallback_path = path.sub(".svg", ".png")
-			render_str.sub("<svg", "<svg data-hikeio-fallback-img-src=\"#{img_fallback_path}\"");
-		end
 	end
 end
 
