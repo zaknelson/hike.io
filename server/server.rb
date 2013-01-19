@@ -96,14 +96,6 @@ class HikeApp < Sinatra::Base
 			render_str.sub("<svg", "<svg data-hikeio-fallback-img-src=\"#{img_fallback_path}\"");
 		end
 	end
-
-	def get_hike_from_id hike_id
-		hike = Hike[:string_id => hike_id]
-		if not hike and KeywordUtils.new.is_word_integer? hike_id
-			hike = Hike[:id => Integer(hike_id)]
-		end
-		hike
-	end
 end
 
 require_relative "routes/api_routes"
