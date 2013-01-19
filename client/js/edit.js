@@ -180,5 +180,4 @@
 			setSavedSinceLastEdit(true);
 		}
 	});
-}
-)();
+})();

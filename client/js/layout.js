@@ -44,5 +44,4 @@ _gaq.push(["_trackPageview"]);
 		initNavigation();
 		replaceSvgIfNecessary();
 	});
-}
-)();
+})();

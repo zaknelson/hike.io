@@ -32,5 +32,4 @@
 
 	// Export
 	window.hikeio.LocalizeUtils = LocalizeUtils;
-}
-)();
+})();

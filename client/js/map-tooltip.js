@@ -53,5 +53,4 @@
 
 	// Export
 	window.hikeio.MapTooltip = MapTooltip;
-}
-)();
+})();

@@ -23,5 +23,4 @@
 
 	// Export
 	window.hikeio.ContentEditableUtils = ContentEditableUtils;
-}
-)();
+})();

@@ -14,5 +14,4 @@
 
 	// Export
 	window.hikeio.MathUtils = MathUtils;
-}
-)();
+})();
