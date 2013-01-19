@@ -90,37 +90,10 @@ class HikeApp < Sinatra::Base
 		end
 
 		# Assumes the svg file has already passed through the process_svg script
-		def render_svg(path, attributes=nil)
-			render_str = ""
-			if supports_svg?
-				render_str = File.open("#{root}/#{path}", "rb").read
-			else
-				# Remove the extension, and use the backup png
-				arr = path.split(".")
-				arr.pop
-				path = arr.join(".") + ".png"
-				render_str = img path, :width => "auto", :height => "auto";
-			end
-			# Add any attributes provided
-			if attributes
-				attr_str = ""
-				attributes.each do |key, value|
-					attr_str += "#{key}=\"#{value}\" "
-				end
-				render_str.insert(4, " #{attr_str}");
-			end
-			render_str
-		end
-
-		def supports_svg?
-			# Naughty, naughty, sniffing the user agent. I'm not happy with any of the polyfills, 
-			# and really would like to use svgs for icons, so it must be done.
-			ua = request.user_agent
-			not (not ua or
-				 ua.include? "Android 2" or 
-				 ua.include? "MSIE 6" 	 or 
-				 ua.include? "MSIE 7" 	 or 
-				 ua.include? "MSIE 8")
+		def render_svg(path)
+			render_str = File.open("#{root}/#{path}", "rb").read
+			img_fallback_path = path.sub(".svg", ".png")
+			render_str.sub("<svg", "<svg data-fallback-img-src=\"#{img_fallback_path}\"");
 		end
 	end
 

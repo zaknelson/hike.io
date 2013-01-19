@@ -31,9 +31,18 @@ _gaq.push(["_trackPageview"]);
 		});
 	};
 
+	var replaceSvgIfNecessary = function() {
+		if (!Modernizr.svg) {
+			$("svg").each(function() {
+				$(this).replaceWith($("<img src=" + $(this).attr("data-fallback-img-src") + "><img"));
+			});
+		}
+	};
+
 	$(document).ready(function() {
 		disableNonTouchFeatures();
 		initNavigation();
+		replaceSvgIfNecessary();
 	});
 }
 )();
