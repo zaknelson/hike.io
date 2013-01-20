@@ -28,8 +28,19 @@
 		var centerLatLng = new google.maps.LatLng(39.833333, -98.583333);
 		var zoomLevel = 4;
 
-		// If we can guess the user's location, zoom into this level instead
-		if (google.loader.ClientLocation) {
+		// If the url parameters lat / lng are set, zoom in there
+		var uriUtils = new window.hikeio.UriUtils();
+		var latString = uriUtils.getParameterByName("lat");
+		var lngString = uriUtils.getParameterByName("lng");
+		if ($.isNumeric(latString) && $.isNumeric(lngString)) {
+			var lat = Number(latString);
+			var lng = Number(lngString);
+			centerLatLng = new google.maps.LatLng(lat, lng);
+			zoomLevel = 12;
+		}
+
+		// else if we can guess the user's location, zoom into this location
+		else if (google.loader.ClientLocation) {
 			var clientLocation = google.loader.ClientLocation;
 			centerLatLng = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
 			zoomLevel = 7;
@@ -43,7 +54,6 @@
 
 		map = new google.maps.Map($(".map-container")[0], mapOptions);
 		markers = [];
-
 	};
 
 	var compareLatLng = function(a, b) {
