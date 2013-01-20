@@ -3,13 +3,14 @@
 
 $facts-padding: 25px;
 $facts-mobile-width: 575px;
+$facts-external-link-svg-size: 12px;
 
 .overview-facts {
 	float: right;
 	width: $facts-width;
 	margin: 0px 0px 15px 15px;
 
-	img {
+	.page-curl > img {
 		width: $facts-width - $facts-padding * 2;
 		margin-bottom: 10px;
 	}
@@ -37,6 +38,21 @@ $facts-mobile-width: 575px;
 		tr:not(:first-child) td {
 			padding-top: 5px;
 		}
+
+		svg, img {
+			width: $facts-external-link-svg-size;
+			height: $facts-external-link-svg-size;
+			margin-left: 4px;
+			display: inline;
+		}
+
+		svg {
+			fill: #39c;
+		}
+
+		svg:hover {
+			fill: #069;
+		}
 	}
 }
 
@@ -45,7 +61,7 @@ $facts-mobile-width: 575px;
 		width: 100%;
 		margin: 0px;
 
-		img {
+		.page-curl > img {
 			width: 100px;
 			float: left;
 			margin-right: 15px;
