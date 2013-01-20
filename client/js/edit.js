@@ -4,7 +4,6 @@
 	var state = {
 		edited: false
 	};
-	var savedSinceLastEdit;
 
 	var initEditableFields = function() {
 		$("[contenteditable]").on("blur keyup cut copy", function(event) {
@@ -164,10 +163,6 @@
 		});
 	};
 
-	var setSavedSinceLastEdit = function(isSavedSinceLastEdit) {
-		savedSinceLastEdit = isSavedSinceLastEdit;
-	};
-
 	$(document).ready(function() {
 		if ($(".hike-page.editing").length) {
 			initEditableFields();
@@ -177,7 +172,6 @@
 			initFocus();
 			initGlobalKeyBindings();
 			initEditWatch();
-			setSavedSinceLastEdit(true);
 		}
 	});
 })();
