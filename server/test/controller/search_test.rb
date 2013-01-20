@@ -59,8 +59,8 @@ class SearchExecutorTest < HikeAppTestCase
 		search_results = @executor.execute
 		assert !@executor.has_best_result
 		assert_equal search_results.length, 2
-		assert_equal search_results[0].hike.string_id, SCOTCHMAN_PEAK_ID
-		assert_equal search_results[1].hike.string_id, PIKES_PEAK_ID
+		assert search_results[0].hike.string_id == SCOTCHMAN_PEAK_ID || search_results[1].hike.string_id == SCOTCHMAN_PEAK_ID
+		assert search_results[0].hike.string_id == PIKES_PEAK_ID || search_results[1].hike.string_id == PIKES_PEAK_ID
 		assert search_results[0].relevance = search_results[1].relevance
 	end
 
