@@ -1,6 +1,7 @@
 require "rubygems"
 require "sinatra"
 require "sinatra/sequel"
+require "uuidtools"
 
 Sequel::Model.plugin :json_serializer, :naked => true
 
@@ -8,6 +9,12 @@ set :database, ENV["DATABASE_URL"] || "postgres://localhost/hikeio"
 
 migration "create pg_trgm extension" do
 	database.run "CREATE EXTENSION IF NOT EXISTS pg_trgm"
+end
+
+migration "create users table" do
+	database.create_table :users do
+		String :id,						:null => false, :unique => true
+	end
 end
 
 migration "create photos table" do
@@ -103,6 +110,9 @@ class Hike < Sequel::Model
 	end
 end
 
+class User < Sequel::Model
+end
+
 class Photo < Sequel::Model
 end
 
@@ -115,4 +125,8 @@ end
 
 class Keyword < Sequel::Model
 	many_to_many :hikes
+end
+
+migration "seed admin user" do
+	User.create(:id => UUIDTools::UUID.random_create.to_s)
 end

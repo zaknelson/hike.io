@@ -49,6 +49,11 @@ https://github.com/zaknelson/hike.io/
 				setTimeout(updateViewport, 500);
 			}
 
+			// In development everyone is an admin
+			<% if Sinatra::Application.environment() == :development %>
+				document.cookie="user_id=<%= User.first.id %>";
+			<% end %>
+
 	</script>
 	<script type="text/javascript" src="//use.typekit.net/jce4miw.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>

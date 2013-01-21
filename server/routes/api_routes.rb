@@ -14,11 +14,15 @@ class HikeApp < Sinatra::Base
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
-		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
-		if hike
-			hike.from_json request.body.read, :fields => ["name", "description", "distance", "elevation_gain", "locality"], :missing => :skip
-			hike.save_changes
-			hike.to_json
+		if is_admin?
+			hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
+			if hike
+				hike.from_json request.body.read, :fields => ["name", "description", "distance", "elevation_gain", "locality"], :missing => :skip
+				hike.save_changes
+				hike.to_json
+			end
+		else
+			403
 		end
 	end
 end

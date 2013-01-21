@@ -1,12 +1,14 @@
 require "rack/test"
 require "test/unit"
 require_relative "../test_case"
+require_relative "../../model/database"
 require_relative "../../routes/api_routes"
 
 class ApiRoutesTest < HikeAppTestCase
 
 	def setup
-		header "Accept", "application/json" 
+		clear_cookies
+		header "Accept", "application/json"
 	end
 
 	def test_get_hikes_ok
@@ -41,6 +43,12 @@ class ApiRoutesTest < HikeAppTestCase
 		assert_equal json["string_id"], "scotchman-peak"
 	end
 
+	def test_put_without_credentials
+		data = {"name" => "New name"}
+		put "/api/v1/hikes/scotchman-peak", data.to_json
+		assert_equal last_response.status, 403
+	end
+
 	def test_put_hike_name
 		data = {"name" => "New name"}
 		put_and_validate data
@@ -67,6 +75,7 @@ class ApiRoutesTest < HikeAppTestCase
 	end
 
 	def put_and_validate data
+		set_cookie "user_id=#{User.first.id}"
 		put "/api/v1/hikes/scotchman-peak", data.to_json
 
 		json = JSON.parse(last_response.body)

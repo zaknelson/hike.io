@@ -1,11 +1,13 @@
 require "rack/test"
 require "test/unit"
 require_relative "../test_case"
+require_relative "../../model/database"
 require_relative "../../routes/html_routes"
 
 class HtmlRoutesTest < HikeAppTestCase
 
 	def setup
+		clear_cookies
 		header "Accept", "text/html" 
 	end
 
@@ -40,8 +42,14 @@ class HtmlRoutesTest < HikeAppTestCase
 	end
 
 	def test_hike_edit_ok
+		set_cookie "user_id=#{User.first.id}"
 		get "/scotchman-peak/edit"
 		assert last_response.ok?
+	end
+
+	def test_hike_edit_requires_credentials
+		get "/scotchman-peak/edit"
+		assert_equal last_response.status, 403
 	end
 
 	def test_missing_hike_not_found

@@ -71,6 +71,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/:hike_id/edit", :provides => "html" do
+		return 403 if not is_admin?
 		@hike = Hike[:string_id => params[:hike_id]]
 		pass unless @hike
 		@title = "Editing #{@hike.name} - hike.io"

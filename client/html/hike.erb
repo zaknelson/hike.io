@@ -1,5 +1,5 @@
 <% content_for :header do %>
-	<% if not @editing %>
+	<% if not @editing and is_admin? %>
 		<div class="header-right">
 			<div class="header-separator"></div>
 			<div class="header-div header-div-edit" >
@@ -33,7 +33,7 @@
 					<% if @hike.description and @hike.description.length > 0 %>
 						<%= @hike.description %>
 					<% elsif not @editing %>
-						<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="<%= "/#{@hike.string_id}/edit" %>">editing this page</a>.</p>
+						<p>Uh oh, this hike doesn't yet have a description.<% if is_admin? %> You can fix that by <a href="<%= "/#{@hike.string_id}/edit" %>">editing this page</a>.<% end %></p>
 					<% end %>
 				</div>
 			</div>

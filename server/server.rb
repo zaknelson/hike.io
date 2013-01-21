@@ -9,6 +9,7 @@ require "sinatra"
 require "sinatra/base" 
 require "sinatra/assetpack"
 require "sinatra/content_for"
+require "sinatra/cookies"
 require "sinatra/partial"
 require "will_paginate"
 require "will_paginate/sequel"
@@ -45,6 +46,9 @@ class HikeApp < Sinatra::Base
 
 	# content_for setup
 	helpers Sinatra::ContentFor
+
+	# cookies
+	helpers Sinatra::Cookies
 
 	# AssetPack setup
 	register Sinatra::AssetPack
@@ -87,6 +91,10 @@ class HikeApp < Sinatra::Base
 	helpers do
 		def root
 			"#{File.dirname(__FILE__)}/../client"
+		end
+
+		def is_admin?
+			cookies["user_id"] == User.first.id
 		end
 	end
 end
