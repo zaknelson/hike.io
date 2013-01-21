@@ -21,7 +21,7 @@ configure :production do
 	require "newrelic_rpm"
 end
 
-configure :development do
+configure :development, :test do
 	require_relative "model/seeds"
 end
 
@@ -94,7 +94,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		def is_admin?
-			cookies["user_id"] == User.first.id
+			Sinatra::Application.environment() == :development or cookies["user_id"] == User.first.id
 		end
 	end
 end

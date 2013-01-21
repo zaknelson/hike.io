@@ -1,7 +1,6 @@
 require_relative "../server"
 require_relative "../utils/routes_utils"
 
-
 class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
