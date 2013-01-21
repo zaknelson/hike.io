@@ -96,11 +96,15 @@ class Hike < Sequel::Model
 	def from_json (json, opts={})
 		parsed_json = JSON.parse(json)
 		if parsed_json["location"]
-			location_hash = parsed_json["location"].symbolize_keys.to_hash
-			if self.location.hikes.length == 1 && parsed_json["location"] != self.location
-				self.location = Location.find_or_create(location_hash)
+			if not self.location || self.location.hikes.length > 1
+				# location either doesn't yet exist, or it's shared, create a new one for this hike
+				location_hash = parsed_json["location"].symbolize_keys.to_hash
+				self.location = Location.create(location_hash)
+			else
+				# have a unique location for this hike, update it
+				self.location.from_json parsed_json["location"].to_json
+				self.location.save_changes
 			end
-			parsed_json.delete "location"
 		end
 		if opts[:fields]
 			set_fields(parsed_json, opts[:fields], opts)
