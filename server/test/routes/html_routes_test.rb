@@ -49,7 +49,7 @@ class HtmlRoutesTest < HikeAppTestCase
 
 	def test_hike_edit_requires_credentials
 		get "/scotchman-peak/edit"
-		assert_equal last_response.status, 403
+		assert_equal 403, last_response.status
 	end
 
 	def test_missing_hike_not_found
@@ -60,7 +60,7 @@ class HtmlRoutesTest < HikeAppTestCase
 	def test_good_query_redirects_to_hike
 		get "/?q=scotchman%20peak"
 		assert last_response.redirect?
-		assert_equal last_response.location, "http://example.org/scotchman-peak"
+		assert_equal "http://example.org/scotchman-peak", last_response.location
 	end
 
 	def test_query_with_multiple_possible_results
@@ -79,6 +79,6 @@ class HtmlRoutesTest < HikeAppTestCase
 	def test_trailing_slash_redirects
 		get "/scotchman-peak/"
 		assert last_response.redirect?
-		assert_equal last_response.location, "http://example.org/scotchman-peak"
+		assert_equal "http://example.org/scotchman-peak", last_response.location
 	end
 end

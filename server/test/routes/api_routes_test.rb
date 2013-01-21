@@ -34,19 +34,19 @@ class ApiRoutesTest < HikeAppTestCase
 	def test_get_hike_by_id
 		get "/api/v1/hikes/1"
 		json = JSON.parse(last_response.body)
-		assert_equal json["id"], 1
+		assert_equal 1, json["id"]
 	end
 
 	def test_get_hike_by_string_id
 		get "/api/v1/hikes/scotchman-peak"
 		json = JSON.parse(last_response.body)
-		assert_equal json["string_id"], "scotchman-peak"
+		assert_equal "scotchman-peak", json["string_id"]
 	end
 
 	def test_put_without_credentials
 		data = {"name" => "New name"}
 		put "/api/v1/hikes/scotchman-peak", data.to_json
-		assert_equal last_response.status, 403
+		assert_equal 403, last_response.status
 	end
 
 	def test_put_hike_name
@@ -79,12 +79,12 @@ class ApiRoutesTest < HikeAppTestCase
 		put "/api/v1/hikes/scotchman-peak", data.to_json
 
 		json = JSON.parse(last_response.body)
-		assert_equal json["string_id"], "scotchman-peak"
+		assert_equal "scotchman-peak", json["string_id"]
 		validate_hashes data, json
 		
 		get "/api/v1/hikes/scotchman-peak"
 		json = JSON.parse(last_response.body)
-		assert_equal json["string_id"], "scotchman-peak"
+		assert_equal "scotchman-peak", json["string_id"]
 		validate_hashes data, json
 	end
 
