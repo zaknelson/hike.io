@@ -1,6 +1,8 @@
 require "rack/test"
 require "test/unit"
 
+ENV["RACK_ENV"] = "test"
+
 class HikeAppTestCase < Test::Unit::TestCase
 	include Rack::Test::Methods
 
