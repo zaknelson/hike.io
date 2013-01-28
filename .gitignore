@@ -4,3 +4,4 @@
 assets/
 development.db
 node_modules
+scripts/scrape/output/
