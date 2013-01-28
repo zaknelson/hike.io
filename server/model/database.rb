@@ -58,7 +58,7 @@ migration "create hikes table" do
 		String :locality,					:null => false
 		Float :distance, 					:null => false
 		Float :elevation_gain,				:null => false
-		Float :elevation_gain,				#optional
+		Float :elevation_max				#optional
 		Time :creation_time, 				:null => false
 		Time :edit_time, 					:null => false
 
