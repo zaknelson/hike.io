@@ -25,12 +25,13 @@ json.each do |external_entry|
 				:lat => external_entry["lat"], 
 				:lng => external_entry["lng"]
 			},
+			:locality => "Washington, USA"
 		}
 
 		entries.push new_entry
 	end
 end
 
-FileUtils.mkdir "output", :noop => true
+FileUtils.mkdir "output" if not File.exist?("output")
 output_file = File.open "output/wa.json", "w"
 output_file.write JSON.pretty_generate(entries)
