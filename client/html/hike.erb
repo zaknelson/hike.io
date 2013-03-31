@@ -13,8 +13,8 @@
 	<div class="edit-banner">
 		<h3>You are editing this page</h3>
 		<div>
-			<button type="button" class="save-button btn" disabled data-loading-text="Saving..." autocomplete="off">Save</button>
-			<button type="button" class="done-button btn">Done</button>
+			<button class="save-button btn" disabled data-loading-text="Saving..." autocomplete="off">Save</button>
+			<button class="done-button btn">Done</button>
 		</div>
 	</div>
 <% end %>
@@ -39,9 +39,12 @@
 			</div>
 		</section>
 
-		<% if @hike.photos.length > 0 %>
+		<% if @hike.photos.length > 0 or @editing %>
 			<section class="photos-section">
 				<h2>Photos</h2>
+				<% if @editing %>
+				<span class="add-photo-button btn btn-file">Add Photo<input class="add-file-input" type="file"></input></span>
+				<% end %>
 				<div class="photo-thumb-list">
 					<% for picture in @hike.photos %>
 						<a class="fancybox-thumbs" rel="photos" href="<%= "#{@hike_img_dir}/#{@hike.string_id}/#{picture.path}.jpg" %>">

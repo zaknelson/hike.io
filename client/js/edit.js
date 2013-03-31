@@ -163,10 +163,16 @@
 		});
 	};
 
+	var initAddFileInput = function() {
+		$(".add-file-input").on("change", function(e) { 
+		});
+	};
+
 	$(document).ready(function() {
 		if ($(".hike-page.editing").length) {
 			initEditableFields();
 			initHikeNameBinding();
+			initAddFileInput();
 			initSaveButton();
 			initDoneButton();
 			initFocus();
