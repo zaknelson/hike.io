@@ -1,5 +1,5 @@
 // Google analytics
-var _gaq = _gaq || [];
+;var _gaq = _gaq || [];
 _gaq.push(["_setAccount", "UA-33552646-1"]);
 _gaq.push(["_setDomainName", "hike.io"]);
 _gaq.push(["_trackPageview"]);

@@ -17,6 +17,8 @@ require "will_paginate/sequel"
 require_relative "controller/search"
 require_relative "model/database"
 
+
+
 configure :production do
 	require "newrelic_rpm"
 end
@@ -26,6 +28,8 @@ configure :development, :test do
 end
 
 class HikeApp < Sinatra::Base
+
+	set :environment, :production
 
 	set :root, "#{File.dirname(__FILE__)}/../client"
 
