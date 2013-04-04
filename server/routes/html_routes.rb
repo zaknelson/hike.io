@@ -48,6 +48,11 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	get "/add", :provides => "html" do
+		@title = "Add Hike - hike.io"
+		erb :blank
+	end
+
 	get "/discover", :provides => "html" do
 		@title = "Discover - hike.io"
 		

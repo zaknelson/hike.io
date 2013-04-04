@@ -68,23 +68,35 @@ https://github.com/zaknelson/hike.io/
 					<%= render_svg("#{@img_dir}/photo-stream.svg") %>
 					<span>Discover</span>
 				</div>
+
 				<div class="header-separator"></div>
 				<div class="header-div header-div-map">
 					<%= render_svg("#{@img_dir}/map.svg") %>
 					 <span>Map</span>
 				</div>
 				<div class="header-separator"></div>
-			</div>
-			<%if not @hide_search_header %>
-			<div class="header-right">
-				<div class="header-separator"></div>
-				<div class="header-div header-div-search" >
-					<%= render_svg("#{@img_dir}/search.svg") %>
-					<span>Search</span>
+
+				<%if not @hide_search_header %>
+				<div class="header-right">
+					<div class="header-separator"></div>
+					<div class="header-div header-div-search" >
+						<%= render_svg("#{@img_dir}/search.svg") %>
+						<span>Search</span>
+					</div>
 				</div>
+				<% end %>
+				<%= yield_content :header %>
+
+				<%if is_admin? %>
+				<div class="header-right">
+					<div class="header-separator"></div>
+					<div class="header-div header-div-add" >
+						<%= render_svg("#{@img_dir}/add.svg") %>
+						<span>Add</span>
+					</div>
+				</div>
+				<% end %>
 			</div>
-			<% end %>
-			<%= yield_content :header %>
 		</header>
 		
 		<noscript>

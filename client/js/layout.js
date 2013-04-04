@@ -29,6 +29,9 @@ _gaq.push(["_trackPageview"]);
 		$(".header-div-map").click(function() {
 			window.location.href = "/map";
 		});
+		$(".header-div-add").click(function() {
+			window.location.href = "/add";
+		});
 	};
 
 	var replaceSvgIfNecessary = function() {
