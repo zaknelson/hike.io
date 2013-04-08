@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("hikeio", ["ui", "hikeio.directives"]).
+angular.module("hikeio", ["ui"]).
   config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
   	$locationProvider.html5Mode(true);
     $routeProvider.
@@ -26,6 +26,3 @@ angular.module("hikeio", ["ui", "hikeio.directives"]).
       }
   	});
   }]);
-
-angular.module("hikeio.directives", 
-  ["hikeio.directives.headerEntry"]);

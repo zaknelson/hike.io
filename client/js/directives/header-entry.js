@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("hikeio.directives.headerEntry", []).
+angular.module("hikeio").
 	directive("headerEntry", function() {
 		return {
 			scope: {

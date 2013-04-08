@@ -72,6 +72,7 @@ class HikeApp < Sinatra::Base
 		serve "/images", from: "images"
 
 		js :app, "/js/app.js", [
+			"/js/main.js",
 			"/js/lib/*.js",
 			"/js/utils/*.js",
 			"/js/layout.js",
