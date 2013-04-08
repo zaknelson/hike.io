@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
 <!--
  _     _ _          _       
@@ -12,11 +11,11 @@ https://github.com/zaknelson/hike.io/
 
 -->
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en" data-ng-app="hikeio">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
 	<meta id="viewport" name="viewport" content="width=device-width"></meta>
-	<title><%= @title %></title>
+	<title data-ng-bind="title">hike.io</title>
 	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon"></link>
 	<style>
 		/* Typekit specific classes to workaround flashing text issue, these must be loaded very early */
@@ -26,92 +25,71 @@ https://github.com/zaknelson/hike.io/
 		.wf-active h1, .wf-active h2, .wf-active h3, .wf-active li, .wf-active p {
 			opacity: 1;
 		}
+
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .data-ng-cloak, .x-ng-cloak {
+			display: none !important;
+		}
 	</style>
-	<script type="text/javascript">
+	<script>
+		window.hikeio = window.hikeio || {};
+		window.hikeio.isAdmin = <%= is_admin? %>;
 
-			window.hikeio = window.hikeio || {};
-
-			var updateViewport = function() {
-				var minWidth = 450;
-				var width = screen.width
-				if (width < minWidth) {
-					var viewport = document.getElementById("viewport");
-					viewport.content = "width=" + minWidth;
-					updated = true;
-				}
-			};
-			updateViewport();
-
-			// Workaround for bug http://stackoverflow.com/questions/5021090/screen-width-android
-			var userAgent = navigator.userAgent.toLowerCase();
-			var isAndroidVersionWithBug = userAgent.indexOf("android 2.2") > -1 || userAgent.indexOf("android 2.3") > -1;
-			if (isAndroidVersionWithBug) {
-				setTimeout(updateViewport, 500);
+		var updateViewport = function() {
+			var minWidth = 450;
+			var width = screen.width
+			if (width < minWidth) {
+				var viewport = document.getElementById("viewport");
+				viewport.content = "width=" + minWidth;
+				updated = true;
 			}
+		};
+		updateViewport();
 
+		// Workaround for bug http://stackoverflow.com/questions/5021090/screen-width-android
+		var userAgent = navigator.userAgent.toLowerCase();
+		var isAndroidVersionWithBug = userAgent.indexOf("android 2.2") > -1 || userAgent.indexOf("android 2.3") > -1;
+		if (isAndroidVersionWithBug) {
+			setTimeout(updateViewport, 500);
+		}
 	</script>
-	<script type="text/javascript" src="//use.typekit.net/jce4miw.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<script src="//use.typekit.net/jce4miw.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
 	<%= css :app %>
 </head>
-<body class="no-touch">
-	<div>
-		<header class="shadow-light">
-			<div>
-				<a href="/">
-					<div class="header-div">
-						<%= render_svg("#{@img_dir}/logo.svg") %>
-					</div>
-				</a>
-				<div class="header-separator"></div>
-				<div class="header-div header-div-photo-stream">
-					<%= render_svg("#{@img_dir}/photo-stream.svg") %>
-					<span>Discover</span>
-				</div>
-
-				<div class="header-separator"></div>
-				<div class="header-div header-div-map">
-					<%= render_svg("#{@img_dir}/map.svg") %>
-					 <span>Map</span>
-				</div>
-				<div class="header-separator"></div>
-
-				<%if not @hide_search_header %>
-				<div class="header-right">
-					<div class="header-separator"></div>
-					<div class="header-div header-div-search" >
-						<%= render_svg("#{@img_dir}/search.svg") %>
-						<span>Search</span>
-					</div>
-				</div>
-				<% end %>
-				<%= yield_content :header %>
-
-				<%if is_admin? %>
-				<div class="header-right">
-					<div class="header-separator"></div>
-					<div class="header-div header-div-add" >
-						<%= render_svg("#{@img_dir}/add.svg") %>
-						<span>Add</span>
-					</div>
-				</div>
-				<% end %>
+<body class="no-touch" data-ng-controller="AppController" data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
+	<header data-ng-cloak>
+		<div class="header-entries shadow-light">
+			<div data-ng-click="isSearchBoxActive = false">
+				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %></div>
 			</div>
-		</header>
-		
+			<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %></div>
+			<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
+			<div ng-click="toggleSearchBox()" data-ng-show="shouldShowSearchHeader()">
+				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %></div>
+			</div>
+			<div data-ng-show="isAdmin">
+				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %></div>
+			</div>
+		</div>
+		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
+			<div class="header-right shadow-light">
+				 <input type="text" placeholder="Hike or location..."></input>
+			</div>
+		</div>
+	</header>
+
+	<script type="text/ng-template" id="<%= @template_id %>">
+		<%= yield %>
+	</script>
+
+	<div ng-view data-ng-click="isSearchBoxActive = false">
 		<noscript>
 			<h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1>
 		</noscript>
-		<div class="sub-header">
-			<div class="search-div header-right shadow-light">
-				<input type="text" placeholder="Hike or location..."></input>
-			</div>
-		</div>
-		<%= yield %>
 	</div>
 
-	<footer></footer>
-
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-infinitescroll/2.0b2.110713/jquery.infinitescroll.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
@@ -120,7 +98,6 @@ https://github.com/zaknelson/hike.io/
 	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min.js"></script>
 	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCpS42FCQP8EbwF8hHr6C5FCg6V7hFKS34&sensor=true"></script>
 	<script src="//google.com/jsapi"></script>
-
 	<%= js  :app %>
 </body>
 </html>

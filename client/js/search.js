@@ -62,6 +62,6 @@
 	};
 
 	$(document).ready(function() {
-		initSearch();
+		//initSearch();
 	});
 })();

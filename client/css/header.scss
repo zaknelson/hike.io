@@ -4,12 +4,16 @@
 $header-background-color: #fff;
 $icon-dimensions: 27px;
 
-header {
+header > .header-entries {
 	width: 100%;
 	background-color: $header-background-color;
 	height: $header-height;
 	z-index: $header-z-index;
-	position: relative;
+	position: absolute;
+
+	a, a:hover {
+		color: #000;
+	}
 
 	.header-separator {
 		background: url(/images/header-separator.png?embed) repeat-y center;
@@ -18,7 +22,7 @@ header {
 		float: left;
 	}
 
-	.header-div {
+	.header-entry {
 		float: left;
 		background-color: $header-background-color;
 		text-align: center;
@@ -36,7 +40,7 @@ header {
 			margin-top: 9px;
 		}
 
-		span {
+		.label {
 			font-style: normal;
 			font-weight: 200;
 			font-size: 18px;
@@ -45,23 +49,20 @@ header {
 	}
 }
 
-.no-touch header .header-div:hover {
+.no-touch header .header-entry:hover {
 	opacity: .8;
 }
 
-.header-right {
-	float: right;
-}
-
-.sub-header {
-	width: 100%;
-	position: fixed;
-	top: $header-height - 3; /* Slide slightly underneath top header */
+header > .search-dropdown {
+	position: absolute;
+	display: none;
+	top: $header-height - 3;
+	height: $header-height;
+	right: 0px;
 	z-index: $header-z-index - 1;
+	float: right;
 
-	.search-div {
-		display: none;
-		margin-top: -$header-height;
+	div {
 		background-color: #fff;
 		padding: 13px 9px 9px 9px;
 		@include border-radius(0px 0px 0px 5px);
@@ -72,7 +73,10 @@ header {
 			font-weight: 200;
 		}
 	}
+}
 
+.search-dropdown.active {
+	display: block;
 }
 
 @media all and (max-width: $mobile-width) {
