@@ -59,17 +59,27 @@ https://github.com/zaknelson/hike.io/
 <body class="no-touch" data-ng-controller="AppController" data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
 	<header data-ng-cloak>
 		<div class="header-entries shadow-light">
+
 			<div data-ng-click="isSearchBoxActive = false">
 				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %></div>
 			</div>
-			<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %></div>
-			<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
+
+			<div>
+				<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %></div>
+			</div>
+
+			<div>
+				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
+			</div>
+
 			<div ng-click="toggleSearchBox()" data-ng-show="shouldShowSearchHeader()">
 				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %></div>
 			</div>
+
 			<div data-ng-show="isAdmin">
 				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %></div>
 			</div>
+			
 		</div>
 		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
 			<div class="header-right shadow-light">
