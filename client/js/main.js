@@ -7,7 +7,7 @@ angular.module("hikeio", ["ui"]).
       when("/", {
         controller: IndexController,
         templateUrl: "templates/index.html",
-        title: "hike.io - Find beautiful hikes" }).
+        title: "hike.io" }).
       when("/discover", {
         controller: PhotoStreamController,
         templateUrl: "templates/photo_stream.html",
