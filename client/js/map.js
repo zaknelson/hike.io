@@ -151,9 +151,9 @@
 
 	$(document).ready(function() {
 		if ($(".map-page").length) {
-			initIcons();
-			initMap();
-			initSocketIo();
+			//initIcons();
+			//initMap();
+			//initSocketIo();
 		}
 	});
 })();
