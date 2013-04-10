@@ -6,15 +6,15 @@ angular.module("hikeio", ["ui"]).
     $routeProvider.
       when("/", {
         controller: IndexController,
-        templateUrl: "templates/index.html",
+        templateUrl: "/?partial=true",
         title: "hike.io" }).
       when("/discover", {
         controller: PhotoStreamController,
-        templateUrl: "templates/photo_stream.html",
+        templateUrl: "/discover?partial=true",
         title: "Discover - hike.io" }).
       when("/map", {
         controller: MapController,
-        templateUrl: "templates/map.html",
+        templateUrl: "/map?partial=true",
         title: "Map - hike.io" });
   }]).
 

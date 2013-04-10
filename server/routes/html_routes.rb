@@ -14,6 +14,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		@img_dir = "/images"
+		@is_partial = params[:partial] == "true"
 	end
 
 	helpers do
@@ -25,18 +26,28 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	def render_template template
-		is_partial = request.path_info.start_with? "/templates/"
-		is_partial ? partial(template) : erb(template)
+	def wrap_template_with_script str, template_id
+		result = "<script type=\"text/ng-template\" id=\"#{template_id}?partial=true\">"
+		result += str
+		result += "</script>"
 	end
 
-	get %r{^(/|/templates/index.html)$}, :provides => "html" do
-		@template_id = "templates/index.html"
-		render_template :index
+	def render_template template_id, script_template_id=nil
+		script_template_id = script_template_id || template_id
+		rendered_template = partial template_id
+		if @is_partial
+			rendered_template
+		else
+			wrapped_partial = wrap_template_with_script rendered_template, script_template_id
+			erb wrapped_partial
+		end
 	end
 
-	get %r{^(/discover|/templates/photo_stream.html)$}, :provides => "html" do
-		@template_id = "templates/photo_stream.html"
+	get "/", :provides => "html" do
+		render_template :index, "/"
+	end
+
+	get "/discover", :provides => "html" do
 		return erb :blank if Hike.count == 0
 		page = params[:page] ? Integer(params[:page]) : 1   
 		@featured_hike = Hike.first if page == 1
@@ -46,8 +57,7 @@ class HikeApp < Sinatra::Base
 		render_template :photo_stream
 	end
 
-	get %r{^(/map|/templates/map.html)$}, :provides => "html" do
-		@template_id = "templates/map.html"
+	get "/map", :provides => "html" do
 		render_template :map
 	end
 
