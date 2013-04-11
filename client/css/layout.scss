@@ -17,25 +17,9 @@ input, button {
 	font-family: "facitweb", Helvetica, Arial, sans-serif;
 }
 
-body > div {
-	height: 100%;
-}
-
 a {
 	color: #39c;
 	text-decoration: none;
- }
-
- .noscript-message {
- 	font-size: 40px;
- 	padding: 20px 20px;
- 	color: #333;
- 	opacity: 1;
- }
-
- a:hover {
- 	color: #069;
- 	text-decoration: underline;
  }
 
 a img { border: none; }
@@ -59,7 +43,27 @@ h3 {
 	line-height: 28px;
 }
 
-*:focus {outline: none;}
+*:focus { outline: none; }
+
+[ng-view] {
+	position: absolute;
+	top: $header-height;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+}
+
+ .noscript-message {
+ 	font-size: 40px;
+ 	padding: 20px 20px;
+ 	color: #333;
+ 	opacity: 1;
+ }
+
+ a:hover {
+ 	color: #069;
+ 	text-decoration: underline;
+ }
 
 .default-container {
 	overflow-x: hidden;

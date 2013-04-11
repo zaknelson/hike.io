@@ -9,7 +9,7 @@ header > .header-entries {
 	background-color: $header-background-color;
 	height: $header-height;
 	z-index: $header-z-index;
-	position: absolute;
+	position: relative;
 
 	a, a:hover {
 		color: #000;
