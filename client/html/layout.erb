@@ -60,7 +60,7 @@ https://github.com/zaknelson/hike.io/
 	<header data-ng-cloak data-ng-controller="HeaderController">
 		<div class="header-entries shadow-light">
 
-			<div data-ng-click="isSearchBoxActive = false">
+			<div data-ng-click="hideSearchBox()">
 				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %></div>
 			</div>
 
@@ -72,7 +72,7 @@ https://github.com/zaknelson/hike.io/
 				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
 			</div>
 
-			<div ng-click="toggleSearchBox()" data-ng-show="shouldShowSearchHeader()">
+			<div data-ng-click="toggleSearchBox()" data-ng-show="shouldShowSearchHeader()">
 				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %></div>
 			</div>
 
@@ -90,7 +90,7 @@ https://github.com/zaknelson/hike.io/
 
 	<%= yield %>
 
-	<div ng-view data-ng-click="isSearchBoxActive = false">
+	<div ng-view data-ng-click="hideSearchBox()">
 		<noscript>
 			<h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1>
 		</noscript>
