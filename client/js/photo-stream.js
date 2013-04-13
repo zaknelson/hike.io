@@ -72,9 +72,9 @@
 
 	$(document).ready(function() {
 		if ($(".photo-stream-page").length) {
-			initMasonry();
-			initPreviewClickHandler();
-			initInfiniteScroll();
+			//initMasonry();
+			//initPreviewClickHandler();
+			//initInfiniteScroll();
 		}
 	});
 })();
