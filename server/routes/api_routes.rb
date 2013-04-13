@@ -7,6 +7,17 @@ class HikeApp < Sinatra::Base
 		Hike.all.to_json
 	end
 
+	get "/api/v1/hikes/search", :provides => "json" do
+		query = params[:q];
+		400 if not query
+
+		search_executor = SearchExecutor.new
+		search_executor.logger = logger
+		search_executor.query = query
+		search_results = search_executor.execute
+		search_results.to_json
+	end
+
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
 		hike.to_json if hike
