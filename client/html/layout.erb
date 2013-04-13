@@ -57,7 +57,7 @@ https://github.com/zaknelson/hike.io/
 	<%= css :app %>
 </head>
 <body class="no-touch" data-ng-controller="AppController" data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
-	<header data-ng-cloak>
+	<header data-ng-cloak data-ng-controller="HeaderController">
 		<div class="header-entries shadow-light">
 
 			<div data-ng-click="isSearchBoxActive = false">
@@ -83,7 +83,7 @@ https://github.com/zaknelson/hike.io/
 		</div>
 		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
 			<div class="header-right shadow-light">
-				 <input type="text" placeholder="Hike or location..."></input>
+				 <input type="text" placeholder="Hike or location..." data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}"></input>
 			</div>
 		</div>
 	</header>

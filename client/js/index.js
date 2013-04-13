@@ -14,7 +14,7 @@
 
 	$(document).ready(function() {
 		if ($(".index-page").length) {
-			initSearchBox();
+			//initSearchBox();
 		}
 	});
 })();
