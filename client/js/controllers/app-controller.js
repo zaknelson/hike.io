@@ -1,5 +1,4 @@
 "use strict";
-
 var AppController = function($scope, $location) {
   $scope.isSearchBoxActive = false;
   $scope.isAdmin = window.hikeio.isAdmin;
