@@ -45,7 +45,7 @@ h3 {
 
 *:focus { outline: none; }
 
-[ng-view] {
+[data-ng-view] {
 	position: absolute;
 	top: $header-height;
 	bottom: 0px;
