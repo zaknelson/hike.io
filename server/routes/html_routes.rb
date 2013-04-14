@@ -13,8 +13,8 @@ class HikeApp < Sinatra::Base
 			@landing_page_img_dir = "http://assets.hike.io/landing-page-images"
 		end
 
+		@is_partial = request.path_info.start_with? "/partials/"
 		@img_dir = "/images"
-		@is_partial = params[:partial] == "true"
 	end
 
 	helpers do
@@ -32,33 +32,38 @@ class HikeApp < Sinatra::Base
 		result += "</script>"
 	end
 
-	def render_template template_id, script_template_id=nil
-		script_template_id = script_template_id || template_id
+	def render_template template_id
 		rendered_template = partial template_id
 		if @is_partial
 			rendered_template
 		else
-			wrapped_partial = wrap_template_with_script rendered_template, script_template_id
+			wrapped_partial = wrap_template_with_script rendered_template, template_id
 			erb wrapped_partial
 		end
 	end
 
-	get "/", :provides => "html" do
-		render_template :index, "/"
+	["/", "/partials/index.html"].each do |path|
+		get path do
+			render_template :index
+		end
 	end
 
-	get "/discover", :provides => "html" do
-		return erb :blank if Hike.count == 0
-		page = params[:page] ? Integer(params[:page]) : 1   
-		@featured_hike = Hike.first if page == 1
+	["/discover", "/partials/photo_stream.html"].each do |path|
+		get path do
+			return erb :blank if Hike.count == 0
+			page = params[:page] ? Integer(params[:page]) : 1   
+			@featured_hike = Hike.first if page == 1
 
-		# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-		@hikes = Hike.where(:id => Hike.first.id).invert.paginate(page, 4) 
-		render_template :photo_stream
+			# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
+			@hikes = Hike.where(:id => Hike.first.id).invert.paginate(page, 4) 
+			render_template :photo_stream
+		end
 	end
 
-	get "/map", :provides => "html" do
-		render_template :map
+	["/map", "/partials/map.html"].each do |path|
+		get path do
+			render_template :map
+		end
 	end
 
 	get %r{\/(.*)\/}, :provides => "html" do
