@@ -50,9 +50,6 @@ angular.module("hikeio").
 			return true;
 		});
 
-		//console.log(element.html());
-		console.log(controller.$viewValue)
-
 		// model -> view
 		controller.$render = function() {
 			element.html(controller.$viewValue);

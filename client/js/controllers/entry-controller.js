@@ -8,7 +8,6 @@ var EntryController = function($scope, $http, $location, $window) {
 	$http({method: "GET", url: "/api/v1" + $location.path()}).
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
-			console.log(data)
 			$window.document.title = data.name + " - hike.io";
 			$scope.hasLoaded = true;
 		}).
