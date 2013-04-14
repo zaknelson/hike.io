@@ -1,0 +1,60 @@
+<article class="default-container hike-page">
+	<div class="edit-banner" data-ng-show="editing">
+		<h3>You are editing this page</h3>
+		<div>
+			<button class="save-button btn" disabled data-loading-text="Saving..." autocomplete="off">Save</button>
+			<button class="done-button btn">Done</button>
+		</div>
+	</div>
+	<div class="header-landscape">
+		<img class="shadow-light" data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-landscape.jpg"></img>		<div>
+			<h1 class="header-hike-name single-line">{{hike.name}}</h1>
+		</div>
+	</div>
+	<div class="content">
+	<section class="overview-section">
+		<div>
+
+			<div class="overview-facts">
+				<div class="page-curl shadow-bottom">
+					<table>
+						<tr>
+							<td>Hike</td>
+							<td class="facts-hike-name single-line"><p>{{hike.name}}</p></td>
+						</tr>
+						<tr>
+							<td>Location</td>
+							<td class="facts-hike-location single-line">{{hike.locality}}</td>
+						</tr>
+						<tr>
+							<td>Distance</td>
+							<td>
+								<div class="facts-hike-distance">
+									<span class="facts-hike-distance-value single-line">{{hike.distance}}</span>
+									<span class="facts-hike-distance-units single-line">mi.</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Elevation</td>
+							<td>
+								<div class="facts-hike-elevation">
+									<span class="facts-hike-elevation-value single-line">{{hike.elevation_gain}}</span>
+									<span class="facts-hike-elevation-units">ft.</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Lat / Lng</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="overview-description" data-ng-show="hike.description" data-ng-bind-html-unsafe="hike.description"></div>
+			<div class="overview-description" data-ng-show="hike && !hike.description">
+				<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
+			</div>
+		</div>
+	</section>
+</article>

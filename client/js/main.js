@@ -15,7 +15,10 @@ angular.module("hikeio", ["ui"]).
       when("/map", {
         controller: MapController,
         templateUrl: "/partials/map.html",
-        title: "Map - hike.io" });;
+        title: "Map - hike.io" }).
+      when("/hikes/:hikeId", {
+        controller: EntryController,
+        templateUrl: "/partials/entry.html"});
   }]).
 
   // Handle title change

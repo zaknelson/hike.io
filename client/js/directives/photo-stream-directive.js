@@ -4,20 +4,22 @@ angular.module("hikeio").
 	directive("photoStream", function() {
 
 	var template = '<div class="preview-list">' +
-		'<div class="preview" data-ng-repeat="hike in hikes">' +
-			'<div data-ng-class="{\'featured-box\': $first}" >' +
-				'<img data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
-				'<div class="preview-footer">' +
-					'<div>' +
-						'<div class="preview-title">{{hike.name}}</div>' +
-						'<div class="preview-location">{{hike.locality}}</div>' +
-					'</div>' +
-					'<div>' +
-						'<div class="preview-distance">{{hike.distance}}</div>' +
+		'<a href="/hikes/{{hike.string_id}}" data-ng-repeat="hike in hikes">' +
+			'<div class="preview" >' +
+				'<div data-ng-class="{\'featured-box\': $first}" >' +
+					'<img data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
+					'<div class="preview-footer">' +
+						'<div>' +
+							'<div class="preview-title">{{hike.name}}</div>' +
+							'<div class="preview-location">{{hike.locality}}</div>' +
+						'</div>' +
+						'<div>' +
+							'<div class="preview-distance">{{hike.distance}}</div>' +
+						'</div>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
-		'</div>';
+		'</a>';
 
 		return {
 			replace: true,

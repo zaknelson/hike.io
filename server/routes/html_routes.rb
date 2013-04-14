@@ -66,6 +66,14 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	["/hikes/:hike_id", "/partials/entry.html"].each do |path|
+		get path do
+			@hike = Hike[:string_id => params[:hike_id]]
+			#pass unless @hike
+			render_template :entry
+		end
+	end
+
 	get %r{\/(.*)\/}, :provides => "html" do
 		# Redirect urls with trailing /'s
 		redirect params[:captures].first

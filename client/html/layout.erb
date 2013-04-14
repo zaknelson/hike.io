@@ -79,6 +79,10 @@ https://github.com/zaknelson/hike.io/
 			<div data-ng-show="isAdmin">
 				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %></div>
 			</div>
+
+			<div data-ng-show="isAdmin &amp;&amp; shouldShowEditHeader()">
+				<div data-header-entry data-label="Edit" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %></div>
+			</div>
 			
 		</div>
 		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
