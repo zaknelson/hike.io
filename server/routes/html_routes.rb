@@ -50,12 +50,6 @@ class HikeApp < Sinatra::Base
 
 	["/discover", "/partials/photo_stream.html"].each do |path|
 		get path do
-			return erb :blank if Hike.count == 0
-			page = params[:page] ? Integer(params[:page]) : 1   
-			@featured_hike = Hike.first if page == 1
-
-			# using Sequel's paginate method, not will_paginate's, see https://github.com/mislav/will_paginate/issues/227
-			@hikes = Hike.where(:id => Hike.first.id).invert.paginate(page, 4) 
 			render_template :photo_stream
 		end
 	end
@@ -68,8 +62,6 @@ class HikeApp < Sinatra::Base
 
 	["/hikes/:hike_id", "/partials/entry.html"].each do |path|
 		get path do
-			@hike = Hike[:string_id => params[:hike_id]]
-			#pass unless @hike
 			render_template :entry
 		end
 	end
