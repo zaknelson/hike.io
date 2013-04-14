@@ -22,9 +22,26 @@ angular.module("hikeio").
 			element.on("paste", function(event) {
 				if (event.originalEvent.clipboardData) {
 					var pastedData = event.originalEvent.clipboardData.getData("text/plain");
-					document.execCommand("insertText", false, pastedData);
-					element.trigger("change");
+					if (attributes.type === "numeric") {
+						if (($.isNumeric(pastedData) && (!attributes.positive || parseFloat(pastedData) > 0)) || pastedData === ".") {
+							// programmatically paste to ensure that result will be numeric
+							var before = element.html();
+							document.execCommand("insertText", false, pastedData);
+							var after = element.html();
+							console.log(after)
+							if ($.isNumeric(after) && (!attributes.positive || parseFloat(after) > 0)) {
+								element.trigger("change");
+							} else {
+								element.html(before);
+								element.blur();
+							}
+						}
+					} else {
+						document.execCommand("insertText", false, pastedData);
+						element.trigger("change");
+					}
 				}
+
 				return false;
 			});
 
