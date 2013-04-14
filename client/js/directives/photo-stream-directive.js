@@ -6,7 +6,7 @@ angular.module("hikeio").
 	var template = '<div class="preview-list">' +
 		'<div class="preview" data-ng-repeat="hike in hikes">' +
 			'<div data-ng-class="{\'featured-box\': $first}" >' +
-				'<img src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
+				'<img data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
 				'<div class="preview-footer">' +
 					'<div>' +
 						'<div class="preview-title">{{hike.name}}</div>' +
