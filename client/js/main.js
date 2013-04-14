@@ -18,11 +18,13 @@ angular.module("hikeio", ["ui"]).
         title: "Map - hike.io" }).
       when("/hikes/:hikeId", {
         controller: EntryController,
+        templateUrl: "/partials/entry.html"}).
+      when("/hikes/:hikeId/edit", {
+        controller: EntryController,
         templateUrl: "/partials/entry.html"});
   }]).
-
-  // Handle title change
   run(['$location', '$rootScope', function($location, $rootScope) {
+    $rootScope.location = $location;
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
       if (current) {
         $rootScope.title = current.$route.title;

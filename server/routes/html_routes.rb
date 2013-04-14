@@ -60,7 +60,7 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	["/hikes/:hike_id", "/partials/entry.html"].each do |path|
+	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path do
 			render_template :entry
 		end

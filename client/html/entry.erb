@@ -1,5 +1,5 @@
 <article class="default-container hike-page">
-	<div class="edit-banner" data-ng-show="editing">
+	<div class="edit-banner" data-ng-show="isEditing()">
 		<h3>You are editing this page</h3>
 		<div>
 			<button class="save-button btn" disabled data-loading-text="Saving..." autocomplete="off">Save</button>
@@ -7,8 +7,9 @@
 		</div>
 	</div>
 	<div class="header-landscape">
-		<img class="shadow-light" data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-landscape.jpg"></img>		<div>
-			<h1 class="header-hike-name single-line">{{hike.name}}</h1>
+		<img class="shadow-light" data-ui-if="hasLoaded" data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-landscape.jpg"></img>
+		<div>
+			<h1 class="header-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true"></h1>
 		</div>
 	</div>
 	<div class="content">
@@ -20,11 +21,11 @@
 					<table>
 						<tr>
 							<td>Hike</td>
-							<td class="facts-hike-name single-line"><p>{{hike.name}}</p></td>
+							<td class="facts-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true"></td>
 						</tr>
 						<tr>
 							<td>Location</td>
-							<td class="facts-hike-location single-line">{{hike.locality}}</td>
+							<td class="facts-hike-location" contenteditable="{{isEditing()}}" data-ng-model="hike.locality" data-type="text" data-single-line="true"></td>
 						</tr>
 						<tr>
 							<td>Distance</td>
@@ -52,7 +53,7 @@
 			</div>
 
 			<div class="overview-description" data-ng-show="hike.description" data-ng-bind-html-unsafe="hike.description"></div>
-			<div class="overview-description" data-ng-show="hike && !hike.description">
+			<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing()">
 				<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
 			</div>
 		</div>

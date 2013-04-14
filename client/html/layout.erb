@@ -81,7 +81,7 @@ https://github.com/zaknelson/hike.io/
 			</div>
 
 			<div data-ng-show="isAdmin &amp;&amp; shouldShowEditHeader()">
-				<div data-header-entry data-label="Edit" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %></div>
+				<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %></div>
 			</div>
 			
 		</div>
