@@ -28,7 +28,6 @@ angular.module("hikeio").
 							var before = element.html();
 							document.execCommand("insertText", false, pastedData);
 							var after = element.html();
-							console.log(after)
 							if ($.isNumeric(after) && (!attributes.positive || parseFloat(after) > 0)) {
 								element.trigger("change");
 							} else {
