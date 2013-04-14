@@ -27,7 +27,7 @@ angular.module("hikeio").
 				 hikes: "="
 			},
 			template: template,
-			link: function (scope, element, attrs) {
+			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 350;
 				element.masonry({
@@ -49,7 +49,7 @@ angular.module("hikeio").
 					element.imagesLoaded(function() {
 						element.masonry("reload");
 					});
-				}, true);
+				});
 			}
 		};
 	});
