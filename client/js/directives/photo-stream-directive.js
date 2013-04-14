@@ -14,7 +14,7 @@ angular.module("hikeio").
 							'<div class="preview-location">{{hike.locality}}</div>' +
 						'</div>' +
 						'<div>' +
-							'<div class="preview-distance">{{hike.distance}}</div>' +
+							'<div class="preview-distance">{{hike.distance | distance:\'kilometers\':\'miles\':1}} mi.</div>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
