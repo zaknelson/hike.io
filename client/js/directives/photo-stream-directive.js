@@ -37,9 +37,9 @@ angular.module("hikeio").
 					columnWidth: function(containerWidth) {
 						var boxes = Math.ceil(containerWidth / maxColumnWidth);
 						var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
-						element.find(".preview > div").width(boxWidth);
+						element.find(".preview > div > img").width(boxWidth);
 						if (boxes !== 1) {
-							element.find(".featured-box").width(boxWidth * 2 + gutterWidth);
+							element.find(".preview > .featured-box > img").width(boxWidth * 2 + gutterWidth);
 						}
 						return boxWidth;
 					}
