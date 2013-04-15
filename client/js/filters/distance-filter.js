@@ -7,8 +7,12 @@ angular.module("hikeio").
 
 		if (from === "meters" && to === "feet") {
 			result = value * 3.28084;
+		} else if (from === "feet" && to === "meters") {
+			result = value * 0.30480;
 		} else if (from === "kilometers" && to === "miles") {
 			result = value * 0.62137;
+		} else if (from === "miles" && to === "kilometers") {
+			result = value * 1.60934;
 		}
 
 		if (truncateTo) {
