@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $location, mapTooltipFactory) {
+var MapController = function($scope, $location, mapTooltipFactory, navigation) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
@@ -26,7 +26,7 @@ var MapController = function($scope, $location, mapTooltipFactory) {
 	};
 
 	$scope.markerClicked = function(marker) {
-		$location.path("/hikes/" + marker.hikeData.string_id);
+		navigation.toEntry(marker.hikeData.string_id);
 	};
 
 	$scope.updateMarkers = function(event) {
@@ -100,7 +100,7 @@ var MapController = function($scope, $location, mapTooltipFactory) {
 	};
 
 	var initSocketIo = function() {
-		socket = io.connect(location.protocol + "//" + location.hostname + ":8080");
+		socket = io.connect($location.protocol() + "://" + $location.host() + ":8080");
 		socket.on("get-hikes-in-bounds", function (data) {
 			mergeMarkers(data);
 		});

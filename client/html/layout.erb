@@ -72,7 +72,7 @@ https://github.com/zaknelson/hike.io/
 				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
 			</div>
 
-			<div data-ng-click="toggleSearchBox()" data-ng-show="shouldShowSearchHeader()">
+			<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
 				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %></div>
 			</div>
 
@@ -80,7 +80,7 @@ https://github.com/zaknelson/hike.io/
 				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %></div>
 			</div>
 
-			<div data-ng-show="isAdmin &amp;&amp; shouldShowEditHeader()">
+			<div data-ng-show="isAdmin &amp;&amp; navigation.onEntry()">
 				<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %></div>
 			</div>
 			

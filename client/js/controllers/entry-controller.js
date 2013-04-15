@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($scope, $http, $location, $window) {
+var EntryController = function($scope, $http, $location, $window, navigation) {
 
 	$scope.editing = false;
 	$scope.hike = null;
@@ -17,9 +17,7 @@ var EntryController = function($scope, $http, $location, $window) {
 		});
 
 	$scope.isEditing = function() {
-		// Tests whether location is of the form /hikes/my-hike (with no /edit at the end)
-		var regex = /\/hikes\/.*?\/edit/; 
-		return regex.test($location.path());
+		return navigation.onEntryEdit();
 	};
 
 	$scope.save = function() {
@@ -36,7 +34,7 @@ var EntryController = function($scope, $http, $location, $window) {
 	};
 
 	$scope.done = function() {
-		$location.path("/hikes/" + $scope.hike.string_id);
+		navigation.toEntry($scope.hike.string_id);
 	};
 
 	$scope.getMapHref = function() {
