@@ -31,7 +31,10 @@ angular.module("hikeio").
 
 						controller.$setViewValue(viewValue);
 					});
-					scope.$apply(attributes.change);
+
+					if (attributes.change) {
+						scope.$apply(attributes.change);
+					}
 				});
 
 				element.on("paste", function(event) {
