@@ -44,6 +44,12 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 	}
 
+	a.disabled {
+		color: #333;
+		cursor: text;
+		text-decoration: none;
+	}
+
 	.content {
 		padding: 0px $section-padding;
 		color: #333;

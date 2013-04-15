@@ -35,8 +35,15 @@ var EntryController = function($scope, $http, $location, $window) {
 			});
 	};
 
-
 	$scope.done = function() {
 		$location.path("/hikes/" + $scope.hike.string_id);
+	};
+
+	$scope.getMapHref = function() {
+		var result = "";
+		if (!$scope.isEditing()) {
+			result = "/map?lat=" + $scope.hike.location.latitude + "&lng=" + $scope.hike.location.longitude;
+		}
+		return result;
 	};
 };

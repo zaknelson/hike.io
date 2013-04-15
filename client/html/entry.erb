@@ -47,6 +47,14 @@
 						</tr>
 						<tr>
 							<td>Lat / Lng</td>
+							<td>
+							<a data-ng-class="{disabled: isEditing()}" data-ng-href="{{getMapHref()}}">
+								<span class="facts-hike-latitude-value" contenteditable="{{isEditing()}}" data-ng-model="hike.location.latitude" data-filter-view="number:1" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span><span>,</span>
+								
+								<span class="facts-hike-longitude-value" contenteditable="{{isEditing()}}" data-ng-model="hike.location.longitude" data-filter-view="number:1" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
+							</a>
+							<a data-ng-show="!isEditing()" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
+						</td>
 						</tr>
 					</table>
 				</div>
