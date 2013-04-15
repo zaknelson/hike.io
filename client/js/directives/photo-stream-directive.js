@@ -48,9 +48,8 @@ angular.module("hikeio").
 				scope.$watch("hikes", function(newValue, oldValue) {
 					element.imagesLoaded(function(images, proper, broken) {
 						element.masonry("reload");
-						console.log(images, proper, broken)
 					});
-				});
+				}, true);
 			}
 		};
 	});
