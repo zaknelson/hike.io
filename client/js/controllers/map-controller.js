@@ -26,7 +26,7 @@ var MapController = function($scope, $location, mapTooltipFactory) {
 	};
 
 	$scope.markerClicked = function(marker) {
-		console.log(marker);
+		$location.path("/hikes/" + marker.hikeData.string_id);
 	};
 
 	$scope.updateMarkers = function(event) {
