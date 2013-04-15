@@ -2,8 +2,8 @@
 	<div class="edit-banner" data-ng-show="isEditing()">
 		<h3>You are editing this page</h3>
 		<div>
-			<button class="save-button btn" data-ng-class="{disabled: !isDirty}" data-loading-text="Saving..." autocomplete="off">Save</button>
-			<button class="done-button btn">Done</button>
+			<button class="save-button btn" data-ng-class="{disabled: !isDirty || isSaving, loading: true}" autocomplete="off" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || 'Save'}}</button>
+			<button class="done-button btn" data-ng-click="done()">Done</button>
 		</div>
 	</div>
 	<div class="header-landscape">
