@@ -10,7 +10,6 @@ angular.module("hikeio").
 			return $filter(filterName).apply(this, filterParams);
 		};
 
-
 		return {
 			require: "ngModel",
 			link: function(scope, element, attributes, controller) {
