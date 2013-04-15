@@ -87,7 +87,7 @@ https://github.com/zaknelson/hike.io/
 		</div>
 		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
 			<div class="header-right shadow-light">
-				 <input type="text" placeholder="Hike or location..." data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}"></input>
+				 <input type="text" placeholder="Hike or location..." data-ui-keypress="{'enter': 'hideSearchBox(); search($event)'}" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
 			</div>
 		</div>
 	</header>

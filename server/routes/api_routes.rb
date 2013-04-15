@@ -15,7 +15,13 @@ class HikeApp < Sinatra::Base
 		search_executor.logger = logger
 		search_executor.query = query
 		search_results = search_executor.execute
-		search_results.to_json
+
+		if (search_executor.has_best_result) 
+			[search_results[0]].to_json
+		else
+			search_results.to_json
+		end
+		
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
