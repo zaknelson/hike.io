@@ -2,14 +2,14 @@
 	<div class="edit-banner" data-ng-show="isEditing()">
 		<h3>You are editing this page</h3>
 		<div>
-			<button class="save-button btn" disabled data-loading-text="Saving..." autocomplete="off">Save</button>
+			<button class="save-button btn" data-ng-class="{disabled: !isDirty}" data-loading-text="Saving..." autocomplete="off">Save</button>
 			<button class="done-button btn">Done</button>
 		</div>
 	</div>
 	<div class="header-landscape">
-		<img class="shadow-light" data-ui-if="hasLoaded" data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-landscape.jpg"></img>
+		<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-landscape.jpg"></img>
 		<div>
-			<h1 class="header-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true"></h1>
+			<h1 class="header-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
 	</div>
 	<div class="content">
@@ -21,18 +21,18 @@
 					<table>
 						<tr>
 							<td>Hike</td>
-							<td class="facts-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true"></td>
+							<td class="facts-hike-name" contenteditable="{{isEditing()}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
 						<tr>
 							<td>Location</td>
-							<td class="facts-hike-location" contenteditable="{{isEditing()}}" data-ng-model="hike.locality" data-type="text" data-single-line="true"></td>
+							<td class="facts-hike-location" contenteditable="{{isEditing()}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
 						<tr>
 							<td>Distance</td>
 							<td>
 								<div class="facts-hike-distance">
-									<span class="facts-hike-distance-value single-line">{{hike.distance}}</span>
-									<span class="facts-hike-distance-units single-line">mi.</span>
+									<span class="facts-hike-distance-value" contenteditable="{{isEditing()}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
+									<span class="facts-hike-distance-units">mi.</span>
 								</div>
 							</td>
 						</tr>
@@ -40,7 +40,7 @@
 							<td>Elevation</td>
 							<td>
 								<div class="facts-hike-elevation">
-									<span class="facts-hike-elevation-value single-line">{{hike.elevation_gain}}</span>
+									<span class="facts-hike-elevation-value" contenteditable="{{isEditing()}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
 									<span class="facts-hike-elevation-units">ft.</span>
 								</div>
 							</td>
