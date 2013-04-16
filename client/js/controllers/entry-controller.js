@@ -44,4 +44,8 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 		}
 		return result;
 	};
+
+	$scope.$on("keyboardEventSave", function(event) {
+		$scope.save();
+	});
 };

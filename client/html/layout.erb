@@ -11,7 +11,7 @@ https://github.com/zaknelson/hike.io/
 
 -->
 
-<html lang="en" data-ng-app="hikeio">
+<html lang="en" data-ng-app="hikeio" data-ng-controller="AppController" data-ui-event="{keydown: 'handleGlobalKeydown($event)'}">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
 	<meta id="viewport" name="viewport" content="width=device-width"></meta>
@@ -56,7 +56,7 @@ https://github.com/zaknelson/hike.io/
 	<script>try{Typekit.load();}catch(e){}</script>
 	<%= css :app %>
 </head>
-<body class="no-touch" data-ng-controller="AppController" data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
+<body class="no-touch" data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
 	<header data-ng-cloak data-ng-controller="HeaderController">
 		<div class="header-entries shadow-light">
 
