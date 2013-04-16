@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("search", function($http, navigation) {
+	factory("search", function($http, $log, navigation) {
 
 		var SearchService = function() {
 		};
@@ -14,7 +14,7 @@ angular.module("hikeio").
 					}
 				}).
 				error(function(data, status, headers, config) {
-					console.log(data)
+					$log.error(data, status, headers, config)
 				});
 		};
 
