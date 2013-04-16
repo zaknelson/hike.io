@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($scope, $http, $location, $window, navigation) {
+var EntryController = function($scope, $http, $location, $window, analytics, navigation) {
 
 	$scope.editing = false;
 	$scope.hike = null;

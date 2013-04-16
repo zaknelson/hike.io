@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $location, mapTooltipFactory, navigation) {
+var MapController = function($scope, $location, analytics, mapTooltipFactory, navigation) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 

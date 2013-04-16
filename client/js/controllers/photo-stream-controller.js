@@ -1,5 +1,5 @@
 "use strict";
-var PhotoStreamController = function($scope, $http) {
+var PhotoStreamController = function($scope, $http, analytics) {
 
 	$http({method: "GET", url: "/api/v1/hikes/"}).
 		success(function(data, status, headers, config) {

@@ -1,5 +1,5 @@
 "use strict";
-var IndexController = function($scope, search) {
+var IndexController = function($scope, analytics, search) {
 	$scope.searchQuery = "";
 
 	$scope.search = function() {
