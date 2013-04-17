@@ -1,35 +1,36 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", function() {
+	directive("photoStream", function($timeout) {
 
-	var template = '<div class="preview-list">' +
-		'<a href="/hikes/{{hike.string_id}}" data-ng-repeat="hike in hikes">' +
-			'<div class="preview" >' +
-				'<div data-ng-class="{\'featured-box\': $first}" >' +
-					'<img data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
-					'<div class="preview-footer">' +
-						'<div>' +
-							'<div class="preview-title">{{hike.name}}</div>' +
-							'<div class="preview-location">{{hike.locality}}</div>' +
-						'</div>' +
-						'<div>' +
-							'<div class="preview-distance">{{hike.distance | distance:\'kilometers\':\'miles\':1}} mi.</div>' +
+		var template = '<div class="preview-list">' +
+			'<a href="/hikes/{{hike.string_id}}" data-ng-repeat="hike in hikes">' +
+				'<div class="preview" >' +
+					'<div data-ng-class="{\'featured-box\': $first}" >' +
+						'<img data-ng-src="/hike-images/{{hike.string_id}}/{{hike.string_id}}-preview{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
+						'<div class="preview-footer">' +
+							'<div>' +
+								'<div class="preview-title">{{hike.name}}</div>' +
+								'<div class="preview-location">{{hike.locality}}</div>' +
+							'</div>' +
+							'<div>' +
+								'<div class="preview-distance">{{hike.distance | distance:\'kilometers\':\'miles\':1}} mi.</div>' +
+							'</div>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
-			'</div>' +
-		'</a>';
+			'</a>';
 
 		return {
 			replace: true,
 			scope: {
-				 hikes: "="
+				hikes: "=",
 			},
 			template: template,
 			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 350;
+
 				element.masonry({
 					itemSelector: ".preview",
 					gutterWidth: gutterWidth,
@@ -37,19 +38,22 @@ angular.module("hikeio").
 					columnWidth: function(containerWidth) {
 						var boxes = Math.ceil(containerWidth / maxColumnWidth);
 						var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
-						element.find(".preview > div > img").width(boxWidth);
+						element.find(".preview > div").width(boxWidth);
 						if (boxes !== 1) {
-							element.find(".preview > .featured-box > img").width(boxWidth * 2 + gutterWidth);
+							element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
 						}
 						return boxWidth;
 					}
 				});
-					
+
 				scope.$watch("hikes", function(newValue, oldValue) {
+					if (newValue.length === 0) return;
 					element.imagesLoaded(function(images, proper, broken) {
-						element.masonry("reload");
+						$timeout(function() {
+							element.masonry("reload");
+						}, 100);
 					});
-				}, true);
+				}, true);	
 			}
 		};
 	});
