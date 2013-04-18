@@ -21,14 +21,12 @@ migration "seed scotchman peak" do
 	hike.photo_preview = Photo.create(:string_id => "scotchman-peak-preview")
 	hike.photo_facts = Photo.create(:string_id => "scotchman-peak-facts")
 
-	hike.add_photo(Photo.create(:string_id => "scotchman-peak-trees"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-mountain-goat"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-wildflower"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-meadow"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-pend-orielle"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-zak"))
 	hike.add_photo(Photo.create(:string_id => "scotchman-peak-hikers"))
-	hike.add_photo(Photo.create(:string_id => "scotchman-peak-dead-tree"))
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Scotchman"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
