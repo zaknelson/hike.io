@@ -23,7 +23,8 @@ angular.module("hikeio", ["ui"]).
         controller: EntryController,
         templateUrl: "/partials/entry.html"});
   }]).
-  run(["$rootScope", "$location", "navigation", function($rootScope, $location, navigation) {
+  run(["$rootScope", "$location", "config", "navigation", function($rootScope, $location, config, navigation) {
+    $rootScope.config = config;
     $rootScope.location = $location;
     $rootScope.navigation = navigation;
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {

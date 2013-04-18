@@ -54,6 +54,10 @@ migration "seed mt kilamanjaro" do
 		:longitude => -120.089783
 	)
 
+	hike.photo_landscape = Photo.create(:string_id => "mt-kilimanjaro-landscape")
+	hike.photo_preview = Photo.create(:string_id => "mt-kilimanjaro-preview")
+	hike.photo_facts = Photo.create(:string_id => "mt-kilimanjaro-facts")
+
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
 
@@ -75,6 +79,10 @@ migration "seed lake 22" do
 		:latitude => 58.177534,
 		:longitude => -118.089783
 	)
+
+	hike.photo_landscape = Photo.create(:string_id => "lake-22-landscape")
+	hike.photo_preview = Photo.create(:string_id => "lake-22-preview")
+	hike.photo_facts = Photo.create(:string_id => "lake-22-facts")
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
@@ -98,6 +106,10 @@ migration "seed pikes peak" do
 		:longitude => -118.289783
 	)
 
+	hike.photo_landscape = Photo.create(:string_id => "pikes-peak-landscape")
+	hike.photo_preview = Photo.create(:string_id => "pikes-peak-preview")
+	hike.photo_facts = Photo.create(:string_id => "pikes-peak-facts")
+
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
 
@@ -120,6 +132,10 @@ migration "seed north kaibab trail" do
 		:longitude => -118.289783
 	)
 
+	hike.photo_landscape = Photo.create(:string_id => "north-kaibab-trail-landscape")
+	hike.photo_preview = Photo.create(:string_id => "north-kaibab-trail-preview")
+	hike.photo_facts = Photo.create(:string_id => "north-kaibab-trail-facts")
+
 	hike.save
 end
 
@@ -139,6 +155,10 @@ migration "seed king arthurs seat" do
 		:longitude => -118.289783
 	)
 
+	hike.photo_landscape = Photo.create(:string_id => "king-arthurs-seat-landscape")
+	hike.photo_preview = Photo.create(:string_id => "king-arthurs-seat-preview")
+	hike.photo_facts = Photo.create(:string_id => "king-arthurs-seat-facts")
+
 	hike.save
 end
 
@@ -153,6 +173,10 @@ migration "seed snoqualmie middle fork" do
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
+
+	hike.photo_landscape = Photo.create(:string_id => "snoqualmie-middle-fork-landscape")
+	hike.photo_preview = Photo.create(:string_id => "snoqualmie-middle-fork-preview")
+	hike.photo_facts = Photo.create(:string_id => "snoqualmie-middle-fork-facts")
 
 	# Indirectly testing whether it's possible to have two hikes with the same location (it should be possible)
 	hike.location = Location.find(:id => 2)
