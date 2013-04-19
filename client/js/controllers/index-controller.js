@@ -6,3 +6,5 @@ var IndexController = function($scope, analytics, search) {
 		search.search($scope.searchQuery)
 	};
 };
+
+IndexController.$inject = ["$scope", "analytics", "search"];

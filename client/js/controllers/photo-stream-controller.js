@@ -10,3 +10,5 @@ var PhotoStreamController = function($scope, $http, analytics) {
 
 	$scope.hikes = [];
 };
+
+PhotoStreamController.$inject = ["$scope", "$http", "analytics"];

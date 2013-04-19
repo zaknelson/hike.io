@@ -49,3 +49,5 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 		$scope.save();
 	});
 };
+
+EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "navigation"];

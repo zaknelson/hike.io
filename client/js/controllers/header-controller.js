@@ -7,3 +7,5 @@ var HeaderController = function($scope, search) {
 		$scope.searchQuery = "";
 	};
 };
+
+HeaderController.$inject = ["$scope", "search"];

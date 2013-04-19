@@ -24,3 +24,5 @@ var AppController = function($scope) {
 		}
 	};
 };
+
+AppController.$inject = ["$scope"];
