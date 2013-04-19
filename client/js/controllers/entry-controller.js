@@ -21,16 +21,18 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 	};
 
 	$scope.save = function() {
-		$scope.isSaving = true;
-		$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
-			success(function(data, status, headers, config) {
-				$scope.isSaving = false;
-				$scope.isDirty = false;
-			}).
-			error(function(data, status, headers, config) {
-				$scope.isSaving = false;
-				$scope.isDirty = false;
-			});
+		if ($scope.isDirty) {
+			$scope.isSaving = true;
+			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
+				success(function(data, status, headers, config) {
+					$scope.isSaving = false;
+					$scope.isDirty = false;
+				}).
+				error(function(data, status, headers, config) {
+					$scope.isSaving = false;
+					$scope.isDirty = false;
+				});
+		}
 	};
 
 	$scope.done = function() {
