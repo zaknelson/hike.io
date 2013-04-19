@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("search", function($http, $log, navigation) {
+	factory("search", ["$http", "$log", "navigation", function($http, $log, navigation) {
 
 		var SearchService = function() {
 		};
@@ -19,4 +19,4 @@ angular.module("hikeio").
 		};
 
 		return new SearchService();
-	});
+	}]);
