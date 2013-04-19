@@ -26,6 +26,7 @@ angular.module("hikeio", ["ui"]).
   run(["$rootScope", "$location", "config", "navigation", function($rootScope, $location, config, navigation) {
     $rootScope.config = config;
     $rootScope.location = $location;
+    $rootScope.Modernizr = Modernizr;
     $rootScope.navigation = navigation;
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
       if (current) {

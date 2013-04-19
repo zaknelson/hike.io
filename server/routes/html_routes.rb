@@ -21,8 +21,7 @@ class HikeApp < Sinatra::Base
 		# Assumes the svg file has already passed through the process_svg script
 		def render_svg(path)
 			render_str = File.open("#{root}/#{path}", "rb").read
-			img_fallback_path = path.sub(".svg", ".png")
-			render_str.sub("<svg", "<svg data-hikeio-fallback-img-src=\"#{img_fallback_path}\"");
+			render_str.sub("<svg", '<svg data-ui-if="Modernizr.svg"');
 		end
 	end
 

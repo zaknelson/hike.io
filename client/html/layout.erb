@@ -61,29 +61,29 @@ https://github.com/zaknelson/hike.io/
 		<div class="header-entries shadow-light">
 
 			<div data-ng-click="hideSearchBox()">
-				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %></div>
+				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/logo.png"></img></div>
 			</div>
 
 			<div>
-				<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %></div>
+				<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/photo-stream.png"></img></div>
 			</div>
 
 			<div>
-				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %></div>
+				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png"></img></div>
 			</div>
 
 			<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
-				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %></div>
+				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
 			</div>
 
 			<!--
 			<div data-ng-show="isAdmin">
-				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %></div>
+				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
 			</div>
 			-->
 
 			<div data-ng-show="isAdmin &amp;&amp; navigation.onEntry()">
-				<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %></div>
+				<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png"></img></div>
 			</div>
 			
 		</div>
