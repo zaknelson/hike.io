@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", function($timeout, config) {
+	directive("photoStream", ["$timeout", "config", function($timeout, config) {
 
 		var template = '<div class="preview-list">' +
 			'<a href="/hikes/{{hike.string_id}}" data-ng-repeat="hike in hikes">' +
@@ -56,4 +56,4 @@ angular.module("hikeio").
 				}, true);	
 			}
 		};
-	});
+	}]);

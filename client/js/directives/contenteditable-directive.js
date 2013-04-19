@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", function($filter) {
+	directive("contenteditable", ["$filter", function($filter) {
 
 		var runFilter = function(filterString, value) {
 			var filterParams = filterString.split(":");
@@ -96,4 +96,4 @@ angular.module("hikeio").
 			controller.$setViewValue(element.html());
 			}
 		};
-	});
+	}]);

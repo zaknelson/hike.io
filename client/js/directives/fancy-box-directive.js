@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("fancybox", function($timeout) {
+	directive("fancybox", function() {
 		return {
 			link: function (scope, element, attrs) {
 				scope.$on("$routeChangeStart", function () {
