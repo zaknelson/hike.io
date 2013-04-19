@@ -69,10 +69,12 @@
 	</section>
 	<section class="photos-section" data-ng-show="hike.photos.length > 0">
 		<h2>Photos</h2>
-		<div class="photo-thumb-list">
-			<div data-ng-repeat="photo in hike.photos">
-				<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{photo.string_id}}-thumb.jpg"></img>
-			</div>
+		<div class="photo-thumb-list" data-fancybox=".fancybox-thumbs">
+			<a data-ng-repeat="photo in hike.photos" class="fancybox-thumbs" href="#" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{hike.string_id}}/{{photo.string_id}}.jpg">
+				<div class="photo-thumb">
+					<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{photo.string_id}}-thumb.jpg"></img>
+				</div>
+			</a>
 		</div>
 	</section>
 </article>
