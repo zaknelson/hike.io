@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($scope, $http, $location, $window, analytics, navigation) {
+var EntryController = function($scope, $http, $location, $window, analytics, navigation, resourceCache) {
 
 	$scope.editing = false;
 	$scope.hike = null;
@@ -7,7 +7,7 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 	$scope.isDirty = false;
 	$scope.isSaving = false;
 
-	$http({method: "GET", url: "/api/v1" + $location.path()}).
+	$http({method: "GET", url: "/api/v1" + $location.path(), cache:resourceCache}).
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
 			$window.document.title = data.name + " - hike.io";
@@ -25,6 +25,7 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
+					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, data);
 					$scope.isSaving = false;
 					$scope.isDirty = false;
 				}).
@@ -52,4 +53,4 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 	});
 };
 
-EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "navigation"];
+EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "navigation", "resourceCache"];
