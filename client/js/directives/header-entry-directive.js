@@ -9,7 +9,7 @@ angular.module("hikeio").
 				url: "@"
 			},
 			template: '<a href="{{url}}">' +
-				'<div style="float:{{align}}" data-ng-click="click()" >' +
+				'<div style="float:{{align}}" >' +
 					'<div class="header-separator" data-ng-show="align == \'right\'"></div>' +
 					'<div class="header-entry" data-ng-transclude>' +
 						'<span class="label" data-ng-show="label">{{label}}</span>' +
