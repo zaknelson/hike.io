@@ -20,7 +20,7 @@ input, button {
 a {
 	color: #39c;
 	text-decoration: none;
- }
+}
 
 a img { border: none; }
 
@@ -63,6 +63,10 @@ h3 {
 a:hover {
 	color: #069;
 	text-decoration: underline;
+}
+
+html.touch a:hover {
+	text-decoration: none;
 }
 
 .default-container {
