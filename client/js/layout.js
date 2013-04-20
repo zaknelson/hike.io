@@ -2,7 +2,7 @@
 
 	var disableNonTouchFeatures = function() {
 		if (Modernizr.touch) {
-			$("body").removeClass("no-touch");
+//			$("body").removeClass("no-touch");
 		}
 	};
 
