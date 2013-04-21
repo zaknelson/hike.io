@@ -26,7 +26,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	def wrap_template_with_script str, template_id
-		result = "<script type=\"text/ng-template\" id=\"#{template_id}?partial=true\">"
+		result = "<script type=\"text/ng-template\" id=\"/partials/#{template_id}.html\">"
 		result += str
 		result += "</script>"
 	end
