@@ -1,9 +1,10 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$filter", function($filter) {
+	directive("contenteditable", ["$filter", "$timeout", function($filter, $timeout) {
 
 		var runFilter = function(filterString, value) {
+			console.log("running filter", filterString, value)
 			var filterParams = filterString.split(":");
 			var filterName = filterParams.splice(0, 1);
 			filterParams.splice(0, 0, value);
@@ -85,11 +86,16 @@ angular.module("hikeio").
 
 			// model -> view
 			controller.$render = function() {
-				var viewValue = controller.$viewValue
-				if (attributes.filterView) {
-					viewValue = runFilter(attributes.filterView, viewValue);
-				}
-				element.html(viewValue);
+
+				// Delay reading of attributes.filterView, otherwise it will appear to be undefined
+				// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
+				$timeout(function() {
+					var viewValue = controller.$viewValue;
+					if (attributes.filterView) {
+						viewValue = runFilter(attributes.filterView, viewValue);
+					}
+					element.html(viewValue);
+				});
 			};
 
 			// Load init value from DOM
