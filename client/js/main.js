@@ -18,10 +18,16 @@ angular.module("hikeio", ["ui"]).
         title: "Map - hike.io" }).
       when("/hikes/:hikeId", {
         controller: EntryController,
-        templateUrl: "/partials/entry.html"}).
+        templateUrl: "/partials/entry.html",
+        resolve: {
+          isEditing: function() { return false; }
+        }}).
       when("/hikes/:hikeId/edit", {
         controller: EntryController,
-        templateUrl: "/partials/entry.html"});
+        templateUrl: "/partials/entry.html",
+        resolve: {
+          isEditing: function() { return true; }
+        }});
   }]).
   run(["$rootScope", "$location", "config", "navigation", function($rootScope, $location, config, navigation) {
     $rootScope.config = config;

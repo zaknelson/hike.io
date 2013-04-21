@@ -1,10 +1,10 @@
 "use strict";
-var EntryController = function($scope, $http, $location, $window, analytics, navigation, resourceCache) {
+var EntryController = function($scope, $http, $location, $window, analytics, isEditing, navigation, resourceCache) {
 
-	$scope.editing = false;
 	$scope.hike = null;
-	$scope.isLoaded = false;
 	$scope.isDirty = false;
+	$scope.isEditing = isEditing;
+	$scope.isLoaded = false;
 	$scope.isSaving = false;
 
 	$http({method: "GET", url: "/api/v1" + $location.path(), cache:resourceCache}).
@@ -15,11 +15,7 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 		}).
 		error(function(data, status, headers, config) {
 		});
-
-	$scope.isEditing = function() {
-		return navigation.onEntryEdit();
-	};
-
+		
 	$scope.save = function() {
 		if ($scope.isDirty) {
 			$scope.isSaving = true;
@@ -42,7 +38,7 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 
 	$scope.getMapHref = function() {
 		var result = "";
-		if (!$scope.isEditing()) {
+		if (!$scope.isEditing) {
 			result = "/map?lat=" + $scope.hike.location.latitude + "&lng=" + $scope.hike.location.longitude;
 		}
 		return result;
@@ -53,4 +49,4 @@ var EntryController = function($scope, $http, $location, $window, analytics, nav
 	});
 };
 
-EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "navigation", "resourceCache"];
+EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "isEditing", "navigation", "resourceCache"];
