@@ -37,23 +37,23 @@ class HtmlRoutesTest < HikeAppTestCase
 	end
 
 	def test_hike_ok
-		get "/scotchman-peak"
+		get "/hikes/scotchman-peak"
 		assert last_response.ok?
 	end
 
 	def test_hike_edit_ok
 		set_cookie "user_id=#{User.first.id}"
-		get "/scotchman-peak/edit"
+		get "/hikes/scotchman-peak/edit"
 		assert last_response.ok?
 	end
 
 	def test_hike_edit_requires_credentials
-		get "/scotchman-peak/edit"
+		get "/hikes/scotchman-peak/edit"
 		assert_equal 403, last_response.status
 	end
 
 	def test_missing_hike_not_found
-		get "/some-missing-hike"
+		get "/hikes/some-missing-hike"
 		assert last_response.not_found?
 	end
 
