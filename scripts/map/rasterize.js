@@ -1,5 +1,5 @@
 "use strict";
-    
+
 // http://code.google.com/p/phantomjs/wiki/QuickStart#Rendering
 var page = require("webpage").create(),
     address, output;

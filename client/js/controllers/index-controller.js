@@ -3,7 +3,7 @@ var IndexController = function($scope, analytics, search) {
 	$scope.searchQuery = "";
 
 	$scope.search = function() {
-		search.search($scope.searchQuery)
+		search.search($scope.searchQuery);
 	};
 };
 

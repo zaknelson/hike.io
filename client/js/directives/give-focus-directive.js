@@ -5,7 +5,7 @@ angular.module("hikeio").
 	return {
 		link: function(scope, element, attributes) {
 			scope.$watch(attributes.giveFocus, function(value) {
-				if (value) { 
+				if (value) {
 					setTimeout(function() {
 						element.focus();
 					});

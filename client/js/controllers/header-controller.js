@@ -3,7 +3,7 @@ var HeaderController = function($scope, search) {
 	$scope.searchQuery = "";
 
 	$scope.search = function(event) {
-		search.search($scope.searchQuery)
+		search.search($scope.searchQuery);
 		$scope.searchQuery = "";
 	};
 };

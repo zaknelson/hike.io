@@ -14,12 +14,12 @@ angular.module("hikeio").
 		};
 
 		NavigationService.prototype.onEntry = function() {
-			var regex = /\/hikes\/(?!.*\/edit$)/; 
+			var regex = /\/hikes\/(?!.*\/edit$)/;
 			return regex.test($location.path());
 		};
 
 		NavigationService.prototype.onEntryEdit = function() {
-			var regex = /\/hikes\/.*?\/edit/; 
+			var regex = /\/hikes\/.*?\/edit/;
 			return regex.test($location.path());
 		};
 

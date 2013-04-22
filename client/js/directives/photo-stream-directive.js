@@ -3,28 +3,28 @@
 angular.module("hikeio").
 	directive("photoStream", ["$timeout", "config", function($timeout, config) {
 
-		var template = '<div class="preview-list">' +
-			'<a href="/hikes/{{hike.string_id}}" data-ng-repeat="hike in hikes">' +
-				'<div class="preview" >' +
-					'<div data-ng-class="{\'featured-box\': $first}" >' +
-						'<img data-ng-src="' + config.hikeImagesPath + '/{{hike.string_id}}/{{hike.photo_preview.string_id}}{{ $first && \'-large\' || \'\' }}.jpg"></img>' +
-						'<div class="preview-footer">' +
-							'<div>' +
-								'<div class="preview-title">{{hike.name}}</div>' +
-								'<div class="preview-location">{{hike.locality}}</div>' +
-							'</div>' +
-							'<div>' +
-								'<div class="preview-distance">{{hike.distance | distance:\'kilometers\':\'miles\':1}} mi.</div>' +
-							'</div>' +
-						'</div>' +
-					'</div>' +
-				'</div>' +
-			'</a>';
+		var template = "<div class='preview-list'>" +
+			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
+				"<div class='preview' >" +
+					"<div data-ng-class='{\"featured-box\": $first}' >" +
+						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.string_id}}/{{hike.photo_preview.string_id}}{{ $first && \"-large\" || \"\" }}.jpg'></img>" +
+						"<div class='preview-footer'>" +
+							"<div>" +
+								"<div class='preview-title'>{{hike.name}}</div>" +
+								"<div class='preview-location'>{{hike.locality}}</div>" +
+							"</div>" +
+							"<div>" +
+								"<div class='preview-distance'>{{hike.distance | distance:\"kilometers\":\"miles\":1}} mi.</div>" +
+							"</div>" +
+						"</div>" +
+					"</div>" +
+				"</div>" +
+			"</a>";
 
 		return {
 			replace: true,
 			scope: {
-				hikes: "=",
+				hikes: "="
 			},
 			template: template,
 			link: function (scope, element) {
@@ -53,7 +53,7 @@ angular.module("hikeio").
 							element.masonry("reload");
 						}, 100);
 					});
-				}, true);	
+				}, true);
 			}
 		};
 	}]);

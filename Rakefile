@@ -17,7 +17,7 @@ task :run => [:build] do
 end
 
 task :static do
-	output = `node_modules/jshint/bin/hint --config config/jshint.json \`find . -name "*.js" | grep -v -E "/lib/|/node_modules/" \``
+	output = `node_modules/jshint/bin/jshint --config config/jshint.json \`find . -name "*.js" | grep -v -E "/lib/|/node_modules/" \``
 	if not $?.success?
 		puts "----- jshint errors -----"
 		puts output

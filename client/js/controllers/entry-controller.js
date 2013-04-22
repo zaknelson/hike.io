@@ -1,5 +1,6 @@
 "use strict";
-var EntryController = function($scope, $http, $location, $window, analytics, isEditing, navigation, resourceCache) {
+var EntryController = function($scope, $http, $location, $log, $window, analytics, isEditing, navigation, resourceCache) {
+	/*jshint camelcase:false*/
 
 	$scope.hike = null;
 	$scope.isDirty = false;
@@ -14,8 +15,10 @@ var EntryController = function($scope, $http, $location, $window, analytics, isE
 			$scope.isLoaded = true;
 		}).
 		error(function(data, status, headers, config) {
-		});
-		
+			$log.error(data, status, headers, config);
+		}
+	);
+
 	$scope.save = function() {
 		if ($scope.isDirty) {
 			$scope.isSaving = true;
@@ -49,4 +52,4 @@ var EntryController = function($scope, $http, $location, $window, analytics, isE
 	});
 };
 
-EntryController.$inject = ["$scope", "$http", "$location", "$window", "analytics", "isEditing", "navigation", "resourceCache"];
+EntryController.$inject = ["$scope", "$http", "$location", "$log", "$window", "analytics", "isEditing", "navigation", "resourceCache"];

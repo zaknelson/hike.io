@@ -11,7 +11,7 @@ angular.module("hikeio").
 		};
 
 		MapTooltip.prototype = new google.maps.OverlayView();
-		
+
 		MapTooltip.prototype.onAdd = function() {
 			this.div = $(".tooltip").clone();
 			this.getPanes().floatShadow.appendChild(this.div[0]);
@@ -25,7 +25,7 @@ angular.module("hikeio").
 
 			var overlayProjection = this.getProjection();
 			var markerPosition = overlayProjection.fromLatLngToContainerPixel(this.marker.getPosition());
-			
+
 			// The default location of the tooltip is anchored to the bottom-right of the marker. If that
 			// location would render the tooltip off the screen, relocate it.
 			var containerOffset = $(this.map.getDiv()).offset();

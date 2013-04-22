@@ -26,12 +26,13 @@ var MapController = function($scope, $location, analytics, mapTooltipFactory, na
 	};
 
 	$scope.markerClicked = function(marker) {
+		/*jshint camelcase:false*/
 		navigation.toEntry(marker.hikeData.string_id);
 	};
 
 	$scope.updateMarkers = function(event) {
-		if (lastMarkerUpdateTime && 
-				event.type != "map-idle" && 
+		if (lastMarkerUpdateTime &&
+				event.type !== "map-idle" &&
 				event.timestamp - lastMarkerUpdateTime < MIN_TIME_BETWEEN_UPDATES) {
 			// Recently updated, ignore this update request
 			return;
@@ -107,7 +108,7 @@ var MapController = function($scope, $location, analytics, mapTooltipFactory, na
 	};
 
 	var compareLatLng = function(a, b) {
-		if 			(a.lat() < b.lat())		{	return -1;}
+		if			(a.lat() < b.lat())		{	return -1;}
 		else if (a.lat() > b.lat())		{	return 1;	}
 		else if (a.lng() < b.lng())		{	return -1;}
 		else if (a.lng() > b.lng())		{	return 1;	}
@@ -131,7 +132,7 @@ var MapController = function($scope, $location, analytics, mapTooltipFactory, na
 				oldMarker = $scope.markers[j];
 				oldLatLng = oldMarker.getPosition();
 			}
-			
+
 			if (!oldLatLng || (newLatLng && compareLatLng(newLatLng, oldLatLng) < 0)) {
 				// This is a brand new marker, add it
 				var marker = new google.maps.Marker({

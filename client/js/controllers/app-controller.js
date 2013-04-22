@@ -9,7 +9,7 @@ var AppController = function($scope) {
 
 	$scope.toggleSearchBox = function() {
 		$scope.isSearchBoxActive = !$scope.isSearchBoxActive;
-	}
+	};
 
 	$scope.handleGlobalKeydown = function(event) {
 		if (event.keyCode === 8) { // delete

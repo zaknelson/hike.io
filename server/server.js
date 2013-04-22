@@ -1,6 +1,6 @@
 "use strict";
 
-var io = require("socket.io").listen(8080);
+var socketIo = require("socket.io").listen(8080);
 var pg = require("pg");
 
 var connectionString = process.env.DATABASE_URL || "postgres://localhost/hikeio";
@@ -8,9 +8,9 @@ var connectionString = process.env.DATABASE_URL || "postgres://localhost/hikeio"
 var client = new pg.Client(connectionString);
 client.connect();
 
-io.set("log level", 2);
+socketIo.set("log level", 2);
 
-io.sockets.on("connection", function (socket) {
+socketIo.sockets.on("connection", function (socket) {
 	socket.on("get-hikes-in-bounds", function (data) {
 
 		// Longitude is tricky because it can jump from 179 to -179 across the international date line

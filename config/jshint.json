@@ -11,11 +11,11 @@
 	"nonew": true,
 	"quotmark": true,
 	"regexp": true,
-	"unused": true,
+	"unused": "vars",
 	"strict": true,
 	"trailing": true,
 
-	"predef": ["google", "io", "log", "Modernizr", "phantom", "watch"],
+	"predef": ["angular", "google", "io", "Modernizr", "phantom", "watch"],
 	"browser": true,
 	"jquery": true,
 	"node": true,

@@ -5,8 +5,7 @@ var PhotoStreamController = function($scope, $http, analytics, resourceCache) {
 		success(function(data, status, headers, config) {
 			$scope.hikes = data;
 		}).
-		error(function(data, status, headers, config) {
-		});
+		error(function(data, status, headers, config) {});
 
 	$scope.hikes = [];
 };

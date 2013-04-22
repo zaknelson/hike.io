@@ -4,7 +4,6 @@ angular.module("hikeio").
 	directive("contenteditable", ["$filter", "$timeout", function($filter, $timeout) {
 
 		var runFilter = function(filterString, value) {
-			console.log("running filter", filterString, value)
 			var filterParams = filterString.split(":");
 			var filterName = filterParams.splice(0, 1);
 			filterParams.splice(0, 0, value);
@@ -62,44 +61,44 @@ angular.module("hikeio").
 					return false;
 				});
 
-			element.keypress(function(event) {
-				if (event.keyCode === 13 && attributes.singleLine) { // return
-					event.preventDefault();
-					element.blur();
-				} else if (attributes.type === "numeric" &&
-					(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9 or period
-					(event.keyCode === 46 && element.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
-					
-					if (attributes.positive && event.keyCode === 45) {
-						var before = element.text();
-						setTimeout(function(){
-							if (!$.isNumeric(element.text())) {
-								element.html(before);
-							}
-						});
-						return true;
-					}
-					return false;
-				}
-				return true;
-			});
+				element.keypress(function(event) {
+					if (event.keyCode === 13 && attributes.singleLine) { // return
+						event.preventDefault();
+						element.blur();
+					} else if (attributes.type === "numeric" &&
+						(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9 or period
+						(event.keyCode === 46 && element.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
 
-			// model -> view
-			controller.$render = function() {
-
-				// Delay reading of attributes.filterView, otherwise it will appear to be undefined
-				// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
-				$timeout(function() {
-					var viewValue = controller.$viewValue;
-					if (attributes.filterView) {
-						viewValue = runFilter(attributes.filterView, viewValue);
+						if (attributes.positive && event.keyCode === 45) {
+							var before = element.text();
+							setTimeout(function(){
+								if (!$.isNumeric(element.text())) {
+									element.html(before);
+								}
+							});
+							return true;
+						}
+						return false;
 					}
-					element.html(viewValue);
+					return true;
 				});
-			};
 
-			// Load init value from DOM
-			controller.$setViewValue(element.html());
+				// model -> view
+				controller.$render = function() {
+
+					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
+					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
+					$timeout(function() {
+						var viewValue = controller.$viewValue;
+						if (attributes.filterView) {
+							viewValue = runFilter(attributes.filterView, viewValue);
+						}
+						element.html(viewValue);
+					});
+				};
+
+				// Load init value from DOM
+				controller.$setViewValue(element.html());
 			}
 		};
 	}]);
