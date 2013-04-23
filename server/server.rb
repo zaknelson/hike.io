@@ -73,9 +73,6 @@ class HikeApp < Sinatra::Base
 
 		js :app, "/js/app.js", [
 			"/js/main.js",
-			"/js/lib/*.js",
-			"/js/utils/*.js",
-			"/js/layout.js",
 			"/js/*.js"	
 		]
 
