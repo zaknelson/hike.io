@@ -61,10 +61,9 @@ class HikeApp < Sinatra::Base
 
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path do
+			hike = RoutesUtils.new.get_hike_from_id params[:hike_id];
 			return 403 if path == "/hikes/:hike_id/edit" and !is_admin?
-
-			hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
-			return 404 if not hike
+			return 404 if path != "/partials/entry.html" and !hike
 			render_template :entry
 		end
 	end
