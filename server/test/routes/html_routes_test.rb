@@ -57,6 +57,10 @@ class HtmlRoutesTest < HikeAppTestCase
 		assert last_response.not_found?
 	end
 
+=begin
+
+	# Commenting out until search functionality is moved over to angularjs.
+
 	def test_good_query_redirects_to_hike
 		get "/?q=scotchman%20peak"
 		assert last_response.redirect?
@@ -75,6 +79,7 @@ class HtmlRoutesTest < HikeAppTestCase
 		assert last_response.ok?
 		assert last_response.body.include? "somemissinghike"
 	end
+=end
 
 	def test_trailing_slash_redirects
 		get "/scotchman-peak/"
