@@ -10,7 +10,7 @@ angular.module("hikeio").
 		};
 
 		NavigationService.prototype.toIndex = function() {
-			return $location.path("/");
+			return $location.url("/");
 		};
 
 		NavigationService.prototype.onIndex = function() {
@@ -18,7 +18,7 @@ angular.module("hikeio").
 		};
 
 		NavigationService.prototype.toEntry = function(id) {
-			$location.path("/hikes/" + id);
+			$location.url("/hikes/" + id);
 		};
 
 		NavigationService.prototype.onEntry = function() {
