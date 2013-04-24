@@ -7,7 +7,7 @@ angular.module("hikeio").
 		};
 
 		SearchService.prototype.search = function(query) {
-			$http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }}).
+			$http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
 					/*jshint camelcase:false*/
 					if (data.length === 1) {
