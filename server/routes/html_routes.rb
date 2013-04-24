@@ -59,6 +59,12 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	["/search", "/partials/search.html"].each do |path|
+		get path do
+			render_template :search
+		end
+	end
+
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path do
 			hike = RoutesUtils.new.get_hike_from_id params[:hike_id];

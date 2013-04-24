@@ -1,14 +1,13 @@
 <article class="search-page">
-	<% if @search_results.length == 0 %>
-	<h1>Unable to find hike "<%= @query %>"</h1>
-	<% elsif @search_results.length > 0 %>
-	<h1>Did you mean?</h1>
-	<ul>
-		<% @search_results.each do |search_result| %>
-			<li style="list-style-type: disc;">
-				<a href="/<%= search_result.hike.string_id %>"><%= search_result.hike.name %></a>
+	<div data-ui-if="results &amp;&amp; results.length > 0">
+		<h1>Did you mean?</h1>
+		<ul>
+			<li style="list-style-type: disc;" data-ng-repeat="result in results">
+				<a href="/hikes/{{result.hike.string_id}}">{{result.hike.name}}</a>
 			</li>
-		<% end %>
-	</ul>
-	<% end %>
+		</ul>
+	</div>
+	<div data-ui-if="results &amp;&amp; results.length == 0">
+		<h1>Unable to find hike: {{query}}</h1>
+	</div>
 </article>

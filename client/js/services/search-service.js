@@ -14,6 +14,8 @@ angular.module("hikeio").
 						var hike = data[0].hike;
 						resourceCache.put("/api/v1/hikes/" + hike.string_id, hike);
 						navigation.toEntry(hike.string_id);
+					} else {
+						navigation.toSearch(query);
 					}
 				}).
 				error(function(data, status, headers, config) {

@@ -5,12 +5,20 @@ angular.module("hikeio").
 		var NavigationService = function() {
 		};
 
-		NavigationService.prototype.toEntry = function(id) {
-			$location.path("/hikes/" + id);
+		NavigationService.prototype.toSearch = function(query) {
+			$location.url("/search?q=" + query);
+		};
+
+		NavigationService.prototype.toIndex = function() {
+			return $location.path("/");
 		};
 
 		NavigationService.prototype.onIndex = function() {
 			return $location.path() === "/";
+		};
+
+		NavigationService.prototype.toEntry = function(id) {
+			$location.path("/hikes/" + id);
 		};
 
 		NavigationService.prototype.onEntry = function() {

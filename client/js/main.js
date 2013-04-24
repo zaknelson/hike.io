@@ -19,6 +19,11 @@ angular.module("hikeio", ["ui"]).
 				templateUrl: "/partials/map.html",
 				title: "Map - hike.io"
 			}).
+			when("/search", {
+				controller: "SearchController",
+				templateUrl: "/partials/search.html",
+				title: "Search - hike.io"
+			}).
 			when("/hikes/:hikeId", {
 				controller: "EntryController",
 				templateUrl: "/partials/entry.html",
