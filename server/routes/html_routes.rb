@@ -48,31 +48,34 @@ class HikeApp < Sinatra::Base
 	end
 
 	["/", "/partials/index.html"].each do |path|
-		get path do
+		get path, :provides => "html" do
 			render_template :index
 		end
 	end
 
 	["/discover", "/partials/photo_stream.html"].each do |path|
-		get path do
+		get path, :provides => "html" do
+			if not @is_partial
+				preload_resource "/api/v1/hikes", Hike.all.to_json
+			end
 			render_template :photo_stream
 		end
 	end
 
 	["/map", "/partials/map.html"].each do |path|
-		get path do
+		get path, :provides => "html" do
 			render_template :map
 		end
 	end
 
 	["/search", "/partials/search.html"].each do |path|
-		get path do
+		get path, :provides => "html" do
 			render_template :search
 		end
 	end
 
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
-		get path do
+		get path, :provides => "html" do
 			hike_id = params[:hike_id]
 			hike = RoutesUtils.new.get_hike_from_id hike_id
 			return 403 if path == "/hikes/:hike_id/edit" and !is_admin?
