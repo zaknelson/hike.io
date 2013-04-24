@@ -24,7 +24,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
-					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, data);
+					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, data));
 					resourceCache.put("/api/v1/hikes", null);
 					$scope.isSaving = false;
 					$scope.isDirty = false;

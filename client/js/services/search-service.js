@@ -12,7 +12,7 @@ angular.module("hikeio").
 					/*jshint camelcase:false*/
 					if (data.length === 1) {
 						var hike = data[0].hike;
-						resourceCache.put("/api/v1/hikes/" + hike.string_id, hike);
+						resourceCache.put("/api/v1/hikes/" + hike.string_id, jQuery.extend(true, {}, hike));
 						navigation.toEntry(hike.string_id);
 					} else {
 						navigation.toSearch(query);
