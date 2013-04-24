@@ -41,6 +41,12 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	def preload_resource resource_id, resource
+		content_for :preload_resource do
+			"<div data-preload-resource='#{resource_id}'>#{resource}</div>"
+		end
+	end
+
 	["/", "/partials/index.html"].each do |path|
 		get path do
 			render_template :index
@@ -67,9 +73,15 @@ class HikeApp < Sinatra::Base
 
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path do
-			hike = RoutesUtils.new.get_hike_from_id params[:hike_id];
+			hike_id = params[:hike_id]
+			hike = RoutesUtils.new.get_hike_from_id hike_id
 			return 403 if path == "/hikes/:hike_id/edit" and !is_admin?
 			return 404 if path != "/partials/entry.html" and !hike
+
+			if not @is_partial
+				resource_id = "/api/v1/hikes/" + hike_id
+				preload_resource resource_id, hike.to_json
+			end
 			render_template :entry
 		end
 	end

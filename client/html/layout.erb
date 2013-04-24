@@ -26,7 +26,7 @@ https://github.com/zaknelson/hike.io/
 			opacity: 1;
 		}
 
-		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .data-ng-cloak, .x-ng-cloak {
+		[data-ng-cloak], [data-preload-resource] {
 			display: none !important;
 		}
 	</style>
@@ -95,6 +95,8 @@ https://github.com/zaknelson/hike.io/
 	</header>
 
 	<%= yield %>
+
+	<%= yield_content :preload_resource %>
 
 	<div data-ng-view data-ng-click="hideSearchBox()">
 		<noscript>
