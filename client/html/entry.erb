@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<div class="header-landscape">
-		<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{hike.photo_landscape.string_id}}.jpg"></img>
+		<img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_landscape" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{hike.photo_landscape.string_id}}.jpg"></img>
 		<div>
 			<h1 class="header-hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
@@ -18,7 +18,7 @@
 
 			<div class="overview-facts">
 				<div class="page-curl shadow-bottom">
-					<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{hike.photo_facts.string_id}}.jpg"></img>
+					<img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{hike.photo_facts.string_id}}.jpg"></img>
 					<table>
 						<tr>
 							<td>Hike</td>

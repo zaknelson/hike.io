@@ -80,7 +80,6 @@ migration "seed lake 22" do
 
 	hike.photo_landscape = Photo.create(:string_id => "lake-22-landscape")
 	hike.photo_preview = Photo.create(:string_id => "lake-22-preview")
-	hike.photo_facts = Photo.create(:string_id => "lake-22-facts")
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
@@ -106,7 +105,6 @@ migration "seed pikes peak" do
 
 	hike.photo_landscape = Photo.create(:string_id => "pikes-peak-landscape")
 	hike.photo_preview = Photo.create(:string_id => "pikes-peak-preview")
-	hike.photo_facts = Photo.create(:string_id => "pikes-peak-facts")
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
@@ -131,7 +129,6 @@ migration "seed north kaibab trail" do
 
 	hike.photo_landscape = Photo.create(:string_id => "north-kaibab-trail-landscape")
 	hike.photo_preview = Photo.create(:string_id => "north-kaibab-trail-preview")
-	hike.photo_facts = Photo.create(:string_id => "north-kaibab-trail-facts")
 
 	hike.save
 end
@@ -154,7 +151,6 @@ migration "seed king arthurs seat" do
 
 	hike.photo_landscape = Photo.create(:string_id => "king-arthurs-seat-landscape")
 	hike.photo_preview = Photo.create(:string_id => "king-arthurs-seat-preview")
-	hike.photo_facts = Photo.create(:string_id => "king-arthurs-seat-facts")
 
 	hike.save
 end
@@ -173,7 +169,6 @@ migration "seed snoqualmie middle fork" do
 
 	hike.photo_landscape = Photo.create(:string_id => "snoqualmie-middle-fork-landscape")
 	hike.photo_preview = Photo.create(:string_id => "snoqualmie-middle-fork-preview")
-	hike.photo_facts = Photo.create(:string_id => "snoqualmie-middle-fork-facts")
 
 	hike.location = Location.create(
 		:latitude => 71.277534,
