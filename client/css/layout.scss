@@ -17,6 +17,13 @@ input, button {
 	font-family: "facitweb", Helvetica, Arial, sans-serif;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	display: none;
+	-webkit-appearance: none;
+	margin: 0;
+}
+
 a {
 	color: #39c;
 	text-decoration: none;

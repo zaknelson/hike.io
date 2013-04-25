@@ -175,8 +175,10 @@ migration "seed snoqualmie middle fork" do
 	hike.photo_preview = Photo.create(:string_id => "snoqualmie-middle-fork-preview")
 	hike.photo_facts = Photo.create(:string_id => "snoqualmie-middle-fork-facts")
 
-	# Indirectly testing whether it's possible to have two hikes with the same location (it should be possible)
-	hike.location = Location.find(:id => 2)
+	hike.location = Location.create(
+		:latitude => 71.277534,
+		:longitude => -118.289783
+	)
 	hike.save
 end
 

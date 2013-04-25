@@ -30,8 +30,6 @@ migration "create locations table" do
 		primary_key :id
 		Float :latitude,						:null => false
 		Float :longitude,						:null => false
-
-		unique [:latitude, :longitude]
 	end
 end
 

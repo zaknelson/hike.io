@@ -1,13 +1,20 @@
 "use strict";
-var AddController = function($scope) {
+var AddController = function($http, $log, $scope, navigation) {
 	/*jshint camelcase:false*/
 
 	$scope.hike = {};
 	$scope.hike.location = {};
 
 	$scope.add = function() {
-		console.log($scope.hike)
+		$http({method: "POST", url: "/api/v1/hikes", data: $scope.hike}).
+			success(function(data, status, headers, config) {
+				navigation.toEntry(data.string_id);
+			}).
+			error(function(data, status, headers, config) {
+				$log.error(data, status, headers, config);
+			}
+		);
 	};
 };
 
-AddController.$inject = ["$scope"];
+AddController.$inject = ["$http", "$log", "$scope", "navigation"];

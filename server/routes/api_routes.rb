@@ -7,6 +7,27 @@ class HikeApp < Sinatra::Base
 		Hike.all.to_json
 	end
 
+	post "/api/v1/hikes", :provides => "json" do
+		json = JSON.parse request.body.read
+		string_id = json["name"].downcase.split(" ").join("-")
+		hike = Hike.create(
+			:string_id => string_id,
+			:name => json["name"],
+			:locality => json["locality"],
+			:distance => json["distance"],
+			:elevation_max => json["elevation_max"],
+			:creation_time => Time.now,
+			:edit_time => Time.now
+			);
+		location = Location.create(
+			:latitude => json["location"]["latitude"],
+			:longitude => json["location"]["longitude"],
+			);
+		hike.location = location
+		hike.save
+		hike.to_json
+	end 
+
 	get "/api/v1/hikes/search", :provides => "json" do
 		query = params[:q];
 		400 if not query
@@ -33,7 +54,7 @@ class HikeApp < Sinatra::Base
 		if is_admin?
 			hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
 			if hike
-				hike.from_json request.body.read, :fields => ["name", "description", "distance", "elevation_gain", "locality"], :missing => :skip
+				hike.from_json request.body.read, :fields => ["name", "description", "distance", "elevation_max", "locality"], :missing => :skip
 				hike.save_changes
 				hike.to_json
 			end
