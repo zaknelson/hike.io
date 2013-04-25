@@ -24,20 +24,20 @@
 							<td>Hike</td>
 							<td class="facts-hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
-						<tr>
+						<tr data-ng-show="hike.locality != null || isEditing">
 							<td>Location</td>
 							<td class="facts-hike-location" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
-						<tr>
+						<tr data-ng-show="hike.distance != null || isEditing">
 							<td>Distance</td>
 							<td>
-								<div class="facts-hike-distance">
+								<div class="facts-hike-distance || isEditing">
 									<span class="facts-hike-distance-value" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
 									<span class="facts-hike-distance-units">mi.</span>
 								</div>
 							</td>
 						</tr>
-						<tr data-ng-show="hike.elevation_max != null">
+						<tr data-ng-show="hike.elevation_max != null || isEditing">
 							<td>Elevation</td>
 							<td>
 								<div class="facts-hike-elevation">
@@ -46,7 +46,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
+						<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
 							<td>Lat / Lng</td>
 							<td>
 							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}">
