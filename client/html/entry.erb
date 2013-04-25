@@ -9,7 +9,7 @@
 	<div class="header-landscape">
 		<img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_landscape" data-ng-src="{{config.hikeImagesPath}}/{{hike.string_id}}/{{hike.photo_landscape.string_id}}.jpg"></img>
 		<div>
-			<h1 class="header-hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
+			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':hike.photo_landscape != null}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
 	</div>
 	<div class="content">

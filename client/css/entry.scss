@@ -14,14 +14,6 @@ $header-landscape-footer-height-mobile: 40px;
 			width: 100%;
 		}
 
-		div {
-			padding-left: 10px;
-			position: relative;
-			background-color:rgba(0, 0, 0, 0.5);
-			margin-top: - $header-landscape-footer-height;
-			height: $header-landscape-footer-height;
-		}
-
 		h1 {
 			font-weight: bold;
 			color: #fff;
@@ -31,9 +23,27 @@ $header-landscape-footer-height-mobile: 40px;
 			line-height: $header-landscape-footer-height;	
 		}
 
+		.header-hike-name {
+			padding-left: 10px;
+			position: relative;
+			margin-top: 10px;
+			margin-bottom: -10px;
+			height: $header-landscape-footer-height;
+			color: #000;
+		}
+
+		.header-hike-name-with-image {
+			color: #fff;
+			padding-left: 10px;
+			position: relative;
+			background-color:rgba(0, 0, 0, 0.5);
+			margin-top: - $header-landscape-footer-height;
+			height: $header-landscape-footer-height;
+		}
+
 		@media all and (max-width: $mobile-width) {
-			div {
-				margin-top: - $header-landscape-footer-height-mobile;
+			.header-hike-name-with-image {
+				margin-top: -$header-landscape-footer-height-mobile;
 				height: $header-landscape-footer-height-mobile;		
 			}
 
