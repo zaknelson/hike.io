@@ -11,12 +11,12 @@
 	}
 
 	form {
-		width: 500px;
+		width: 400px;
 
 		label {
 			float: left;
 			clear: left;
-			width: 150px;
+			width: 100px;
 			text-align: right;
 			font-size: 18px;
 			line-height: 45px;
@@ -31,11 +31,11 @@
 			font-size: 18px;
 			font-weight: 200;
 			padding: 7px;
-			width: 320px;
+			width: 270px;
 		}
 
 		#latitude, #longitude {
-			width: 150px;
+			width: 125px;
 			margin-right: 5px;
 			display: inline;
 		}

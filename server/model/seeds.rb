@@ -7,7 +7,7 @@ migration "seed scotchman peak" do
 		:locality => "North Idaho, USA",
 		:description => "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p><p>Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.</p><p>Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus erat nec elit posuere volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis diam nisl, consectetur egestas ornare vitae, viverra a metus. Ut leo velit, pellentesque lobortis placerat sed, ullamcorper sit amet lacus.Maecenas mattis, tellus nec pretium interdum, arcu lorem adipiscing elit, in tempor tortor risus sit amet nibh. Nam ultrices nibh ac neque hendrerit et condimentum tellus sollicitudin.</p>",
 		:distance => 10,
-		:elevation_gain => 1000,
+		:elevation_max => 1000,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -42,7 +42,7 @@ migration "seed mt kilamanjaro" do
 		:name => "Mt. Kilimanjaro",
 		:locality => "Tanzania",
 		:distance => 50,
-		:elevation_gain => 10500,
+		:elevation_max => 10500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -68,7 +68,7 @@ migration "seed lake 22" do
 		:name => "Lake 22",
 		:locality => "Washington, USA",
 		:distance => 18,
-		:elevation_gain => 2500,
+		:elevation_max => 2500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -94,7 +94,7 @@ migration "seed pikes peak" do
 		:name => "Pike's Peak",
 		:locality => "Colorado, USA",
 		:distance => 28,
-		:elevation_gain => 3500,
+		:elevation_max => 3500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -120,7 +120,6 @@ migration "seed north kaibab trail" do
 		:name => "North Kaibab Trail",
 		:locality => "Colorado, USA",
 		:distance => 22,
-		:elevation_gain => 3500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -143,7 +142,7 @@ migration "seed king arthurs seat" do
 		:name => "King Arthur's Seat",
 		:locality => "Edinburgh, Scotland",
 		:distance => 22,
-		:elevation_gain => 3500,
+		:elevation_max => 3500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
@@ -167,7 +166,7 @@ migration "seed snoqualmie middle fork" do
 		:name => "Snoqualmie Middle Fork",
 		:locality => "Washington, USA",
 		:distance => 22,
-		:elevation_gain => 3500,
+		:elevation_max => 3500,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
