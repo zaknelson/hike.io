@@ -5,6 +5,10 @@ angular.module("hikeio").
 		var NavigationService = function() {
 		};
 
+		NavigationService.prototype.onAdd = function() {
+			return $location.path() === "/add";
+		};
+
 		NavigationService.prototype.toSearch = function(query) {
 			$location.url("/search?q=" + query);
 		};

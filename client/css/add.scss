@@ -1,0 +1,50 @@
+@import "_vars";
+@import "_mixins";
+@import "compass/css3/border-radius";
+
+.add-page {
+	margin: 20px;
+
+	h1 {
+		padding-bottom: 20px;
+		padding-left: 20px;
+	}
+
+	form {
+		width: 500px;
+
+		label {
+			float: left;
+			clear: left;
+			width: 150px;
+			text-align: right;
+			font-size: 18px;
+			line-height: 45px;
+			margin-right: 8px;
+		}
+
+		input[type=text] {
+			display: inline-block;
+			float: left;
+			border: 1px solid rgba(1, 1, 1, 0.3);
+			@include border-radius(2px, 2px);
+			font-size: 18px;
+			font-weight: 200;
+			padding: 7px;
+			width: 320px;
+		}
+
+		#latitude, #longitude {
+			width: 150px;
+			margin-right: 5px;
+			display: inline;
+		}
+
+		input[type=submit] {
+			float: right;
+			clear: left;
+			display: block;
+			margin: 10px;
+		}
+	}
+}

@@ -9,7 +9,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	background-image: url(/images/background.png);
 	font-family: "facitweb", sans-serif;
-	min-width: 450px;
+	min-width: $min-width;
 	height: 100%;
 }
 

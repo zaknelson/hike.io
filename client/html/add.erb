@@ -1,0 +1,31 @@
+<article class="default-container add-page">
+	<h1>Add a hike</h1>
+	<form data-ng-submit="add()">
+		<div>
+			<div>
+				<label for="name">Name</label>
+				<input id="name" type="text" required="true" autocomplete="off" data-ng-model="hike.name" ></input>
+			</div>
+			<div>
+				<label for="locality">Location</label>
+				<input id="locality" type="text" required="true" autocomplete="off" data-ng-model="hike.locality" ></input>
+			</div>
+			<div>
+				<label for="distance">Distance</label>
+				<input id="distance" type="text" required="true" autocomplete="off" data-ng-model="hike.distance" ></input>
+			</div>
+			<div>
+				<label for="elevationGain">Elevation Gain</label>
+				<input id="elevationGain" type="text" required="true" autocomplete="off" data-ng-model="hike.elevation_gain" ></input>
+			</div>
+			<div>
+				<label for="latitude">Lat/Lng</label>
+				<input id="latitude" type="text" required="true" autocomplete="off" data-ng-model="hike.location.latitude" ></input>
+				<input id="longitude" type="text" required="true" autocomplete="off" data-ng-model="hike.location.longitude" ></
+			</div>
+			<div>
+				<input type="submit" class="btn" value="Add Hike"></input>
+			</div>
+		</div>
+	</form>
+</article>

@@ -53,6 +53,12 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	["/add", "/partials/add.html"].each do |path|
+		get path, :provides => "html" do
+			render_template :add
+		end
+	end
+
 	["/discover", "/partials/photo_stream.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
