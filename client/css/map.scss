@@ -4,7 +4,9 @@
 
 .map-page {
 	width: 100%;
-	height: 100%;
+	position: absolute;
+	top: $header-height;
+	bottom: 0px;
 
 	.tooltip {
 		position: absolute;
