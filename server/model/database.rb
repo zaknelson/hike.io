@@ -104,26 +104,6 @@ class Hike < Sequel::Model
 			}, 
 			:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id]
 	end
-
-	def from_json (json, opts={})
-		parsed_json = JSON.parse(json)
-		if parsed_json["location"]
-			if not self.location || self.location.hikes.length > 1
-				# location either doesn't yet exist, or it's shared, create a new one for this hike
-				location_hash = parsed_json["location"].symbolize_keys.to_hash
-				self.location = Location.create(location_hash)
-			else
-				# have a unique location for this hike, update it
-				self.location.from_json parsed_json["location"].to_json
-				self.location.save_changes
-			end
-		end
-		if opts[:fields]
-			set_fields(parsed_json, opts[:fields], opts)
-		else
-			set(parsed_json)
-		end
-	end
 end
 
 class Photo < Sequel::Model
