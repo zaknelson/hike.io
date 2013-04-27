@@ -1,10 +1,12 @@
 source "https://rubygems.org"
 
+gem "aws-sdk", "1.9.2"
 gem "compass", "0.12.2"
 gem "json", "1.7.6"
 gem "humanize", "1.1.0"
 gem "newrelic_rpm", "3.4.1"
 gem "pg", "0.14.1"
+gem "rmagick", "2.13.2"
 gem "roodi", "2.1.0"
 gem "sass", "3.2.1"
 gem "sequel", "3.39.0"

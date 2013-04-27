@@ -1,3 +1,5 @@
+require "aws-sdk"
+
 require_relative "../server"
 require_relative "../utils/routes_utils"
 
@@ -76,5 +78,31 @@ class HikeApp < Sinatra::Base
 		hike.to_json
 	end
 
+	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
+		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
+		name = "abcd"#params[:name]
+		return 404 if not hike
+		#return 400 if not name
+
+		#clean up file name parameter
+		name = name.end_with?(".jpg") ? name[0, name.length-4] : name
+		name = name.split(" ").join("-")
+		name = name.gsub(/[^0-9a-z\-]/i, "")
+
+		FileUtils.mkdir_p("tmp")
+		temp_file = File.join("tmp", name)
+		puts params
+		datafile = params[:data]
+		File.open(temp_file, 'wb') do |file|
+			file.write(datafile[:tempfile].read)
+		end
+
+		s3 = AWS::S3.new(
+			:access_key_id     => settings.access_key_id,
+			:secret_access_key => settings.secret_access_key)
+		bucket = s3.buckets["assets.hike.io"]
+		object = bucket.objects[params[:hike_id] + name]
+		object.write(:file => temp_file)
+	end
 
 end

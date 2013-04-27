@@ -8,6 +8,7 @@ require "sass"
 require "sinatra"
 require "sinatra/base" 
 require "sinatra/assetpack"
+require "sinatra/config_file"
 require "sinatra/content_for"
 require "sinatra/cookies"
 require "sinatra/partial"
@@ -63,6 +64,10 @@ class HikeApp < Sinatra::Base
 	configure :production, :development do
     	enable :logging
 	end
+
+	# config
+	register Sinatra::ConfigFile
+	config_file "../config/config.yml"
 
 	assets {
 		prebuild true
