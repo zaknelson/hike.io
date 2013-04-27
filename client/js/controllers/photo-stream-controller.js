@@ -1,6 +1,5 @@
 "use strict";
 var PhotoStreamController = function($scope, $http, $log, analytics, resourceCache) {
-	/*jshint camelcase:false*/
 
 	$http({method: "GET", url: "/api/v1/hikes", cache: resourceCache}).
 		success(function(data, status, headers, config) {

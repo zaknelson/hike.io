@@ -1,6 +1,6 @@
 {
 	"multistr": true,
-	"camelcase": true,
+	"camelcase": false,
 	"eqeqeq": true,
 	"forin": true,
 	"immed": true,

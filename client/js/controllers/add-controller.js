@@ -1,7 +1,5 @@
 "use strict";
 var AddController = function($http, $log, $scope, navigation) {
-	/*jshint camelcase:false*/
-
 	$scope.hike = {};
 	$scope.hike.location = {};
 

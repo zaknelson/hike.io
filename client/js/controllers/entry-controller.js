@@ -1,6 +1,5 @@
 "use strict";
 var EntryController = function($scope, $http, $log, $routeParams, $window, analytics, isEditing, navigation, resourceCache) {
-	/*jshint camelcase:false*/
 
 	$scope.hike = null;
 	$scope.isDirty = false;

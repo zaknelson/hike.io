@@ -26,7 +26,6 @@ var MapController = function($scope, $location, analytics, mapTooltipFactory, na
 	};
 
 	$scope.markerClicked = function(marker) {
-		/*jshint camelcase:false*/
 		navigation.toEntry(marker.hikeData.string_id);
 	};
 
