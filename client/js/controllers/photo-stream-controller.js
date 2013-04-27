@@ -1,5 +1,6 @@
 "use strict";
 var PhotoStreamController = function($scope, $http, $log, analytics, resourceCache) {
+	/*jshint camelcase:false*/
 
 	$http({method: "GET", url: "/api/v1/hikes", cache: resourceCache}).
 		success(function(data, status, headers, config) {
@@ -7,7 +8,7 @@ var PhotoStreamController = function($scope, $http, $log, analytics, resourceCac
 			var hikes = jQuery.grep(data, function(hike){
 				return hike.photo_preview;
 			});
-			$scope.hikes = hikes
+			$scope.hikes = hikes;
 		}).
 		error(function(data, status, headers, config) {
 			$log.error(config);
