@@ -9,6 +9,12 @@ $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 
 .entry-page {
+
+	.placeholder-img {
+		@include box-sizing(border-box);
+		border: 4px dashed #999;
+	}
+
 	.header-landscape {
 		img {
 			width: 100%;
