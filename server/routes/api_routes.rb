@@ -61,6 +61,8 @@ class HikeApp < Sinatra::Base
 		hike.distance = json["distance"] if json["distance"]
 		hike.elevation_max = json["elevation_max"] if json["elevation_max"]
 		hike.locality = json["locality"] if json["locality"]
+		hike.photo_landscape = Photo.find(:string_id => json["photo_landscape"]["string_id"]) if json["photo_landscape"]
+		hike.photo_facts = Photo.find(:string_id => json["photo_facts"]["string_id"]) if json["photo_facts"]
 
 		if json["location"] and json["location"]["longitude"] and json["location"]["latitude"]
 			if not hike.location
@@ -80,29 +82,46 @@ class HikeApp < Sinatra::Base
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
 		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
-		name = "abcd"#params[:name]
+		uploaded_file = params[:file]
+		name = params[:name]
+		alt = params[:alt]
 		return 404 if not hike
-		#return 400 if not name
+		return 400 if not name or not uploaded_file or not alt
 
 		#clean up file name parameter
 		name = name.end_with?(".jpg") ? name[0, name.length-4] : name
 		name = name.split(" ").join("-")
 		name = name.gsub(/[^0-9a-z\-]/i, "")
 
+		string_id = params[:hike_id] + "/" + name;
+
+		photo = Photo.create({
+			:string_id => string_id,
+			:alt => alt
+		})
+
 		FileUtils.mkdir_p("tmp")
 		temp_file = File.join("tmp", name)
-		puts params
-		datafile = params[:data]
 		File.open(temp_file, 'wb') do |file|
-			file.write(datafile[:tempfile].read)
+			file.write(uploaded_file[:tempfile].read)
 		end
 
-		s3 = AWS::S3.new(
-			:access_key_id     => settings.access_key_id,
-			:secret_access_key => settings.secret_access_key)
-		bucket = s3.buckets["assets.hike.io"]
-		object = bucket.objects[params[:hike_id] + name]
-		object.write(:file => temp_file)
+		if settings.production?
+			s3 = AWS::S3.new(
+				:access_key_id     => settings.access_key_id,
+				:secret_access_key => settings.secret_access_key
+			)
+			bucket = s3.buckets["assets.hike.io"]
+			object = bucket.objects[string_id + ".jpg"]
+			object.write(:file => temp_file)
+		else
+			dst = self.root + "/public/hike-images/" + string_id + ".jpg"
+			dst_dir = File.dirname dst
+			FileUtils.mkdir_p(dst_dir)
+			FileUtils.cp temp_file, dst
+		end
+
+		photo.to_json
 	end
 
 end

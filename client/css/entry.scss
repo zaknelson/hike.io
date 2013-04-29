@@ -13,6 +13,7 @@ $header-landscape-footer-height-mobile: 40px;
 	.placeholder-img {
 		@include box-sizing(border-box);
 		border: 4px dashed #999;
+		cursor: pointer;
 	}
 
 	.header-landscape {
@@ -24,7 +25,6 @@ $header-landscape-footer-height-mobile: 40px;
 			font-weight: bold;
 			color: #fff;
 			margin: 0px;
-			padding-top: 3px;
 			font-size: $header-landscape-footer-height - 10;
 			line-height: $header-landscape-footer-height;	
 		}

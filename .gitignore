@@ -6,3 +6,4 @@ config/config.yml
 development.db
 node_modules
 scripts/scrape/output/
+tmp/

@@ -47,6 +47,35 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 		return result;
 	};
 
+	$scope.uploadPhoto = function(file, type) {
+		var data = new FormData();
+		data.append("file", file);
+		data.append("name", new Date().getTime() + "");
+		data.append("alt", "My alt text");
+		$.ajax({
+			url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos",
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			type: "POST",
+			complete: function(jqXHR){
+				var photo = jqXHR.responseJSON;
+				switch (type) {
+				case "landscape":
+					$scope.hike.photo_landscape = photo;
+					break;
+				case "facts":
+					break;
+				case "generic":
+					break;
+				}
+				$scope.isDirty = true;
+				$scope.$apply();
+			}
+		});
+	};
+
 	$scope.$on("keyboardEventSave", function(event) {
 		$scope.save();
 	});

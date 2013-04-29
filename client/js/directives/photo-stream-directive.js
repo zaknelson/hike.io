@@ -7,7 +7,7 @@ angular.module("hikeio").
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview' >" +
 					"<div data-ng-class='{\"featured-box\": $first}' >" +
-						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.string_id}}/{{hike.photo_preview.string_id}}{{ $first && \"-large\" || \"\" }}.jpg'></img>" +
+						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_preview.string_id}}{{ $first && \"-large\" || \"\" }}.jpg'></img>" +
 						"<div class='preview-footer'>" +
 							"<div>" +
 								"<div class='preview-title'>{{hike.name}}</div>" +
