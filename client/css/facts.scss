@@ -10,7 +10,7 @@ $facts-external-link-svg-size: 12px;
 	width: $facts-width;
 	margin: 0px 0px 15px 15px;
 
-	.page-curl > img {
+	.page-curl img {
 		width: $facts-width - $facts-padding * 2;
 		margin-bottom: 10px;
 	}

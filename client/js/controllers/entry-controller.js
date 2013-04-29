@@ -66,6 +66,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 					$scope.hike.photo_landscape = photo;
 					break;
 				case "facts":
+					$scope.hike.photo_facts = photo;
 					break;
 				case "generic":
 					break;
