@@ -21,7 +21,7 @@ angular.module("hikeio").
 			};
 		},
 		replace: true,
-		template: "<div data-ng-transclude></div>",
+		template: "<div data-ng-transclude style='cursor: pointer;'></div>",
 		transclude: true
 	};
 });

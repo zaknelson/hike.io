@@ -7,8 +7,7 @@
 		</div>
 	</div>
 	<div class="header-landscape">
-		<img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_landscape" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_landscape.string_id}}.jpg" alt="{{hike.photo_landscape.alt}}"></img>
-		<div data-file-uploader="uploadPhoto(file, 'landscape')"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div>
+		<div data-file-uploader="uploadPhoto(file, 'landscape')"><img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_landscape" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_landscape.string_id}}.jpg" alt="{{hike.photo_landscape.alt}}"></img><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div>
 		<div>
 			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':hike.photo_landscape != null}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
@@ -19,8 +18,7 @@
 
 			<div class="overview-facts">
 				<div class="page-curl shadow-bottom">
-					<img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}.jpg" alt="{{hike.photo_facts.alt}}"></img>
-					<div data-file-uploader="uploadPhoto(file, 'facts')"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+					<div data-file-uploader="uploadPhoto(file, 'facts')"><img class="shadow-light" data-ui-if="isLoaded &amp;&amp; hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}.jpg" alt="{{hike.photo_facts.alt}}"></img><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
 					
 					<table>
 						<tr>
