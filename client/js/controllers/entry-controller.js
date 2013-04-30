@@ -29,8 +29,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 					$scope.isDirty = false;
 				}).
 				error(function(data, status, headers, config) {
-					$scope.isSaving = false;
-					$scope.isDirty = false;
+					$log.error(data, status, headers, config);
 				});
 		}
 	};
@@ -52,29 +51,31 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 		data.append("file", file);
 		data.append("name", new Date().getTime() + "");
 		data.append("alt", "My alt text");
-		$.ajax({
-			url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos",
-			data: data,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: "POST",
-			complete: function(jqXHR){
-				var photo = jqXHR.responseJSON;
+		$http({
+				method: "POST", 
+				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos", 
+				data: data, 
+				headers: { "Content-Type": false }, 
+				transformRequest: function(data) { 
+					return data; 
+				}
+			}).
+			success(function(data, status, headers, config) {
 				switch (type) {
 				case "landscape":
-					$scope.hike.photo_landscape = photo;
+					$scope.hike.photo_landscape = data;
 					break;
 				case "facts":
-					$scope.hike.photo_facts = photo;
+					$scope.hike.photo_facts = data;
 					break;
 				case "generic":
 					break;
 				}
 				$scope.isDirty = true;
-				$scope.$apply();
-			}
-		});
+			}).
+			error(function(data, status, headers, config) {
+				$log.error(data, status, headers, config);
+			});
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {
