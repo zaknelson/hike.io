@@ -1,4 +1,5 @@
 require "aws-sdk"
+require 'RMagick'
 
 require_relative "../server"
 require_relative "../utils/routes_utils"
@@ -93,18 +94,17 @@ class HikeApp < Sinatra::Base
 		name = name.split(" ").join("-")
 		name = name.gsub(/[^0-9a-z\-]/i, "")
 
-		string_id = params[:hike_id] + "/" + name;
-
 		photo = Photo.create({
-			:string_id => string_id,
+			:string_id => File.join(params[:hike_id], name),
 			:alt => alt
 		})
 
-		FileUtils.mkdir_p("tmp")
-		temp_file = File.join("tmp", name)
-		File.open(temp_file, 'wb') do |file|
-			file.write(uploaded_file[:tempfile].read)
-		end
+		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
+		original_image.resize_to_fit!(2400, 2400)
+		large_image = original_image.resize_to_fit(1200)
+		medium_image = original_image.resize_to_fit(800)
+		small_image = original_image.resize_to_fit(400)
+		thumb_image = original_image.crop_resized(400, 400)
 
 		if settings.production?
 			s3 = AWS::S3.new(
@@ -112,13 +112,23 @@ class HikeApp < Sinatra::Base
 				:secret_access_key => settings.secret_access_key
 			)
 			bucket = s3.buckets["assets.hike.io"]
-			object = bucket.objects[string_id + ".jpg"]
-			object.write(:file => temp_file)
+			dst_dir = params[:hike_id]
+
+			
+			bucket.objects[File.join(dst_dir, name) + "-original.jpg"].write(original_image.to_blob)
+			bucket.objects[File.join(dst_dir, name) + "-large.jpg"].write(large_image.to_blob)
+			bucket.objects[File.join(dst_dir, name) + "-medium.jpg"].write(medium_image.to_blob)
+			bucket.objects[File.join(dst_dir, name) + "-small.jpg"].write(small_image.to_blob)
+			bucket.objects[File.join(dst_dir, name) + "-thumb.jpg"].write(thumb_image.to_blob)
 		else
-			dst = self.root + "/public/hike-images/" + string_id + ".jpg"
-			dst_dir = File.dirname dst
+			dst_dir = self.root + "/public/hike-images/" + params[:hike_id]
 			FileUtils.mkdir_p(dst_dir)
-			FileUtils.cp temp_file, dst
+			
+			original_image.write(File.join(dst_dir, name) + "-original.jpg")
+			large_image.write(File.join(dst_dir, name) + "-large.jpg")
+			medium_image.write(File.join(dst_dir, name) + "-medium.jpg")
+			small_image.write(File.join(dst_dir, name) + "-small.jpg")
+			thumb_image.write(File.join(dst_dir, name) + "-thumb.jpg")
 		end
 
 		photo.to_json

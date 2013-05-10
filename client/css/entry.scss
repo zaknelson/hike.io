@@ -136,7 +136,7 @@ $header-landscape-footer-height-mobile: 40px;
 			overflow-x: hidden;
 			overflow-y: hidden;
 
-			div {
+			.photo-thumb {
 				@include box-sizing(border-box);
 				padding: 2px;
 				float: left;
