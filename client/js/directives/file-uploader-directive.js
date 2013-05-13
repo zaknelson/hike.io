@@ -4,7 +4,8 @@ angular.module("hikeio").
 	directive("fileUploader", function() {
 	return {
 		compile: function(tplElm, tplAttr) {
-			tplElm.after("<input type='file' style='display: none;'>");
+			var mulitpleStr = tplAttr.multiple === "true" ? "multiple" : "";
+			tplElm.after("<input type='file' " + mulitpleStr + " style='display: none;'>");
 
 			return function(scope, elm, attr) {
 				if (scope.$eval(attr.enabled)) {
@@ -12,7 +13,7 @@ angular.module("hikeio").
 
 					input.bind("change", function() {
 						if (input[0].files.length > 0) {
-							scope.$eval(attr.fileUploader, {file: input[0].files[0]});
+							scope.$eval(attr.fileUploader, {files: input[0].files});
 						}
 					});
 

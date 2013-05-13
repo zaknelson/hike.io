@@ -46,7 +46,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 		return result;
 	};
 
-	$scope.uploadPhoto = function(file, type) {
+	var doUploadPhoto = function(file, type) {
 		var data = new FormData();
 		data.append("file", file);
 		data.append("name", new Date().getTime() + "");
@@ -77,6 +77,12 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
 			});
+	}
+
+	$scope.uploadPhotos = function(files, type) {
+		for (var i = 0; i < files.length; i++) {
+			doUploadPhoto(files[i], type);
+		}
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {
