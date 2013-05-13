@@ -72,7 +72,7 @@
 		<h2>Photos</h2>
 
 		<div class="photo-thumb-list" data-fancybox=".fancybox-thumbs">
-			<div data-file-uploader="uploadPhoto(file, 'generic')" data-enabled="isEditing"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; hike.photos_generic.length == 0 &amp;&amp; isEditing">
+			<div data-file-uploader="uploadPhoto(file, 'generic')" data-enabled="isEditing"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
 				<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img>
 			</div></div>
 			<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumbs" href="#" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-large.jpg">
