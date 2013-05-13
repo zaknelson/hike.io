@@ -62,8 +62,8 @@ class HikeApp < Sinatra::Base
 		hike.distance = json["distance"] if json["distance"]
 		hike.elevation_max = json["elevation_max"] if json["elevation_max"]
 		hike.locality = json["locality"] if json["locality"]
-		hike.photo_landscape = Photo.find(:string_id => json["photo_landscape"]["string_id"]) if json["photo_landscape"]
-		hike.photo_facts = Photo.find(:string_id => json["photo_facts"]["string_id"]) if json["photo_facts"]
+		hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"]) if json["photo_landscape"]
+		hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"]) if json["photo_facts"]
 
 		if json["location"] and json["location"]["longitude"] and json["location"]["latitude"]
 			if not hike.location
@@ -77,6 +77,27 @@ class HikeApp < Sinatra::Base
 				hike.location.save_changes
 			end
 		end
+
+		if json["photos_generic"]
+			new_generic_photos = []
+			json["photos_generic"].each do |photo, index|
+				photo = Photo.find(:id => photo["id"])
+				new_generic_photos.push(photo) if photo
+			end
+
+			added_photos = new_generic_photos - hike.photos_generic
+			removed_photos = hike.photos_generic - new_generic_photos
+
+			added_photos.each do |photo|
+				hike.add_photos_generic(photo)
+			end
+			
+			# TODO, should we actually delete the photo from the db?
+			removed_photos.each do |photo|
+				hike.remove_photos_generic(photo)
+			end
+		end
+
 		hike.save_changes
 		hike.to_json
 	end

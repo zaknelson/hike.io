@@ -97,11 +97,11 @@ class Hike < Sequel::Model
 
 	def to_json *a
 		super :include => { 
-				:location => { :except => :id },
-				:photo_facts => { :except => :id },
-				:photo_landscape => { :except => :id },
-				:photo_preview => { :except => :id },
-				:photos_generic => { :except => :id } 
+				:location => {},
+				:photo_facts => {},
+				:photo_landscape => {},
+				:photo_preview => {},
+				:photos_generic => {}
 			}, 
 			:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id]
 	end
