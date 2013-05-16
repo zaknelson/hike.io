@@ -12,11 +12,11 @@
 			</div>
 			<div>
 				<label for="distance">Distance</label>
-				<input id="distance" type="number" step="any" min="0" required="true" autocomplete="off" data-ng-model="hike.distance" ></input>
+				<input id="distance" type="number" step="any" min="0" required="true" autocomplete="off" data-ng-model="hike.distance" data-model-filter="distance:miles:kilometers:5" ></input>
 			</div>
 			<div>
 				<label for="elevation">Elevation</label>
-				<input id="elevation" type="number" step="any" min="0" required="true" autocomplete="off" data-ng-model="hike.elevation_max" ></input>
+				<input id="elevation" type="number" step="any" min="0" required="true" autocomplete="off" data-ng-model="hike.elevation_max" data-model-filter="distance:feet:meters:5" ></input>
 			</div>
 			<div>
 				<label for="latitude">Lat/Lng</label>

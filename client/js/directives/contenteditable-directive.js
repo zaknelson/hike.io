@@ -1,14 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$filter", "$timeout", function($filter, $timeout) {
-
-		var runFilter = function(filterString, value) {
-			var filterParams = filterString.split(":");
-			var filterName = filterParams.splice(0, 1);
-			filterParams.splice(0, 0, value);
-			return $filter(filterName).apply(this, filterParams);
-		};
+	directive("contenteditable", ["$timeout", "filterParser", function($timeout, filterParser) {
 
 		return {
 			require: "ngModel",
@@ -25,7 +18,7 @@ angular.module("hikeio").
 						}
 
 						if (attributes.filterModel) {
-							viewValue = runFilter(attributes.filterModel, viewValue);
+							viewValue = filterParser.filter(attributes.filterModel, viewValue);
 						}
 
 						controller.$setViewValue(viewValue);
@@ -91,7 +84,7 @@ angular.module("hikeio").
 					$timeout(function() {
 						var viewValue = controller.$viewValue;
 						if (attributes.filterView) {
-							viewValue = runFilter(attributes.filterView, viewValue);
+							viewValue = filterParser.filter(attributes.filterView, viewValue);
 						}
 						element.html(viewValue);
 					});
