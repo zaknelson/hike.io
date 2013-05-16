@@ -27,6 +27,12 @@ class HikeApp < Sinatra::Base
 			:latitude => json["location"]["latitude"],
 			:longitude => json["location"]["longitude"]
 			);
+
+		keywords = KeywordUtils.new.sanitize_to_keywords(hike.name)
+		keywords.each do |keyword|
+			hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
+		end
+
 		hike.save
 		hike.to_json
 	end
