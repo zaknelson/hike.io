@@ -1,5 +1,6 @@
 require "aws-sdk"
-require 'RMagick'
+require "RMagick"
+require "uuidtools"
 
 require_relative "../server"
 require_relative "../utils/routes_utils"
@@ -105,19 +106,13 @@ class HikeApp < Sinatra::Base
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
 		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
-		name = params[:name]
-		alt = params[:alt]
 		return 404 if not hike
-		return 400 if not name or not uploaded_file or not alt
+		return 400 if not uploaded_file
 
-		#clean up file name parameter
-		name = name.end_with?(".jpg") ? name[0, name.length-4] : name
-		name = name.split(" ").join("-")
-		name = name.gsub(/[^0-9a-z\-]/i, "")
+		name = UUIDTools::UUID.random_create.to_s
 
 		photo = Photo.create({
-			:string_id => File.join(params[:hike_id], name),
-			:alt => alt
+			:string_id => File.join(params[:hike_id], name)
 		})
 
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first

@@ -49,8 +49,6 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 	var doUploadPhoto = function(file, type) {
 		var data = new FormData();
 		data.append("file", file);
-		data.append("name", new Date().getTime() + "");
-		data.append("alt", "My alt text");
 		$http({
 				method: "POST",
 				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos",
