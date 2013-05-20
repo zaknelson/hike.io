@@ -75,7 +75,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
 			});
-	}
+	};
 
 	$scope.uploadPhotos = function(files, type) {
 		for (var i = 0; i < files.length; i++) {
