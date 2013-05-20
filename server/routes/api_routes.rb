@@ -64,6 +64,16 @@ class HikeApp < Sinatra::Base
 		return 404 if not hike
 
 		json = JSON.parse request.body.read
+
+		# Replace keywords if name has changed
+		if json["name"] && json["name"] != hike.name
+			hike.remove_all_keywords
+			keywords = KeywordUtils.new.sanitize_to_keywords(json["name"])
+			keywords.each do |keyword|
+				hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
+			end
+		end
+
 		hike.name = json["name"] if json["name"]
 		hike.description = json["description"] if json["description"]
 		hike.distance = json["distance"] if json["distance"]
