@@ -63,6 +63,8 @@ class HikeApp < Sinatra::Base
 		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
 		return 404 if not hike
 
+		removed_photos = []
+
 		json = JSON.parse request.body.read
 
 		# Replace keywords if name has changed
@@ -79,8 +81,20 @@ class HikeApp < Sinatra::Base
 		hike.distance = json["distance"] if json["distance"]
 		hike.elevation_max = json["elevation_max"] if json["elevation_max"]
 		hike.locality = json["locality"] if json["locality"]
-		hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"]) if json["photo_landscape"]
-		hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"]) if json["photo_facts"]
+
+		if json["photo_landscape"] != nil
+			hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"])
+		else
+			removed_photos.push hike.photo_landscape if hike.photo_landscape
+			hike.photo_landscape = nil
+		end
+
+		if json["photo_facts"] != nil
+			hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"])
+		else
+			removed_photos.push hike.photo_facts if hike.photo_facts
+			hike.photo_facts = nil
+		end
 
 		if json["location"] and json["location"]["longitude"] and json["location"]["latitude"]
 			if not hike.location
@@ -102,20 +116,26 @@ class HikeApp < Sinatra::Base
 				new_generic_photos.push(photo) if photo
 			end
 
-			added_photos = new_generic_photos - hike.photos_generic
-			removed_photos = hike.photos_generic - new_generic_photos
+			added_generic_photos = new_generic_photos - hike.photos_generic
+			removed_generic_photos = hike.photos_generic - new_generic_photos
 
-			added_photos.each do |photo|
+			added_generic_photos.each do |photo|
 				hike.add_photos_generic(photo)
 			end
+
+			removed_photos += removed_generic_photos
 			
-			# TODO, should we actually delete the photo from the db?
-			removed_photos.each do |photo|
+			removed_generic_photos.each do |photo|
 				hike.remove_photos_generic(photo)
 			end
 		end
 
 		hike.save_changes
+		
+		removed_photos.each do |photo|
+			photo.delete
+		end
+
 		hike.to_json
 	end
 

@@ -83,6 +83,21 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 		}
 	};
 
+	$scope.removePhoto = function(type, photo) {
+		switch (type) {
+		case "landscape":
+			$scope.hike.photo_landscape = null;
+			break;
+		case "facts":
+			$scope.hike.photo_facts = null;
+			break;
+		case "generic":
+			$scope.hike.photos_generic.splice($scope.hike.photos_generic.indexOf(photo), 1);
+			break;
+		}
+		$scope.isDirty = true;
+	};
+
 	$scope.$on("keyboardEventSave", function(event) {
 		$scope.save();
 	});
