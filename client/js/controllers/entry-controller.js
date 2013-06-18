@@ -27,6 +27,7 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 					resourceCache.put("/api/v1/hikes", null);
 					$scope.isSaving = false;
 					$scope.isDirty = false;
+					$scope.hike = data;
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);

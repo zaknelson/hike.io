@@ -84,6 +84,7 @@ class HikeApp < Sinatra::Base
 
 		if json["photo_landscape"] != nil
 			hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"])
+			move_photo_if_needed hike.photo_landscape, hike
 		else
 			removed_photos.push hike.photo_landscape if hike.photo_landscape
 			hike.photo_landscape = nil
@@ -91,6 +92,7 @@ class HikeApp < Sinatra::Base
 
 		if json["photo_facts"] != nil
 			hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"])
+			move_photo_if_needed hike.photo_facts, hike
 		else
 			removed_photos.push hike.photo_facts if hike.photo_facts
 			hike.photo_facts = nil
@@ -121,6 +123,7 @@ class HikeApp < Sinatra::Base
 
 			added_generic_photos.each do |photo|
 				hike.add_photos_generic(photo)
+				move_photo_if_needed photo, hike
 			end
 
 			removed_photos += removed_generic_photos
@@ -148,7 +151,7 @@ class HikeApp < Sinatra::Base
 		name = UUIDTools::UUID.random_create.to_s
 
 		photo = Photo.create({
-			:string_id => File.join(params[:hike_id], name)
+			:string_id => "tmp/" + name
 		})
 
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
@@ -159,31 +162,58 @@ class HikeApp < Sinatra::Base
 		thumb_image = original_image.crop_resized(400, 400)
 
 		if settings.production?
-			s3 = AWS::S3.new(
-				:access_key_id     => settings.access_key_id,
-				:secret_access_key => settings.secret_access_key
-			)
 			bucket = s3.buckets["assets.hike.io"]
-			dst_dir = params[:hike_id]
-
-			
-			bucket.objects[File.join(dst_dir, name) + "-original.jpg"].write(original_image.to_blob)
-			bucket.objects[File.join(dst_dir, name) + "-large.jpg"].write(large_image.to_blob)
-			bucket.objects[File.join(dst_dir, name) + "-medium.jpg"].write(medium_image.to_blob)
-			bucket.objects[File.join(dst_dir, name) + "-small.jpg"].write(small_image.to_blob)
-			bucket.objects[File.join(dst_dir, name) + "-thumb.jpg"].write(thumb_image.to_blob)
+			dst_dir = "hike-images/tmp/"
+			bucket.objects[dst_dir + name + "-original.jpg"].write(original_image.to_blob)
+			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob)
+			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob)
+			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob)
+			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob)
 		else
-			dst_dir = self.root + "/public/hike-images/" + params[:hike_id]
+			dst_dir = self.root + "/public/hike-images/tmp/"
 			FileUtils.mkdir_p(dst_dir)
 			
-			original_image.write(File.join(dst_dir, name) + "-original.jpg")
-			large_image.write(File.join(dst_dir, name) + "-large.jpg")
-			medium_image.write(File.join(dst_dir, name) + "-medium.jpg")
-			small_image.write(File.join(dst_dir, name) + "-small.jpg")
-			thumb_image.write(File.join(dst_dir, name) + "-thumb.jpg")
+			original_image.write(dst_dir + name + "-original.jpg")
+			large_image.write(dst_dir + name + "-large.jpg")
+			medium_image.write(dst_dir + name + "-medium.jpg")
+			small_image.write(dst_dir + name + "-small.jpg")
+			thumb_image.write(dst_dir + name + "-thumb.jpg")
 		end
 
 		photo.to_json
+	end
+
+	def move_photo_if_needed photo, hike
+		if photo.string_id.start_with? "tmp/"
+			src = "hike-images/" + photo.string_id
+			dst_dir = "hike-images/" + hike.string_id + "/"
+			dst = dst_dir + photo.string_id[4..-1]
+			if settings.production?
+				s3.buckets["assets.hike.io"][src + "-original.jpg"].move_to[dst + "-original.jpg"]
+				s3.buckets["assets.hike.io"][src + "-large.jpg"].move_to[dst + "-large.jpg"]
+				s3.buckets["assets.hike.io"][src + "-medium.jpg"].move_to[dst + "-medium.jpg"]
+				s3.buckets["assets.hike.io"][src + "-small.jpg"].move_to[dst + "-small.jpg"]
+				s3.buckets["assets.hike.io"][src + "-thumb.jpg"].move_to[dst + "-thumb.jpg"]
+			else
+				FileUtils.mkdir_p(self.root + "/public/" + dst_dir)
+				FileUtils.mv(self.root + "/public/" + src + "-original.jpg", self.root + "/public/" + dst + "-original.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-large.jpg", self.root + "/public/" + dst + "-large.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-medium.jpg", self.root + "/public/" + dst + "-medium.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-small.jpg", self.root + "/public/" + dst + "-small.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-thumb.jpg", self.root + "/public/" + dst + "-thumb.jpg")
+			end
+
+			photo.string_id = hike.string_id + "/" + photo.string_id[4..-1]
+			photo.save_changes
+		end
+	end
+
+	def s3
+		@s3 = @s3 || AWS::S3.new(
+			:access_key_id     => settings.access_key_id,
+			:secret_access_key => settings.secret_access_key
+		)
+		@s3
 	end
 
 end
