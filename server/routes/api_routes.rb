@@ -137,6 +137,25 @@ class HikeApp < Sinatra::Base
 		
 		removed_photos.each do |photo|
 			photo.delete
+			if settings.production?
+				bucket = s3.buckets["assets.hike.io"]
+				src = "hike-images/" + photo.string_id
+				dst = "hike-images/tmp/deleted/" + photo.string_id
+				bucket.objects[src + "-original.jpg"].move_to(dst + "-original.jpg")
+				bucket.objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
+				bucket.objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
+				bucket.objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
+				bucket.objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
+			else
+				src = self.root + "/public/hike-images/" + photo.string_id
+				dst_dir = self.root + "/public/hike-images/tmp/deleted/"
+				FileUtils.mkdir_p(dst_dir)
+				FileUtils.mv(src + "-original.jpg", dst_dir)
+				FileUtils.mv(src + "-large.jpg", dst_dir)
+				FileUtils.mv(src + "-medium.jpg", dst_dir)
+				FileUtils.mv(src + "-small.jpg", dst_dir)
+				FileUtils.mv(src + "-thumb.jpg", dst_dir)
+			end
 		end
 
 		hike.to_json
@@ -151,7 +170,7 @@ class HikeApp < Sinatra::Base
 		name = UUIDTools::UUID.random_create.to_s
 
 		photo = Photo.create({
-			:string_id => "tmp/" + name
+			:string_id => "tmp/uploading/" + name
 		})
 
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
@@ -163,16 +182,15 @@ class HikeApp < Sinatra::Base
 
 		if settings.production?
 			bucket = s3.buckets["assets.hike.io"]
-			dst_dir = "hike-images/tmp/"
+			dst_dir = "hike-images/tmp/uploading/"
 			bucket.objects[dst_dir + name + "-original.jpg"].write(original_image.to_blob)
 			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob)
 			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob)
 			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob)
 			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob)
 		else
-			dst_dir = self.root + "/public/hike-images/tmp/"
+			dst_dir = self.root + "/public/hike-images/tmp/uploading/"
 			FileUtils.mkdir_p(dst_dir)
-			
 			original_image.write(dst_dir + name + "-original.jpg")
 			large_image.write(dst_dir + name + "-large.jpg")
 			medium_image.write(dst_dir + name + "-medium.jpg")
@@ -186,14 +204,15 @@ class HikeApp < Sinatra::Base
 	def move_photo_if_needed photo, hike
 		if photo.string_id.start_with? "tmp/"
 			src = "hike-images/" + photo.string_id
+			photo_id = photo.string_id["tmp/uploading/".length..-1]
 			dst_dir = "hike-images/" + hike.string_id + "/"
-			dst = dst_dir + photo.string_id[4..-1]
+			dst = dst_dir + photo_id
 			if settings.production?
-				s3.buckets["assets.hike.io"][src + "-original.jpg"].move_to[dst + "-original.jpg"]
-				s3.buckets["assets.hike.io"][src + "-large.jpg"].move_to[dst + "-large.jpg"]
-				s3.buckets["assets.hike.io"][src + "-medium.jpg"].move_to[dst + "-medium.jpg"]
-				s3.buckets["assets.hike.io"][src + "-small.jpg"].move_to[dst + "-small.jpg"]
-				s3.buckets["assets.hike.io"][src + "-thumb.jpg"].move_to[dst + "-thumb.jpg"]
+				s3.buckets["assets.hike.io"].objects[src + "-original.jpg"].move_to(dst + "-original.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
 			else
 				FileUtils.mkdir_p(self.root + "/public/" + dst_dir)
 				FileUtils.mv(self.root + "/public/" + src + "-original.jpg", self.root + "/public/" + dst + "-original.jpg")
@@ -203,7 +222,7 @@ class HikeApp < Sinatra::Base
 				FileUtils.mv(self.root + "/public/" + src + "-thumb.jpg", self.root + "/public/" + dst + "-thumb.jpg")
 			end
 
-			photo.string_id = hike.string_id + "/" + photo.string_id[4..-1]
+			photo.string_id = hike.string_id + "/" + photo_id
 			photo.save_changes
 		end
 	end
