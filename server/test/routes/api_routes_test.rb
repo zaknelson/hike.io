@@ -38,14 +38,14 @@ class ApiRoutesTest < HikeAppTestCase
 	end
 
 	def test_get_hike_by_string_id
-		get "/api/v1/hikes/scotchman-peak"
+		get "/api/v1/hikes/empty"
 		json = JSON.parse(last_response.body)
-		assert_equal "scotchman-peak", json["string_id"]
+		assert_equal "empty", json["string_id"]
 	end
 
 	def test_put_without_credentials
 		data = {"name" => "New name"}
-		put "/api/v1/hikes/scotchman-peak", data.to_json
+		put "/api/v1/hikes/empty", data.to_json
 		assert_equal 403, last_response.status
 	end
 
@@ -76,15 +76,15 @@ class ApiRoutesTest < HikeAppTestCase
 
 	def put_and_validate data
 		set_cookie "user_id=#{User.first.id}"
-		put "/api/v1/hikes/scotchman-peak", data.to_json
+		put "/api/v1/hikes/empty", data.to_json
 
 		json = JSON.parse(last_response.body)
-		assert_equal "scotchman-peak", json["string_id"]
+		assert_equal "empty", json["string_id"]
 		validate_hashes data, json
 		
-		get "/api/v1/hikes/scotchman-peak"
+		get "/api/v1/hikes/empty"
 		json = JSON.parse(last_response.body)
-		assert_equal "scotchman-peak", json["string_id"]
+		assert_equal "empty", json["string_id"]
 		validate_hashes data, json
 	end
 
