@@ -95,6 +95,11 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	get "/sitemap.xml", :provides => "xml" do
+		@hikes = Hike.all
+		erb :sitemap, :layout => false
+	end
+
 	get %r{^\/(.*)\/$}, :provides => "html" do
 		# Redirect urls with trailing /'s
 		redirect params[:captures].first
