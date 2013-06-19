@@ -10,6 +10,10 @@ client.connect();
 
 socketIo.set("log level", 2);
 
+// Heroku requires long polling https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
+socketIo.set("transports", ["xhr-polling"]); 
+socketIo.set("polling duration", 10); 
+
 socketIo.sockets.on("connection", function (socket) {
 	socket.on("get-hikes-in-bounds", function (data) {
 
