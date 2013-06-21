@@ -1,0 +1,11 @@
+{
+	"name": "hike.io",
+	"version": "1.0.0",
+	"dependencies": {
+		"jshint": "1.1.0"
+	},
+	"engines": {
+		"node": "0.8.x",
+		"npm": "1.1.x"
+	}
+}
