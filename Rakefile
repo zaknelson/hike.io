@@ -12,7 +12,6 @@ task :clean do
 end
 
 task :run => [:build] do
-	system "npm start &"
 	system "rackup -p 4567"
 end
 
