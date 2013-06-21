@@ -12,6 +12,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
+		return 403 if not is_admin?
 		json = JSON.parse request.body.read
 		string_id = json["name"].downcase.split(" ").join("-")
 		hike = Hike.create(
@@ -162,6 +163,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
+		return 403 if not is_admin?
 		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
 		return 404 if not hike

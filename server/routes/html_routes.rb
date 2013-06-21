@@ -55,6 +55,7 @@ class HikeApp < Sinatra::Base
 
 	["/add", "/partials/add.html"].each do |path|
 		get path, :provides => "html" do
+			return 403 if not is_admin?
 			render_template :add
 		end
 	end
