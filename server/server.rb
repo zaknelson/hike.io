@@ -97,7 +97,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		def is_admin?
-			Sinatra::Application.environment() == :development or cookies["user_id"] == User.first.id
+			Sinatra::Application.environment() == :development or cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id)
 		end
 	end
 end
