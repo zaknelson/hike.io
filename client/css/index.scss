@@ -66,6 +66,12 @@
 			max-width: 80%;
 		}
 	}
+
+	@media all and (max-width: $mobile-width) { 
+		.content input {
+			font-size: 24px;
+		}
+	}
 }
 
 @media all and (max-width: $mobile-width) {

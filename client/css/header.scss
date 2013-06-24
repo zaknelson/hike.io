@@ -76,6 +76,13 @@ header > .search-dropdown {
 	}
 }
 
+@media all and (max-width: $mobile-width) {
+	header > .search-dropdown > div > input {
+		height: 30px;
+		font-size: 24px;
+	}
+}
+
 .search-dropdown.active {
 	display: block;
 }
