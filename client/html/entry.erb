@@ -63,7 +63,7 @@
 			</div>
 
 			<div class="overview-description" data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null" contenteditable="{{isEditing}}" data-ng-model="hike.description" data-change="isDirty = true"></div>
-			<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing">
+			<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing &amp;&amp; isAdmin">
 				<p>Uh oh, this hike doesn't yet have a description. You can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
 			</div>
 		</div>
