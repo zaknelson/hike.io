@@ -11,7 +11,7 @@ task :clean do
 	`rm -rf .sass-cache`
 end
 
-task :push
+task :push do
 	`git push heroku master`
 end
 
