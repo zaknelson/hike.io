@@ -11,6 +11,10 @@ task :clean do
 	`rm -rf .sass-cache`
 end
 
+task :push
+	`git push heroku master`
+end
+
 task :run => [:build] do
 	system "rackup -p 4567"
 end
