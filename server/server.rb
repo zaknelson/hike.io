@@ -72,6 +72,8 @@ class HikeApp < Sinatra::Base
 	assets {
 		prebuild true
 
+		expires 60*60*24*365, :public #a year
+
 		serve "/js",     from: "js"
 		serve "/css",    from: "css"
 		serve "/images", from: "images"
