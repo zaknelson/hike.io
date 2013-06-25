@@ -80,7 +80,7 @@ class HikeApp < Sinatra::Base
 
 		js :app, "/js/app.js", [
 			"/js/main.js",
-			"/js/*.js"	
+			"/js/*/*.js"	
 		]
 
 		css :app, "/css/app.css", [
