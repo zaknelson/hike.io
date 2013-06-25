@@ -60,11 +60,15 @@ $facts-external-link-svg-size: 12px;
 	.overview-facts {
 		width: 100%;
 		margin: 0px;
+		
+		.page-curl {
+			height: 95px;
 
-		.page-curl img {
-			width: 100px;
-			float: left;
-			margin-right: 15px;
+			img {
+				width: 105px;
+				float: left;
+				margin-right: 15px;
+			}
 		}
 
 		> div {
@@ -74,8 +78,8 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		table {
-			font-size: 14px;
-			line-height: 16px;
+			font-size: 15px;
+			line-height: 18px;
 			margin-top: 0px;
 
 			tr:first-child {
