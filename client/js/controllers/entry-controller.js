@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($scope, $http, $log, $routeParams, $window, analytics, isEditing, navigation, resourceCache) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $window, analytics, isEditing, navigation, resourceCache) {
 
 	$scope.hike = null;
 	$scope.isDirty = false;
@@ -11,7 +11,12 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
 			$window.document.title = data.name + " - hike.io";
+			if ($scope.hike.description) {
+				var description = $scope.hike.description;
+				$rootScope.metaDescription = description.substring(0, description.indexOf(".") + 1);
+			}
 			$scope.isLoaded = true;
+			$scope.htmlReady();
 		}).
 		error(function(data, status, headers, config) {
 			$log.error(data, status, headers, config);
@@ -104,4 +109,4 @@ var EntryController = function($scope, $http, $log, $routeParams, $window, analy
 	});
 };
 
-EntryController.$inject = ["$scope", "$http", "$log", "$routeParams", "$window", "analytics", "isEditing", "navigation", "resourceCache"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$window", "analytics", "isEditing", "navigation", "resourceCache"];
