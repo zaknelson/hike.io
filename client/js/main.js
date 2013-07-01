@@ -50,8 +50,8 @@ angular.module("hikeio", ["ui"]).
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
-			if (current && current.$route.title) {
-				$rootScope.title = current.$route.title;
+			if (current && current.$$route && current.$$route.title) {
+				$rootScope.title = current.$$route.title;
 			}
 		});
 	}]);
