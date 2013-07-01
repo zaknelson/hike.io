@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("hikeio", ["ui"]).
+angular.module("hikeio", ["seo", "ui"]).
 	config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
 		$locationProvider.html5Mode(true);
 		$routeProvider.
