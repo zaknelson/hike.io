@@ -54,10 +54,7 @@ class HikeApp < Sinatra::Base
 
 	get "*" do
 		pass unless @is_bot
-		open("http://localhost:8888/" + request.fullpath) do |f|
-			content_type = f.content_type
-			f.read
-		end
+		`phantomjs --disk-cache=true server/static-seo-server.js #{request.url}`
 	end
 
 	["/", "/partials/index.html"].each do |path|

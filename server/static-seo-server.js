@@ -2,14 +2,13 @@
 
 var system = require("system");
 
-if (system.args.length < 3) {
+if (system.args.length < 2) {
 	console.log("Missing arguments.");
 	phantom.exit();
 }
 
 var server = require("webserver").create();
-var port = parseInt(system.args[1], 10);
-var urlPrefix = system.args[2];
+var url = system.args[1];
 
 var renderHtml = function(url, cb) {
 	var page = require("webpage").create();
@@ -43,14 +42,8 @@ var renderHtml = function(url, cb) {
 	}, 10000);
 };
 
-server.listen(port, function (request, response) {
-	renderHtml(urlPrefix + request.url, function(html) {
-		response.statusCode = 200;
-		response.write(html);
-		response.close();
-	});
-});
 
-// Warm up cache
-renderHtml(urlPrefix, function(){
+renderHtml(url, function(html) {
+	console.log(html);
+	phantom.exit();
 });
