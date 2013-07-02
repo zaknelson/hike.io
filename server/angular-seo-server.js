@@ -1,16 +1,18 @@
-var system = require('system');
+"use strict";
+
+var system = require("system");
 
 if (system.args.length < 3) {
 	console.log("Missing arguments.");
 	phantom.exit();
 }
 
-var server = require('webserver').create();
-var port = parseInt(system.args[1]);
+var server = require("webserver").create();
+var port = parseInt(system.args[1], 10);
 var urlPrefix = system.args[2];
 
 var renderHtml = function(url, cb) {
-	var page = require('webpage').create();
+	var page = require("webpage").create();
 	var finished = false;
 	page.settings.loadImages = false;
 	page.settings.localToRemoteUrlAccessEnabled = true;
@@ -23,12 +25,9 @@ var renderHtml = function(url, cb) {
 			}
 		}, 100);
 	};
-	page.onConsoleMessage = function(msg, lineNum, sourceId) {
-		console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
-	};
 	page.onInitialized = function() {
 		page.evaluate(function() {
-			document.addEventListener('__htmlReady__', function() {
+			document.addEventListener("__htmlReady__", function() {
 				window.callPhantom();
 			}, false);
 		});
