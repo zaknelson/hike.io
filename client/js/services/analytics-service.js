@@ -15,10 +15,10 @@ angular.module("hikeio").
 		s.parentNode.insertBefore(ga, s);
 
 	}).
-	service("analytics", function($rootScope, $window, $location, $routeParams) {
+	service("analytics", ["$rootScope", "$window", "$location", "$routeParams", function($rootScope, $window, $location, $routeParams) {
 		var trackPageView = function() {
 			$window._gaq.push(["_trackPageview", $location.path()]);
 		};
 
 		$rootScope.$on("$viewContentLoaded", trackPageView);
-	});
+	}]);
