@@ -14,6 +14,7 @@ var PhotoStreamController = function($scope, $http, $log, analytics, resourceCac
 		});
 
 	$scope.hikes = [];
+	$scope.htmlReady();
 };
 
 PhotoStreamController.$inject = ["$scope", "$http", "$log", "analytics", "resourceCache"];

@@ -2,7 +2,8 @@
 	"name": "hike.io",
 	"version": "1.0.0",
 	"dependencies": {
-		"jshint": "1.1.0"
+		"jshint": "1.1.0",
+		"phantomjs": "1.9.1-0"
 	},
 	"engines": {
 		"node": "0.8.x",

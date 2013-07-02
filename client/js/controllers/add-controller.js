@@ -13,6 +13,7 @@ var AddController = function($http, $log, $scope, navigation) {
 			}
 		);
 	};
+	$scope.htmlReady();
 };
 
 AddController.$inject = ["$http", "$log", "$scope", "navigation"];

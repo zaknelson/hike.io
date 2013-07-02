@@ -1,3 +1,5 @@
+require "agent_orange"
+require "open-uri"
 require_relative "../server"
 
 class HikeApp < Sinatra::Base
@@ -15,7 +17,10 @@ class HikeApp < Sinatra::Base
 
 		@is_partial = request.path_info.start_with? "/partials/"
 		@img_dir = "/images"
+		@is_bot = AgentOrange::UserAgent.new(request.user_agent).device.is_bot?
 	end
+
+	
 
 	helpers do
 		# Assumes the svg file has already passed through the process_svg script
@@ -44,6 +49,14 @@ class HikeApp < Sinatra::Base
 	def preload_resource resource_id, resource
 		content_for :preload_resource do
 			"<div data-preload-resource='#{resource_id}'>#{resource}</div>"
+		end
+	end
+
+	get "*" do
+		pass unless @is_bot
+		open("http://localhost:8888/" + request.fullpath) do |f|
+			content_type = f.content_type
+			f.read
 		end
 	end
 

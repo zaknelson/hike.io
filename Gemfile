@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 ruby '2.0.0'
 
+gem "agent_orange", "0.1.6"
 gem "aws-sdk", "1.9.2"
 gem "compass", "0.12.2"
 gem "json", "1.7.6"

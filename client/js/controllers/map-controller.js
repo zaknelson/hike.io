@@ -160,6 +160,7 @@ var MapController = function($scope, $location, analytics, config, mapTooltipFac
 	initIcons();
 	initMapOptions();
 	initSocketIo();
+	$scope.htmlReady();
 };
 
 MapController.$inject = ["$scope", "$location", "analytics", "config", "mapTooltipFactory", "navigation"];

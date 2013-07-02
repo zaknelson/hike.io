@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    agent_orange (0.1.6)
     aws-sdk (1.9.2)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
@@ -63,6 +64,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  agent_orange (= 0.1.6)
   aws-sdk (= 1.9.2)
   compass (= 0.12.2)
   humanize (= 1.1.0)

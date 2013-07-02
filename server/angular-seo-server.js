@@ -9,27 +9,19 @@ var server = require('webserver').create();
 var port = parseInt(system.args[1]);
 var urlPrefix = system.args[2];
 
-var parse_qs = function(s) {
-	var queryString = {};
-	var a = document.createElement("a");
-	a.href = s;
-	a.search.replace(
-		new RegExp("([^?=&]+)(=([^&]*))?", "g"),
-		function($0, $1, $2, $3) { queryString[$1] = $3; }
-	);
-	return queryString;
-};
-
 var renderHtml = function(url, cb) {
 	var page = require('webpage').create();
+	var finished = false;
 	page.settings.loadImages = false;
 	page.settings.localToRemoteUrlAccessEnabled = true;
 	page.onCallback = function() {
 		setTimeout(function() {
-			cb(page.content);
-			page.close();
+			if (!finished) {
+				cb(page.content);
+				page.close();
+				finished = true;
+			}
 		}, 100);
-		
 	};
 	page.onConsoleMessage = function(msg, lineNum, sourceId) {
 		console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
@@ -42,20 +34,24 @@ var renderHtml = function(url, cb) {
 		});
 	};
 	page.open(url);
+
+	setTimeout(function() {
+		if (!finished) {
+			cb(page.content);
+			page.close();
+			finished = true;
+		}
+	}, 10000);
 };
 
 server.listen(port, function (request, response) {
-	var route = parse_qs(request.url)._escaped_fragment_;
-	var url = urlPrefix
-		+ request.url.slice(1, request.url.indexOf('?'))
-		+ route;
-	renderHtml(url, function(html) {
-		console.log(html)
+	renderHtml(urlPrefix + request.url, function(html) {
 		response.statusCode = 200;
 		response.write(html);
 		response.close();
 	});
 });
 
-console.log('Listening on ' + port + '...');
-console.log('Press Ctrl+C to stop.');
+// Warm up cache
+renderHtml(urlPrefix, function(){
+});

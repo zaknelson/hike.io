@@ -14,6 +14,7 @@ var SearchController = function($http, $location, $log, $scope, analytics, resou
 			});
 	}
 
+	$scope.htmlReady();
 };
 
 SearchController.$inject = ["$http", "$location", "$log", "$scope", "analytics", "resourceCache"];
