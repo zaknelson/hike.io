@@ -12,6 +12,7 @@ require "sinatra/config_file"
 require "sinatra/content_for"
 require "sinatra/cookies"
 require "sinatra/partial"
+require "uglifier"
 require "will_paginate"
 require "will_paginate/sequel"
 
@@ -21,6 +22,8 @@ require_relative "model/database"
 configure :production do
 	require "newrelic_rpm"
 end
+
+#set :environment, :production
 
 configure :development, :test do
 	require_relative "model/seeds"
@@ -62,12 +65,8 @@ class HikeApp < Sinatra::Base
 
 	# logging setup
 	configure :production, :development do
-    	enable :logging
+    enable :logging
 	end
-
-	# config
-	register Sinatra::ConfigFile
-	config_file "../config/config.yml"
 
 	assets {
 		prebuild true
@@ -80,7 +79,7 @@ class HikeApp < Sinatra::Base
 
 		js :app, "/js/app.js", [
 			"/js/main.js",
-			"/js/*/*.js"	
+			"/js/*/*.js"
 		]
 
 		css :app, "/css/app.css", [
@@ -89,8 +88,8 @@ class HikeApp < Sinatra::Base
 			"/css/lib/*.css"
 		]
 
-		js_compression :jsmin
-   		css_compression :sass
+		js_compression :uglify, { :output => { :comments => :none } }
+   	css_compression :sass
 	}
 
 	helpers do
