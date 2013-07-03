@@ -1,13 +1,10 @@
 "use strict";
 
 var system = require("system");
-
 if (system.args.length < 2) {
 	console.log("Missing arguments.");
 	phantom.exit();
 }
-
-var server = require("webserver").create();
 var url = system.args[1];
 
 var renderHtml = function(url, cb) {
@@ -41,7 +38,6 @@ var renderHtml = function(url, cb) {
 		}
 	}, 10000);
 };
-
 
 renderHtml(url, function(html) {
 	console.log(html);
