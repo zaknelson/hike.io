@@ -113,6 +113,6 @@ class HikeApp < Sinatra::Base
 
 	get %r{^\/(.*)\/$}, :provides => "html" do
 		# Redirect urls with trailing /'s
-		redirect params[:captures].first
+		redirect params[:captures].first, 301
 	end
 end
