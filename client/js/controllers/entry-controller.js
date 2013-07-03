@@ -72,6 +72,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $w
 				case "facts":
 					$scope.hike.photo_facts = data;
 					break;
+				case "preview":
+					$scope.hike.photo_preview = data;
+					break;
 				case "generic":
 					$scope.hike.photos_generic.push(data);
 					break;
@@ -96,6 +99,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $w
 			break;
 		case "facts":
 			$scope.hike.photo_facts = null;
+			break;
+		case "preview":
+			$scope.hike.photo_preview = null;
 			break;
 		case "generic":
 			$scope.hike.photos_generic.splice($scope.hike.photos_generic.indexOf(photo), 1);

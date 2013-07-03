@@ -91,6 +91,14 @@ class HikeApp < Sinatra::Base
 			hike.photo_landscape = nil
 		end
 
+		if json["photo_preview"] != nil
+			hike.photo_preview = Photo.find(:id => json["photo_preview"]["id"])
+			move_photo_if_needed hike.photo_preview, hike
+		else
+			removed_photos.push hike.photo_preview if hike.photo_preview
+			hike.photo_preview = nil
+		end
+
 		if json["photo_facts"] != nil
 			hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"])
 			move_photo_if_needed hike.photo_facts, hike

@@ -70,7 +70,6 @@
 	</section>
 	<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
 		<h2>Photos</h2>
-
 		<div class="photo-thumb-list" data-fancybox=".fancybox-thumbs">
 			<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
 				<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img>
@@ -82,5 +81,10 @@
 				</div>
 			</a>
 		</div>
+	</section>
+	<section class="metadata-section" data-ng-show="isEditing">
+		<h2>Metadata</h2>
+			<h3>Discover preview image</h3>
+			<div data-ui-if="isLoaded &amp;&amp; hike.photo_preview" style="position:relative"><div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="trash-icon">×</div><img class="shadow-light" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_preview.string_id}}-small.jpg" alt="{{hike.photo_preview.alt}}"></img></div><div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing"><img class="placeholder-img" style="width:400px;" data-ui-if="isLoaded &amp;&amp; !hike.photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
 	</section>
 </article>
