@@ -59,7 +59,7 @@ class HikeApp < Sinatra::Base
 
 	get "*" do
 		pass unless request.url.include? "www.hike.io"
-		redirect "hike.io" + request.fullpath, 301
+		redirect request.scheme + "://hike.io" + request.fullpath, 301
 	end
 
 	["/", "/partials/index.html"].each do |path|
