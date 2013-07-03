@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://www.hike.io</loc>
+		<loc>http://hike.io</loc>
 		<priority>1</priority>
 	</url>
 	<url>
-		<loc>http://www.hike.io/add</loc>
-		<priority>.8</priority>
+		<loc>http://hike.io/add</loc>
+		<priority>.2</priority>
 	</url>
 	<url>
-		<loc>http://www.hike.io/discover</loc>
-		<priority>.8</priority>
+		<loc>http://hike.io/discover</loc>
+		<priority>.5</priority>
 	</url>
 	<url>
-		<loc>http://www.hike.io/map</loc>
-		<priority>.8</priority>
+		<loc>http://hike.io/map</loc>
+		<priority>.5</priority>
 	</url>
 	<url>
-		<loc>http://www.hike.io/search</loc>
+		<loc>http://hike.io/search</loc>
 		<priority>.2</priority>
 	</url>
 	<% for hike in @hikes %>
 	<url>
-		<loc>http://www.hike.io/hikes/<%= hike.string_id %></loc>
-		<priority>.5</priority>
+		<loc>http://hike.io/hikes/<%= hike.string_id %></loc>
+		<priority>1.0</priority>
 	</url>
 	<% end %>
 </urlset>
