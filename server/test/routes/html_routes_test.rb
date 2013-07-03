@@ -12,60 +12,46 @@ class HtmlRoutesTest < HikeAppTestCase
 		header "User-Agent", "rack/test (#{Rack::Test::VERSION})"
 	end
 
-	def test_home_page_ok
-		get "/"
-		assert last_response.ok?
+	def test_get_pages_return_200
+		get_and_assert_status "/", 200
+		get_and_assert_status "/map", 200
+		get_and_assert_status "/discover", 200
+		get_and_assert_status "/discover?page=1", 200
+		get_and_assert_status "/discover?page=2", 200
+		get_and_assert_status "/hikes/scotchman-peak", 200
+		get_and_assert_status "/search", 200
+		get_and_assert_status "/search?q=peak", 200
 	end
 
-	def test_map_page_ok
-		get "/map"
-		assert last_response.ok?
+	def test_get_unauthorized_pages_return_403
+		get_and_assert_status "/hikes/scotchman-peak/edit", 403
+		get_and_assert_status "/add", 403
 	end
 
-	def test_photo_stream_page_ok
-		get "/discover"
-		assert last_response.ok?
-	end
-
-	def test_photo_stream_page1_ok
-		get "/discover?page=1"
-		assert last_response.ok?
-	end
-
-	def test_photo_stream_page2_ok
-		get "/discover?page=2"
-		assert last_response.ok?
-	end
-
-	def test_hike_ok
-		get "/hikes/scotchman-peak"
-		assert last_response.ok?
-	end
-
-	def test_hike_edit_ok
+	def test_get_authorized_pages_return_200
 		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
-		get "/hikes/scotchman-peak/edit"
-		assert last_response.ok?
+		get_and_assert_status "/hikes/scotchman-peak/edit", 200
+		get_and_assert_status "/add", 200
 	end
 
-	def test_hike_edit_requires_credentials
-		get "/hikes/scotchman-peak/edit"
-		assert_equal 403, last_response.status
-	end
-
-	def test_missing_hike_not_found
-		get "/hikes/some-missing-hike"
-		assert last_response.not_found?
-	end
-
-	def test_query_with_multiple_possible_results
-		get "/search?q=peak"
-		assert last_response.ok?
+	def test_missing_pages_return_404
+		get_and_assert_status "/missing-page", 404
+		get_and_assert_status "/hikes/some-missing-hike", 404
 	end
 
 	def test_trailing_slash_redirects
 		get "/scotchman-peak/"
 		assert last_response.redirect?
 		assert_equal "http://example.org/scotchman-peak", last_response.location
+	end
+
+	def test_get_sitemap
+		header "Accept", "text/xml"
+		get_and_assert_status "/sitemap.xml", 200
+	end
+
+	def get_and_assert_status path, status
+		get path
+		assert_equal status, last_response.status
 	end
 end
