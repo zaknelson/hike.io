@@ -8,7 +8,8 @@ class HtmlRoutesTest < HikeAppTestCase
 
 	def setup
 		clear_cookies
-		header "Accept", "text/html" 
+		header "Accept", "text/html"
+		header "User-Agent", "rack/test (#{Rack::Test::VERSION})"
 	end
 
 	def test_home_page_ok
@@ -42,7 +43,7 @@ class HtmlRoutesTest < HikeAppTestCase
 	end
 
 	def test_hike_edit_ok
-		set_cookie "user_id=#{User.first.id}"
+		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
 		get "/hikes/scotchman-peak/edit"
 		assert last_response.ok?
 	end

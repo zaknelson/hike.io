@@ -9,6 +9,7 @@ class ApiRoutesTest < HikeAppTestCase
 	def setup
 		clear_cookies
 		header "Accept", "application/json"
+		header "User-Agent", "rack/test (#{Rack::Test::VERSION})"
 	end
 
 	def test_get_hikes_ok
@@ -75,9 +76,8 @@ class ApiRoutesTest < HikeAppTestCase
 	end
 
 	def put_and_validate data
-		set_cookie "user_id=#{User.first.id}"
+		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
 		put "/api/v1/hikes/empty", data.to_json
-
 		json = JSON.parse(last_response.body)
 		assert_equal "empty", json["string_id"]
 		validate_hashes data, json
