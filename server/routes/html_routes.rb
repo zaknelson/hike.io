@@ -116,6 +116,14 @@ class HikeApp < Sinatra::Base
 		erb :sitemap, :layout => false
 	end
 
+	# Temporary, need a better way of setting admin status than in a cookie
+	get "/cookie", :provides => "html" do
+		params.each do |key, value|
+			response.set_cookie key, value
+		end
+		redirect "/"
+	end
+
 	get %r{^\/(.*)\/$}, :provides => "html" do
 		# Redirect urls with trailing /'s
 		redirect params[:captures].first, 301
