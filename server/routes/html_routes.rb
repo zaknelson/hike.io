@@ -57,6 +57,11 @@ class HikeApp < Sinatra::Base
 		`phantomjs --disk-cache=true server/static-seo-server.js #{request.url}`
 	end
 
+	get "*" do
+		pass unless request.url.include? "www.hike.io"
+		redirect "hike.io" + request.fullpath, 301
+	end
+
 	["/", "/partials/index.html"].each do |path|
 		get path, :provides => "html" do
 			render_template :index
