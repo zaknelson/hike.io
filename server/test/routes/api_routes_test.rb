@@ -63,12 +63,12 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 
 	def test_post_hike_without_credentials
-		post "/api/v1/hikes", get_post_hike_json.to_json
+		post "/api/v1/hikes", get_basic_hike_json.to_json
 		assert_equal 403, last_response.status
 	end
 
 	def test_post_with_credentials
-		data = get_post_hike_json
+		data = get_basic_hike_json
 		post_and_validate data, 200
 		validate data, "new-name"
 	end
@@ -77,44 +77,44 @@ class ApiRoutesTest < HikeAppTestCase
 		post_and_validate nil, 400
 	end
 
-	def test_post_with_incomplete_input
-		data = get_post_hike_json
+	def test_post_hike_incomplete_input
+		data = get_basic_hike_json
 		data.delete("name")
 		post_and_validate data, 400
 	end
 
-	def test_post_with_invalid_distance_input
-		data = get_post_hike_json
+	def test_post_hike_invalid_distance
+		data = get_basic_hike_json
 		data["distance"] = "not-a-number"
 		post_and_validate data, 400
 	end
 
-	def test_post_with_invalid_elevation_input
-		data = get_post_hike_json
+	def test_post_hike_invalid_elevation
+		data = get_basic_hike_json
 		data["elevation_max"] = "not-a-number"
 		post_and_validate data, 400
 	end
 
-	def test_post_with_invalid_latitude_input
-		data = get_post_hike_json
+	def test_post_hike_invalid_latitude
+		data = get_basic_hike_json
 		data["location"]["latitude"] = 91
 		post_and_validate data, 400
 	end
 
-	def test_post_with_invalid_longitude_input
-		data = get_post_hike_json
+	def test_post_hike_invalid_longitude
+		data = get_basic_hike_json
 		data["location"]["longitude"] = -181
 		post_and_validate data, 400
 	end
 
 	def test_post_with_hike_that_already_exists
-		data = get_post_hike_json
+		data = get_basic_hike_json
 		data["name"] = "Empty"
 		post_and_validate data, 409
 	end
 
-	def test_post_sets_keywords
-		data = get_post_hike_json
+	def test_post_hike_sets_keywords
+		data = get_basic_hike_json
 		data["name"] = "My new hike with unique keywords"
 		post_and_validate data, 200
 		get "/api/v1/hikes/search?q=unique+keywords"
@@ -127,39 +127,38 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 
 	def test_put_hike_without_credentials
-		data = {"name" => "New name"}
-		put "/api/v1/hikes/empty", data.to_json
+		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
 		assert_equal 403, last_response.status
 	end
 
 	def test_put_hike_name
-		data = {"name" => "New name"}
-		put_and_validate data
+		put_and_validate get_basic_hike_json, 200
 	end
 
-	def test_put_hike_description
-		data = {"description" => "New description"}
-		put_and_validate data
+	def test_put_invalid_distance
+		data = get_basic_hike_json
+		data["distance"] = "not-a-number"
+		put_and_validate data.to_json, 400
 	end
 
-	def test_put_hike_name_and_description
-		data = {"name" => "New name", "description" => "New description"}
-		put_and_validate data
-	end
-
-	def test_put_hike_location
-		data = {"location" => {"latitude" => 56, "longitude" => -123.4}}
-		put_and_validate data
+	def test_put_hike_invalid_latitude
+		data = get_basic_hike_json
+		data["location"]["latitude"] = -91
+		put_and_validate data.to_json, 400
 	end
 
 	#
 	# Helpers
 	#
 
-	def put_and_validate data
+	def put_and_validate data, response_code
 		set_admin_cookie
 		put "/api/v1/hikes/empty", data.to_json
-		validate data, "empty"
+		if response_code == 200
+			validate data, "empty"
+		else
+			assert_equal response_code, last_response.status
+		end
 	end
 
 	def post_and_validate data, response_code
@@ -193,7 +192,7 @@ class ApiRoutesTest < HikeAppTestCase
 		end
 	end
 
-	def get_post_hike_json
+	def get_basic_hike_json
 		{
 			"name" => "New Name",
 			"locality" => "New Locality",
