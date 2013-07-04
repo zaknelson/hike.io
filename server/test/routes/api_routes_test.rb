@@ -113,6 +113,14 @@ class ApiRoutesTest < HikeAppTestCase
 		post_and_validate data, 409
 	end
 
+	def test_post_sets_keywords
+		data = get_post_hike_json
+		data["name"] = "My new hike with unique keywords"
+		post_and_validate data, 200
+		get "/api/v1/hikes/search?q=unique+keywords"
+		assert_equal JSON.parse(last_response.body).length, 1
+	end
+
 
 	#
 	# PUT /api/v1/hikes/:id
