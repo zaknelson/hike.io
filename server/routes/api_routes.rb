@@ -142,6 +142,7 @@ class HikeApp < Sinatra::Base
 			end
 		end
 
+		hike.edit_time = Time.now
 		hike.save_changes
 		
 		removed_photos.each do |photo|
