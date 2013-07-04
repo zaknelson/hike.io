@@ -18,6 +18,7 @@ require "will_paginate/sequel"
 
 require_relative "controller/search"
 require_relative "model/database"
+require_relative "model/hike"
 
 configure :production do
 	require "newrelic_rpm"

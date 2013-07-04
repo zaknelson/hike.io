@@ -16,29 +16,9 @@ class HikeApp < Sinatra::Base
 		return 403 if not is_admin?
 		json = JSON.parse request.body.read rescue return 400
 		return 400 if not is_valid_hike_input? json
-
-		string_id = json["name"].downcase.split(" ").join("-")
-		return 409 if Hike[:string_id => string_id]
-
-		hike = Hike.create(
-			:string_id => string_id,
-			:name => json["name"],
-			:locality => json["locality"],
-			:distance => json["distance"],
-			:elevation_max => json["elevation_max"],
-			:creation_time => Time.now,
-			:edit_time => Time.now
-			);
-		hike.location = Location.create(
-			:latitude => json["location"]["latitude"],
-			:longitude => json["location"]["longitude"]
-			);
-
-		keywords = KeywordUtils.sanitize_to_keywords(hike.name)
-		keywords.each do |keyword|
-			hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
-		end
-
+		return 409 if Hike[:string_id => Hike.create_string_id_from_name(json["name"])]
+		hike = Hike.create_from_json json
+		hike.update_keywords
 		hike.save
 		hike.to_json
 	end
@@ -74,7 +54,7 @@ class HikeApp < Sinatra::Base
 		removed_photos = []
 
 		# Replace keywords if name has changed
-		if json["name"] && json["name"] != hike.name
+		if json["name"] != hike.name
 			hike.remove_all_keywords
 			keywords = KeywordUtils.sanitize_to_keywords(json["name"])
 			keywords.each do |keyword|
@@ -82,11 +62,11 @@ class HikeApp < Sinatra::Base
 			end
 		end
 
-		hike.name = json["name"] if json["name"]
-		hike.description = json["description"] if json["description"]
-		hike.distance = json["distance"] if json["distance"]
-		hike.elevation_max = json["elevation_max"] if json["elevation_max"]
-		hike.locality = json["locality"] if json["locality"]
+		hike.name = json["name"]
+		hike.description = json["description"]
+		hike.distance = json["distance"]
+		hike.elevation_max = json["elevation_max"]
+		hike.locality = json["locality"]
 
 		if json["photo_landscape"] != nil
 			hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"])

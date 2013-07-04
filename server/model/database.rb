@@ -85,28 +85,6 @@ migration "create hikes_keywords table" do
 	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
 end
 
-class Hike < Sequel::Model
-	
-	many_to_many :maps
-	many_to_many :keywords
-	many_to_one  :location
-	many_to_one  :photo_facts, :class => :Photo
-	many_to_one  :photo_landscape, :class => :Photo
-	many_to_one  :photo_preview, :class => :Photo
-	many_to_many :photos_generic, :class => :Photo, :left_key => :hike_id, :right_key => :photo_id, :join_table => :hikes_photos
-
-	def to_json *a
-		super :include => { 
-				:location => {},
-				:photo_facts => {},
-				:photo_landscape => {},
-				:photo_preview => {},
-				:photos_generic => {}
-			}, 
-			:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id]
-	end
-end
-
 class Photo < Sequel::Model
 	one_to_one :hike
 end
