@@ -1,5 +1,5 @@
 class StringUtils
-	def is_integer?(str)
+	def self.is_integer?(str)
 		true if Integer(str) rescue false
 	end
 end

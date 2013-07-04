@@ -26,7 +26,7 @@ Dir.foreach("output") do |output_file|
 		end
 		hike.location = location
 
-		keywords = KeywordUtils.new.sanitize_to_keywords entry["name"];
+		keywords = KeywordUtils.sanitize_to_keywords entry["name"];
 		keywords.each do |keyword|
 			begin
 				# TODO find a way to check whether this hike already has this keyword 

@@ -24,7 +24,7 @@ class SearchExecutor < Executor
 	def run
 		@search_results = []
 		@hike_search_result_hash = {}
-		keywords = KeywordUtils.new.sanitize_to_keywords @query
+		keywords = KeywordUtils.sanitize_to_keywords @query
 		@word_weight = 1.0 / keywords.length
 		keywords.each do |keyword|
 			search_for_keyword keyword

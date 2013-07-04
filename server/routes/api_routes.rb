@@ -40,7 +40,7 @@ class HikeApp < Sinatra::Base
 			:longitude => json["location"]["longitude"]
 			);
 
-		keywords = KeywordUtils.new.sanitize_to_keywords(hike.name)
+		keywords = KeywordUtils.sanitize_to_keywords(hike.name)
 		keywords.each do |keyword|
 			hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
 		end
@@ -66,13 +66,13 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
-		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
+		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		hike.to_json if hike
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
 		return 403 if not is_admin?
-		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
+		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		return 404 if not hike
 
 		removed_photos = []
@@ -82,7 +82,7 @@ class HikeApp < Sinatra::Base
 		# Replace keywords if name has changed
 		if json["name"] && json["name"] != hike.name
 			hike.remove_all_keywords
-			keywords = KeywordUtils.new.sanitize_to_keywords(json["name"])
+			keywords = KeywordUtils.sanitize_to_keywords(json["name"])
 			keywords.each do |keyword|
 				hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
 			end
@@ -184,7 +184,7 @@ class HikeApp < Sinatra::Base
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
 		return 403 if not is_admin?
-		hike = RoutesUtils.new.get_hike_from_id params[:hike_id]
+		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
 		return 404 if not hike
 		return 400 if not uploaded_file
