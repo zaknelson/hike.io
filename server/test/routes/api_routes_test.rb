@@ -82,6 +82,14 @@ class ApiRoutesTest < HikeAppTestCase
 		assert_equal 400, last_response.status
 	end
 
+	def test_post_with_hike_that_already_exists
+		data = get_post_hike_json
+		data["name"] = "Empty"
+		set_admin_cookie
+		post "/api/v1/hikes", data.to_json
+		assert_equal 409, last_response.status
+	end
+
 
 	#
 	# PUT /api/v1/hikes/:id

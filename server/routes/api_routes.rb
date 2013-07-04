@@ -4,6 +4,7 @@ require "uuidtools"
 
 require_relative "../server"
 require_relative "../utils/routes_utils"
+require_relative "../utils/string_utils"
 
 class HikeApp < Sinatra::Base
 
@@ -12,8 +13,8 @@ class HikeApp < Sinatra::Base
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
-		return 403 if not is_admin?
 		json = JSON.parse request.body.read
+		return 403 if not is_admin?
 		return 400 if (!json["name"] ||
 			!json["locality"] || 
 			!json["distance"] ||
@@ -23,6 +24,8 @@ class HikeApp < Sinatra::Base
 			!json["location"]["longitude"])
 
 		string_id = json["name"].downcase.split(" ").join("-")
+		return 409 if Hike[:string_id => string_id]
+
 		hike = Hike.create(
 			:string_id => string_id,
 			:name => json["name"],
@@ -253,5 +256,4 @@ class HikeApp < Sinatra::Base
 		)
 		@s3
 	end
-
 end
