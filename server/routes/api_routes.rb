@@ -13,15 +13,21 @@ class HikeApp < Sinatra::Base
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
-		json = JSON.parse request.body.read
 		return 403 if not is_admin?
+		json = JSON.parse request.body.read rescue return 400
 		return 400 if (!json["name"] ||
 			!json["locality"] || 
 			!json["distance"] ||
 			!json["elevation_max"] || 
 			!json["location"] || 
 			!json["location"]["latitude"] || 
-			!json["location"]["longitude"])
+			!json["location"]["longitude"] || 
+			!StringUtils.is_numeric?(json["distance"]) ||
+			!StringUtils.is_numeric?(json["elevation_max"]) || 
+			!StringUtils.is_numeric?(json["location"]["latitude"]) || 
+			!StringUtils.is_numeric?(json["location"]["longitude"]) ||
+			!is_valid_latitude?(json["location"]["latitude"]) || 
+			!is_valid_longitude?(json["location"]["longitude"]))
 
 		string_id = json["name"].downcase.split(" ").join("-")
 		return 409 if Hike[:string_id => string_id]
@@ -255,5 +261,15 @@ class HikeApp < Sinatra::Base
 			:secret_access_key => ENV["S3_SECRET_ACCESS_KEY"]
 		)
 		@s3
+	end
+
+	def is_valid_latitude? latitude
+		latitude = Integer(latitude)
+		latitude >= -90 and latitude <= 90
+	end
+
+	def is_valid_longitude? longitude
+		longitude = Integer(longitude)
+		longitude >= -180 and longitude <= 180
 	end
 end

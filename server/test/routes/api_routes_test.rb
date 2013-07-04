@@ -69,17 +69,42 @@ class ApiRoutesTest < HikeAppTestCase
 
 	def test_post_with_credentials
 		data = get_post_hike_json
-		set_admin_cookie
-		post "/api/v1/hikes", data.to_json
+		post_and_validate data, 200
 		validate data, "new-name"
+	end
+
+	def test_post_without_input
+		post_and_validate nil, 400
 	end
 
 	def test_post_with_incomplete_input
 		data = get_post_hike_json
 		data.delete("name")
-		set_admin_cookie
-		post "/api/v1/hikes", data.to_json
-		assert_equal 400, last_response.status
+		post_and_validate data, 400
+	end
+
+	def test_post_with_invalid_distance_input
+		data = get_post_hike_json
+		data["distance"] = "not-a-number"
+		post_and_validate data, 400
+	end
+
+	def test_post_with_invalid_elevation_input
+		data = get_post_hike_json
+		data["elevation_max"] = "not-a-number"
+		post_and_validate data, 400
+	end
+
+	def test_post_with_invalid_latitude_input
+		data = get_post_hike_json
+		data["location"]["latitude"] = 91
+		post_and_validate data, 400
+	end
+
+	def test_post_with_invalid_longitude_input
+		data = get_post_hike_json
+		data["location"]["longitude"] = -181
+		post_and_validate data, 400
 	end
 
 	def test_post_with_hike_that_already_exists
@@ -129,6 +154,12 @@ class ApiRoutesTest < HikeAppTestCase
 		set_admin_cookie
 		put "/api/v1/hikes/empty", data.to_json
 		validate data, "empty"
+	end
+
+	def post_and_validate data, response_code
+		set_admin_cookie
+		post "/api/v1/hikes", data.to_json
+		assert_equal response_code, last_response.status
 	end
 
 	def set_admin_cookie
