@@ -20,8 +20,6 @@ class HikeApp < Sinatra::Base
 		@is_bot = AgentOrange::UserAgent.new(request.user_agent).device.is_bot?
 	end
 
-	
-
 	helpers do
 		# Assumes the svg file has already passed through the process_svg script
 		def render_svg(path)
