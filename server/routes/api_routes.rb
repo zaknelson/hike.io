@@ -14,6 +14,14 @@ class HikeApp < Sinatra::Base
 	post "/api/v1/hikes", :provides => "json" do
 		return 403 if not is_admin?
 		json = JSON.parse request.body.read
+		return 400 if (!json["name"] ||
+			!json["locality"] || 
+			!json["distance"] ||
+			!json["elevation_max"] || 
+			!json["location"] || 
+			!json["location"]["latitude"] || 
+			!json["location"]["longitude"])
+
 		string_id = json["name"].downcase.split(" ").join("-")
 		hike = Hike.create(
 			:string_id => string_id,
