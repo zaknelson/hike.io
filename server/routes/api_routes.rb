@@ -51,22 +51,15 @@ class HikeApp < Sinatra::Base
 		json = JSON.parse request.body.read rescue return 400
 		return 400 if not is_valid_hike_input? json
 
-		removed_photos = []
-
-		# Replace keywords if name has changed
-		if json["name"] != hike.name
-			hike.remove_all_keywords
-			keywords = KeywordUtils.sanitize_to_keywords(json["name"])
-			keywords.each do |keyword|
-				hike.add_keyword(Keyword.find_or_create(:keyword => keyword))
-			end
-		end
-
 		hike.name = json["name"]
 		hike.description = json["description"]
 		hike.distance = json["distance"]
 		hike.elevation_max = json["elevation_max"]
 		hike.locality = json["locality"]
+
+		hike.update_keywords if json["name"] != hike.name
+
+		removed_photos = []
 
 		if json["photo_landscape"] != nil
 			hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"])
@@ -171,6 +164,7 @@ class HikeApp < Sinatra::Base
 
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
 		original_image.resize_to_fit!(2400, 2400)
+		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
 		large_image = original_image.resize_to_fit(1200)
 		medium_image = original_image.resize_to_fit(800)
 		small_image = original_image.resize_to_fit(400)
@@ -180,18 +174,18 @@ class HikeApp < Sinatra::Base
 			bucket = s3.buckets["assets.hike.io"]
 			dst_dir = "hike-images/tmp/uploading/"
 			bucket.objects[dst_dir + name + "-original.jpg"].write(original_image.to_blob)
-			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob)
-			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob)
-			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob)
-			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob)
+			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob) { self.quality = 87 }
+			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob) {  self.quality = 87 }
+			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob) {  self.quality = 87 }
+			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob) {  self.quality = 87 }
 		else
 			dst_dir = self.root + "/public/hike-images/tmp/uploading/"
 			FileUtils.mkdir_p(dst_dir)
-			original_image.write(dst_dir + name + "-original.jpg")
-			large_image.write(dst_dir + name + "-large.jpg")
-			medium_image.write(dst_dir + name + "-medium.jpg")
-			small_image.write(dst_dir + name + "-small.jpg")
-			thumb_image.write(dst_dir + name + "-thumb.jpg")
+			original_image.write(dst_dir + name + "-original.jpg") {  self.quality = 87 }
+			large_image.write(dst_dir + name + "-large.jpg") {  self.quality = 87 }
+			medium_image.write(dst_dir + name + "-medium.jpg") {  self.quality = 87 }
+			small_image.write(dst_dir + name + "-small.jpg") {  self.quality = 87 }
+			thumb_image.write(dst_dir + name + "-thumb.jpg") {  self.quality = 87 }
 		end
 
 		photo.to_json
