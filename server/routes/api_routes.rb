@@ -165,10 +165,10 @@ class HikeApp < Sinatra::Base
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
 		original_image.resize_to_fit!(2400, 2400)
 		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
-		large_image = original_image.resize_to_fit(1200)
-		medium_image = original_image.resize_to_fit(800)
-		small_image = original_image.resize_to_fit(400)
-		thumb_image = original_image.crop_resized(400, 400)
+		large_image = sharpened_image.resize_to_fit(1200)
+		medium_image = sharpened_image.resize_to_fit(800)
+		small_image = sharpened_image.resize_to_fit(400)
+		thumb_image = sharpened_image.crop_resized(400, 400)
 
 		if settings.production?
 			bucket = s3.buckets["assets.hike.io"]
