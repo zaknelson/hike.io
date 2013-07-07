@@ -174,10 +174,10 @@ class HikeApp < Sinatra::Base
 			bucket = s3.buckets["assets.hike.io"]
 			dst_dir = "hike-images/tmp/uploading/"
 			bucket.objects[dst_dir + name + "-original.jpg"].write(original_image.to_blob)
-			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob) { self.quality = 87 }
-			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob) {  self.quality = 87 }
-			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob) {  self.quality = 87 }
-			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob) {  self.quality = 87 }
+			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob { self.quality = 87 })
+			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob { self.quality = 87 }) 
+			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob { self.quality = 87 })
+			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob { self.quality = 87 })
 		else
 			dst_dir = self.root + "/public/hike-images/tmp/uploading/"
 			FileUtils.mkdir_p(dst_dir)
