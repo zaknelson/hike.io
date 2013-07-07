@@ -1,4 +1,5 @@
 require "aws-sdk"
+require "sanitize"
 require "RMagick"
 require "uuidtools"
 
@@ -51,12 +52,7 @@ class HikeApp < Sinatra::Base
 		json = JSON.parse request.body.read rescue return 400
 		return 400 if not is_valid_hike_input? json
 
-		hike.name = json["name"]
-		hike.description = json["description"]
-		hike.distance = json["distance"]
-		hike.elevation_max = json["elevation_max"]
-		hike.locality = json["locality"]
-
+		hike.update_from_json json
 		hike.update_keywords if json["name"] != hike.name
 
 		removed_photos = []

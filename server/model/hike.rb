@@ -20,10 +20,11 @@ class Hike < Sequel::Model
 	end
 
 	def self.create_from_json json
+		name = Hike.clean_string_input(json["name"])
 		hike = Hike.create(
-			:string_id => Hike.create_string_id_from_name(json["name"]),
-			:name => json["name"],
-			:locality => json["locality"],
+			:string_id => Hike.create_string_id_from_name(name),
+			:name => name,
+			:locality => Hike.clean_string_input(json["locality"]),
 			:distance => json["distance"],
 			:elevation_max => json["elevation_max"],
 			:creation_time => Time.now,
@@ -40,10 +41,36 @@ class Hike < Sequel::Model
 		name.downcase.split(" ").join("-")
 	end
 
+	def update_from_json json
+		self.name = Hike.clean_string_input(json["name"])
+		self.description = Hike.clean_html_input(json["description"])
+		self.distance = json["distance"]
+		self.elevation_max = json["elevation_max"]
+		self.locality = Hike.clean_string_input(json["locality"])
+	end
+
 	def update_keywords
 		keywords = KeywordUtils.sanitize_to_keywords(name)
 		keywords.each do |keyword|
 			add_keyword(Keyword.find_or_create(:keyword => keyword))
 		end
+	end
+
+	def self.clean_string_input str
+		Sanitize.clean(str)
+	end
+
+	def self.clean_html_input html
+		return html if not html
+		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
+		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>)/i, "\n")
+		html.gsub!("&nbsp;", "")
+		cleaned_html = ""
+		paragraphs = html.split("\n")
+		paragraphs.each do |p|
+			next if p.length == 0
+			cleaned_html += "<p>" + p.strip + "</p>"
+		end
+		Sanitize.clean(cleaned_html, :elements => ["p"])
 	end
 end
