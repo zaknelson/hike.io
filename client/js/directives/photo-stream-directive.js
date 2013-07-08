@@ -10,11 +10,11 @@ angular.module("hikeio").
 						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_preview.string_id}}{{ $first && \"-medium\" || \"-small\" }}.jpg' alt='{{hike.photo_preview.alt}}'></img>" +
 						"<div class='preview-footer'>" +
 							"<div>" +
-								"<div class='preview-title'>{{hike.name}}</div>" +
-								"<div class='preview-location'>{{hike.locality}}</div>" +
+								"<h4 class='preview-title'>{{hike.name}}</h4>" +
+								"<h4 class='preview-location'>{{hike.locality}}</h4>" +
 							"</div>" +
 							"<div>" +
-								"<div class='preview-distance'>{{hike.distance | distance:\"kilometers\":\"miles\":1}} mi.</div>" +
+								"<h4 class='preview-distance'>{{hike.distance | distance:\"kilometers\":\"miles\":1}} mi.</h4>" +
 							"</div>" +
 						"</div>" +
 					"</div>" +
