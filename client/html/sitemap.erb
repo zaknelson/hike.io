@@ -2,24 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>http://hike.io</loc>
-		<priority>1</priority>
+		<priority>1.0</priority>
+		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hike.io/discover</loc>
-		<priority>.5</priority>
+		<priority>0.5</priority>
+		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hike.io/map</loc>
-		<priority>.5</priority>
+		<priority>0.5</priority>
+		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hike.io/search</loc>
-		<priority>.2</priority>
+		<priority>0.2</priority>
+		<changefreq>weekly</changefreq>
 	</url>
 	<% for hike in @hikes %>
 	<url>
 		<loc>http://hike.io/hikes/<%= hike.string_id %></loc>
-		<priority>1</priority>
+		<priority>1.0</priority>
+		<changefreq>daily</changefreq>
+		<lastmod><%= hike.edit_time.strftime("%F") %></lastmod>
 	</url>
 	<% end %>
 </urlset>
