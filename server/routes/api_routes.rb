@@ -10,7 +10,7 @@ require_relative "../utils/string_utils"
 class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
-		Hike.all.to_json
+		Hike.order(:id).all.to_json
 	end
 
 	post "/api/v1/hikes", :provides => "json" do

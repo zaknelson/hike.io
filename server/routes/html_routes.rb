@@ -76,7 +76,7 @@ class HikeApp < Sinatra::Base
 	["/discover", "/partials/photo_stream.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
-				preload_resource "/api/v1/hikes", Hike.all.to_json
+				preload_resource "/api/v1/hikes", Hike.order(:id).all.to_json
 			end
 			render_template :photo_stream
 		end
