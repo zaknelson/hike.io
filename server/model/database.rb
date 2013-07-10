@@ -85,6 +85,7 @@ migration "create hikes_keywords table" do
 	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
 end
 
+# Cached static HTML of site's url's, for SEO only
 migration "create static_html table" do
 	database.create_table :static_htmls do
 		primary_key :id

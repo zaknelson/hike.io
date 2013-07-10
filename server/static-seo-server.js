@@ -7,18 +7,14 @@ if (system.args.length < 2) {
 }
 var url = system.args[1];
 
-var renderHtml = function(url, cb) {
+var renderHtml = function(url) {
 	var page = require("webpage").create();
-	var finished = false;
 	page.settings.loadImages = false;
 	page.settings.localToRemoteUrlAccessEnabled = true;
 	page.onCallback = function() {
 		setTimeout(function() {
-			if (!finished) {
-				cb(page.content);
-				page.close();
-				finished = true;
-			}
+			console.log(page.content);
+			phantom.exit();
 		}, 100);
 	};
 	page.onInitialized = function() {
@@ -28,18 +24,11 @@ var renderHtml = function(url, cb) {
 			}, false);
 		});
 	};
-	page.open(url);
-
 	setTimeout(function() {
-		if (!finished) {
-			cb(page.content);
-			page.close();
-			finished = true;
-		}
+		console.log(page.content);
+		phantom.exit();
 	}, 10000);
+	page.open(url);
 };
 
-renderHtml(url, function(html) {
-	console.log(html);
-	phantom.exit();
-});
+renderHtml(url)
