@@ -65,7 +65,10 @@ class HikeApp < Sinatra::Base
 				:html => get_static_html_for_url(request.url),
 				:fetch_time => Time.now
 				)
-			static_html.save
+			if static_html.html.length > 100
+				#phantomjs issue in which the whole page isn't returned, revisit later, for now just don't cache it
+				static_html.save
+			end
 		else
 			if Time.now - static_html.fetch_time > 86400 # one day
 				EM.defer do
