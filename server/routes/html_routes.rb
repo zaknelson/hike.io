@@ -54,6 +54,16 @@ class HikeApp < Sinatra::Base
 		`phantomjs --disk-cache=true server/static-seo-server.js #{url}`
 	end
 
+	get "/sitemap.xml", :provides => "xml" do
+		@hikes = Hike.all
+		erb :sitemap, :layout => false
+	end
+
+	get "*" do
+		pass unless request.url.include? "www.hike.io"
+		redirect request.scheme + "://hike.io" + request.fullpath, 301
+	end
+
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
@@ -76,11 +86,6 @@ class HikeApp < Sinatra::Base
 			end
 		end
 		static_html.html
-	end
-
-	get "*" do
-		pass unless request.url.include? "www.hike.io"
-		redirect request.scheme + "://hike.io" + request.fullpath, 301
 	end
 
 	["/", "/partials/index.html"].each do |path|
@@ -130,11 +135,6 @@ class HikeApp < Sinatra::Base
 			end
 			render_template :entry
 		end
-	end
-
-	get "/sitemap.xml", :provides => "xml" do
-		@hikes = Hike.all
-		erb :sitemap, :layout => false
 	end
 
 	# Temporary, need a better way of setting admin status than in a cookie
