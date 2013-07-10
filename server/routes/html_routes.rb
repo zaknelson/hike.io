@@ -67,13 +67,13 @@ class HikeApp < Sinatra::Base
 				)
 			static_html.save
 		else
-			#if Time.now - static_html.fetch_time > 86400 # one day
+			if Time.now - static_html.fetch_time > 86400 # one day
 				Thread.new do
 					static_html.html = get_static_html_for_url request.url
 					static_html.fetch_time = Time.now
 					static_html.save
 				end
-			#end
+			end
 		end
 		static_html.html
 	end
