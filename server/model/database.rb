@@ -89,8 +89,9 @@ end
 migration "create static_html table" do
 	database.create_table :static_htmls do
 		primary_key :id
-		String :url
-		String :html
+		String :url, 								:null => false, :unique => true
+		String :html, 							:null => false
+		Time :fetch_time, 					:null => false
 	end
 end
 

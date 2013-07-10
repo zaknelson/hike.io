@@ -60,13 +60,19 @@ class HikeApp < Sinatra::Base
 		pass unless @is_bot
 		static_html = StaticHtml.find(:url => request.fullpath)
 		if not static_html
-			static_html = StaticHtml.create(:url => request.fullpath)
-			static_html.html = get_static_html_for_url request.url
+			static_html = StaticHtml.create(
+				:url => request.fullpath,
+				:html => get_static_html_for_url(request.url),
+				:fetch_time => Time.now
+				)
 			static_html.save
 		else
-			EM.defer do
-				static_html.html = get_static_html_for_url request.url
-				static_html.save
+			if Time.now - static_html.fetch_time > 86400 # one day
+				EM.defer do
+					static_html.html = get_static_html_for_url request.url
+					static_html.fetch_time = Time.now
+					static_html.save
+				end
 			end
 		end
 		static_html.html
