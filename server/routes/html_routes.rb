@@ -54,6 +54,13 @@ class HikeApp < Sinatra::Base
 		`phantomjs --disk-cache=true server/static-seo-server.js #{url}`
 	end
 
+	def save_static_html_if_valid static_html
+		if static_html.html.length > 100
+			#phantomjs issue in which the whole page isn't returned, revisit later, for now just don't cache it
+			static_html.save
+		end
+	end
+
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
@@ -65,16 +72,13 @@ class HikeApp < Sinatra::Base
 				:html => get_static_html_for_url(request.url),
 				:fetch_time => Time.now
 				)
-			if static_html.html.length > 100
-				#phantomjs issue in which the whole page isn't returned, revisit later, for now just don't cache it
-				static_html.save
-			end
+			save_static_html_if_valid static_html
 		else
 			if Time.now - static_html.fetch_time > 86400 # one day
 				EM.defer do
 					static_html.html = get_static_html_for_url request.url
 					static_html.fetch_time = Time.now
-					static_html.save
+					save_static_html_if_valid static_html
 				end
 			end
 		end
