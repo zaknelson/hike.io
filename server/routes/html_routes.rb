@@ -50,9 +50,24 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	def fetch_static_html url
+		`phantomjs --disk-cache=true server/static-seo-server.js #{url}`
+	end
+
 	get "*" do
 		pass unless @is_bot
-		`phantomjs --disk-cache=true server/static-seo-server.js #{request.url}`
+		static_html = StaticHtml.find(:url => request.url)
+		if not static_html
+			static_html = StaticHtml.create(:url => request.url)
+			static_html.html = fetch_static_html request.url
+			static_html.save
+		else
+			EM.defer do
+				static_html.html = fetch_static_html request.url
+				static_html.save
+			end
+		end
+		static_html.html
 	end
 
 	get "*" do

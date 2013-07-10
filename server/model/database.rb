@@ -85,6 +85,14 @@ migration "create hikes_keywords table" do
 	database.create_join_table(:hike_id => :hikes, :keyword_id => :keywords)
 end
 
+migration "create static_html table" do
+	database.create_table :static_htmls do
+		primary_key :id
+		String :url
+		String :html
+	end
+end
+
 class Photo < Sequel::Model
 	one_to_one :hike
 end
@@ -101,6 +109,9 @@ class Keyword < Sequel::Model
 end
 
 class User < Sequel::Model
+end
+
+class StaticHtml < Sequel::Model
 end
 
 migration "seed admin user" do
