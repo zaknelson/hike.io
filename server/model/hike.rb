@@ -38,7 +38,8 @@ class Hike < Sequel::Model
 	end
 
 	def self.create_string_id_from_name name
-		name.downcase.split(" ").join("-")
+		id = name.gsub("#", "");
+		id.downcase.split(" ").join("-")
 	end
 
 	def update_from_json json
