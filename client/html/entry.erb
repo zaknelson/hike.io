@@ -50,7 +50,7 @@
 						<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
 							<td>Lat / Lng</td>
 							<td>
-							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}">
+							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
 								<span class="facts-hike-latitude-value" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span><span>,</span>
 								
 								<span class="facts-hike-longitude-value" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
