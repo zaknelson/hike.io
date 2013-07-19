@@ -44,7 +44,7 @@ angular.module("hikeio", ["seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$rootScope", "$location", "config", "navigation", function($rootScope, $location, config, navigation) {
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, config, navigation) {
 		$rootScope.config = config;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
@@ -54,4 +54,14 @@ angular.module("hikeio", ["seo", "ui"]).
 				$rootScope.title = current.$$route.title;
 			}
 		});
+
+		// Pre-populate template
+		$timeout(function() {
+			$http.get("/partials/entry.html", 			{ cache:$templateCache });
+			$http.get("/partials/index.html", 			{ cache:$templateCache });
+			$http.get("/partials/photo_stream.html", 	{ cache:$templateCache });
+			$http.get("/partials/map.html", 			{ cache:$templateCache });
+			$http.get("/partials/search.html", 			{ cache:$templateCache });
+			$http.get("/partials/add.html", 			{ cache:$templateCache });
+		}, 1000);
 	}]);
