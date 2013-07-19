@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$timeout", "config", function($timeout, config) {
+	directive("photoStream", ["$document", "$timeout", "config", function($document, $timeout, config) {
 
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
@@ -29,29 +29,28 @@ angular.module("hikeio").
 			template: template,
 			link: function (scope, element) {
 				var gutterWidth = 2;
-				var maxColumnWidth = 350;
-
-				element.masonry({
-					itemSelector: ".preview",
-					gutterWidth: gutterWidth,
-					isAnimated: false,
-					columnWidth: function(containerWidth) {
-						var boxes = Math.ceil(containerWidth / maxColumnWidth);
-						var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
-						element.find(".preview > div").width(boxWidth);
-						if (boxes !== 1) {
-							element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
-						}
-						return boxWidth;
-					}
-				});
+				var maxColumnWidth = 400;
 
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
-					element.imagesLoaded(function(images, proper, broken) {
-						$timeout(function() {
-							element.masonry("reload");
-						}, 100);
+					$document.ready(function() {
+						element.imagesLoaded(function(images, proper, broken) {
+							element.css("opacity", "1");
+							element.masonry({
+								itemSelector: ".preview",
+								gutterWidth: gutterWidth,
+								isAnimated: true,
+								columnWidth: function(containerWidth) {
+									var boxes = Math.ceil(containerWidth / maxColumnWidth);
+									var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
+									element.find(".preview > div").width(boxWidth);
+									if (boxes !== 1) {
+										element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
+									}
+									return boxWidth;
+								}
+							});
+						});
 					});
 				}, true);
 			}
