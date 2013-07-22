@@ -2,6 +2,7 @@
 @import "_mixins";
 @import "compass/css3/background-size";
 @import "compass/css3/border-radius";
+@import "compass/css3/box-sizing";
 
 .index-page {
 	width: 100%;
@@ -32,6 +33,22 @@
 			font-weight: 100;
 			font-size: 30px;
 			color: white;
+		}
+
+		.links {
+			position: absolute;
+			bottom: 0px;
+			right: 15px;
+			a {
+				color: #BBB;
+				display: inline-block;
+				padding: 20px 7px;
+			}
+			@media all and (max-width: 800px) { 
+				a {
+					padding: 20px 5px;
+				}
+			}
 		}
 	}
 
