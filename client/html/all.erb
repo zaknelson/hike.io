@@ -1,0 +1,10 @@
+<article class="default-container all-page"  data-meta-description="All hikes on hike.io">
+	<div data-ng-repeat='locality in localities | orderBy:"name"'>
+		<h2 class="locality-header">{{locality.name}}</h2>
+		<ul>
+			<li data-ng-repeat='hike in locality.hikes'>
+				<a href='/hikes/{{hike.string_id}}'><h3>{{hike.name}}</h3></a>
+			</li>
+		</ul>
+	</div>
+</article>

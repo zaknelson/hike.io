@@ -50,6 +50,15 @@ h3 {
 	line-height: 28px;
 }
 
+h4 {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+li {
+    list-style-type: disc;
+ }
+ 
 *:focus { outline: none; }
 
 [data-ng-view] {
@@ -86,3 +95,4 @@ html.touch a:hover {
 @media all and (max-width: $container-width) {
 	.default-container { width: 100%; }
 }
+
