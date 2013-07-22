@@ -3,10 +3,10 @@ var AllController = function($scope, $http, $log, analytics, resourceCache) {
 	$http({method: "GET", url: "/api/v1/hikes", cache: resourceCache}).
 		success(function(data, status, headers, config) {
 			var localityMap = {};
-			var localities = []
+			var localities = [];
 			for (var i  = 0; i < data.length; i++) {
 				var hike = data[i];
-				var locality = localityMap[hike.locality]
+				var locality = localityMap[hike.locality];
 				if (!locality) {
 					locality = { name: hike.locality, hikes: [] };
 					localities.push(locality);

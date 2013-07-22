@@ -31,4 +31,4 @@ var renderHtml = function(url) {
 	page.open(url);
 };
 
-renderHtml(url)
+renderHtml(url);
