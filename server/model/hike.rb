@@ -64,14 +64,19 @@ class Hike < Sequel::Model
 	def self.clean_html_input html
 		return html if not html
 		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
-		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>)/i, "\n")
+		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>|<h3>|<\/h3>)/i, "\n")
 		html.gsub!("&nbsp;", "")
 		cleaned_html = ""
 		paragraphs = html.split("\n")
 		paragraphs.each do |p|
 			next if p.length == 0
-			cleaned_html += "<p>" + p.strip + "</p>"
+			p = p.strip
+			if p[p.length - 1] != "." # HACK, until a better ui is developed for adding headers
+				cleaned_html += "<h3>" + p.strip + "</h3>"
+			else
+				cleaned_html += "<p>" + p.strip + "</p>"
+			end
 		end
-		Sanitize.clean(cleaned_html, :elements => ["p"])
+		Sanitize.clean(cleaned_html, :elements => ["p", "h3"])
 	end
 end
