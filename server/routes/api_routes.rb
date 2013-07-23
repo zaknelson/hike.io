@@ -161,9 +161,17 @@ class HikeApp < Sinatra::Base
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
 		original_image.resize_to_fit!(2400, 2400)
 		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
-		large_image = sharpened_image.resize_to_fit(1200)
-		medium_image = sharpened_image.resize_to_fit(800)
-		small_image = sharpened_image.resize_to_fit(400)
+		puts original_image.columns, original_image.rows 
+		if original_image.columns > original_image.rows
+			large_image = sharpened_image.resize_to_fit(1200)
+			medium_image = sharpened_image.resize_to_fit(800)
+			small_image = sharpened_image.resize_to_fit(400)
+		else
+			large_image = sharpened_image.resize_to_fit(1200, 2400)
+			medium_image = sharpened_image.resize_to_fit(800, 1600)
+			small_image = sharpened_image.resize_to_fit(400, 800)
+		end
+		
 		thumb_image = sharpened_image.crop_resized(400, 400)
 
 		if settings.production?
