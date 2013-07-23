@@ -87,9 +87,11 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $w
 	};
 
 	$scope.uploadPhotos = function(files, type) {
-		for (var i = 0; i < files.length; i++) {
-			doUploadPhoto(files[i], type);
-		}
+		$scope.$apply(function() {
+			for (var i = 0; i < files.length; i++) {
+				doUploadPhoto(files[i], type);
+			}
+		});
 	};
 
 	$scope.removePhoto = function(type, photo) {
