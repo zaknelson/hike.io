@@ -94,7 +94,7 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 
 		section {
-			margin: $section-padding 0px;
+			margin: 10px 0px 30px 0px;
 		}
 	}
 
@@ -122,10 +122,6 @@ $header-landscape-footer-height-mobile: 40px;
 
 				p, div {
 					margin-bottom: 15px;
-				}
-
-				p:last-child {
-					margin-bottom: 0px;
 				}
 			}
 
