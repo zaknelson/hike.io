@@ -15,7 +15,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $w
 			if ($scope.hike.description) {
 				var description = $scope.hike.description;
 				if (description.indexOf("<p>") === 0 && description.indexOf("</p>") > 0) {
-					$rootScope.metaDescription = description.substring("<p>".length, description.indexOf("</p>") - 1);
+					$rootScope.metaDescription = description.substring("<p>".length, description.indexOf("</p>"));
 					haveSetMetaDescription = true;
 				}
 			}
