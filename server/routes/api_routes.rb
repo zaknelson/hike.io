@@ -238,12 +238,12 @@ class HikeApp < Sinatra::Base
 	end
 
 	def is_valid_latitude? latitude
-		latitude = Integer(latitude)
+		latitude = latitude.to_f
 		latitude >= -90 and latitude <= 90
 	end
 
 	def is_valid_longitude? longitude
-		longitude = Integer(longitude)
+		longitude = longitude.to_f
 		longitude >= -180 and longitude <= 180
 	end
 end
