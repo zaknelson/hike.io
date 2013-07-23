@@ -101,7 +101,7 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	["/all", "/partials/all.html"].each do |path|
+	["/hikes", "/partials/all.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
 				preload_resource "/api/v1/hikes", Hike.order(:id).all.to_json
