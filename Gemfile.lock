@@ -25,6 +25,8 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pg (0.14.1)
+    puma (2.4.0)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -79,6 +81,7 @@ DEPENDENCIES
   json (= 1.7.6)
   newrelic_rpm (= 3.6.4.122)
   pg (= 0.14.1)
+  puma (= 2.4.0)
   rmagick (= 2.13.2)
   roodi (= 2.1.0)
   sanitize (= 2.0.4)
