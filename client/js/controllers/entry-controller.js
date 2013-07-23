@@ -10,11 +10,20 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $w
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
-			$window.document.title = data.name + " - hike.io";
+			$window.document.title = $scope.hike.name + " - hike.io";
+			var haveSetMetaDescription = false;
 			if ($scope.hike.description) {
 				var description = $scope.hike.description;
-				$rootScope.metaDescription = description.substring(0, description.indexOf(".") + 1);
+				if (description.indexOf("<p>") === 0 && description.indexOf("</p>") > 0) {
+					$rootScope.metaDescription = description.substring("<p>".length, description.indexOf("</p>") - 1);
+					haveSetMetaDescription = true;
+				}
 			}
+
+			if (!haveSetMetaDescription) {
+				$rootScope.metaDescription = $scope.hike.name + " is a hike in " + $scope.hike.locality + ".";
+			}
+
 			$scope.isLoaded = true;
 			$scope.htmlReady();
 		}).
