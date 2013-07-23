@@ -67,6 +67,5 @@ angular.module("hikeio", ["seo", "ui"]).
 			$http.get("/partials/photo_stream.html",	{ cache:$templateCache });
 			$http.get("/partials/map.html",				{ cache:$templateCache });
 			$http.get("/partials/search.html",			{ cache:$templateCache });
-			$http.get("/partials/add.html",				{ cache:$templateCache });
 		}, 1000);
 	}]);
