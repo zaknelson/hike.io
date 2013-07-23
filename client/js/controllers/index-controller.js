@@ -1,12 +1,16 @@
 "use strict";
-var IndexController = function($scope, analytics, search) {
+var IndexController = function($scope, analytics, navigation, search) {
 	$scope.searchQuery = "";
 
 	$scope.search = function() {
-		search.search($scope.searchQuery);
+		if ($scope.searchQuery.trim().length === 0) {
+			navigation.toEntry("the-narrows");
+		} else {
+			search.search($scope.searchQuery);
+		}
 	};
 
 	$scope.htmlReady();
 };
 
-IndexController.$inject = ["$scope", "analytics", "search"];
+IndexController.$inject = ["$scope", "analytics", "navigation", "search"];
