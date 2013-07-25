@@ -20,6 +20,11 @@
 		<priority>0.2</priority>
 		<changefreq>weekly</changefreq>
 	</url>
+	<url>
+		<loc>http://hike.io/hikes</loc>
+		<priority>0.5</priority>
+		<changefreq>daily</changefreq>
+	</url>
 	<% for hike in @hikes %>
 	<url>
 		<loc>http://hike.io/hikes/<%= hike.string_id %></loc>
