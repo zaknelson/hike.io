@@ -2,6 +2,7 @@
 
 require "rubygems"
 
+require "agent_orange"
 require "compass"
 require "json"
 require "sass"
@@ -90,7 +91,7 @@ class HikeApp < Sinatra::Base
 		]
 
 		js_compression :uglify, { :output => { :comments => :none } }
-   	css_compression :sass
+   		css_compression :sass
 	}
 
 	helpers do
@@ -101,6 +102,10 @@ class HikeApp < Sinatra::Base
 		def is_admin?
 			Sinatra::Application.environment() == :development or cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id)
 		end
+	end
+
+	before do
+		@user_agent = AgentOrange::UserAgent.new(request.user_agent)
 	end
 end
 

@@ -44,9 +44,12 @@ https://github.com/zaknelson/hike.io/
 		if (isAndroidVersionWithBug) {
 			setTimeout(updateViewport, 500);
 		}
+
 	</script>
-	<script src="//use.typekit.net/jce4miw.js"></script>
+	<% if !@user_agent.is_mobile? || @user_agent.device.platform.to_s.downcase.include?('ipad') %>
+	<script  src="//use.typekit.net/jce4miw.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
+	<% end %>
 	<%= css :app %>
 </head>
 <body data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
