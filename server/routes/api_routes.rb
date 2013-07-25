@@ -160,8 +160,9 @@ class HikeApp < Sinatra::Base
 
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
 		original_image.resize_to_fit!(2400, 2400)
+		original_image.strip!
+		original_image.profile!("*", nil)
 		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
-		puts original_image.columns, original_image.rows 
 		if original_image.columns > original_image.rows
 			large_image = sharpened_image.resize_to_fit(1200)
 			medium_image = sharpened_image.resize_to_fit(800)
