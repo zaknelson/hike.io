@@ -167,13 +167,16 @@ class HikeApp < Sinatra::Base
 			large_image = sharpened_image.resize_to_fit(1200)
 			medium_image = sharpened_image.resize_to_fit(800)
 			small_image = sharpened_image.resize_to_fit(400)
+			tiny_image = sharpened_image.resize_to_fit(200)
 		else
 			large_image = sharpened_image.resize_to_fit(1200, 2400)
 			medium_image = sharpened_image.resize_to_fit(800, 1600)
 			small_image = sharpened_image.resize_to_fit(400, 800)
+			tiny_image = sharpened_image.resize_to_fit(200, 400)
 		end
 		
 		thumb_image = sharpened_image.crop_resized(400, 400)
+		tiny_thumb_image = sharpened_image.crop_resized(200, 200)
 
 		if settings.production?
 			bucket = s3.buckets["assets.hike.io"]
@@ -182,7 +185,9 @@ class HikeApp < Sinatra::Base
 			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob { self.quality = 87 })
 			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob { self.quality = 87 }) 
 			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob { self.quality = 87 })
+			bucket.objects[dst_dir + name +  "-tiny.jpg"].write(tiny_image.to_blob { self.quality = 87 })
 			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob { self.quality = 87 })
+			bucket.objects[dst_dir + name +  "-thumb-tiny.jpg"].write(tiny_thumb_image.to_blob { self.quality = 87 })
 		else
 			dst_dir = self.root + "/public/hike-images/tmp/uploading/"
 			FileUtils.mkdir_p(dst_dir)
@@ -190,7 +195,9 @@ class HikeApp < Sinatra::Base
 			large_image.write(dst_dir + name + "-large.jpg") {  self.quality = 87 }
 			medium_image.write(dst_dir + name + "-medium.jpg") {  self.quality = 87 }
 			small_image.write(dst_dir + name + "-small.jpg") {  self.quality = 87 }
+			tiny_image.write(dst_dir + name + "-tiny.jpg") {  self.quality = 87 }
 			thumb_image.write(dst_dir + name + "-thumb.jpg") {  self.quality = 87 }
+			tiny_thumb_image.write(dst_dir + name + "-thumb-tiny.jpg") {  self.quality = 87 }
 		end
 
 		photo.to_json
