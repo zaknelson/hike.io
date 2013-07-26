@@ -8,7 +8,7 @@ angular.module("hikeio").
 					$.fancybox.close();
 				});
 				$(element).find(attrs.fancybox).fancybox({
-					padding: 10,
+					padding: 2,
 					nextEffect : "none",
 					prevEffect : "none",
 					closeEffect : "none",
