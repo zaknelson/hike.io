@@ -1,13 +1,23 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$document", "$timeout", "config", function($document, $timeout, config) {
+	directive("photoStream", ["$document", "$rootScope", "$timeout", "config", function($document, $rootScope, $timeout, config) {
+
+		var normalImage = "";
+		var biggerImage = "";
+		if ($rootScope.isMobile) {
+			normalImage = "tiny";
+			biggerImage = "small";
+		} else {
+			normalImage = "small";
+			biggerImage = "medium";
+		}
 
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview' >" +
 					"<div data-ng-class='{\"featured-box\": $first}' >" +
-						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_preview.string_id}}{{ $first && \"-medium\" || \"-small\" }}.jpg' alt='{{hike.photo_preview.alt}}'></img>" +
+						"<img data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_preview.string_id}}{{ $first && \"-" + biggerImage + "\" || \"-" + normalImage + "\" }}.jpg' alt='{{hike.photo_preview.alt}}'></img>" +
 						"<div class='preview-footer'>" +
 							"<div>" +
 								"<h4 class='preview-title'>{{hike.name}}</h4>" +

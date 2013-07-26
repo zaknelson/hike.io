@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<div class="header-landscape">
-		<div><div data-ui-if="isLoaded &amp;&amp; hike.photo_landscape"><div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="trash-icon">×</div><img class="shadow-light" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_landscape.string_id}}-large.jpg" alt="{{hike.photo_landscape.alt}}"></img></div><div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div></div>
+		<div><div data-ui-if="isLoaded &amp;&amp; hike.photo_landscape"><div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="trash-icon">×</div><img class="shadow-light" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{hike.photo_landscape.alt}}"></img></div><div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div></div>
 		<div>
 			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':hike.photo_landscape != null}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
@@ -18,7 +18,7 @@
 
 			<div class="overview-facts">
 				<div class="page-curl shadow-bottom">
-					<div data-ui-if="isLoaded &amp;&amp; hike.photo_facts" style="position:relative"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="trash-icon">×</div><img class="shadow-light" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}-thumb.jpg" alt="{{hike.photo_facts.alt}}"></img></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+					<div data-ui-if="isLoaded &amp;&amp; hike.photo_facts" style="position:relative"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="trash-icon">×</div><img class="shadow-light" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{hike.photo_facts.alt}}"></img></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !hike.photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
 					
 					<table>
 						<tr>
@@ -77,7 +77,7 @@
 			<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumbs" href="#" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-large.jpg">
 				<div class="photo-thumb" style="position:relative">
 					<div data-ui-if="isEditing" data-ng-click="removePhoto('generic', photo)" class="trash-icon">×</div>
-					<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb.jpg" alt="{{photo.alt}}"></img>
+					<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
 				</div>
 			</a>
 		</div>

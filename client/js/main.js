@@ -49,11 +49,12 @@ angular.module("hikeio", ["seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, config, navigation) {
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation) {
 		$rootScope.config = config;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
+		$rootScope.isMobile = $(window).width() < 650;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			if (current && current.$$route && current.$$route.title) {
 				$rootScope.title = current.$$route.title;
