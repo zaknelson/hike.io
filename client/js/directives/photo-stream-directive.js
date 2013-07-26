@@ -3,16 +3,8 @@
 angular.module("hikeio").
 	directive("photoStream", ["$document", "$rootScope", "$timeout", "config", function($document, $rootScope, $timeout, config) {
 
-		var normalImage = "";
-		var biggerImage = "";
-		if ($rootScope.isMobile) {
-			normalImage = "tiny";
-			biggerImage = "small";
-		} else {
-			normalImage = "small";
-			biggerImage = "medium";
-		}
-
+		var normalImage = "small";
+		var biggerImage = "medium";
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview' >" +
