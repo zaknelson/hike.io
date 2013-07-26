@@ -1,4 +1,6 @@
-require "rubygems"
+
+require "sinatra"
+require "sinatra/sequel"
 require "aws-sdk"
 require "RMagick"
 
@@ -9,6 +11,8 @@ def s3
 	)
 	@s3
 end
+
+set :database, ENV["DATABASE_URL"]
 
 def strip_metadata object
 	blob = object.read
@@ -50,8 +54,24 @@ def create_tiny_thumb object, bucket
 	end
 end
 
+def update_photo_size object
+	key = object.key
+	if key.start_with?("hike-images/") and key.end_with?("-original.jpg")
+		blob = object.read
+		index_of_first_slash = key.index("/")
+		id = key[index_of_first_slash + 1, key.length - index_of_first_slash]
+		id.chomp! "-original.jpg"
+		puts id
+		if blob.length > 0
+			image = Magick::Image.from_blob(blob).first
+			puts database["UPDATE photos SET width=#{image.columns}, height=#{image.rows} WHERE string_id='#{id}';"].entries
+		end
+	end
+end
+
 def trace object
-	puts object.key
+	key = object.key
+	puts key
 end
 
 def main
@@ -59,8 +79,9 @@ def main
 	bucket.objects.each do |object|
 		#strip_metadata object
 		#create_tiny object, bucket
-		#trace object
-		create_tiny_thumb object, bucket
+		trace object
+		#create_tiny_thumb object, bucket
+		#update_photo_size object
 	end
 end
 
