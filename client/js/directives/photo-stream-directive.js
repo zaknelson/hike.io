@@ -36,21 +36,23 @@ angular.module("hikeio").
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
 					$document.ready(function() {
-						element.imagesLoaded(function(images, proper, broken) {
-							element.css("opacity", "1");
-							element.masonry({
-								itemSelector: ".preview",
-								gutterWidth: gutterWidth,
-								isAnimated: true,
-								columnWidth: function(containerWidth) {
-									var boxes = Math.ceil(containerWidth / maxColumnWidth);
-									var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
-									element.find(".preview > div").width(boxWidth);
-									if (boxes !== 1) {
-										element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
+						$timeout(function() {
+							element.imagesLoaded(function(images, proper, broken) {
+								element.css("opacity", "1");
+								element.masonry({
+									itemSelector: ".preview",
+									gutterWidth: gutterWidth,
+									isAnimated: true,
+									columnWidth: function(containerWidth) {
+										var boxes = Math.ceil(containerWidth / maxColumnWidth);
+										var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
+										element.find(".preview > div").width(boxWidth);
+										if (boxes !== 1) {
+											element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
+										}
+										return boxWidth;
 									}
-									return boxWidth;
-								}
+								});
 							});
 						});
 					});
