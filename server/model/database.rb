@@ -13,15 +13,17 @@ end
 
 migration "create users table" do
 	database.create_table :users do
-		String :id,									:null => false, :unique => true
+		String :id,								:null => false, :unique => true
 	end
 end
 
 migration "create photos table" do
 	database.create_table :photos do
 		primary_key :id
-		String :string_id, 					:null => false, :unique => true
-		String :alt									#optional 
+		String :string_id, 						:null => false, :unique => true
+		Integer :width,							:null => false
+		Integer :height,						:null => false
+		String :alt								#optional 
 	end
 end
 
@@ -36,7 +38,7 @@ end
 migration "create maps table" do
 	database.create_table :maps do
 		primary_key :id
-		String :image_path, 				:null => false, :unique => true
+		String :image_path, 					:null => false, :unique => true
 	end
 end
 
@@ -51,10 +53,10 @@ migration "create hikes table" do
 	database.create_table :hikes do
 		primary_key :id
 		String :string_id,					:null => false, :unique => true
-		String :name, 							:null => false
+		String :name, 						:null => false
 		String :description 				#optional
-		String :locality,						:null => false
-		Float :distance, 						:null => false
+		String :locality,					:null => false
+		Float :distance, 					:null => false
 		Float :elevation_gain				#optional
 		Float :elevation_max				#optional
 		Time :creation_time, 				:null => false
@@ -92,6 +94,13 @@ migration "create static_html table" do
 		String :url, 								:null => false, :unique => true
 		String :html, 							:null => false
 		Time :fetch_time, 					:null => false
+	end
+end
+
+migration "add photos width / height columns" do
+	database.alter_table :photos do
+		add_column :width, :Integer
+		add_column :height, :Integer
 	end
 end
 
