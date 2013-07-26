@@ -97,13 +97,6 @@ migration "create static_html table" do
 	end
 end
 
-migration "add photos width / height columns" do
-	database.alter_table :photos do
-		add_column :width, :Integer
-		add_column :height, :Integer
-	end
-end
-
 class Photo < Sequel::Model
 	one_to_one :hike
 end
