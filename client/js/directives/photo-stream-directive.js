@@ -35,13 +35,14 @@ angular.module("hikeio").
 					if (newValue.length === 0) return;
 					$timeout(function() {
 						element.find(".preview > div > img").load(function() {
-							$(this).parent().parent().css("opacity", "1");
+							var preview = $(this).parent().parent();
+							preview.css("opacity", "1");
 							$timeout(function() {
-								element.find(".preview").addClass("no-transition");
-								element.find(".preview").hover(function() {
-									$(this).css("opacity", ".95");
+								preview.addClass("no-transition");
+								preview.hover(function() {
+									preview.css("opacity", ".95");
 								}, function() {
-									$(this).css("opacity", "1");
+									preview.css("opacity", "1");
 								});
 							}, 400)	
 						}).each(function() {
