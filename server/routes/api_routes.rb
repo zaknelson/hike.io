@@ -154,10 +154,6 @@ class HikeApp < Sinatra::Base
 
 		name = UUIDTools::UUID.random_create.to_s
 
-		photo = Photo.create({
-			:string_id => "tmp/uploading/" + name
-		})
-
 		original_image = Magick::Image.read(uploaded_file[:tempfile].path).first
 		original_image.resize_to_fit!(2400, 2400)
 		original_image.strip!
@@ -199,6 +195,12 @@ class HikeApp < Sinatra::Base
 			thumb_image.write(dst_dir + name + "-thumb.jpg") {  self.quality = 87 }
 			tiny_thumb_image.write(dst_dir + name + "-thumb-tiny.jpg") {  self.quality = 87 }
 		end
+
+		photo = Photo.create({
+			:string_id => "tmp/uploading/" + name,
+			:width => original_image.columns,
+			:height => original_image.rows
+		})
 
 		photo.to_json
 	end
