@@ -36,6 +36,10 @@ angular.module("hikeio").
 					$timeout(function() {
 						element.find(".preview > div > img").load(function() {
 							$(this).parent().parent().css("opacity", "1");
+						}).each(function() {
+							if (this.complete) {
+								$(this).load();
+							}
 						});
 						element.masonry({
 							itemSelector: ".preview",
