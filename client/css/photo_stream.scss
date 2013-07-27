@@ -1,5 +1,6 @@
 @import "_vars";
 @import "_mixins";
+@import "compass/css3/transition";
 
 $preview-titletext-font-size: 16px;
 $preview-subtext-font-size: 13px;
@@ -23,6 +24,8 @@ $preview-subtext-font-size: 13px;
 		img {
 			width: 100%;
 		}
+
+		@include transition(opacity, 1.0s, ease-in);
 	}
 
 	.preview-footer {
