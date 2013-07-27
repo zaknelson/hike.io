@@ -115,7 +115,7 @@
 	height: 28px;
 	cursor: pointer;
 	z-index: 8040;
-	background: url('/images/fancybox_close.png?embed') center center no-repeat;
+	background: url('/images/close.png?embed') center center no-repeat;
 }
 
 .fancybox-nav {
@@ -186,7 +186,7 @@
 	overflow: hidden;
 	display: none;
 	z-index: 8010;
-	background: url('/images/fancybox_overlay.png?embed');
+	background: url('/images/overlay.png?embed');
 }
 
 .fancybox-overlay-fixed {
