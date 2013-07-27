@@ -36,12 +36,13 @@ angular.module("hikeio").
 					$timeout(function() {
 						element.find(".preview > div > img").load(function() {
 							$(this).parent().parent().css("opacity", "1");
+							element.find(".preview").addClass("no-transition");
 						}).each(function() {
 							if (this.complete) {
 								$(this).load();
 							}
 						});
-						element.find(".preview").addClass("no-transition");
+						
 						element.find(".preview").hover(function() {
 							$(this).css("opacity", ".95");
 						}, function() {
