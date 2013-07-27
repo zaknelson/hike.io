@@ -21,8 +21,8 @@ migration "create photos table" do
 	database.create_table :photos do
 		primary_key :id
 		String :string_id, 						:null => false, :unique => true
-		Integer :width,							:null => false
-		Integer :height,						:null => false
+		Integer :width							#:null => false
+		Integer :height							#:null => false
 		String :alt								#optional 
 	end
 end
