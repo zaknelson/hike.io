@@ -9,7 +9,7 @@ $preview-subtext-font-size: 13px;
 		height:100%;
 
 	.preview-list {
-		opacity: 0;
+		
 		width:100%;
 		height:100%;
 		overflow-x: hidden;
@@ -17,6 +17,7 @@ $preview-subtext-font-size: 13px;
 	}
 
 	.preview {
+		opacity: 0;
 		margin-bottom: 2px;
 
 		img {

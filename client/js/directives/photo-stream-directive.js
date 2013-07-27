@@ -33,8 +33,10 @@ angular.module("hikeio").
 				var maxColumnWidth = 400;
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
-					element.css("opacity", "1");
 					$timeout(function() {
+						element.find(".preview > div > img").load(function() {
+							$(this).parent().parent().css("opacity", "1");
+						});
 						element.masonry({
 							itemSelector: ".preview",
 							gutterWidth: gutterWidth,
@@ -50,7 +52,7 @@ angular.module("hikeio").
 									$(img).height(aspectRatio * boxWidth);
 								});
 								if (boxes !== 1) {
-									element.find(".preview > div.featured-box").width(boxWidth * 2 + gutterWidth);
+									element.find(".preview > featured-box").width(boxWidth * 2 + gutterWidth);
 									var featuredBoxImage = element.find(".preview > .featured-box > img");
 									var aspectRatio = parseFloat(featuredBoxImage.attr("data-aspect-ratio"), 10);
 									featuredBoxImage.height(aspectRatio * boxWidth * 2);
