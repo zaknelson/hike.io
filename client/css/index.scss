@@ -11,6 +11,7 @@
 	bottom: 0px;
 	background: url("http://assets.hike.io/landing-page-images/the-narrows.jpg") no-repeat center bottom fixed;
 	@include background-size(cover);
+	min-height: 550px;
 
 	.banner {
 		position: absolute;
