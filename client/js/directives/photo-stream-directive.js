@@ -44,7 +44,7 @@ angular.module("hikeio").
 								}, function() {
 									preview.css("opacity", "1");
 								});
-							}, 400)	
+							}, 400);
 						}).each(function() {
 							if (this.complete) {
 								$(this).load();
