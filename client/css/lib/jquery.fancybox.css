@@ -75,22 +75,36 @@
 	max-height: 100%;
 }
 
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
 #fancybox-loading {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	margin-top: -22px;
-	margin-left: -22px;
+	margin-top: -25px;
+	margin-left: -25px;
 	background-position: 0 -108px;
+	width: 50px;
 	opacity: 0.8;
 	cursor: pointer;
 	z-index: 8060;
+	-webkit-animation-name: rotate; 
+	-webkit-animation-duration: 1s; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
 }
 
 #fancybox-loading div {
 	width: 44px;
 	height: 44px;
-	background: url('/images/fancybox_loading.gif?embed') center center no-repeat;
+	background: url('/images/spinner-white.png?embed') center center no-repeat;
 }
 
 .fancybox-close {
