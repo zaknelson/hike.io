@@ -52,7 +52,7 @@ angular.module("hikeio").
 									$(img).height(aspectRatio * boxWidth);
 								});
 								if (boxes !== 1) {
-									element.find(".preview > featured-box").width(boxWidth * 2 + gutterWidth);
+									element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
 									var featuredBoxImage = element.find(".preview > .featured-box > img");
 									var aspectRatio = parseFloat(featuredBoxImage.attr("data-aspect-ratio"), 10);
 									featuredBoxImage.height(aspectRatio * boxWidth * 2);
