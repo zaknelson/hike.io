@@ -41,6 +41,12 @@ angular.module("hikeio").
 								$(this).load();
 							}
 						});
+						element.find(".preview").addClass("no-transition");
+						element.find(".preview").hover(function() {
+							$(this).css("opacity", ".95");
+						}, function() {
+							$(this).css("opacity", "1");
+						});
 						element.masonry({
 							itemSelector: ".preview",
 							gutterWidth: gutterWidth,

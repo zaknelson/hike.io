@@ -16,6 +16,11 @@ $preview-subtext-font-size: 13px;
 		overflow-y: hidden;
 	}
 
+	.preview:hover {
+		opacity: .95;
+		cursor: pointer;
+	}
+
 	.preview {
 		opacity: 0;
 		margin-bottom: 2px;
@@ -24,11 +29,19 @@ $preview-subtext-font-size: 13px;
 			width: 100%;
 		}
 
-		-webkit-transition: opacity 0.4s ease-in;
-		-moz-transition: opacity 0.4s ease-in;
-		-o-transition: opacity 0.4s ease-in;
-		-ms-transition: opacity 0.4s ease-in;
-		transition: opacity 0.4s ease-in;
+		-webkit-transition: opacity 0.4s ease-in-out;
+		-moz-transition: opacity 0.4s ease-in-out;
+		-o-transition: opacity 0.4s ease-in-out;
+		-ms-transition: opacity 0.4s ease-in-out;
+		transition: opacity 0.4s ease-in-out;
+	}
+
+	.preview.no-transition {
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		-o-transition: none !important;
+		-ms-transition: none !important;
+		transition: none !important;
 	}
 
 	.preview-footer {
@@ -75,9 +88,4 @@ $preview-subtext-font-size: 13px;
 		font-size: 16px;
 		display: none;
 	}
-}
-
-.photo-stream-page .preview:hover {
-	opacity: .95;
-	cursor: pointer;
 }
