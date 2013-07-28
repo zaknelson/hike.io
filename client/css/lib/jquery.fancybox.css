@@ -88,8 +88,8 @@
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	margin-top: -50px;
-	margin-left: -50px;
+	margin-top: -25px;
+	margin-left: -25px;
 	background-position: 0 -108px;
 	opacity: 0.8;
 	cursor: pointer;
@@ -97,8 +97,8 @@
 }
 
 #fancybox-loading div {
-	width: 100px;
-	height: 100px;
+	width: 50px;
+	height: 50px;
 	-webkit-animation-name: rotate; 
 	-webkit-animation-duration: 1s; 
 	-webkit-animation-iteration-count: infinite;
