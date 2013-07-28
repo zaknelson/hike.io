@@ -75,6 +75,15 @@
 	max-height: 100%;
 }
 
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
 #fancybox-loading {
 	position: fixed;
 	top: 50%;
@@ -90,6 +99,10 @@
 #fancybox-loading div {
 	width: 100px;
 	height: 100px;
+	-webkit-animation-name: rotate; 
+	-webkit-animation-duration: 1s; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
 	background: url('/images/spinner-white.png?embed') center center no-repeat;
 }
 
