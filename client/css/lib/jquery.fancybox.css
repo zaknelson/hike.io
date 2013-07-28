@@ -91,7 +91,6 @@
 	margin-top: -25px;
 	margin-left: -25px;
 	background-position: 0 -108px;
-	width: 50px;
 	opacity: 0.8;
 	cursor: pointer;
 	z-index: 8060;
@@ -102,8 +101,8 @@
 }
 
 #fancybox-loading div {
-	width: 44px;
-	height: 44px;
+	width: 50px;
+	height: 50px;
 	background: url('/images/spinner-white.png?embed') center center no-repeat;
 }
 
