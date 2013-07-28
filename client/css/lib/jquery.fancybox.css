@@ -75,15 +75,6 @@
 	max-height: 100%;
 }
 
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to { 
-    -webkit-transform: rotate(360deg);
-  }
-}
-
 #fancybox-loading {
 	position: fixed;
 	top: 50%;
@@ -94,10 +85,6 @@
 	opacity: 0.8;
 	cursor: pointer;
 	z-index: 8060;
-	-webkit-animation-name: rotate; 
-	-webkit-animation-duration: 1s; 
-	-webkit-animation-iteration-count: infinite;
-	-webkit-animation-timing-function: linear;
 }
 
 #fancybox-loading div {
