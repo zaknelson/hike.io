@@ -58,6 +58,8 @@ angular.module("hikeio").
 								var boxes = Math.ceil(containerWidth / maxColumnWidth);
 								var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 
+								element.find(".preview-title").width(boxWidth - 75) // 50px for the distance on the right, and 20px for the outer padding, and 5 for the inner padding
+
 								// TODO: clean up these selectors
 								element.find(".preview > div").width(boxWidth);
 								element.find(".preview > div > img").each(function(i, img) {

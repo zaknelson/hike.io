@@ -61,7 +61,11 @@ $preview-subtext-font-size: 13px;
 		line-height: $preview-titletext-font-size;
 		font-weight: bold;
 		padding-bottom: 4px;
-		color: #fff;	
+		color: #fff;
+		width: 250px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.preview-location {
