@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $location, analytics, config, mapTooltipFactory, navigation) {
+var MapController = function($scope, $location, $timeout, analytics, config, mapTooltipFactory, navigation) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
@@ -13,16 +13,21 @@ var MapController = function($scope, $location, analytics, config, mapTooltipFac
 	$scope.markers = [];
 
 	$scope.markerActivate = function(marker) {
-		activeMarker = mapTooltipFactory.create(marker);
+		var tooltip = mapTooltipFactory.create(marker)
+		marker.tooltips.push(tooltip);
 		marker.setIcon(hoverMarker);
 	};
 
 	$scope.markerDeactivate = function(marker) {
-		if (activeMarker) {
-			activeMarker.destroy();
-			activeMarker = null;
-		}
-		marker.setIcon(defaultMarker);
+		$timeout(function() {
+			var tooltip = marker.tooltips.pop();
+			if (tooltip) {
+				tooltip.destroy();
+			}
+			if (marker.tooltips.length === 0) {
+				marker.setIcon(defaultMarker);
+			}
+		}, 200)
 	};
 
 	$scope.markerClicked = function(marker) {
@@ -138,7 +143,8 @@ var MapController = function($scope, $location, analytics, config, mapTooltipFac
 					icon: defaultMarker,
 					map: $scope.map,
 					position: newLatLng,
-					hikeData: newMarkers[i]
+					hikeData: newMarkers[i],
+					tooltips: []
 				});
 				mergedMarkers.push(marker);
 				i++;
@@ -163,4 +169,4 @@ var MapController = function($scope, $location, analytics, config, mapTooltipFac
 	$scope.htmlReady();
 };
 
-MapController.$inject = ["$scope", "$location", "analytics", "config", "mapTooltipFactory", "navigation"];
+MapController.$inject = ["$scope", "$location", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation"];
