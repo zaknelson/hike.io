@@ -56,14 +56,14 @@ var MapController = function($scope, $location, analytics, config, mapTooltipFac
 		defaultMarker = {
 			path: google.maps.SymbolPath.CIRCLE,
 			fillOpacity: 1,
-			fillColor: "ff6262",
+			fillColor: "#FF6262",
 			strokeWeight: 1.0,
 			scale: 4
 		};
 		hoverMarker = {
 			path: google.maps.SymbolPath.CIRCLE,
 			fillOpacity: 1,
-			fillColor: "ffff33",
+			fillColor: "#FFFF33",
 			strokeWeight: 1.0,
 			scale: 5
 		};
