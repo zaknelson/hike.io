@@ -32,3 +32,13 @@ $edit-banner-height: 50px;
 		text-align: left;
 	}
 }
+
+.entry-edit-page {
+
+	.header-landscape {
+
+		h1 {
+			text-overflow: clip !important;
+		}
+	}
+}

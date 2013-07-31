@@ -41,6 +41,9 @@ $header-landscape-footer-height-mobile: 40px;
 			margin: 0px;
 			font-size: $header-landscape-footer-height - 10;
 			line-height: $header-landscape-footer-height;	
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.header-hike-name {
