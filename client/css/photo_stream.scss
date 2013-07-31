@@ -15,12 +15,6 @@ $preview-subtext-font-size: 13px;
 		overflow-x: hidden;
 		overflow-y: hidden;
 	}
-
-	.preview:hover {
-		opacity: .95;
-		cursor: pointer;
-	}
-
 	.preview {
 		opacity: 0;
 		margin-bottom: 2px;
