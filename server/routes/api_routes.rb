@@ -25,7 +25,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes/search", :provides => "json" do
-		query = params[:q];
+		query = params[:q]
 		return 400 if not query
 
 		search_executor = SearchExecutor.new
@@ -57,29 +57,15 @@ class HikeApp < Sinatra::Base
 		hike.update_keywords if json["name"] != hike.name
 
 		removed_photos = []
-
-		if json["photo_landscape"] != nil
-			hike.photo_landscape = Photo.find(:id => json["photo_landscape"]["id"])
-			move_photo_if_needed hike.photo_landscape, hike
-		else
-			removed_photos.push hike.photo_landscape if hike.photo_landscape
-			hike.photo_landscape = nil
-		end
-
-		if json["photo_preview"] != nil
-			hike.photo_preview = Photo.find(:id => json["photo_preview"]["id"])
-			move_photo_if_needed hike.photo_preview, hike
-		else
-			removed_photos.push hike.photo_preview if hike.photo_preview
-			hike.photo_preview = nil
-		end
-
-		if json["photo_facts"] != nil
-			hike.photo_facts = Photo.find(:id => json["photo_facts"]["id"])
-			move_photo_if_needed hike.photo_facts, hike
-		else
-			removed_photos.push hike.photo_facts if hike.photo_facts
-			hike.photo_facts = nil
+		hike.each_photo do |photo_key|
+			existing_photo = hike.send(photo_key)
+			if json[photo_key] != nil
+				hike.send "#{photo_key}=", Photo.find(:id => json[photo_key]["id"])
+				move_photo_if_needed existing_photo, hike if existing_photo
+			elsif existing_photo
+				removed_photos.push existing_photo
+				hike.send "#{photo_key}=", nil
+			end
 		end
 
 		if json["location"] and json["location"]["longitude"] and json["location"]["latitude"]

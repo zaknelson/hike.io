@@ -42,22 +42,7 @@ class Hike < Sequel::Model
 		id.downcase.split(" ").join("-")
 	end
 
-	def update_from_json json
-		self.name = Hike.clean_string_input(json["name"])
-		self.description = Hike.clean_html_input(json["description"])
-		self.distance = json["distance"]
-		self.elevation_max = json["elevation_max"]
-		self.locality = Hike.clean_string_input(json["locality"])
-	end
-
-	def update_keywords
-		keywords = KeywordUtils.sanitize_to_keywords(name)
-		keywords.each do |keyword|
-			add_keyword(Keyword.find_or_create(:keyword => keyword))
-		end
-	end
-
-	def self.clean_string_input str
+		def self.clean_string_input str
 		Sanitize.clean(str)
 	end
 
@@ -79,4 +64,26 @@ class Hike < Sequel::Model
 		end
 		Sanitize.clean(cleaned_html, :elements => ["p", "h3"])
 	end
+
+	def update_from_json json
+		self.name = Hike.clean_string_input(json["name"])
+		self.description = Hike.clean_html_input(json["description"])
+		self.distance = json["distance"]
+		self.elevation_max = json["elevation_max"]
+		self.locality = Hike.clean_string_input(json["locality"])
+	end
+
+	def update_keywords
+		keywords = KeywordUtils.sanitize_to_keywords(name)
+		keywords.each do |keyword|
+			add_keyword(Keyword.find_or_create(:keyword => keyword))
+		end
+	end
+
+	def each_photo
+		yield "photo_facts"
+		yield "photo_landscape"
+		yield "photo_preview"
+	end
+
 end
