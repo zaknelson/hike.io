@@ -59,10 +59,10 @@ angular.module("hikeio").
 						event.preventDefault();
 						element.blur();
 					} else if (attributes.type === "numeric" &&
-						(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9 or period
+						(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9, a dash, or a period
 						(event.keyCode === 46 && element.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
 
-						if (attributes.positive && event.keyCode === 45) {
+						if (event.keyCode === 45 && element.text().indexOf("-") === -1) {
 							var before = element.text();
 							setTimeout(function(){
 								if (!$.isNumeric(element.text())) {
