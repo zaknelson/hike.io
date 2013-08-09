@@ -57,6 +57,11 @@ class ApiRoutesTest < HikeAppTestCase
 		assert_equal "empty", json["string_id"]
 	end
 
+	def test_missing_hike
+		get "/api/v1/hikes/not-a-real-hike"
+		assert_equal 404, last_response.status
+	end
+
 
 	#
 	# POST /api/v1/hikes

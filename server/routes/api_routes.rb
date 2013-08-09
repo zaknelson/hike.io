@@ -42,6 +42,7 @@ class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
+		return 404 if not hike
 		hike.to_json if hike
 	end
 
