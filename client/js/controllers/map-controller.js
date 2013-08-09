@@ -3,7 +3,6 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
-	var activeMarker = null;
 	var defaultMarker = null;
 	var hoverMarker = null;
 	var lastMarkerUpdateTime = null;
@@ -13,7 +12,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	$scope.markers = [];
 
 	$scope.markerActivate = function(marker) {
-		var tooltip = mapTooltipFactory.create(marker)
+		var tooltip = mapTooltipFactory.create(marker);
 		marker.tooltips.push(tooltip);
 		marker.setIcon(hoverMarker);
 	};
@@ -27,7 +26,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 			if (marker.tooltips.length === 0) {
 				marker.setIcon(defaultMarker);
 			}
-		}, 200)
+		}, 200);
 	};
 
 	$scope.markerClicked = function(marker) {
