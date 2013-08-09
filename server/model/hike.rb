@@ -71,6 +71,8 @@ class Hike < Sequel::Model
 		self.distance = json["distance"]
 		self.elevation_max = json["elevation_max"]
 		self.locality = Hike.clean_string_input(json["locality"])
+		self.location.latitude = json["location"]["latitude"]
+		self.location.longitude = json["location"]["longitude"]
 	end
 
 	def update_keywords

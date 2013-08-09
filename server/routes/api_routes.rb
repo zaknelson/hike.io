@@ -68,19 +68,6 @@ class HikeApp < Sinatra::Base
 			end
 		end
 
-		if json["location"] and json["location"]["longitude"] and json["location"]["latitude"]
-			if not hike.location
-				hike.location = Location.create(
-					:latitude => json["location"]["latitude"],
-					:longitude => json["location"]["longitude"]
-					);
-			else
-				hike.location.latitude = json["location"]["latitude"]
-				hike.location.longitude = json["location"]["longitude"]
-				hike.location.save_changes
-			end
-		end
-
 		if json["photos_generic"]
 			new_generic_photos = []
 			json["photos_generic"].each do |photo, index|
@@ -104,6 +91,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		hike.edit_time = Time.now
+		hike.location.save_changes
 		hike.save_changes
 		
 		removed_photos.each do |photo|
