@@ -46,6 +46,20 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 	# GET /api/v1/hikes/search
 	#
+	def test_get_search_with_one_result
+		get "/api/v1/hikes/search?q=kilimanjaro"
+		json = JSON.parse(last_response.body)
+		assert_equal 200, last_response.status
+		assert_equal 1, json.length
+	end
+
+	def test_get_search_with_two_results
+		get "/api/v1/hikes/search?q=peak"
+		json = JSON.parse(last_response.body)
+		assert_equal 200, last_response.status
+		assert_equal 2, json.length
+	end
+
 	def test_get_search_with_missing_query
 		get "/api/v1/hikes/search"
 		assert_equal 400, last_response.status
