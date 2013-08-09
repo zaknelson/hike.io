@@ -46,6 +46,14 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 	# GET /api/v1/hikes/search
 	#
+
+	def test_get_search_with_no_results
+		get "/api/v1/hikes/search?q=not-a-real-hike"
+		json = JSON.parse(last_response.body)
+		assert_equal 200, last_response.status
+		assert_equal 0, json.length
+	end
+
 	def test_get_search_with_one_result
 		get "/api/v1/hikes/search?q=kilimanjaro"
 		json = JSON.parse(last_response.body)
