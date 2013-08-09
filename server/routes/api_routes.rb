@@ -26,7 +26,7 @@ class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes/search", :provides => "json" do
 		query = params[:q];
-		400 if not query
+		return 400 if not query
 
 		search_executor = SearchExecutor.new
 		search_executor.logger = logger

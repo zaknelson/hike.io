@@ -42,6 +42,17 @@ class ApiRoutesTest < HikeAppTestCase
 		assert last_response.not_found?
 	end
 
+
+	#
+	# GET /api/v1/hikes/search
+	#
+	def test_get_search_with_missing_query
+		get "/api/v1/hikes/search"
+		assert_equal 400, last_response.status
+	end
+
+
+
 	#
 	# GET /api/v1/hikes/:id
 	#
