@@ -104,7 +104,7 @@ class HikeApp < Sinatra::Base
 	["/hikes", "/partials/all.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
-				preload_resource "/api/v1/hikes", Hike.order(:id).all.to_json
+				preload_resource "/api/v1/hikes", array_as_json(Hike.order(:id).all)
 			end
 			render_template :all
 		end
@@ -113,7 +113,7 @@ class HikeApp < Sinatra::Base
 	["/discover", "/partials/photo_stream.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
-				preload_resource "/api/v1/hikes", Hike.order(:id).all.to_json
+				preload_resource "/api/v1/hikes", array_as_json(Hike.order(:id).all)
 			end
 			render_template :photo_stream
 		end
@@ -140,7 +140,7 @@ class HikeApp < Sinatra::Base
 
 			if not @is_partial
 				resource_id = "/api/v1/hikes/" + hike_id
-				preload_resource resource_id, hike.to_json
+				preload_resource resource_id, hike.as_json
 			end
 			render_template :entry
 		end

@@ -10,7 +10,7 @@ require_relative "../utils/string_utils"
 class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
-		Hike.order(:id).all.to_json
+		array_as_json(Hike.order(:id).all, get_fields_filter) 
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
@@ -21,7 +21,7 @@ class HikeApp < Sinatra::Base
 		hike = Hike.create_from_json json
 		hike.update_keywords
 		hike.save
-		hike.to_json
+		hike.as_json
 	end
 
 	get "/api/v1/hikes/search", :provides => "json" do
@@ -34,16 +34,16 @@ class HikeApp < Sinatra::Base
 		search_results = search_executor.execute
 
 		if (search_executor.has_best_result) 
-			[search_results[0]].to_json
+			array_as_json([search_results[0]], get_fields_filter) 
 		else
-			search_results.to_json
+			array_as_json(search_results, get_fields_filter)
 		end
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		return 404 if not hike
-		hike.to_json if hike
+		hike.as_json get_fields_filter if hike
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
@@ -117,7 +117,7 @@ class HikeApp < Sinatra::Base
 			end
 		end
 
-		hike.to_json
+		hike.as_json
 	end
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
@@ -177,7 +177,7 @@ class HikeApp < Sinatra::Base
 			:height => original_image.rows
 		})
 
-		photo.to_json
+		photo.as_json
 	end
 
 	def move_photo_if_needed photo, hike
@@ -238,5 +238,9 @@ class HikeApp < Sinatra::Base
 	def is_valid_longitude? longitude
 		longitude = longitude.to_f
 		longitude >= -180 and longitude <= 180
+	end
+
+	def get_fields_filter
+		params[:fields] ? params[:fields].split(",") : nil
 	end
 end

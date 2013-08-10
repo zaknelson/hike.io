@@ -28,6 +28,14 @@ class ApiRoutesTest < HikeAppTestCase
 		assert json.length > 0
 	end
 
+	def test_get_hikes_with_fields_filter
+		get "/api/v1/hikes?fields=name,string_id"
+		json = JSON.parse(last_response.body)
+		assert json[0]["name"] != nil
+		assert json[0]["string_id"] != nil
+		assert json[0]["description"] == nil
+	end
+
 	def test_get_hikes_includes_location
 		get "/api/v1/hikes"
 		json = JSON.parse(last_response.body)
@@ -93,6 +101,14 @@ class ApiRoutesTest < HikeAppTestCase
 	def test_missing_hike
 		get "/api/v1/hikes/not-a-real-hike"
 		assert_equal 404, last_response.status
+	end
+
+	def test_get_hike_with_fields_filter
+		get "/api/v1/hikes?fields=id,location"
+		json = JSON.parse(last_response.body)
+		assert json[0]["id"] != nil
+		assert json[0]["location"] != nil
+		assert json[0]["description"] == nil
 	end
 
 

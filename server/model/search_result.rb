@@ -2,10 +2,7 @@ class SearchResult
 	attr_accessor :hike
 	attr_accessor :relevance
 
-	def to_json *a
-		{
-			:hike => hike,
-			:relevance => relevance
-		}.to_json(*a)
+	def as_json fields
+		"{\"hike\":#{hike.as_json fields},\"relevance\":#{relevance}}"
 	end
 end

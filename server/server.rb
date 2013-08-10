@@ -102,6 +102,15 @@ class HikeApp < Sinatra::Base
 		def is_admin?
 			Sinatra::Application.environment() == :development or cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id)
 		end
+
+		def array_as_json array, fields=nil
+			json = "["
+			array.each_with_index do |element, i|
+				json += element.as_json fields
+				json += "," if i != array.length - 1
+			end
+			json += "]"
+		end
 	end
 
 	before do
