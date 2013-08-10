@@ -1,6 +1,6 @@
 "use strict";
 var AllController = function($scope, $http, $log, analytics, resourceCache) {
-	$http({method: "GET", url: "/api/v1/hikes", cache: resourceCache}).
+	$http({method: "GET", url: "/api/v1/hikes?fields=locality,name,string_id", cache: resourceCache}).
 		success(function(data, status, headers, config) {
 			var localityMap = {};
 			var localities = [];
