@@ -177,7 +177,7 @@ class HikeApp < Sinatra::Base
 			:height => original_image.rows
 		})
 
-		photo.as_json
+		photo.to_json
 	end
 
 	def move_photo_if_needed photo, hike
