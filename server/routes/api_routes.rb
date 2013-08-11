@@ -100,11 +100,16 @@ class HikeApp < Sinatra::Base
 				bucket = s3.buckets["assets.hike.io"]
 				src = "hike-images/" + photo.string_id
 				dst = "hike-images/tmp/deleted/" + photo.string_id
-				bucket.objects[src + "-original.jpg"].move_to(dst + "-original.jpg")
-				bucket.objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
-				bucket.objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
-				bucket.objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
-				bucket.objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
+				begin
+					bucket.objects[src + "-original.jpg"].move_to(dst + "-original.jpg")
+					bucket.objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
+					bucket.objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
+					bucket.objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
+					bucket.objects[src + "-tiny.jpg"].move_to(dst + "-tiny.jpg")
+					bucket.objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
+					bucket.objects[src + "-thumb-tiny.jpg"].move_to(dst + "-thumb-tiny.jpg")
+				rescue
+				end
 			else
 				src = self.root + "/public/hike-images/" + photo.string_id
 				dst_dir = self.root + "/public/hike-images/tmp/deleted/"
@@ -113,7 +118,9 @@ class HikeApp < Sinatra::Base
 				FileUtils.mv(src + "-large.jpg", dst_dir)
 				FileUtils.mv(src + "-medium.jpg", dst_dir)
 				FileUtils.mv(src + "-small.jpg", dst_dir)
+				FileUtils.mv(src + "-tiny.jpg", dst_dir)
 				FileUtils.mv(src + "-thumb.jpg", dst_dir)
+				FileUtils.mv(src + "-thumb-tiny.jpg", dst_dir)
 			end
 		end
 
