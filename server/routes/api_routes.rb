@@ -61,7 +61,7 @@ class HikeApp < Sinatra::Base
 			existing_photo = hike.send(photo_key)
 			if json[photo_key] != nil
 				hike.send "#{photo_key}=", Photo.find(:id => json[photo_key]["id"])
-				move_photo_if_needed existing_photo, hike if existing_photo
+				move_photo_if_needed(existing_photo, hike) if existing_photo
 			elsif existing_photo
 				removed_photos.push existing_photo
 				hike.send "#{photo_key}=", nil
@@ -191,14 +191,18 @@ class HikeApp < Sinatra::Base
 				s3.buckets["assets.hike.io"].objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
 				s3.buckets["assets.hike.io"].objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
 				s3.buckets["assets.hike.io"].objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-tiny.jpg"].move_to(dst + "-tiny.jpg")
 				s3.buckets["assets.hike.io"].objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
+				s3.buckets["assets.hike.io"].objects[src + "-thumb-tiny.jpg"].move_to(dst + "-thumb-tiny.jpg")
 			else
 				FileUtils.mkdir_p(self.root + "/public/" + dst_dir)
 				FileUtils.mv(self.root + "/public/" + src + "-original.jpg", self.root + "/public/" + dst + "-original.jpg")
 				FileUtils.mv(self.root + "/public/" + src + "-large.jpg", self.root + "/public/" + dst + "-large.jpg")
 				FileUtils.mv(self.root + "/public/" + src + "-medium.jpg", self.root + "/public/" + dst + "-medium.jpg")
 				FileUtils.mv(self.root + "/public/" + src + "-small.jpg", self.root + "/public/" + dst + "-small.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-tiny.jpg", self.root + "/public/" + dst + "-tiny.jpg")
 				FileUtils.mv(self.root + "/public/" + src + "-thumb.jpg", self.root + "/public/" + dst + "-thumb.jpg")
+				FileUtils.mv(self.root + "/public/" + src + "-thumb-tiny.jpg", self.root + "/public/" + dst + "-thumb-tiny.jpg")
 			end
 
 			photo.string_id = hike.string_id + "/" + photo_id
