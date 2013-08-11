@@ -60,8 +60,9 @@ class HikeApp < Sinatra::Base
 		hike.each_photo do |photo_key|
 			existing_photo = hike.send(photo_key)
 			if json[photo_key] != nil
-				hike.send "#{photo_key}=", Photo.find(:id => json[photo_key]["id"])
-				move_photo_if_needed(existing_photo, hike) if existing_photo
+				new_photo = Photo.find(:id => json[photo_key]["id"])
+				hike.send "#{photo_key}=", new_photo
+				move_photo_if_needed(new_photo, hike)
 			elsif existing_photo
 				removed_photos.push existing_photo
 				hike.send "#{photo_key}=", nil
