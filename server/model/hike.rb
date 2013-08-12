@@ -89,7 +89,7 @@ class Hike < Sequel::Model
 		end
 	end
 
-	def each_photo
+	def self.each_photo_type
 		yield "photo_facts"
 		yield "photo_landscape"
 		yield "photo_preview"

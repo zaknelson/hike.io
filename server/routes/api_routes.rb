@@ -57,7 +57,7 @@ class HikeApp < Sinatra::Base
 		hike.update_keywords if json["name"] != hike.name
 
 		removed_photos = []
-		hike.each_photo do |photo_key|
+		Hike.each_photo_type do |photo_key|
 			existing_photo = hike.send(photo_key)
 			if json[photo_key] != nil
 				new_photo = Photo.find(:id => json[photo_key]["id"])
