@@ -163,7 +163,7 @@ class HikeApp < Sinatra::Base
 			renditions["tiny"] = sharpened_image.resize_to_fit(200, 400)
 		end
 		renditions["thumb"] = sharpened_image.crop_resized(400, 400)
-		renditions["tiny_thumb"] = sharpened_image.crop_resized(200, 200)
+		renditions["thumb-tiny"] = sharpened_image.crop_resized(200, 200)
 		renditions
 	end
 
