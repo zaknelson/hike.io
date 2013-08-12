@@ -97,10 +97,6 @@ migration "create static_html table" do
 	end
 end
 
-class Photo < Sequel::Model
-	one_to_one :hike
-end
-
 class Location < Sequel::Model
 	one_to_many :hikes
 end
