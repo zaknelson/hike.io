@@ -129,12 +129,11 @@ class HikeApp < Sinatra::Base
 			bucket = s3.buckets["assets.hike.io"]
 			dst_dir = "hike-images/tmp/uploading/"
 			Photo.each_rendition_including_original do |rendition|
-				blob = renditions[rendition].to_blob
 				object_path = dst_dir + name + get_rendition_suffix(rendition)
 				if rendition == "original"
-					bucket.objects[object_path].write(blob)
+					bucket.objects[object_path].write(renditions[rendition].to_blob)
 				else
-					bucket.objects[object_path].write(blob) { self.quality = 87 }
+					bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
 				end
 			end
 		end
