@@ -102,15 +102,8 @@ class HikeApp < Sinatra::Base
 				src = "hike-images/" + photo.string_id
 				dst = "hike-images/tmp/deleted/" + photo.string_id
 				Photo.each_rendition do |rendition|
-					suffix = "-" + rendition + ".jpg"
+					suffix = get_rendition_suffix(rendition)
 					bucket.objects[src + suffix].move_to(dst + suffix)
-				end
-			else
-				src = self.root + "/public/hike-images/" + photo.string_id
-				dst_dir = self.root + "/public/hike-images/tmp/deleted/"
-				FileUtils.mkdir_p(dst_dir)
-				Photo.each_rendition do |rendition|
-					FileUtils.mv(src + "-" + rendition + ".jpg", dst_dir)
 				end
 			end
 		end
@@ -131,44 +124,16 @@ class HikeApp < Sinatra::Base
 		original_image.resize_to_fit!(2400, 2400)
 		original_image.strip!
 		original_image.profile!("*", nil)
-		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
-		if original_image.columns > original_image.rows
-			large_image = sharpened_image.resize_to_fit(1200)
-			medium_image = sharpened_image.resize_to_fit(800)
-			small_image = sharpened_image.resize_to_fit(400)
-			tiny_image = sharpened_image.resize_to_fit(200)
-		else
-			large_image = sharpened_image.resize_to_fit(1200, 2400)
-			medium_image = sharpened_image.resize_to_fit(800, 1600)
-			small_image = sharpened_image.resize_to_fit(400, 800)
-			tiny_image = sharpened_image.resize_to_fit(200, 400)
-		end
-		
-		thumb_image = sharpened_image.crop_resized(400, 400)
-		tiny_thumb_image = sharpened_image.crop_resized(200, 200)
-
-		if settings.production?
+		renditions = get_photo_renditions(original_image)
+		if settings.production?	
 			bucket = s3.buckets["assets.hike.io"]
 			dst_dir = "hike-images/tmp/uploading/"
-			bucket.objects[dst_dir + name + "-original.jpg"].write(original_image.to_blob)
-			bucket.objects[dst_dir + name +  "-large.jpg"].write(large_image.to_blob { self.quality = 87 })
-			bucket.objects[dst_dir + name +  "-medium.jpg"].write(medium_image.to_blob { self.quality = 87 }) 
-			bucket.objects[dst_dir + name +  "-small.jpg"].write(small_image.to_blob { self.quality = 87 })
-			bucket.objects[dst_dir + name +  "-tiny.jpg"].write(tiny_image.to_blob { self.quality = 87 })
-			bucket.objects[dst_dir + name +  "-thumb.jpg"].write(thumb_image.to_blob { self.quality = 87 })
-			bucket.objects[dst_dir + name +  "-thumb-tiny.jpg"].write(tiny_thumb_image.to_blob { self.quality = 87 })
-		else
-			dst_dir = self.root + "/public/hike-images/tmp/uploading/"
-			FileUtils.mkdir_p(dst_dir)
-			original_image.write(dst_dir + name + "-original.jpg") {  self.quality = 87 }
-			large_image.write(dst_dir + name + "-large.jpg") {  self.quality = 87 }
-			medium_image.write(dst_dir + name + "-medium.jpg") {  self.quality = 87 }
-			small_image.write(dst_dir + name + "-small.jpg") {  self.quality = 87 }
-			tiny_image.write(dst_dir + name + "-tiny.jpg") {  self.quality = 87 }
-			thumb_image.write(dst_dir + name + "-thumb.jpg") {  self.quality = 87 }
-			tiny_thumb_image.write(dst_dir + name + "-thumb-tiny.jpg") {  self.quality = 87 }
+			Photo.each_rendition_including_original do |rendition|
+				bucket.objects[dst_dir + name + get_rendition_suffix(rendition)].write(renditions[rendition].to_blob) do
+					self.quality = 87 if rendition != "original"
+				end
+			end
 		end
-
 		photo = Photo.create({
 			:string_id => "tmp/uploading/" + name,
 			:width => original_image.columns,
@@ -178,6 +143,30 @@ class HikeApp < Sinatra::Base
 		photo.to_json
 	end
 
+	def get_rendition_suffix rendition
+		"-" + rendition + ".jpg"
+	end
+
+	def get_photo_renditions original_image
+		renditions = {}
+		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
+		renditions["original"] = original_image
+		if original_image.columns > original_image.rows
+			renditions["large"] = sharpened_image.resize_to_fit(1200)
+			renditions["medium"] = sharpened_image.resize_to_fit(800)
+			renditions["small"] = sharpened_image.resize_to_fit(400)
+			renditions["tiny"] = sharpened_image.resize_to_fit(200)
+		else
+			renditions["large"] = sharpened_image.resize_to_fit(1200, 2400)
+			renditions["medium"] = sharpened_image.resize_to_fit(800, 1600)
+			renditions["small"] = sharpened_image.resize_to_fit(400, 800)
+			renditions["tiny"] = sharpened_image.resize_to_fit(200, 400)
+		end
+		renditions["thumb"] = sharpened_image.crop_resized(400, 400)
+		renditions["tiny_thumb"] = sharpened_image.crop_resized(200, 200)
+		renditions
+	end
+
 	def move_photo_if_needed photo, hike
 		if photo.string_id.start_with? "tmp/"
 			src = "hike-images/" + photo.string_id
@@ -185,24 +174,11 @@ class HikeApp < Sinatra::Base
 			dst_dir = "hike-images/" + hike.string_id + "/"
 			dst = dst_dir + photo_id
 			if settings.production?
-				s3.buckets["assets.hike.io"].objects[src + "-original.jpg"].move_to(dst + "-original.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-large.jpg"].move_to(dst + "-large.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-medium.jpg"].move_to(dst + "-medium.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-small.jpg"].move_to(dst + "-small.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-tiny.jpg"].move_to(dst + "-tiny.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-thumb.jpg"].move_to(dst + "-thumb.jpg")
-				s3.buckets["assets.hike.io"].objects[src + "-thumb-tiny.jpg"].move_to(dst + "-thumb-tiny.jpg")
-			else
-				FileUtils.mkdir_p(self.root + "/public/" + dst_dir)
-				FileUtils.mv(self.root + "/public/" + src + "-original.jpg", self.root + "/public/" + dst + "-original.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-large.jpg", self.root + "/public/" + dst + "-large.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-medium.jpg", self.root + "/public/" + dst + "-medium.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-small.jpg", self.root + "/public/" + dst + "-small.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-tiny.jpg", self.root + "/public/" + dst + "-tiny.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-thumb.jpg", self.root + "/public/" + dst + "-thumb.jpg")
-				FileUtils.mv(self.root + "/public/" + src + "-thumb-tiny.jpg", self.root + "/public/" + dst + "-thumb-tiny.jpg")
+				Photo.each_rendition_including_original do |rendition_name|
+					suffix = get_rendition_suffix(rendition_name)
+					s3.buckets["assets.hike.io"].objects[src + suffix].move_to(dst + suffix)
+				end
 			end
-
 			photo.string_id = hike.string_id + "/" + photo_id
 			photo.save_changes
 		end
