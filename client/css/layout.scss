@@ -1,6 +1,7 @@
 @import "_vars";
 @import "_mixins";
 @import "compass/css3/box-shadow";
+@import "compass/css3/box-sizing";
 
 html { height: 100%; }
 
@@ -59,8 +60,14 @@ h4 {
 li {
     list-style-type: disc;
  }
+
+* {
+	@include box-sizing(border-box);
+}
  
-*:focus { outline: none; }
+*:focus { 
+	outline: none;
+}
 
 [data-ng-view] {
 	width: 100%;
