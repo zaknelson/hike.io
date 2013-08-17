@@ -10,23 +10,33 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 
 	$scope.mapOptions = null;
 	$scope.markers = [];
+	$scope.activeMarker = null;
+
+	var doDeactivateMarker = function(marker) {
+		var tooltip = marker.tooltips.pop();
+		if (tooltip) {
+			tooltip.destroy();
+		}
+		if (marker.tooltips.length === 0) {
+			marker.setIcon(defaultMarker);
+		}
+	};
 
 	$scope.markerActivate = function(marker) {
+		if ($scope.activeMarker && $scope.activeMarker !== marker) {
+			doDeactivateMarker($scope.activeMarker);
+			$scope.activeMarker = null;
+		}
 		var tooltip = mapTooltipFactory.create(marker);
 		marker.tooltips.push(tooltip);
 		marker.setIcon(hoverMarker);
+		$scope.activeMarker = marker;
 	};
 
 	$scope.markerDeactivate = function(marker) {
 		$timeout(function() {
-			var tooltip = marker.tooltips.pop();
-			if (tooltip) {
-				tooltip.destroy();
-			}
-			if (marker.tooltips.length === 0) {
-				marker.setIcon(defaultMarker);
-			}
-		}, 200);
+			doDeactivateMarker(marker);
+		}, 300);
 	};
 
 	$scope.markerClicked = function(marker) {
