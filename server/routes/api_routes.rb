@@ -71,7 +71,7 @@ class HikeApp < Sinatra::Base
 
 		if json["photos_generic"]
 			new_generic_photos = []
-			json["photos_generic"].each do |photo, index|
+			json["photos_generic"].each do |photo|
 				photo = Photo.find(:id => photo["id"])
 				new_generic_photos.push(photo) if photo
 			end
