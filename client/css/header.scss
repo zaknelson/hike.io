@@ -69,7 +69,8 @@ header > .search-dropdown {
 		@include border-radius(0px 0px 0px 5px);
 
 		input {
-			height: 22px;
+			height: 30px;
+			padding-left: 4px;
 			font-size: 16px;
 			font-weight: 200;
 		}
