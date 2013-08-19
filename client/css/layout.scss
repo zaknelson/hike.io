@@ -31,7 +31,7 @@ footer {
 		float: right;
 		color: #BBB;
 		display: inline-block;
-		margin-left: 20px
+		margin-left: 20px;
 	}
 }
 
@@ -91,6 +91,7 @@ li {
 }
 
 [data-ng-view] {
+	padding-bottom: 55px;
 	width: 100%;
 	overflow: auto;
 }
