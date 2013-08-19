@@ -53,49 +53,56 @@ https://github.com/zaknelson/hike.io/
 	<%= css :app %>
 </head>
 <body data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
-	<header data-ng-cloak data-ng-controller="HeaderController">
-		<div class="header-entries shadow-light">
+	<div class="container">
+		<header data-ng-cloak data-ng-controller="HeaderController">
+			<div class="header-entries shadow-light">
 
-			<div data-ng-click="hideSearchBox()">
-				<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/logo.png"></img></div>
-			</div>
+				<div data-ng-click="hideSearchBox()">
+					<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/logo.png"></img></div>
+				</div>
 
-			<div>
-				<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/photo-stream.png"></img></div>
-			</div>
+				<div>
+					<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/photo-stream.png"></img></div>
+				</div>
 
-			<div>
-				<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png"></img></div>
-			</div>
+				<div>
+					<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png"></img></div>
+				</div>
 
-			<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
-				<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
-			</div>
+				<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
+					<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
+				</div>
 
-			<div data-ng-show="isAdmin">
-				<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
-			</div>
+				<div data-ng-show="isAdmin">
+					<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
+				</div>
 
-			<div data-ng-show="isAdmin &amp;&amp; navigation.onEntry()">
-				<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png"></img></div>
+				<div data-ng-show="isAdmin &amp;&amp; navigation.onEntry()">
+					<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png"></img></div>
+				</div>
+				
 			</div>
-			
+			<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
+				<div class="header-right shadow-light">
+					 <input type="text" placeholder="Hike name..." data-ui-keypress="{'enter': 'hideSearchBox(); search($event)'}" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
+				</div>
+			</div>
+		</header>
+
+		<%= yield %>
+
+		<%= yield_content :preload_resource %>
+
+		<div data-ng-view data-ng-click="hideSearchBox()">
+			<noscript>
+				<h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1>
+			</noscript>
 		</div>
-		<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
-			<div class="header-right shadow-light">
-				 <input type="text" placeholder="Hike name..." data-ui-keypress="{'enter': 'hideSearchBox(); search($event)'}" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
-			</div>
-		</div>
-	</header>
-
-	<%= yield %>
-
-	<%= yield_content :preload_resource %>
-
-	<div data-ng-view data-ng-click="hideSearchBox()">
-		<noscript>
-			<h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1>
-		</noscript>
+		<footer>
+			<a data-mailto><h4>CONTACT</h4></a>
+			<a href="https://github.com/zaknelson/hike.io"><h4>CODE</h4></a>
+			<a href="/hikes"><h4>ALL HIKES</h4></a>
+		</footer>
 	</div>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>

@@ -35,22 +35,6 @@
 			font-size: 30px;
 			color: white;
 		}
-
-		.links {
-			position: absolute;
-			bottom: 0px;
-			right: 15px;
-			a {
-				color: #BBB;
-				display: inline-block;
-				padding: 20px 7px;
-			}
-			@media all and (max-width: 800px) { 
-				a {
-					padding: 20px 5px;
-				}
-			}
-		}
 	}
 
 	@media all and (max-width: $mobile-width) { 
