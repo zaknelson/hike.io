@@ -59,7 +59,7 @@ $facts-external-link-svg-size: 12px;
 @media all and (max-width: $facts-mobile-width) {
 	.overview-facts {
 		width: 100%;
-		margin: 0px;
+		margin-bottom: 10px;
 		
 		.page-curl {
 			img {
