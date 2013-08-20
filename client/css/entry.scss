@@ -30,7 +30,6 @@ $header-landscape-footer-height-mobile: 40px;
 		position: relative;
 
 		img {
-			min-height: 341px;
 			width: 100%;
 		}
 
@@ -72,14 +71,6 @@ $header-landscape-footer-height-mobile: 40px;
 			h1 {
 				font-size: $header-landscape-footer-height-mobile - 5;
 				line-height: $header-landscape-footer-height-mobile;
-			}
-		}
-	}
-
-	@media all and (max-width: $container-width) {
-		.header-landscape {
-			img {
-				min-height: 0;
 			}
 		}
 	}
