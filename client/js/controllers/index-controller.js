@@ -2,6 +2,7 @@
 var IndexController = function($scope, analytics, navigation, progressbar, search) {
 	$scope.searchQuery = "";
 
+	progressbar.start();
 	$scope.search = function() {
 		if ($scope.searchQuery.trim().length === 0) {
 			navigation.toEntry("the-narrows");
@@ -10,6 +11,7 @@ var IndexController = function($scope, analytics, navigation, progressbar, searc
 		}
 	};
 
+	progressbar.complete();
 	$scope.htmlReady();
 };
 
