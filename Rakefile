@@ -2,6 +2,15 @@ require "rake/testtask"
 
 task :default => :run
 
+task :backup do
+	date = Time.now.strftime("%F")
+	backup_dir = "backup/#{date}"
+	FileUtils.mkdir_p(backup_dir)
+	`heroku pgbackups:capture`
+  	`curl -s -o #{backup_dir}/db.dump \`heroku pgbackups:url\``
+  	`s3cmd sync s3://assets.hike.io/ #{backup_dir}`
+end
+
 task :build do
 	`psql -h localhost -l | grep -q hikeio || psql -h localhost -c "CREATE DATABASE hikeio"`
 end
