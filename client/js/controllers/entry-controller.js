@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, analytics, isEditing, navigation, progressbar, resourceCache) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, progressbar, resourceCache) {
 
 	$scope.hike = null;
 	$scope.isDirty = false;
@@ -27,6 +27,17 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, an
 
 			$scope.isLoaded = true;
 			$scope.htmlReady();
+			$timeout(function() {
+				var loaded = 0;
+				var toLoad = $("img").length;
+				$("img").load(function() {
+					loaded++;
+					progressbar.set(100.0 / toLoad);
+					if (loaded === toLoad) {
+						progressbar.complete();
+					}
+				});
+			});
 			progressbar.complete();
 		}).
 		error(function(data, status, headers, config) {
@@ -135,4 +146,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, an
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "analytics", "isEditing", "navigation", "progressbar", "resourceCache"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "progressbar", "resourceCache"];

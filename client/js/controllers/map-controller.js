@@ -115,8 +115,13 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 
 	var initSocketIo = function() {
 		socket = io.connect(config.socketIoPath);
+		var firstResponse = true;
 		socket.on("get-hikes-in-bounds", function (data) {
 			mergeMarkers(data);
+			if (firstResponse) {
+				progressbar.complete();
+				firstResponse = false;
+			}
 		});
 	};
 
@@ -177,7 +182,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	initMapOptions();
 	initSocketIo();
 	$scope.htmlReady();
-	progressbar.complete();
+	//progress complete isn't fired until first response from socket
 };
 
 MapController.$inject = ["$scope", "$location", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "progressbar"];

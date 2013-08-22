@@ -11,15 +11,14 @@ var PhotoStreamController = function($scope, $http, $log, $timeout, analytics, p
 			$scope.hikes = hikes;
 			$timeout(function() {
 				var loaded = 0;
-				$(".preview-img").load(function() {
+				$("img").load(function() {
 					loaded++;
-					progressbar.set(100.0 / hikes.length)
+					progressbar.set(100.0 / hikes.length);
 					if (loaded === hikes.length) {
 						progressbar.complete();
 					}
 				});
-			})
-			
+			});
 		}).
 		error(function(data, status, headers, config) {
 			$log.error(config);
