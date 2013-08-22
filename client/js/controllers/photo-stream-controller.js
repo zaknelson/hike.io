@@ -13,7 +13,7 @@ var PhotoStreamController = function($scope, $http, $log, $timeout, analytics, p
 				var loaded = 0;
 				$("img").load(function() {
 					loaded++;
-					progressbar.set(100.0 / hikes.length);
+					progressbar.set(loaded * (100.0 / hikes.length));
 					if (loaded === hikes.length) {
 						progressbar.complete();
 					}

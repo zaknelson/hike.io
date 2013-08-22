@@ -32,13 +32,12 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				var toLoad = $("img").length;
 				$("img").load(function() {
 					loaded++;
-					progressbar.set(100.0 / toLoad);
+					progressbar.set(loaded * (100.0 / toLoad));
 					if (loaded === toLoad) {
 						progressbar.complete();
 					}
 				});
 			});
-			progressbar.complete();
 		}).
 		error(function(data, status, headers, config) {
 			$log.error(data, status, headers, config);
