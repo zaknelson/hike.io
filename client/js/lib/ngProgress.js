@@ -15,7 +15,7 @@ module.provider('progressbar', function () {
     //Default values for provider
     this.count = 0;
     this.height = '2px';
-    this.color = 'firebrick';
+    this.color = '#444';
 
     this.$get = ['$document', '$window', function ($document, $window) {
         var count = this.count,

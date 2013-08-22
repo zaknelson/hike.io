@@ -182,6 +182,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	initMapOptions();
 	initSocketIo();
 	$scope.htmlReady();
+	progressbar.set(20);
 	//progress complete isn't fired until first response from socket
 };
 

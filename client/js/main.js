@@ -49,8 +49,7 @@ angular.module("hikeio", ["ngProgress", "seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", "progressbar", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation, progressbar) {
-		progressbar.color("#444");
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation) {
 		$rootScope.config = config;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;

@@ -30,13 +30,18 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$timeout(function() {
 				var loaded = 0;
 				var toLoad = $("img").length;
-				$("img").load(function() {
-					loaded++;
-					progressbar.set(loaded * (100.0 / toLoad));
-					if (loaded === toLoad) {
-						progressbar.complete();
-					}
-				});
+				if (toLoad === 0) {
+					progressbar.complete();
+				} else {
+					$("img").load(function() {
+						loaded++;
+						progressbar.set(loaded * (100.0 / toLoad));
+						if (loaded === toLoad) {
+							progressbar.complete();
+						}
+					});
+				}
+				
 			});
 		}).
 		error(function(data, status, headers, config) {
