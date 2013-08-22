@@ -1,5 +1,5 @@
 "use strict";
-var IndexController = function($scope, analytics, navigation, search) {
+var IndexController = function($scope, analytics, navigation, progressbar, search) {
 	$scope.searchQuery = "";
 
 	$scope.search = function() {
@@ -13,4 +13,4 @@ var IndexController = function($scope, analytics, navigation, search) {
 	$scope.htmlReady();
 };
 
-IndexController.$inject = ["$scope", "analytics", "navigation", "search"];
+IndexController.$inject = ["$scope", "analytics", "navigation", "progressbar", "search"];

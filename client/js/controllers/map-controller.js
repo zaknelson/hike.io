@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $location, $timeout, analytics, config, mapTooltipFactory, navigation) {
+var MapController = function($scope, $location, $timeout, analytics, config, mapTooltipFactory, navigation, progressbar) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
@@ -172,10 +172,12 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	};
 
 	// Init
+	progressbar.start();
 	initIcons();
 	initMapOptions();
 	initSocketIo();
 	$scope.htmlReady();
+	progressbar.complete();
 };
 
-MapController.$inject = ["$scope", "$location", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation"];
+MapController.$inject = ["$scope", "$location", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "progressbar"];

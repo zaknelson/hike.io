@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("hikeio", ["seo", "ui"]).
+angular.module("hikeio", ["ngProgress", "seo", "ui"]).
 	config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
 		$locationProvider.html5Mode(true);
 		$routeProvider.
@@ -49,7 +49,8 @@ angular.module("hikeio", ["seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation) {
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", "progressbar", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation, progressbar) {
+		progressbar.color("#444");
 		$rootScope.config = config;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
