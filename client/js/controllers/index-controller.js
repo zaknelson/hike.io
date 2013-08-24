@@ -1,8 +1,7 @@
 "use strict";
-var IndexController = function($scope, analytics, navigation, progressbar, search) {
+var IndexController = function($scope, analytics, navigation, search) {
 	$scope.searchQuery = "";
 
-	progressbar.start();
 	$scope.search = function() {
 		if ($scope.searchQuery.trim().length === 0) {
 			navigation.toEntry("the-narrows");
@@ -11,8 +10,7 @@ var IndexController = function($scope, analytics, navigation, progressbar, searc
 		}
 	};
 
-	progressbar.complete();
 	$scope.htmlReady();
 };
 
-IndexController.$inject = ["$scope", "analytics", "navigation", "progressbar", "search"];
+IndexController.$inject = ["$scope", "analytics", "navigation", "search"];

@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, progressbar, resourceCache) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, resourceCache) {
 
 	$scope.hike = null;
 	$scope.isDirty = false;
@@ -7,7 +7,6 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isLoaded = false;
 	$scope.isSaving = false;
 
-	progressbar.start();
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
@@ -27,32 +26,14 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 			$scope.isLoaded = true;
 			$scope.htmlReady();
-			$timeout(function() {
-				var loaded = 0;
-				var toLoad = $("img").length;
-				if (toLoad === 0) {
-					progressbar.complete();
-				} else {
-					$("img").load(function() {
-						loaded++;
-						progressbar.set(loaded * (100.0 / toLoad));
-						if (loaded === toLoad) {
-							progressbar.complete();
-						}
-					});
-				}
-				
-			});
 		}).
 		error(function(data, status, headers, config) {
 			$log.error(data, status, headers, config);
-			progressbar.complete();
 		}
 	);
 
 	$scope.save = function() {
 		if ($scope.isDirty) {
-			progressbar.start();
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
@@ -61,11 +42,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					$scope.isSaving = false;
 					$scope.isDirty = false;
 					$scope.hike = data;
-					progressbar.complete();
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
-					progressbar.complete();
 				});
 		}
 	};
@@ -83,7 +62,6 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	var doUploadPhoto = function(file, type) {
-		progressbar.start();
 		var data = new FormData();
 		data.append("file", file);
 		$http({
@@ -111,11 +89,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					break;
 				}
 				$scope.isDirty = true;
-				progressbar.complete();
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
-				progressbar.complete();
 			});
 	};
 
@@ -150,4 +126,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "progressbar", "resourceCache"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "resourceCache"];
