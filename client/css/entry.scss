@@ -157,10 +157,16 @@ $header-landscape-footer-height-mobile: 40px;
 			.photo-thumb {
 				padding: 2px;
 				float: left;
-				width: 33.333%;
+				width: 25%;
 
 				img {
 					width: 100%;
+				}
+			}
+
+			@media all and (max-width: $mobile-width) {
+				.photo-thumb {
+					width: 33.333%;
 				}
 			}
 		}
