@@ -164,7 +164,7 @@ $header-landscape-footer-height-mobile: 40px;
 				}
 			}
 
-			@media all and (max-width: $mobile-width) {
+			@media all and (max-width: 600px) {
 				.photo-thumb {
 					width: 33.333%;
 				}
