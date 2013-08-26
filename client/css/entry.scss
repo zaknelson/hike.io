@@ -76,21 +76,18 @@ $header-landscape-footer-height-mobile: 40px;
 	}
 
 	a.disabled {
-		color: #333;
+		color: #444;
 		cursor: text;
 		text-decoration: none;
 	}
 
 	.content {
 		padding: 10px $section-padding;
-		color: #333;
-
 		h2 {
 			padding-bottom: 10px;
 		}
 
 		h3 {
-			color: #333;
 			padding-top: 5px;
 			padding-bottom: 5px;
 		}
@@ -116,10 +113,10 @@ $header-landscape-footer-height-mobile: 40px;
 
 			.overview-description {
 				width: 100%;
-				font-weight: 200;
-				font-size: 16px;
-				line-height: 27px;
-				color: #222;
+				font-weight: 300;
+				font-size: 17px;
+				line-height: 28px;
+				color: #444;
 				min-height: 100px;
 
 				p, div {
