@@ -129,3 +129,15 @@ html.touch a:hover {
 	.default-container { width: 100%; }
 }
 
+@media all and (max-width: $mobile-width) {
+	footer {
+		padding-right: 10px;
+		a {
+			margin-left: 10px;
+			h4 {
+				font-size: 11px;
+			}
+		}
+	}
+}
+
