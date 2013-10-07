@@ -5,5 +5,8 @@
 	</div>
 	<div class="content">
 		<input type="text" class="search-box shadow-light" placeholder="Hike name..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
+		<div class="search-input-button" data-ng-click="search()">
+			<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img>
+		</div>
 	</div>
 </article>

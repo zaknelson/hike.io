@@ -54,7 +54,6 @@
 	.content {
 		position: absolute;
 		top:30%;
-
 		width: 100%;
 		text-align: center;
 
@@ -66,6 +65,17 @@
 			padding: 7px;
 			width: 500px;
 			max-width: 80%;
+		}
+		.search-input-button {
+			display: inline;
+			cursor: pointer;
+			svg, img {
+				display: inline;
+				opacity: .65;
+				margin-left: -35px;
+				width: 15px;
+				height: 15px;
+			}
 		}
 	}
 
