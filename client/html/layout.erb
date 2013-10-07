@@ -71,7 +71,7 @@ https://github.com/zaknelson/hike.io/
 				</div>
 
 				<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
-					<div data-header-entry data-label="Search" data-url="#" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
+					<div data-header-entry data-label="Search" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
 				</div>
 
 				<div data-ng-show="isAdmin">
@@ -85,7 +85,7 @@ https://github.com/zaknelson/hike.io/
 			</div>
 			<div class="search-dropdown" data-ng-class="{active: isSearchBoxActive}">
 				<div class="header-right shadow-light">
-					 <input type="text" placeholder="Hike name..." data-ui-keypress="{'enter': 'hideSearchBox(); search($event)'}" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
+					 <input type="text" placeholder="Hike name..." data-ui-keypress="{'enter': 'hideSearchBox(); search($event)'}" spellcheck="false" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
 				</div>
 			</div>
 		</header>
