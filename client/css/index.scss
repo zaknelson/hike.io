@@ -69,13 +69,16 @@
 		.search-input-button {
 			display: inline;
 			cursor: pointer;
+			opacity: .65;
 			svg, img {
 				display: inline;
-				opacity: .65;
 				margin-left: -35px;
 				width: 15px;
 				height: 15px;
 			}
+		}
+		.search-input-button:hover {
+			opacity: .8;
 		}
 	}
 
