@@ -17,11 +17,6 @@ body {
 	position: relative;
 }
 
-.container {
-	min-height:100%;
-	position:relative;
-}
-
 footer {
 	position:absolute;
 	bottom:0;
@@ -93,10 +88,31 @@ li {
     list-style-type: disc;
 }
 
+b {
+	font-weight: bold;
+}
+
+i {
+	font-style: italic;
+}
+
+blockquote {
+	padding: 10px 15px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	line-height: 22px;
+	border-left: 5px solid #ddd;
+}
+
 [data-ng-view] {
 	padding-bottom: 55px;
 	width: 100%;
 	overflow: auto;
+}
+
+.container {
+	min-height:100%;
+	position:relative;
 }
 
 .noscript-message {

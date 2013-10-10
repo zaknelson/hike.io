@@ -7,6 +7,12 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isLoaded = false;
 	$scope.isSaving = false;
 
+	var disableLinksIfEditing = function(data) {
+		if ($scope.hike.description && $scope.isEditing) {
+			$scope.hike.description = $scope.hike.description.replace(/href/g, "data-href");
+		}
+	};
+
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
 			$scope.hike = data;
@@ -24,6 +30,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				$rootScope.metaDescription = $scope.hike.name + " is a hike in " + $scope.hike.locality + ".";
 			}
 
+			disableLinksIfEditing();
 			$scope.isLoaded = true;
 			$scope.htmlReady();
 		}).
@@ -32,16 +39,27 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		}
 	);
 
+	if (isEditing) {
+		new MediumEditor(".overview-description", {
+			anchorInputPlaceholder: "Hike id...",
+			excludedActions: ["u", "h4"],
+			placeholder: "",
+			delay: 100
+		});
+	}
+
+
 	$scope.save = function() {
 		if ($scope.isDirty) {
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
-					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, data));
-					resourceCache.put("/api/v1/hikes", null);
+					$scope.hike = data;
 					$scope.isSaving = false;
 					$scope.isDirty = false;
-					$scope.hike = data;
+					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
+					resourceCache.put("/api/v1/hikes", null);
+					disableLinksIfEditing();
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);

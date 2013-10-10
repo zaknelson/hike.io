@@ -23,7 +23,7 @@ class Hike < Sequel::Model
 				}
 			}
 		end
-		to_json options
+		to_json(options)
 	end
 
 	def self.create_from_json json
@@ -49,27 +49,34 @@ class Hike < Sequel::Model
 		id.downcase.split(" ").join("-")
 	end
 
-		def self.clean_string_input str
+	def self.clean_string_input str
 		Sanitize.clean(str)
 	end
 
 	def self.clean_html_input html
 		return html if not html
 		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
-		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>|<h3>|<\/h3>)/i, "\n")
+		# TODO this code is inefficient
+		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>)/i, "\n")
 		html.gsub!("&nbsp;", "")
+		html.gsub!('href="javascript:void"', "")
+		html.gsub!("data-href", "href")
 		cleaned_html = ""
-		paragraphs = html.split("\n")
-		paragraphs.each do |p|
-			next if p.length == 0
-			p = p.strip
-			if p[p.length - 1] != "." # HACK, until a better ui is developed for adding headers
-				cleaned_html += "<h3>" + p.strip + "</h3>"
+		html_elements = html.split("\n")
+		html_elements.each do |element|
+			element.strip!
+			next if element.length == 0
+			if ((element.start_with?("<h3>") && element.end_with?("</h3>")) ||
+				(element.start_with?("<blockquote>") && element.end_with?("</blockquote>")))
+				cleaned_html += element
 			else
-				cleaned_html += "<p>" + p.strip + "</p>"
+				cleaned_html += "<p>" + element + "</p>"
 			end
 		end
-		Sanitize.clean(cleaned_html, :elements => ["p", "h3"])
+		Sanitize.clean(cleaned_html, 
+			:elements => ["h3", "b", "i", "blockquote", "p", "a"],
+			:attributes => { "a" => ["href"] },
+			:protocols => { "a" => { "href" => [:relative]}})
 	end
 
 	def update_from_json json
