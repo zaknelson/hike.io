@@ -41,7 +41,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 	if (isEditing) {
 		new MediumEditor(".overview-description", {
-			anchorInputPlaceholder: "Hike id...",
+			anchorInputPlaceholder: "Relative link...",
 			excludedActions: ["u", "h4"],
 			placeholder: "",
 			delay: 100
