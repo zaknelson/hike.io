@@ -18,17 +18,19 @@ class HikeApp < Sinatra::Base
 		return 404 if not review
 		return 400 if review.api_verb != "put" && review.api_verb != "post"
 		return 409 if review.status != Review::STATUS_UNREVIEWED
-		review.reviewer = current_user_id
-		review.status = Review::STATUS_ACCEPTED
-		review.edit_time = Time.now
-		review.save_changes
 
 		if review.api_verb == "put"
 			hike = Hike[:id => review.hike_id]
+			return 409 if hike.edit_time > review.creation_time
 			update_hike(hike, JSON.parse(review.api_body)) # defined in api_routes.rb
 		elsif review.api_verb == "post" 
 			Hike.create_from_json(JSON.parse(review.api_body))
 		end
+
+		review.reviewer = current_user_id
+		review.status = Review::STATUS_ACCEPTED
+		review.edit_time = Time.now
+		review.save_changes
 
 		redirect "/hikes/#{hike.string_id}"
 	end

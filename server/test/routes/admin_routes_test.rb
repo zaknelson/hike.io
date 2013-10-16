@@ -65,6 +65,14 @@ class AdminRoutesTest < HikeAppTestCase
 		assert_equal 409, last_response.status
 	end
 
+	def test_accept_already_updated
+		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		set_admin_cookie
+		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
+		assert_equal 409, last_response.status
+	end
+
 
 	#
 	# GET /admin/v1/reviews/:review_id/reject
