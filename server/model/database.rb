@@ -115,37 +115,6 @@ migration "create reviews table" do
 	end
 end
 
-class Location < Sequel::Model
-	one_to_many :hikes
-end
-
-class Map < Sequel::Model
-end
-
-class Keyword < Sequel::Model
-	many_to_many :hikes
-end
-
-class User < Sequel::Model
-end
-
-class StaticHtml < Sequel::Model
-end
-
-class Review < Sequel::Model
-	STATUS_UNREVIEWED = "unreviewed"
-	STATUS_ACCEPTED = "accepted"
-	STATUS_REJECTED = "rejected"
-
-	def before_create
-		super
-		self.string_id ||= UUIDTools::UUID.random_create.to_s
-		self.status ||= STATUS_UNREVIEWED
-		self.creation_time ||= Time.now
-		self.edit_time ||= Time.now
-	end
-end
-
 migration "seed admin user" do
 	User.create(:id => UUIDTools::UUID.random_create.to_s)
 end

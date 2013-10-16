@@ -18,9 +18,7 @@ require "will_paginate"
 require "will_paginate/sequel"
 
 require_relative "controller/search"
-require_relative "model/database"
-require_relative "model/hike"
-require_relative "model/photo"
+Dir.glob("#{File.dirname(__FILE__)}/model/*") {|file| require file}
 
 configure :production do
 	require "newrelic_rpm"
