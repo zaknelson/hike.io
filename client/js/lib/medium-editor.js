@@ -243,8 +243,11 @@ function MediumEditor(elements, options) {
 
         setToolbarPosition: function () {
             var buttonHeight = 50,
-                selection = window.getSelection(),
-                range = selection.getRangeAt(0),
+                selection = window.getSelection();
+            if (!selection.rangeCount) {
+                return;
+            }
+            var range = selection.getRangeAt(0),
                 boundary = range.getBoundingClientRect(),
                 defaultLeft = (this.options.diffLeft) - (this.toolbar.offsetWidth / 2),
                 middleBoundary = (boundary.left + boundary.right) / 2,
