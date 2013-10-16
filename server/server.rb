@@ -101,7 +101,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		def user_needs_changes_reviewed?
-			Sinatra::Application.environment() == :production && cookies["user_id"] != Digest::SHA1.hexdigest(User.first.id)
+			cookies["user_id"] != Digest::SHA1.hexdigest(User.first.id)
 		end
 
 		def current_user_id
