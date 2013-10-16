@@ -6,6 +6,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isEditing = isEditing;
 	$scope.isLoaded = false;
 	$scope.isSaving = false;
+	$scope.isBeingReviewed = false;
 
 	var disableLinksIfEditing = function(data) {
 		if ($scope.hike.description && $scope.isEditing) {
@@ -56,12 +57,18 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
-					$scope.hike = data;
-					$scope.isSaving = false;
-					$scope.isDirty = false;
-					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
-					resourceCache.put("/api/v1/hikes", null);
-					disableLinksIfEditing();
+					if (status === 200) {
+						$scope.hike = data;
+						$scope.isSaving = false;
+						$scope.isDirty = false;
+						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
+						resourceCache.put("/api/v1/hikes", null);
+						disableLinksIfEditing();
+					} else if (status === 202) {
+						$scope.isBeingReviewed = true;
+						$scope.isSaving = false;
+						$scope.isDirty = false;
+					}
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
