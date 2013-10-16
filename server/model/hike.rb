@@ -47,6 +47,7 @@ class Hike < Sequel::Model
 	end
 
 	def self.create_string_id_from_name name
+		# The logic for converting name into id needs to stay in sync with the same function on the client
 		id = name.gsub("#", "");
 		id.downcase.split(" ").join("-")
 	end
