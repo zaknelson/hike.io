@@ -26,9 +26,7 @@ class HikeApp < Sinatra::Base
 			hike = Hike[:id => review.hike_id]
 			update_hike(hike, JSON.parse(review.api_body)) # defined in api_routes.rb
 		elsif review.api_verb == "post" 
-			hike = Hike.create_from_json(JSON.parse(review.api_body))
-			hike.update_keywords
-			hike.save
+			Hike.create_from_json(JSON.parse(review.api_body))
 		end
 
 		redirect "/hikes/#{hike.string_id}"
