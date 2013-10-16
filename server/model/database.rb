@@ -114,7 +114,3 @@ migration "create reviews table" do
 		index :id
 	end
 end
-
-migration "seed admin user" do
-	User.create(:id => UUIDTools::UUID.random_create.to_s)
-end

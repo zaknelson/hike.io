@@ -82,6 +82,8 @@ class Hike < Sequel::Model
 	end
 
 	def update_from_json json
+		self.update_keywords if json["name"] != self.name
+
 		self.name = Hike.clean_string_input(json["name"])
 		self.description = Hike.clean_html_input(json["description"])
 		self.distance = json["distance"]
@@ -89,6 +91,58 @@ class Hike < Sequel::Model
 		self.locality = Hike.clean_string_input(json["locality"])
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
+
+		removed_photos = []
+		Hike.each_photo_type do |photo_key|
+			existing_photo = self.send(photo_key)
+			if json[photo_key] != nil
+				new_photo = Photo.find(:id => json[photo_key]["id"])
+				self.send "#{photo_key}=", new_photo
+				new_photo.move_on_s3_if_needed(self)
+			elsif existing_photo
+				removed_photos.push existing_photo
+				self.send "#{photo_key}=", nil
+			end
+		end
+
+		if json["photos_generic"]
+			new_generic_photos = []
+			json["photos_generic"].each do |photo|
+				photo = Photo.find(:id => photo["id"])
+				new_generic_photos.push(photo) if photo
+			end
+
+			added_generic_photos = new_generic_photos - self.photos_generic
+			removed_generic_photos = self.photos_generic - new_generic_photos
+
+			added_generic_photos.each do |photo|
+				self.add_photos_generic(photo)
+				photo.move_on_s3_if_needed(self)
+			end
+
+			removed_photos += removed_generic_photos
+			
+			removed_generic_photos.each do |photo|
+				self.remove_photos_generic(photo)
+			end
+		end
+
+		self.edit_time = Time.now
+		self.location.save_changes
+		self.save_changes
+		
+		removed_photos.each do |photo|
+			photo.delete
+			if settings.production?
+				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
+				src = "hike-images/" + photo.string_id
+				dst = "hike-images/tmp/deleted/" + photo.string_id
+				Photo.each_rendition do |rendition|
+					suffix = Photo.get_rendition_suffix(rendition)
+					bucket.objects[src + suffix].move_to(dst + suffix)
+				end
+			end
+		end
 	end
 
 	def update_keywords
@@ -102,6 +156,32 @@ class Hike < Sequel::Model
 		yield "photo_facts"
 		yield "photo_landscape"
 		yield "photo_preview"
+	end
+
+	def self.is_valid_json? json
+		json["name"] &&
+			json["locality"] &&
+			json["distance"] &&
+			json["elevation_max"] &&
+			json["location"] && 
+			json["location"]["latitude"] &&
+			json["location"]["longitude"] &&
+			StringUtils.is_numeric?(json["distance"]) &&
+			StringUtils.is_numeric?(json["elevation_max"]) &&
+			StringUtils.is_numeric?(json["location"]["latitude"]) &&
+			StringUtils.is_numeric?(json["location"]["longitude"]) &&
+			is_valid_latitude?(json["location"]["latitude"]) &&
+			is_valid_longitude?(json["location"]["longitude"])
+	end
+
+	def self.is_valid_latitude? latitude
+		latitude = latitude.to_f
+		latitude >= -90 and latitude <= 90
+	end
+
+	def self.is_valid_longitude? longitude
+		longitude = longitude.to_f
+		longitude >= -180 and longitude <= 180
 	end
 
 end

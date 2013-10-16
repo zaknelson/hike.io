@@ -18,7 +18,18 @@ require "will_paginate"
 require "will_paginate/sequel"
 
 require_relative "controller/search"
-Dir.glob("#{File.dirname(__FILE__)}/model/*") {|file| require file}
+require_relative "model/database"
+require_relative "model/hike"
+require_relative "model/keyword"
+require_relative "model/location"
+require_relative "model/map"
+require_relative "model/photo"
+require_relative "model/review"
+require_relative "model/search_result"
+require_relative "model/static_html"
+require_relative "model/user"
+
+require_relative "model/seeds"
 
 configure :production do
 	require "newrelic_rpm"
@@ -27,7 +38,7 @@ end
 #set :environment, :production
 
 configure :development, :test do
-	require_relative "model/seeds"
+	require_relative "model/dev_seeds"
 end
 
 class HikeApp < Sinatra::Base

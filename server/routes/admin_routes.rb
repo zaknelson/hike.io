@@ -22,7 +22,7 @@ class HikeApp < Sinatra::Base
 		if review.api_verb == "put"
 			hike = Hike[:id => review.hike_id]
 			return 409 if hike.edit_time > review.creation_time
-			update_hike(hike, JSON.parse(review.api_body)) # defined in api_routes.rb
+			hike.update_from_json(JSON.parse(review.api_body))
 		elsif review.api_verb == "post" 
 			Hike.create_from_json(JSON.parse(review.api_body))
 		end
