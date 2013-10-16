@@ -242,16 +242,4 @@ class ApiRoutesTest < HikeAppTestCase
 		end
 	end
 
-	def get_basic_hike_json
-		{
-			"name" => "New Name",
-			"locality" => "New Locality",
-			"distance" => 123,
-			"elevation_max" => 1234,
-			"location" => {
-				"latitude" => 12,
-				"longitude" => 12
-			}
-		}
-	end
 end

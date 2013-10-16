@@ -19,4 +19,17 @@ class HikeAppTestCase < Test::Unit::TestCase
 	def set_admin_cookie
 		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
 	end
+
+	def get_basic_hike_json
+		{
+			"name" => "New Name",
+			"locality" => "New Locality",
+			"distance" => 123,
+			"elevation_max" => 1234,
+			"location" => {
+				"latitude" => 12,
+				"longitude" => 12
+			}
+		}
+	end
 end
