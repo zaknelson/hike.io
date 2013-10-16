@@ -14,18 +14,15 @@ class HtmlRoutesTest < HikeAppTestCase
 
 	def test_get_pages_return_200
 		get_and_assert_status "/", 200
+		get_and_assert_status "/add", 200
 		get_and_assert_status "/map", 200
 		get_and_assert_status "/discover", 200
 		get_and_assert_status "/discover?page=1", 200
 		get_and_assert_status "/discover?page=2", 200
 		get_and_assert_status "/hikes/scotchman-peak", 200
+		get_and_assert_status "/hikes/scotchman-peak/edit", 200
 		get_and_assert_status "/search", 200
 		get_and_assert_status "/search?q=peak", 200
-	end
-
-	def test_get_unauthorized_pages_return_403
-		get_and_assert_status "/hikes/scotchman-peak/edit", 403
-		get_and_assert_status "/add", 403
 	end
 
 	def test_get_authorized_pages_return_200

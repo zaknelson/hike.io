@@ -1,7 +1,6 @@
 "use strict";
 var AppController = function($scope) {
 	$scope.isSearchBoxActive = false;
-	$scope.isAdmin = window.hikeio.isAdmin;
 
 	$scope.hideSearchBox = function() {
 		$scope.isSearchBoxActive = false;
@@ -18,7 +17,7 @@ var AppController = function($scope) {
 			if (target === document.body) {
 				event.preventDefault();
 			}
-		} else if ($scope.isAdmin && event.keyCode === 83 && (event.metaKey || event.ctrlKey)) { // save event
+		} else if (event.keyCode === 83 && (event.metaKey || event.ctrlKey)) { // save event
 			$scope.$broadcast("keyboardEventSave");
 			event.preventDefault();
 		}

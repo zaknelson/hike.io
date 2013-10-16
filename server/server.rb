@@ -100,8 +100,12 @@ class HikeApp < Sinatra::Base
 			"#{File.dirname(__FILE__)}/../client"
 		end
 
-		def is_admin?
-			Sinatra::Application.environment() == :development or cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id)
+		def user_needs_changes_reviewed?
+			Sinatra::Application.environment() == :production && cookies["user_id"] != Digest::SHA1.hexdigest(User.first.id)
+		end
+
+		def current_user_id
+			cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id) ? User.first.id : nil
 		end
 
 		def array_as_json array, fields=nil
@@ -120,4 +124,5 @@ class HikeApp < Sinatra::Base
 end
 
 require_relative "routes/api_routes"
+require_relative "routes/admin_routes"
 require_relative "routes/html_routes"

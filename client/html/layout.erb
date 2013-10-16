@@ -26,7 +26,6 @@ https://github.com/zaknelson/hike.io/
 	</style>
 	<script>
 		window.hikeio = window.hikeio || {};
-		window.hikeio.isAdmin = <%= is_admin? %>;
 
 		var updateViewport = function() {
 			var minWidth = 450;
@@ -74,11 +73,11 @@ https://github.com/zaknelson/hike.io/
 					<div data-header-entry data-label="Search" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
 				</div>
 
-				<div data-ng-show="isAdmin">
+				<div>
 					<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
 				</div>
 
-				<div data-ng-show="isAdmin &amp;&amp; navigation.onEntry()">
+				<div data-ng-show="navigation.onEntry()">
 					<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png"></img></div>
 				</div>
 				

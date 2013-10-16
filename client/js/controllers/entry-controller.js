@@ -40,7 +40,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	);
 
 	if (isEditing) {
-		/*jshint nonew: false, undef: false */
+		/* jshint nonew: false, undef: false */
 		/* global MediumEditor: false */
 		new MediumEditor(".overview-description", {
 			anchorInputPlaceholder: "Relative link...",

@@ -60,7 +60,7 @@ migration "create hikes table" do
 		Float :elevation_gain				#optional
 		Float :elevation_max				#optional
 		Time :creation_time, 				:null => false
-		Time :edit_time, 						:null => false
+		Time :edit_time, 					:null => false
 
 		foreign_key :location_id, :locations
 		foreign_key :photo_facts_id, :photos
@@ -91,9 +91,27 @@ end
 migration "create static_html table" do
 	database.create_table :static_htmls do
 		primary_key :id
-		String :url, 								:null => false, :unique => true
-		String :html, 							:null => false
+		String :url, 						:null => false, :unique => true
+		String :html, 						:null => false
 		Time :fetch_time, 					:null => false
+	end
+end
+
+# TODO, revisit this
+migration "create reviews table" do
+	database.create_table :reviews do
+		primary_key :id
+		String :string_id,						:null => false, :unique => true
+		String :status,							:null => false
+		String :api_verb,						:null => false
+		String :api_body,						:null => false
+		Time :creation_time,					:null => false
+		Time :edit_time,						:null => false
+		foreign_key :hike_id, :hikes
+		foreign_key :reviewer, :users, :key => :id, :type => String
+		foreign_key :reviewee, :users, :key => :id, :type => String
+
+		index :id
 	end
 end
 
@@ -112,6 +130,20 @@ class User < Sequel::Model
 end
 
 class StaticHtml < Sequel::Model
+end
+
+class Review < Sequel::Model
+	STATUS_UNREVIEWED = "unreviewed"
+	STATUS_ACCEPTED = "accepted"
+	STATUS_REJECTED = "rejected"
+
+	def before_create
+		super
+		self.string_id ||= UUIDTools::UUID.random_create.to_s
+		self.status ||= STATUS_UNREVIEWED
+		self.creation_time ||= Time.now
+		self.edit_time ||= Time.now
+	end
 end
 
 migration "seed admin user" do

@@ -41,6 +41,8 @@ class Hike < Sequel::Model
 			:latitude => json["location"]["latitude"],
 			:longitude => json["location"]["longitude"]
 			);
+		hike.update_keywords
+		hike.save
 		hike
 	end
 

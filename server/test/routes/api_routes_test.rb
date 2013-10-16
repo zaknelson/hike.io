@@ -118,7 +118,7 @@ class ApiRoutesTest < HikeAppTestCase
 
 	def test_post_hike_without_credentials
 		post "/api/v1/hikes", get_basic_hike_json.to_json
-		assert_equal 403, last_response.status
+		assert_equal 202, last_response.status
 	end
 
 	def test_post_with_credentials
@@ -182,7 +182,7 @@ class ApiRoutesTest < HikeAppTestCase
 
 	def test_put_hike_without_credentials
 		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
-		assert_equal 403, last_response.status
+		assert_equal 202, last_response.status
 	end
 
 	def test_put_hike_name

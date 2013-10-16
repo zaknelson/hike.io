@@ -4,6 +4,7 @@ require "RMagick"
 require "uuidtools"
 
 require_relative "../server"
+require_relative "../utils/email_utils"
 require_relative "../utils/routes_utils"
 require_relative "../utils/string_utils"
 
@@ -14,13 +15,21 @@ class HikeApp < Sinatra::Base
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
-		return 403 if not is_admin?
-		json = JSON.parse request.body.read rescue return 400
+		json_str = request.body.read 
+		json = JSON.parse json_str rescue return 400
 		return 400 if not is_valid_hike_input? json
 		return 409 if Hike[:string_id => Hike.create_string_id_from_name(json["name"])]
+		if user_needs_changes_reviewed?
+			review = Review.create({
+				:api_verb => "post",
+				:api_body => json_str,
+				:reviewee => current_user_id
+			})
+			EmailUtils.send_new_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}")
+			return 202
+		end
+
 		hike = Hike.create_from_json json
-		hike.update_keywords
-		hike.save
 		hike.as_json
 	end
 
@@ -43,76 +52,31 @@ class HikeApp < Sinatra::Base
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		return 404 if not hike
-		hike.as_json get_fields_filter if hike
+		hike.as_json get_fields_filter
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
-		return 403 if not is_admin?
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		return 404 if not hike
-		json = JSON.parse request.body.read rescue return 400
+		json_str = request.body.read
+		json = JSON.parse json_str rescue return 400
 		return 400 if not is_valid_hike_input? json
 
-		hike.update_from_json json
-		hike.update_keywords if json["name"] != hike.name
-
-		removed_photos = []
-		Hike.each_photo_type do |photo_key|
-			existing_photo = hike.send(photo_key)
-			if json[photo_key] != nil
-				new_photo = Photo.find(:id => json[photo_key]["id"])
-				hike.send "#{photo_key}=", new_photo
-				move_photo_if_needed(new_photo, hike)
-			elsif existing_photo
-				removed_photos.push existing_photo
-				hike.send "#{photo_key}=", nil
-			end
+		if user_needs_changes_reviewed?
+			review = Review.create({
+				:api_verb => "put",
+				:api_body => json_str,
+				:hike_id => hike.id,
+				:reviewee => current_user_id
+			})
+			EmailUtils.send_diff_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}")
+			return 202
 		end
 
-		if json["photos_generic"]
-			new_generic_photos = []
-			json["photos_generic"].each do |photo|
-				photo = Photo.find(:id => photo["id"])
-				new_generic_photos.push(photo) if photo
-			end
-
-			added_generic_photos = new_generic_photos - hike.photos_generic
-			removed_generic_photos = hike.photos_generic - new_generic_photos
-
-			added_generic_photos.each do |photo|
-				hike.add_photos_generic(photo)
-				move_photo_if_needed photo, hike
-			end
-
-			removed_photos += removed_generic_photos
-			
-			removed_generic_photos.each do |photo|
-				hike.remove_photos_generic(photo)
-			end
-		end
-
-		hike.edit_time = Time.now
-		hike.location.save_changes
-		hike.save_changes
-		
-		removed_photos.each do |photo|
-			photo.delete
-			if settings.production?
-				bucket = s3.buckets["assets.hike.io"]
-				src = "hike-images/" + photo.string_id
-				dst = "hike-images/tmp/deleted/" + photo.string_id
-				Photo.each_rendition do |rendition|
-					suffix = get_rendition_suffix(rendition)
-					bucket.objects[src + suffix].move_to(dst + suffix)
-				end
-			end
-		end
-
-		hike.as_json
+		update_hike(hike, json)
 	end
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
-		return 403 if not is_admin?
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
 		return 404 if not hike
@@ -168,6 +132,65 @@ class HikeApp < Sinatra::Base
 		renditions["thumb"] = sharpened_image.crop_resized(400, 400)
 		renditions["thumb-tiny"] = sharpened_image.crop_resized(200, 200)
 		renditions
+	end
+
+	def update_hike hike, json
+		hike.update_keywords if json["name"] != hike.name
+		hike.update_from_json(json)
+
+		removed_photos = []
+		Hike.each_photo_type do |photo_key|
+			existing_photo = hike.send(photo_key)
+			if json[photo_key] != nil
+				new_photo = Photo.find(:id => json[photo_key]["id"])
+				hike.send "#{photo_key}=", new_photo
+				move_photo_if_needed(new_photo, hike)
+			elsif existing_photo
+				removed_photos.push existing_photo
+				hike.send "#{photo_key}=", nil
+			end
+		end
+
+		if json["photos_generic"]
+			new_generic_photos = []
+			json["photos_generic"].each do |photo|
+				photo = Photo.find(:id => photo["id"])
+				new_generic_photos.push(photo) if photo
+			end
+
+			added_generic_photos = new_generic_photos - hike.photos_generic
+			removed_generic_photos = hike.photos_generic - new_generic_photos
+
+			added_generic_photos.each do |photo|
+				hike.add_photos_generic(photo)
+				move_photo_if_needed photo, hike
+			end
+
+			removed_photos += removed_generic_photos
+			
+			removed_generic_photos.each do |photo|
+				hike.remove_photos_generic(photo)
+			end
+		end
+
+		hike.edit_time = Time.now
+		hike.location.save_changes
+		hike.save_changes
+		
+		removed_photos.each do |photo|
+			photo.delete
+			if settings.production?
+				bucket = s3.buckets["assets.hike.io"]
+				src = "hike-images/" + photo.string_id
+				dst = "hike-images/tmp/deleted/" + photo.string_id
+				Photo.each_rendition do |rendition|
+					suffix = get_rendition_suffix(rendition)
+					bucket.objects[src + suffix].move_to(dst + suffix)
+				end
+			end
+		end
+
+		hike.as_json
 	end
 
 	def move_photo_if_needed photo, hike
