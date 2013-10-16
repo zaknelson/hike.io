@@ -22,7 +22,7 @@ class EmailUtils
 		RestClient.post api_url + "/messages", 
 			:from => "review@hike.io.mailgun.org",
 			:to => "review@hike.io",
-			:subject => "[REVIEW] " + title,
+			:subject => "[Review " +  Sinatra::Application.environment().to_s + "] "  + title,
 			:html => Premailer.new(html, :with_html_string => true).to_inline_css
 	end
 
