@@ -68,6 +68,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						$scope.isBeingReviewed = true;
 						$scope.isSaving = false;
 						$scope.isDirty = false;
+						// Keep this temporary version in the user's session cache, in case they decide to make other changes.
+						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 					}
 				}).
 				error(function(data, status, headers, config) {
