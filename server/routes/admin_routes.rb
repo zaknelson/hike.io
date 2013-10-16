@@ -47,7 +47,7 @@ class HikeApp < Sinatra::Base
 			hike = Hike[:id => review.hike_id]
 			redirect "/hikes/#{hike.string_id}"
 		elsif review.api_verb == "post" 
-			# todo
+			redirect "/hikes"
 		end
 	end
 end
