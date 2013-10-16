@@ -15,4 +15,8 @@ class HikeAppTestCase < Test::Unit::TestCase
 		Sequel::Model.db.transaction(:rollback => :always){ result = super }
 		result
 	end
+
+	def set_admin_cookie
+		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
+	end
 end

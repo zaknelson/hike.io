@@ -6,6 +6,7 @@ class HikeApp < Sinatra::Base
 	get "/admin/v1/reviews/:review_id", :provides => "json" do
 		return 403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
+		return 404 if not review
 		review.to_json
 	end
 

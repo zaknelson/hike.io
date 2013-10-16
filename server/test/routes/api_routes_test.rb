@@ -221,10 +221,6 @@ class ApiRoutesTest < HikeAppTestCase
 		assert_equal response_code, last_response.status
 	end
 
-	def set_admin_cookie
-		set_cookie "user_id=#{Digest::SHA1.hexdigest(User.first.id)}"
-	end
-
 	def validate data, hike_string_id
 		json = JSON.parse(last_response.body)
 		assert_equal hike_string_id, json["string_id"]
