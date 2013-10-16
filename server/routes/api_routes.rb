@@ -25,7 +25,7 @@ class HikeApp < Sinatra::Base
 				:api_body => json_str,
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_new_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}")
+			EmailUtils.send_new_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}") if Sinatra::Application.environment() != :test
 			return 202
 		end
 
@@ -69,7 +69,7 @@ class HikeApp < Sinatra::Base
 				:hike_id => hike.id,
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_diff_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}")
+			EmailUtils.send_diff_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}") if Sinatra::Application.environment() != :test
 			return 202
 		end
 
