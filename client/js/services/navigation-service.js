@@ -25,6 +25,10 @@ angular.module("hikeio").
 			$location.url("/hikes/" + id);
 		};
 
+		NavigationService.prototype.toEntryEdit = function(id) {
+			$location.url("/hikes/" + id + "/edit");
+		};
+
 		NavigationService.prototype.onEntry = function() {
 			var regex = /\/hikes\/(?!.*\/edit$)/;
 			return regex.test($location.path());

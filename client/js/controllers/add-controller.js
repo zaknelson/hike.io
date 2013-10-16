@@ -16,7 +16,7 @@ var AddController = function($http, $log, $scope, navigation, resourceCache) {
 				} else if (status === 200) {
 					id = data.string_id;
 				}
-				navigation.toEntry(id);
+				navigation.toEntryEdit(id);
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
