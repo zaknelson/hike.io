@@ -71,11 +71,11 @@
 	</section>
 	<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
 		<h2>Photos</h2>
-		<div class="photo-thumb-list" data-fancybox=".fancybox-thumbs">
+		<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
 			<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
 				<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img>
 			</div></div>
-			<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumbs" href="#" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
+			<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumb-link" href="#" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
 				<div class="photo-thumb" style="position:relative">
 					<div data-ui-if="isEditing" data-ng-click="removePhoto('generic', photo)" class="trash-icon">×</div>
 					<img class="shadow-light" data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
