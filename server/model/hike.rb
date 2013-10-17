@@ -42,7 +42,6 @@ class Hike < Sequel::Model
 			:longitude => json["location"]["longitude"]
 			);
 		hike.update_keywords
-		hike.save
 		hike
 	end
 
@@ -130,7 +129,6 @@ class Hike < Sequel::Model
 
 		self.edit_time = Time.now
 		self.location.save_changes
-		self.save_changes
 		
 		removed_photos.each do |photo|
 			photo.delete

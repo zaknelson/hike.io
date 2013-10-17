@@ -32,10 +32,13 @@ class EmailUtils
 	end
 
 	def self.send_diff_review(review, base_url)
-		hike = Hike[:id => review.hike_id]
-		before = JSON.pretty_generate(JSON.parse(hike.as_json))
+		hike = Hike[:string_id => review.hike_string_id]
+		# Because the review process allows users to perform updates on hikes that haven't been
+		# created yet, there might not yet be a before.
+		title = hike ? "Update for #{hike.name}" : "Update for pending hike"
+		before = hike ? JSON.pretty_generate(JSON.parse(hike.as_json)) : ""
 		after = JSON.pretty_generate(JSON.parse(review.api_body))
 		html = Diffy::Diff.new(before, after).to_s(:html)
-		send_review(html, base_url, hike.name)
+		send_review(html, base_url, title)
 	end
 end

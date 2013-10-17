@@ -20,11 +20,17 @@ class HikeApp < Sinatra::Base
 		return 409 if review.status != Review::STATUS_UNREVIEWED
 
 		if review.api_verb == "put"
-			hike = Hike[:id => review.hike_id]
+			hike = Hike[:string_id => review.hike_string_id]
+			return 409 if not hike
 			return 409 if hike.edit_time > review.creation_time
 			hike.update_from_json(JSON.parse(review.api_body))
+			hike.edit_time = review.creation_time
+			hike.save_changes
 		elsif review.api_verb == "post" 
-			Hike.create_from_json(JSON.parse(review.api_body))
+			hike = Hike.create_from_json(JSON.parse(review.api_body))
+			hike.creation_time = review.creation_time
+			hike.edit_time = review.creation_time
+			hike.save
 		end
 
 		review.reviewer = current_user_id
@@ -47,10 +53,14 @@ class HikeApp < Sinatra::Base
 		review.save_changes
 
 		if review.api_verb == "put"
-			hike = Hike[:id => review.hike_id]
-			redirect "/hikes/#{hike.string_id}"
+			hike = Hike[:string_id => review.hike_string_id]
+			if hike
+				redirect "/hikes/#{hike.string_id}"
+			else
+				redirect "/"
+			end
 		elsif review.api_verb == "post" 
-			redirect "/hikes"
+			redirect "/"
 		end
 	end
 end

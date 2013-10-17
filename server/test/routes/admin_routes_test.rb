@@ -40,7 +40,8 @@ class AdminRoutesTest < HikeAppTestCase
 	#
 
 	def test_accept_review
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		json_obj = get_basic_hike_json
+		put "/api/v1/hikes/empty", json_obj.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		assert_equal 302, last_response.status
@@ -49,6 +50,9 @@ class AdminRoutesTest < HikeAppTestCase
 		json = JSON.parse(last_response.body)
 		assert_equal 200, last_response.status
 		assert_equal Review::STATUS_ACCEPTED, json["status"]
+
+		get "/api/v1/hikes/empty"
+		assert_equal json_obj["name"], JSON.parse(last_response.body)["name"]
 	end
 
 	def test_accept_without_credentials
@@ -71,6 +75,27 @@ class AdminRoutesTest < HikeAppTestCase
 		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		assert_equal 409, last_response.status
+	end
+
+	def test_accept_post_and_put
+		# Setup reviews
+		json_obj = get_basic_hike_json
+		post "/api/v1/hikes", get_basic_hike_json.to_json
+		description = "<p>updated description</p>"
+		json_obj["description"] = description
+		put "/api/v1/hikes/new-name", json_obj.to_json
+
+		# Accept reviews
+		set_admin_cookie
+		get "/admin/v1/reviews/" + Review[:api_verb => "post"].string_id + "/accept"
+		assert_equal 302, last_response.status
+		get "/api/v1/hikes/new-name"
+		get "/admin/v1/reviews/" + Review[:api_verb => "put"].string_id + "/accept"
+		assert_equal 302, last_response.status
+
+		# Verify
+		get "/api/v1/hikes/new-name"
+		assert_equal description, JSON.parse(last_response.body)["description"]
 	end
 
 

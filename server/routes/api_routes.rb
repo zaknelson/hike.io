@@ -30,6 +30,7 @@ class HikeApp < Sinatra::Base
 		end
 
 		hike = Hike.create_from_json json
+		hike.save
 		hike.as_json
 	end
 
@@ -57,7 +58,6 @@ class HikeApp < Sinatra::Base
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
-		return 404 if not hike
 		json_str = request.body.read
 		json = JSON.parse json_str rescue return 400
 		return 400 if not Hike.is_valid_json? json
@@ -66,13 +66,16 @@ class HikeApp < Sinatra::Base
 			review = Review.create({
 				:api_verb => "put",
 				:api_body => json_str,
-				:hike_id => hike.id,
+				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
 			EmailUtils.send_diff_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}") if Sinatra::Application.environment() != :test
 			return 202
+		elsif not hike
+			return 404
 		end
 		hike.update_from_json(json)
+		hike.save_changes
 		hike.as_json
 	end
 
