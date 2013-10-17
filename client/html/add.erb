@@ -1,10 +1,10 @@
-<article class="default-container add-page"  data-meta-description="Add a new hike by specifying name, locality, distance, elevation and latitude / longitude.">
-	<h1>Add a hike</h1>
-	<form data-ng-submit="add()">
+<article id="add-page" class="add-page" data-ng-controller="AddController" data-meta-description="Add a new hike by specifying name, locality, distance, elevation and latitude / longitude.">
+	<h2>Add a hike</h2>
+	<form data-ng-submit="add()" action="javascript:void(0);">
 		<div>
 			<div>
 				<label for="name">Name</label>
-				<input id="name" type="text" required="true" autocomplete="off" data-ng-model="hike.name" autofocus></input>
+				<input id="name" type="text" required="true" autocomplete="off" data-ng-model="hike.name"></input>
 			</div>
 			<div>
 				<label for="locality">Location</label>

@@ -73,8 +73,10 @@ https://github.com/zaknelson/hike.io/
 					<div data-header-entry data-label="Search" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
 				</div>
 
-				<div>
-					<div data-header-entry data-label="Add" data-url="/add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
+				<div data-fancybox=".add-header-link">
+					<a class="add-header-link" data-fancybox-href="#add-page">
+						<div data-header-entry data-label="Add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png"></img></div>
+					</a>
 				</div>
 
 				<div data-ng-show="navigation.onEntry()">
@@ -92,6 +94,8 @@ https://github.com/zaknelson/hike.io/
 		<%= yield %>
 
 		<%= yield_content :preload_resource %>
+
+		<%= yield_content :add_modal %>
 
 		<div data-ng-view data-ng-click="hideSearchBox()">
 			<noscript>

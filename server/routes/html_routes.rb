@@ -18,6 +18,7 @@ class HikeApp < Sinatra::Base
 		@is_partial = request.path_info.start_with? "/partials/"
 		@img_dir = "/images"
 		@is_bot = AgentOrange::UserAgent.new(request.user_agent).device.is_bot?
+		inject_inlined_html
 	end
 
 	helpers do
@@ -47,6 +48,12 @@ class HikeApp < Sinatra::Base
 	def preload_resource resource_id, resource
 		content_for :preload_resource do
 			"<div data-preload-resource='#{resource_id}'>#{resource}</div>"
+		end
+	end
+
+	def inject_inlined_html
+		content_for :add_modal do
+			erb :add
 		end
 	end
 
@@ -91,12 +98,6 @@ class HikeApp < Sinatra::Base
 	["/", "/partials/index.html"].each do |path|
 		get path, :provides => "html" do
 			render_template :index
-		end
-	end
-
-	["/add", "/partials/add.html"].each do |path|
-		get path, :provides => "html" do
-			render_template :add
 		end
 	end
 

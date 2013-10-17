@@ -17,6 +17,8 @@ var AddController = function($http, $log, $scope, navigation, resourceCache) {
 					id = data.string_id;
 				}
 				navigation.toEntryEdit(id);
+				$scope.hike = {};
+				$scope.hike.location = {};
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
