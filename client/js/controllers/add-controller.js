@@ -22,8 +22,8 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 				$scope.hike = {};
 				$scope.hike.location = {};
 				$timeout(function() {
-					$rootScope.$broadcast("hikeAdded", $scope.hike); 
-				})
+					$rootScope.$broadcast("hikeAdded", $scope.hike);
+				});
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
