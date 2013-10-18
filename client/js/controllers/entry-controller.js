@@ -6,13 +6,17 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isEditing = isEditing;
 	$scope.isLoaded = false;
 	$scope.isSaving = false;
-	$scope.isBeingReviewed = false;
+	$scope.isJustAdded = false;
 
 	var disableLinksIfEditing = function(data) {
 		if ($scope.hike.description && $scope.isEditing) {
 			$scope.hike.description = $scope.hike.description.replace(/href/g, "data-href");
 		}
 	};
+
+	$scope.$on("hikeAdded", function() {
+		$scope.isJustAdded = true;
+	});
 
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
@@ -57,6 +61,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
+					$scope.isJustAdded = false;
 					if (status === 200) {
 						$scope.hike = data;
 						$scope.isSaving = false;

@@ -1,7 +1,9 @@
 <article class="default-container entry-page" data-ng-show="isLoaded" data-ng-class="{'entry-edit-page': isEditing}">
 	<div class="edit-banner" data-ng-show="isEditing" data-ng-class="{'edit-banner-review': isBeingReviewed &amp;&amp; !isDirty}">
-		<h3 data-ng-show="!isBeingReviewed || isDirty">You are editing this page</h3>
-		<h3 data-ng-show="isBeingReviewed &amp;&amp; !isDirty">Great! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
+		
+		<h3 data-ng-show="!isJustAdded &amp;&amp; !isBeingReviewed">You are editing this page.</h3>
+		<h3 data-ng-show="isJustAdded">Nice! You can now edit this page.</h3>
+		<h3 data-ng-show="!isJustAdded &amp;&amp; isBeingReviewed">Great! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
 		<div>
 			<button class="save-button btn" data-ng-class="{disabled: !isDirty || isSaving, loading: true}" autocomplete="off" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || 'Save'}}</button>
 			<button class="done-button btn" data-ng-click="done()">Done</button>

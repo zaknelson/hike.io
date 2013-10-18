@@ -1,5 +1,5 @@
 "use strict";
-var AddController = function($http, $log, $scope, navigation, resourceCache) {
+var AddController = function($http, $log, $rootScope, $scope, $timeout, navigation, resourceCache) {
 	$scope.hike = {};
 	$scope.hike.location = {};
 
@@ -21,6 +21,9 @@ var AddController = function($http, $log, $scope, navigation, resourceCache) {
 				navigation.toEntryEdit(id);
 				$scope.hike = {};
 				$scope.hike.location = {};
+				$timeout(function() {
+					$rootScope.$broadcast("hikeAdded", $scope.hike); 
+				})
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
@@ -30,4 +33,4 @@ var AddController = function($http, $log, $scope, navigation, resourceCache) {
 	$scope.htmlReady();
 };
 
-AddController.$inject = ["$http", "$log", "$scope", "navigation", "resourceCache"];
+AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "navigation", "resourceCache"];
