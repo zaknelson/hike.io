@@ -11,11 +11,13 @@ var AddController = function($http, $log, $scope, navigation, resourceCache) {
 					// The logic for converting name into id needs to stay in sync with the same function on the server
 					id = $scope.hike.name.toLowerCase().replace(/#/g, "").split(" ").join("-");
 					$scope.hike.string_id = id;
-					// Keep this temporary version in the user's session cache, in case they decide to make other changes.
-					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 				} else if (status === 200) {
 					id = data.string_id;
+					$scope.hike = data;
 				}
+				// Keep this hike in the user's session cache (even in the case when the add is under review, otherwise
+				// the redirect to the entry page would fail)
+				resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 				navigation.toEntryEdit(id);
 				$scope.hike = {};
 				$scope.hike.location = {};
