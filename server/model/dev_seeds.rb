@@ -17,16 +17,13 @@ migration "seed scotchman peak" do
 		:longitude => -116.089783
 	)
 
-	hike.photo_landscape = Photo.create(:string_id => "scotchman-peak/scotchman-peak-landscape")
-	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/scotchman-peak-preview")
-	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/scotchman-peak-facts")
-
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-mountain-goat"))
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-wildflower"))
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-meadow"))
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-pend-orielle"))
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-zak"))
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/scotchman-peak-hikers"))
+	hike.photo_landscape = Photo.create(:string_id => "scotchman-peak/landscape", :width => 2400, :height => 800)
+	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/preview", :width => 2400, :height => 2400)
+	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594)
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo1", :width => 2400, :height => 812))
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo2", :width => 1594, :height => 2400))
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo3", :width => 1594, :height => 2400))
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo4", :width => 2400, :height => 2400))
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Scotchman"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
@@ -34,144 +31,51 @@ migration "seed scotchman peak" do
 	hike.save
 end
 
-migration "seed mt kilamanjaro" do
+migration "seed nakoa trail" do
 	hike = Hike.create(
-		:string_id => "mt-kilimanjaro",
-		:name => "Mt. Kilimanjaro",
-		:locality => "Tanzania",
-		:distance => 50,
-		:elevation_max => 10500,
+		:string_id => "nakoa-trail",
+		:name => "Nakoa Trail",
+		:locality => "Hawaii, USA",
+		:distance => 10,
+		:elevation_max => 1200,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
 
 	hike.location = Location.create(
-		:latitude => 58.177534,
-		:longitude => -120.089783
+		:latitude => 21.545,
+		:longitude => -157.887
 	)
 
-	hike.photo_landscape = Photo.create(:string_id => "mt-kilimanjaro/mt-kilimanjaro-landscape")
-	hike.photo_preview = Photo.create(:string_id => "mt-kilimanjaro/mt-kilimanjaro-preview")
-	hike.photo_facts = Photo.create(:string_id => "mt-kilimanjaro/mt-kilimanjaro-facts")
+	hike.photo_preview = Photo.create(:string_id => "nakoa-trail/preview")
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Nakoa"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Trail"))
 
 	hike.save
 end
 
-migration "seed lake 22" do
+migration "seed the narrows" do
 	hike = Hike.create(
-		:string_id => "lake-22",
-		:name => "Lake 22",
-		:locality => "Washington, USA",
-		:distance => 18,
-		:elevation_max => 2500,
-		:creation_time => Time.now,
-		:edit_time => Time.now
-	)
-
-	hike.location = Location.create(
-		:latitude => 58.177534,
-		:longitude => -118.089783
-	)
-
-	hike.photo_landscape = Photo.create(:string_id => "lake-22/lake-22-landscape")
-	hike.photo_preview = Photo.create(:string_id => "lake-22/lake-22-preview")
-
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
-
-	hike.save
-end
-
-migration "seed pikes peak" do
-	hike = Hike.create(
-		:string_id => "pikes-peak",
-		:name => "Pike's Peak",
-		:locality => "Colorado, USA",
-		:distance => 28,
-		:elevation_max => 3500,
-		:creation_time => Time.now,
-		:edit_time => Time.now
-	)
-
-	hike.location = Location.create(
-		:latitude => 58.277534,
-		:longitude => -118.289783
-	)
-
-	hike.photo_landscape = Photo.create(:string_id => "pikes-peak/pikes-peak-landscape")
-	hike.photo_preview = Photo.create(:string_id => "pikes-peak/pikes-peak-preview")
-
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
-
-	hike.save
-end
-
-migration "seed north kaibab trail" do
-	hike = Hike.create(
-		:string_id => "north-kaibab-trail",
-		:name => "North Kaibab Trail",
-		:locality => "Colorado, USA",
+		:string_id => "the-narrows",
+		:name => "The Narrows",
+		:locality => "Utah, USA",
 		:distance => 22,
+		:elevation_max => 5000,
 		:creation_time => Time.now,
 		:edit_time => Time.now
 	)
 
 	hike.location = Location.create(
-		:latitude => 70.277534,
-		:longitude => -118.289783
+		:latitude => 37.30669,
+		:longitude => -112.94745
 	)
 
-	hike.photo_landscape = Photo.create(:string_id => "north-kaibab-trail/north-kaibab-trail-landscape")
-	hike.photo_preview = Photo.create(:string_id => "north-kaibab-trail/north-kaibab-trail-preview")
+	hike.photo_preview = Photo.create(:string_id => "the-narrows/preview")
 
-	hike.save
-end
+	hike.add_keyword(Keyword.find_or_create(:keyword => "The"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Narrows"))
 
-migration "seed king arthurs seat" do
-	hike = Hike.create(
-		:string_id => "king-arthurs-seat",
-		:name => "King Arthur's Seat",
-		:locality => "Edinburgh, Scotland",
-		:distance => 22,
-		:elevation_max => 3500,
-		:creation_time => Time.now,
-		:edit_time => Time.now
-	)
-
-	hike.location = Location.create(
-		:latitude => 71.277534,
-		:longitude => -118.289783
-	)
-
-	hike.photo_landscape = Photo.create(:string_id => "king-arthurs-seat/king-arthurs-seat-landscape")
-	hike.photo_preview = Photo.create(:string_id => "king-arthurs-seat/king-arthurs-seat-preview")
-
-	hike.save
-end
-
-
-migration "seed snoqualmie middle fork" do
-	hike = Hike.create(
-		:string_id => "snoqualmie-middle-fork",
-		:name => "Snoqualmie Middle Fork",
-		:locality => "Washington, USA",
-		:distance => 22,
-		:elevation_max => 3500,
-		:creation_time => Time.now,
-		:edit_time => Time.now
-	)
-
-	hike.photo_landscape = Photo.create(:string_id => "snoqualmie-middle-fork/snoqualmie-middle-fork-landscape")
-	hike.photo_preview = Photo.create(:string_id => "snoqualmie-middle-fork/snoqualmie-middle-fork-preview")
-
-	hike.location = Location.create(
-		:latitude => 71.277534,
-		:longitude => -118.289783
-	)
 	hike.save
 end
 
@@ -191,5 +95,8 @@ migration "seed empty hike" do
 		:latitude => 71.277534,
 		:longitude => -118.289783
 	)
+
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Empty"))
+
 	hike.save
 end
