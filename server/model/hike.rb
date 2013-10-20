@@ -133,16 +133,7 @@ class Hike < Sequel::Model
 		self.save_changes
 		
 		removed_photos.each do |photo|
-			photo.delete
-			if Sinatra::Application.environment() == :production
-				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
-				src = "hike-images/" + photo.string_id
-				dst = "hike-images/tmp/deleted/" + photo.string_id
-				Photo.each_rendition do |rendition|
-					suffix = Photo.get_rendition_suffix(rendition)
-					bucket.objects[src + suffix].move_to(dst + suffix)
-				end
-			end
+			photo.delete_and_move_on_s3
 		end
 	end
 
