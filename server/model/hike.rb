@@ -42,6 +42,7 @@ class Hike < Sequel::Model
 			:longitude => json["location"]["longitude"]
 			);
 		hike.update_keywords
+		hike.save
 		hike
 	end
 
@@ -129,10 +130,11 @@ class Hike < Sequel::Model
 
 		self.edit_time = Time.now
 		self.location.save_changes
+		self.save_changes
 		
 		removed_photos.each do |photo|
 			photo.delete
-			if settings.production?
+			if Sinatra::Application.environment() == :production
 				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
 				src = "hike-images/" + photo.string_id
 				dst = "hike-images/tmp/deleted/" + photo.string_id

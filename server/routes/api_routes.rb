@@ -30,7 +30,6 @@ class HikeApp < Sinatra::Base
 		end
 
 		hike = Hike.create_from_json json
-		hike.save
 		hike.as_json
 	end
 
@@ -75,7 +74,6 @@ class HikeApp < Sinatra::Base
 			return 404
 		end
 		hike.update_from_json(json)
-		hike.save_changes
 		hike.as_json
 	end
 
