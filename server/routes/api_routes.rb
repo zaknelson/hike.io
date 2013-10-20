@@ -82,7 +82,7 @@ class HikeApp < Sinatra::Base
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
 		hike = RoutesUtils.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
-		return 404 if not hike
+		return 404 if !hike && !user_needs_changes_reviewed?
 		return 400 if not uploaded_file
 		photo = Photo.create_with_renditions(uploaded_file[:tempfile])
 		photo.to_json
