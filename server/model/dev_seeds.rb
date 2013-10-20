@@ -100,3 +100,69 @@ migration "seed empty hike" do
 
 	hike.save
 end
+
+migration "seed lake 22" do
+	hike = Hike.create(
+		:string_id => "lake-22",
+		:name => "Lake 22",
+		:locality => "Washington, USA",
+		:distance => 10,
+		:elevation_max => 2400,
+		:creation_time => Time.now,
+		:edit_time => Time.now
+	)
+	
+	hike.location = Location.create(
+		:latitude => 74.277534,
+		:longitude => -123.289783
+	)
+
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
+
+	hike.save
+end
+
+migration "seed pike's peak" do
+	hike = Hike.create(
+		:string_id => "pikes-peak",
+		:name => "Pike's Peak",
+		:locality => "Colorado, USA",
+		:distance => 59,
+		:elevation_max => 12000,
+		:creation_time => Time.now,
+		:edit_time => Time.now
+	)
+	
+	hike.location = Location.create(
+		:latitude => 75.277534,
+		:longitude => -113.289783
+	)
+
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+
+	hike.save
+end
+
+migration "seed mt. kilimanjaro" do
+	hike = Hike.create(
+		:string_id => "mt-kilimanjaro",
+		:name => "Mount Kilimanjaro",
+		:locality => "Tanazania",
+		:distance => 100,
+		:elevation_max => 15000,
+		:creation_time => Time.now,
+		:edit_time => Time.now
+	)
+	
+	hike.location = Location.create(
+		:latitude => -75.277534,
+		:longitude => -123.289783
+	)
+
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
+
+	hike.save
+end
