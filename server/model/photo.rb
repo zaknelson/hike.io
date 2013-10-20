@@ -7,7 +7,7 @@ class Photo < Sequel::Model
 		"-" + rendition + ".jpg"
 	end
 
-	def get_photo_renditions original_image
+	def self.get_photo_renditions original_image
 		renditions = {}
 		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
 		renditions["original"] = original_image
@@ -35,7 +35,7 @@ class Photo < Sequel::Model
 		original_image.strip!
 		original_image.profile!("*", nil)
 		renditions = get_photo_renditions(original_image)
-		if settings.production?	
+		if Sinatra::Application.environment() == :production
 			bucket = AmazonUtils.s3.buckets["assets.hike.io"]
 			dst_dir = "hike-images/tmp/uploading/"
 			Photo.each_rendition_including_original do |rendition|
@@ -74,7 +74,7 @@ class Photo < Sequel::Model
 			photo_id = self.string_id["tmp/uploading/".length..-1]
 			dst_dir = "hike-images/" + hike.string_id + "/"
 			dst = dst_dir + photo_id
-			if settings.production?
+			if Sinatra::Application.environment() == :production
 				Photo.each_rendition_including_original do |rendition_name|
 					suffix = get_rendition_suffix(rendition_name)
 					AmazonUtils.s3.buckets["assets.hike.io"].objects[src + suffix].move_to(dst + suffix)
