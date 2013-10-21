@@ -2,10 +2,13 @@
 @import "_mixins";
 @import "compass/css3/border-radius";
 
+$add-page-mobile-width: 400px;
+$add-page-width: 450px;
+
 .add-page {
 	display: none;
 	margin: 25px 10px;
-	width: 400px;
+	width: $add-page-width;
 
 	h2 {
 		padding-bottom: 15px;
@@ -14,12 +17,12 @@
 	}
 
 	form {
-		width: 400px;
+		width: $add-page-width;
 
 		label {
 			float: left;
 			clear: left;
-			width: 100px;
+			width: 150px;
 			text-align: right;
 			font-size: 18px;
 			line-height: 45px;
@@ -59,6 +62,20 @@
 			display: block;
 			margin: 10px;
 			margin-bottom: 15px;
+		}
+	}
+}
+
+@media all and (max-width: $mobile-width) { 
+	.add-page {
+		width: $add-page-mobile-width;
+
+		form {
+			width: $add-page-mobile-width;
+
+			label {
+				width: 100px;
+			}
 		}
 	}
 }
