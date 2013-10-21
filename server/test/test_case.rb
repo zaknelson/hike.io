@@ -25,6 +25,7 @@ class HikeAppTestCase < Test::Unit::TestCase
 			"name" => "New Name",
 			"locality" => "New Locality",
 			"distance" => 123,
+			"elevation_gain" => 1234,
 			"elevation_max" => 1234,
 			"location" => {
 				"latitude" => 12,
