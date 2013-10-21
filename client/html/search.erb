@@ -8,6 +8,7 @@
 		</ul>
 	</div>
 	<div data-ui-if="results &amp;&amp; results.length == 0">
-		<h1>Unable to find hike: {{query}}</h1>
+		<h1 class="unable-to-find">Unable to find hike: {{query}}</h1>
+		<p>If you want, you can <span data-fancybox=".add-link"><a class="add-link" data-fancybox-href="#add-page">add it</a></span>.</p>
 	</div>
 </article>

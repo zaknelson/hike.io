@@ -4,6 +4,15 @@
 .search-page {
 	padding: 20px;
 
+	.add-link {
+		cursor: pointer;
+	}
+
+	.unable-to-find {
+		font-size: 36px;
+		margin-bottom: 10px;
+	}
+
 	ul {
 		padding: 20px;
 
