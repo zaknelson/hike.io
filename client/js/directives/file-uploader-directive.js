@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("fileUploader", function() {
+	directive("fileUploader", ["$window", function($window) {
 	return {
 		compile: function(tplElm, tplAttr) {
 			var mulitpleStr = tplAttr.multiple === "true" ? "multiple" : "";
@@ -18,6 +18,9 @@ angular.module("hikeio").
 					});
 
 					elm.bind("click", function() {
+						if (input[0].disabled) {
+							$window.alert("Sorry this device doesn't support file upload.");
+						}
 						input[0].click();
 					});
 
@@ -29,4 +32,4 @@ angular.module("hikeio").
 		template: "<div data-ng-transclude></div>",
 		transclude: true
 	};
-});
+}]);
