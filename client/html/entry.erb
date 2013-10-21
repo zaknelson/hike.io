@@ -41,7 +41,7 @@
 							</td>
 						</tr>
 						<tr data-ng-show="hike.elevation_max != null || isEditing">
-							<td>Elevation</td>
+							<td>Max Elev.</td>
 							<td>
 								<div class="facts-hike-elevation">
 									<span class="facts-hike-elevation-value" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
@@ -50,7 +50,7 @@
 							</td>
 						</tr>
 						<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
-							<td>Lat / Lng</td>
+							<td>Lat. / Lng.</td>
 							<td>
 							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
 								<span class="facts-hike-latitude-value" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span><span>,</span>
