@@ -1,6 +1,5 @@
 @import "_vars";
 @import "_mixins";
-@import "compass/css3/user-interface";
 
 $map-dimensions: 800px;
 $section-padding: 10px;
@@ -12,18 +11,6 @@ $header-landscape-footer-height-mobile: 40px;
 
 	.placeholder-img {
 		border: 4px dashed #999;
-	}
-
-	.trash-icon {
-		position: absolute;
-		right: 9px;
-		top: 0px;
-		cursor: pointer;
-		font-size: 30px;
-		line-height: 30px;
-		color: white;
-		text-shadow: 1px 1px 3px #111;
-		@include user-select(none);
 	}
 
 	.header-landscape {

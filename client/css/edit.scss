@@ -1,5 +1,6 @@
 @import "_vars";
 @import "_mixins";
+@import "compass/css3/user-interface";
 
 $edit-banner-height: 50px;
 
@@ -63,5 +64,17 @@ $edit-banner-height: 50px;
 		h1 {
 			text-overflow: clip !important;
 		}
+	}
+
+	.trash-icon {
+		position: absolute;
+		right: 9px;
+		top: 0px;
+		cursor: pointer;
+		font-size: 30px;
+		line-height: 30px;
+		color: white;
+		text-shadow: 1px 1px 3px #111;
+		@include user-select(none);
 	}
 }
