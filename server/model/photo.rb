@@ -107,6 +107,7 @@ class Photo < Sequel::Model
 					AmazonUtils.s3.buckets["assets.hike.io"].objects[src + suffix].move_to(dst + suffix)
 				end
 			else
+				FileUtils.mkdir_p(HikeApp.root + "/public/" + dst_dir)
 				Photo.each_rendition_including_original do |rendition_name|
 					suffix = Photo.get_rendition_suffix(rendition_name)
 					FileUtils.mv(HikeApp.root + "/public/" + src + suffix, HikeApp.root + "/public/" + dst + suffix)
