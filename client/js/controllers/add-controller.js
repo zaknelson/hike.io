@@ -22,7 +22,8 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 				$scope.hike = {};
 				$scope.hike.location = {};
 				$timeout(function() {
-					$rootScope.$broadcast("hikeAdded", $scope.hike);
+					var isBeingReviewed = status === 202;
+					$rootScope.$broadcast("hikeAdded", $scope.hike, isBeingReviewed);
 				});
 			}).
 			error(function(data, status, headers, config) {

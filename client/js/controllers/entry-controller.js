@@ -7,6 +7,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isLoaded = false;
 	$scope.isSaving = false;
 	$scope.isJustAdded = false;
+	$scope.isBeingReviewed = false;
 
 	var disableLinksIfEditing = function(data) {
 		if ($scope.hike.description && $scope.isEditing) {
@@ -14,8 +15,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		}
 	};
 
-	$scope.$on("hikeAdded", function() {
+	$scope.$on("hikeAdded", function(hike, isBeingReviewed) {
 		$scope.isJustAdded = true;
+		$scope.isBeingReviewed = isBeingReviewed;
 	});
 
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
