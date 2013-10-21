@@ -37,6 +37,16 @@
 			width: 265px;
 		}
 
+		.units {
+			line-height: 45px;
+			float: left;
+			margin-left: 5px;
+		}
+
+		#distance, #elevation {
+			width: 71px;
+		}
+
 		#latitude, #longitude {
 			width: 130px;
 			margin-right: 5px;
