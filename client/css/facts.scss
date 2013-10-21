@@ -22,11 +22,11 @@ $facts-external-link-svg-size: 12px;
 	}
 
 	.image-container {
+		margin-bottom: 14px;
 		position: relative;
 	}
 
 	table {
-		margin-top: 14px;
 		margin-left: 10px;
 		font-weight: 300;
 		font-size: 15px;
@@ -72,6 +72,7 @@ $facts-external-link-svg-size: 12px;
 
 		.image-container {
 			width: $facts-mobile-image-width;
+			margin-bottom: 0px;
 		}
 		
 		.page-curl {
