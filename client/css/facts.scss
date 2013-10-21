@@ -6,6 +6,8 @@ $facts-padding: 25px;
 $facts-external-link-svg-size: 12px;
 
 .overview-facts {
+	position: relative;
+	z-index: 10;
 	float: right;
 	width: $facts-width;
 	margin: 0px 0px 4px 15px;
