@@ -89,7 +89,7 @@ angular.module("hikeio").
 						element.html(viewValue);
 
 						// Workaround for issue with medium-editor
-						if (viewValue.length > 0 && element.hasClass("medium-editor-placeholder")) {
+						if (viewValue && viewValue.length > 0 && element.hasClass("medium-editor-placeholder")) {
 							element.removeClass("medium-editor-placeholder");
 						}
 					});
