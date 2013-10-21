@@ -133,6 +133,12 @@ $header-landscape-footer-height-mobile: 40px;
 				line-height: 20px;
 			}
 		}
+
+		@media all and (max-width: $facts-mobile-width) {
+			.overview-description {
+				margin-top: 155px;
+			}
+		}
 	}
 
 	@media all and (max-width: $mobile-width) {
