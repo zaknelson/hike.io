@@ -2,7 +2,7 @@
 @import "_mixins";
 
 $facts-padding: 25px;
-
+$facts-mobile-image-width: 110px;
 $facts-external-link-svg-size: 12px;
 
 .overview-facts {
@@ -19,6 +19,10 @@ $facts-external-link-svg-size: 12px;
 
 	> div {
 		padding: $facts-padding;
+	}
+
+	.image-container {
+		position: relative;
 	}
 
 	table {
@@ -63,10 +67,14 @@ $facts-external-link-svg-size: 12px;
 	.overview-facts {
 		width: 100%;
 		margin-bottom: 10px;
+
+		.image-container {
+			width: $facts-mobile-image-width;
+		}
 		
 		.page-curl {
 			img {
-				width: 110px;
+				width: $facts-mobile-image-width;
 				float: left;
 				margin-right: 15px;
 			}
