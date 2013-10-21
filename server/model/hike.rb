@@ -33,6 +33,7 @@ class Hike < Sequel::Model
 			:name => name,
 			:locality => Hike.clean_string_input(json["locality"]),
 			:distance => json["distance"],
+			:elevation_gain => json["elevation_gain"],
 			:elevation_max => json["elevation_max"],
 			:creation_time => Time.now,
 			:edit_time => Time.now
@@ -88,6 +89,7 @@ class Hike < Sequel::Model
 		self.name = Hike.clean_string_input(json["name"])
 		self.description = Hike.clean_html_input(json["description"])
 		self.distance = json["distance"]
+		self.elevation_gain = json["elevation_gain"]
 		self.elevation_max = json["elevation_max"]
 		self.locality = Hike.clean_string_input(json["locality"])
 		self.location.latitude = json["location"]["latitude"]
@@ -155,11 +157,13 @@ class Hike < Sequel::Model
 		json["name"] &&
 			json["locality"] &&
 			json["distance"] &&
+			json["elevation_gain"] &&
 			json["elevation_max"] &&
 			json["location"] && 
 			json["location"]["latitude"] &&
 			json["location"]["longitude"] &&
 			StringUtils.is_numeric?(json["distance"]) &&
+			StringUtils.is_numeric?(json["elevation_gain"]) &&
 			StringUtils.is_numeric?(json["elevation_max"]) &&
 			StringUtils.is_numeric?(json["location"]["latitude"]) &&
 			StringUtils.is_numeric?(json["location"]["longitude"]) &&
