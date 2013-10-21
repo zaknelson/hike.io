@@ -83,7 +83,7 @@ class Hike < Sequel::Model
 	end
 
 	def update_from_json json
-		self.update_keywords if json["name"] != self.name
+		previous_name = self.name
 
 		self.name = Hike.clean_string_input(json["name"])
 		self.description = Hike.clean_html_input(json["description"])
@@ -92,6 +92,7 @@ class Hike < Sequel::Model
 		self.locality = Hike.clean_string_input(json["locality"])
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
+		self.update_keywords if json["name"] != previous_name
 
 		removed_photos = []
 		Hike.each_photo_type do |photo_key|
@@ -138,7 +139,7 @@ class Hike < Sequel::Model
 	end
 
 	def update_keywords
-		keywords = KeywordUtils.sanitize_to_keywords(name)
+		keywords = KeywordUtils.sanitize_to_keywords(self.name)
 		keywords.each do |keyword|
 			add_keyword(Keyword.find_or_create(:keyword => keyword))
 		end
