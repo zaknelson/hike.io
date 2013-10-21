@@ -5,7 +5,7 @@ var SearchController = function($http, $location, $log, $scope, analytics, resou
 	$scope.query = $location.search().q;
 
 	if ($scope.query) {
-		$http({method: "GET", url: "/api/v1/hikes/search", params: { q: $scope.query }, cache: resourceCache}).
+		$http({method: "GET", url: "/api/v1/hikes/search", params: { q: $scope.query }}).
 			success(function(data, status, headers, config) {
 				$scope.results = data;
 			}).
