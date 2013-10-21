@@ -47,7 +47,7 @@ migration "seed nakoa trail" do
 		:longitude => -157.887
 	)
 
-	hike.photo_preview = Photo.create(:string_id => "nakoa-trail/preview")
+	hike.photo_preview = Photo.create(:string_id => "nakoa-trail/preview", :width => 2400, :height => 2400)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Nakoa"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Trail"))
@@ -71,7 +71,7 @@ migration "seed the narrows" do
 		:longitude => -112.94745
 	)
 
-	hike.photo_preview = Photo.create(:string_id => "the-narrows/preview")
+	hike.photo_preview = Photo.create(:string_id => "the-narrows/preview", :width => 1594, :height => 2400)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "The"))
 	hike.add_keyword(Keyword.find_or_create(:keyword => "Narrows"))
