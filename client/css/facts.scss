@@ -2,7 +2,7 @@
 @import "_mixins";
 
 $facts-padding: 25px;
-$facts-mobile-image-width: 110px;
+$facts-mobile-image-width: 135px;
 $facts-external-link-svg-size: 12px;
 
 .overview-facts {
@@ -26,13 +26,15 @@ $facts-external-link-svg-size: 12px;
 	}
 
 	table {
+		margin-top: 14px;
 		margin-left: 10px;
 		font-weight: 300;
-		font-size: 16px;
+		font-size: 15px;
 		line-height: 24px;
 		color: #555;
 
 		tr td:first-child {
+			width: 75px;
 			color: #333;
 			font-weight: bold;
 		}
@@ -81,8 +83,8 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		> div {
-			padding: 10px 10px 20px 10px;
-			width: 90%;
+			padding: 13px 13px 20px 13px;
+			width: 95%;
 			position: relative;
 		}
 
