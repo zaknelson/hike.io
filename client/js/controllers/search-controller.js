@@ -1,8 +1,10 @@
 "use strict";
-var SearchController = function($http, $location, $log, $scope, analytics, resourceCache) {
+var SearchController = function($http, $location, $log, $rootScope, $scope, analytics, resourceCache) {
 
 	$scope.results = null;
 	$scope.query = $location.search().q;
+
+	$rootScope.$broadcast("prepopulateAddHikeName", $scope.query);
 
 	if ($scope.query) {
 		$http({method: "GET", url: "/api/v1/hikes/search", params: { q: $scope.query }}).
@@ -17,4 +19,4 @@ var SearchController = function($http, $location, $log, $scope, analytics, resou
 	$scope.htmlReady();
 };
 
-SearchController.$inject = ["$http", "$location", "$log", "$scope", "analytics", "resourceCache"];
+SearchController.$inject = ["$http", "$location", "$log", "$rootScope", "$scope", "analytics", "resourceCache"];

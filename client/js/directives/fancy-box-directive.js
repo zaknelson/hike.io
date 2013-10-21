@@ -1,22 +1,28 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("fancybox", function() {
+	directive("fancybox", ["$rootScope", function($rootScope) {
 		return {
 			link: function (scope, element, attrs) {
 				scope.$on("$routeChangeStart", function () {
 					$.fancybox.close();
 				});
 				$(element).find(attrs.fancybox).fancybox({
-					padding: 2,
+					afterLoad: function(current, previous) {
+						$rootScope.$broadcast("fancyboxLoaded");
+					},
+					afterClose: function(current, previous) {
+						$rootScope.$broadcast("fancyboxClosed");
+					},
+					padding : 2,
 					nextEffect : "none",
 					prevEffect : "none",
 					closeEffect : "none",
-					closeBtn : true,
+					closeBtn : false,
 					arrows : false,
 					keys : true,
 					nextClick : true
 				});
 			}
 		};
-	});
+	}]);

@@ -1,7 +1,29 @@
 "use strict";
 var AddController = function($http, $log, $rootScope, $scope, $timeout, navigation, resourceCache) {
-	$scope.hike = {};
-	$scope.hike.location = {};
+
+	var resetScope = function() {
+		$scope.hike = {};
+		$scope.hike.location = {};
+		$scope.isLoaded = false;
+	};
+	resetScope();
+
+	$rootScope.$on("$locationChangeStart", function (event, next, current) {
+		resetScope();
+	});
+	$scope.$on("prepopulateAddHikeName", function(event, name) {
+		$scope.hike.name = name;
+	});
+	$scope.$on("fancyboxLoaded", function() {
+		$scope.$apply(function() {
+			$scope.isLoaded = true;
+		});
+	});
+	$scope.$on("fancyboxClosed", function() {
+		$scope.$apply(function() {
+			$scope.isLoaded = false;
+		});
+	});
 
 	$scope.add = function() {
 		$http({method: "POST", url: "/api/v1/hikes", data: $scope.hike}).
@@ -19,8 +41,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 				// the redirect to the entry page would fail)
 				resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 				navigation.toEntryEdit(id);
-				$scope.hike = {};
-				$scope.hike.location = {};
+				resetScope();
 				$timeout(function() {
 					var isBeingReviewed = (status === 202);
 					$rootScope.$broadcast("hikeAdded", $scope.hike, isBeingReviewed);
