@@ -15,7 +15,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		}
 	};
 
-	$scope.$on("hikeAdded", function(hike, isBeingReviewed) {
+	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
 		$scope.isJustAdded = true;
 		$scope.isBeingReviewed = isBeingReviewed;
 	});
