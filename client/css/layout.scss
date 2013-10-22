@@ -114,6 +114,26 @@ blockquote {
 	border-left: 5px solid #ddd;
 }
 
+::-webkit-input-placeholder {
+	font-weight: 300;
+	opacity: .5;
+}
+
+:-moz-placeholder {
+	font-weight: 300;
+	opacity: .5;
+}
+
+::-moz-placeholder {
+	font-weight: 300;
+	opacity: .5;
+}
+
+:-ms-input-placeholder {  
+	font-weight: 300;
+	opacity: .5;
+}
+
 [data-ng-view] {
 	padding-bottom: 55px;
 	width: 100%;
