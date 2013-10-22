@@ -5,6 +5,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 		$scope.hike = {};
 		$scope.hike.location = {};
 		$scope.isLoaded = false;
+		$scope.isSubmitted = false;
 	};
 	resetScope();
 
@@ -24,6 +25,10 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 			$scope.isLoaded = false;
 		});
 	});
+
+	$scope.attemptSubmit = function() {
+		$scope.isSubmitted  = true;
+	};
 
 	$scope.add = function() {
 		$http({method: "POST", url: "/api/v1/hikes", data: $scope.hike}).

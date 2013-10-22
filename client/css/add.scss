@@ -64,6 +64,14 @@ $add-page-width: 450px;
 			margin-bottom: 15px;
 		}
 	}
+
+	form.submitted {
+		.ng-invalid-required {
+			outline: none;
+			border: 0px solid rgba(1, 0, 0, 0.5);
+			box-shadow: 0 0 3px #c90707;
+		}
+	}
 }
 
 @media all and (max-width: $mobile-width) { 

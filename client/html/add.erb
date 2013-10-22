@@ -1,6 +1,6 @@
 <article id="add-page" class="add-page" data-ng-controller="AddController" data-meta-description="Add a new hike by specifying name, locality, distance, elevation and latitude / longitude.">
 	<h2>Add a hike</h2>
-	<form data-ng-submit="add()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()">
+	<form data-ng-submit="add()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}">
 		<div>
 			<div>
 				<label for="name">Name</label>
@@ -28,7 +28,7 @@
 				<input id="longitude" type="number" step="any" min="-180" max="180" required="true" autocomplete="off" data-ng-model="hike.location.longitude" placeholder="-112.94745"></input>
 			</div>
 			<div>
-				<input type="submit" class="btn" value="Add Hike"></input>
+				<input type="submit" class="btn" value="Add Hike" ng-click="attemptSubmit()"></input>
 			</div>
 		</div>
 	</form>
