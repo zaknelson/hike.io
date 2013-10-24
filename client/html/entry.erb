@@ -11,7 +11,7 @@
 	<div class="header-landscape">
 		<div><div data-ui-if="isLoaded &amp;&amp; local_photo_landscape"><div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="trash-icon">×</div><img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}"></img><img data-ui-if="!local_photo_landscape.string_id" data-ng-src="{{local_photo_landscape.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div></div>
 		<div>
-			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
+			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape || isEditing}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
 	</div>
 	<div class="content">
