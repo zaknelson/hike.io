@@ -194,7 +194,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	$scope.isPhotoDataUriEncoded = function(photo) {
-		return photo.string_id === null;
+		return !photo.string_id;
 	};
 
 	$scope.removePhoto = function(type, index) {
