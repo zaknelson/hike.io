@@ -44,7 +44,7 @@ angular.module("hikeio", ["seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, config, navigation) {
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "capabilities", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, capabilities, config, navigation) {
 		$rootScope.config = config;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
@@ -53,6 +53,13 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			if (current && current.$$route && current.$$route.title) {
 				$rootScope.title = current.$$route.title;
+			}
+		});
+		$rootScope.$on("$locationChangeStart", function(event, next, current) {
+			var isOnEntryEditPage = /\/hikes\/.*?\/edit/.test(next);
+			if (isOnEntryEditPage && !capabilities.isEditPageSupported) {
+				$window.alert("Unable to edit using this browser.");
+				event.preventDefault();
 			}
 		});
 
