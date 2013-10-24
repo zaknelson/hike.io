@@ -1,6 +1,5 @@
 "use strict";
 var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, resourceCache) {
-
 	$scope.hike = null;
 	$scope.isDirty = false;
 	$scope.isEditing = isEditing;
@@ -195,7 +194,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	$scope.isPhotoDataUriEncoded = function(photo) {
-		return photo.string_id == null;
+		return photo.string_id === null;
 	};
 
 	$scope.removePhoto = function(type, index) {
@@ -223,7 +222,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			removedPhoto = $scope.local_photos_generic.splice(index, 1)[0];
 			for (var i = 0; i < $scope.hike.photos_generic.length; i++) {
 				var photo = $scope.hike.photos_generic[i];
-				if (($scope.isPhotoDataUriEncoded(removedPhoto) && uploadedPhotoIdMap[removedPhoto.id] === photo) || 
+				if (($scope.isPhotoDataUriEncoded(removedPhoto) && uploadedPhotoIdMap[removedPhoto.id] === photo) ||
 					(!$scope.isPhotoDataUriEncoded(removedPhoto) && photo.string_id === removedPhoto.string_id)) {
 					$scope.hike.photos_generic.splice(i, 1);
 					break;
