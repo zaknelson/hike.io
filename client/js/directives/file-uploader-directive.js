@@ -20,7 +20,7 @@ angular.module("hikeio").
 
 					elm.bind("click", function() {
 						if (input[0].disabled) {
-							$window.alert("Sorry this device doesn't support file upload.");
+							$window.alert("Sorry this browser doesn't support file upload.");
 						}
 						input[0].click();
 					});

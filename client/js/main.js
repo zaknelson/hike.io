@@ -58,7 +58,7 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.$on("$locationChangeStart", function(event, next, current) {
 			var isOnEntryEditPage = /\/hikes\/.*?\/edit/.test(next);
 			if (isOnEntryEditPage && !capabilities.isEditPageSupported) {
-				$window.alert("Unable to edit using this browser.");
+				$window.alert("Sorry this browser doesn't support editing.");
 				event.preventDefault();
 			}
 		});
