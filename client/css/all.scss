@@ -1,14 +1,9 @@
 .all-page {
-	.group {
-		padding: 20px;
-
-		ul {
-			padding-top: 10px;
-			padding-bottom: 40px;
-		}
-
-		li {
-			margin-left: 40px;
-		}
+	ul {
+		overflow: hidden;
+	}
+	li {
+		margin-top: 10px;
+		margin-left: 10px;
 	}
 }
