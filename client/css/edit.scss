@@ -48,6 +48,10 @@ $edit-banner-height: 50px;
 	}
 
 	.metadata-section {
+		.image-container {
+			position: relative;
+			width: 400px;
+		}
 		img {
 			width: 400px;
 		}
