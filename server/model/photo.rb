@@ -27,37 +27,53 @@ class Photo < Sequel::Model
 		renditions
 	end
 
+	def self.get_resized_dimensions image
+		width = image.columns
+		height = image.rows
+		if width > height
+			height *= (2400 / width).round
+			width = 2400
+		else
+			width *= (2400 / height).round
+			height = 2400
+		end
+
+		{ :width => width, :height => height }
+	end
+
 	def self.create_with_renditions file
 		name = UUIDTools::UUID.random_create.to_s
-
 		original_image = Magick::Image.read(file.path).first
-		original_image.resize_to_fit!(2400, 2400)
-		original_image.strip!
-		original_image.profile!("*", nil)
-		renditions = get_photo_renditions(original_image)
-		if Sinatra::Application.environment() == :production
-			bucket = AmazonUtils.s3.buckets["assets.hike.io"]
-			dst_dir = "hike-images/tmp/uploading/"
-			Photo.each_rendition_including_original do |rendition|
-				object_path = dst_dir + name + get_rendition_suffix(rendition)
-				if rendition == "original"
-					bucket.objects[object_path].write(renditions[rendition].to_blob)
-				else
-					bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
+		resized_dimensions = Photo.get_resized_dimensions(original_image)
+		Thread.new do	
+			original_image.resize_to_fit!(2400, 2400)
+			original_image.strip!
+			original_image.profile!("*", nil)
+			renditions = get_photo_renditions(original_image)
+			if Sinatra::Application.environment() == :production
+				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
+				dst_dir = "hike-images/tmp/uploading/"
+				Photo.each_rendition_including_original do |rendition|
+					object_path = dst_dir + name + get_rendition_suffix(rendition)
+					if rendition == "original"
+						bucket.objects[object_path].write(renditions[rendition].to_blob)
+					else
+						bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
+					end
 				end
-			end
-		else
-			dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
-			FileUtils.mkdir_p(dst_dir)
-			Photo.each_rendition_including_original do |rendition|
-				object_path = dst_dir + name + get_rendition_suffix(rendition)
-				renditions[rendition].write(object_path) {  self.quality = 87 }
+			else
+				dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
+				FileUtils.mkdir_p(dst_dir)
+				Photo.each_rendition_including_original do |rendition|
+					object_path = dst_dir + name + get_rendition_suffix(rendition)
+					renditions[rendition].write(object_path) {  self.quality = 87 }
+				end
 			end
 		end
 		Photo.create({
 			:string_id => "tmp/uploading/" + name,
-			:width => original_image.columns,
-			:height => original_image.rows
+			:width => resized_dimensions[:width],
+			:height => resized_dimensions[:height]
 		})
 	end
 
