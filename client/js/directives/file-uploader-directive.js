@@ -14,6 +14,7 @@ angular.module("hikeio").
 					input.bind("change", function() {
 						if (input[0].files.length > 0) {
 							scope.$eval(attr.fileUploader, {files: input[0].files});
+							input[0].value = ""; // Allow the user to select the same file again
 						}
 					});
 
