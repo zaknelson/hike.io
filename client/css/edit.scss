@@ -4,39 +4,6 @@
 
 $edit-banner-height: 50px;
 
-
-
-@media all and (max-width: $mobile-width) {
-	.edit-banner {
-		text-align: left;
-		
-	}
-}
-
-@media all and (max-width: 900px) {
-	.edit-banner-review {
-		text-align: left;
-	}
-}
-
-@media all and (max-width: 700px) {
-	.edit-banner-review {
-		text-align: left;
-		h3 {
-			font-size: 15px;
-		}
-	}
-}
-
-@media all and (max-width: $mobile-width) {
-	.edit-banner-review {
-		.live-soon-msg {
-			display: none;
-		}
-	}
-}
-
-
 .entry-edit-page {
 	.header-landscape {
 		h1 {
@@ -83,6 +50,36 @@ $edit-banner-height: 50px;
 	.metadata-section {
 		img {
 			width: 400px;
+		}
+	}
+	
+	@media all and (max-width: $mobile-width) {
+		.edit-banner {
+			text-align: left;
+			
+		}
+	}
+
+	@media all and (max-width: 900px) {
+		.edit-banner-review {
+			text-align: left;
+		}
+	}
+
+	@media all and (max-width: 700px) {
+		.edit-banner-review {
+			text-align: left;
+			h3 {
+				font-size: 15px;
+			}
+		}
+	}
+
+	@media all and (max-width: $mobile-width) {
+		.edit-banner-review {
+			.live-soon-msg {
+				display: none;
+			}
 		}
 	}
 }
