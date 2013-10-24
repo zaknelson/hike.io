@@ -12,9 +12,17 @@ $facts-external-link-svg-size: 12px;
 	width: $facts-width;
 	margin: 0px 0px 4px 15px;
 
-	.page-curl img {
-		width: $facts-width - $facts-padding * 2;
-		margin-bottom: 10px;
+	.page-curl {
+		img, .img-div {
+			width: $facts-width - $facts-padding * 2;
+			height: $facts-width - $facts-padding * 2;
+			margin-bottom: 10px;
+		}
+	}
+
+	.page-curl .img-div {
+		background-position: center center;
+		background-size:cover;
 	}
 
 	> div {
@@ -76,8 +84,9 @@ $facts-external-link-svg-size: 12px;
 		}
 		
 		.page-curl {
-			img {
+			img, .img-div {
 				width: $facts-mobile-image-width;
+				height: $facts-mobile-image-width;
 				float: left;
 				margin-right: 15px;
 			}

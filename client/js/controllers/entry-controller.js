@@ -8,11 +8,30 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isSaving = false;
 	$scope.isJustAdded = false;
 	$scope.isBeingReviewed = false;
+	$scope.numPhotosUploading = 0;
+
+	// A little tricky, maintain two versions of the photo data, the "local" version (data uri encoded, for instant preview), 
+	// and the "real" version (on the $scope.hike object) which takes some time to process on the backend.
+	$scope.local_photo_landscape = null;
+	$scope.local_photo_facts = null;
+	$scope.local_photo_preview = null;
+	$scope.local_photos_generic = [];
+
+	var lastUploadedPhotoId = 0;
+	var uploadedPhotoIdMap = {};
+	var canceledUploadedPhotoIdMap = {};
 
 	var disableLinksIfEditing = function(data) {
 		if ($scope.hike.description && $scope.isEditing) {
 			$scope.hike.description = $scope.hike.description.replace(/href/g, "data-href");
 		}
+	};
+
+	var cloneToLocalPhotos = function() {
+		if ($scope.hike.photo_landscape) $scope.local_photo_landscape = jQuery.extend(true, {}, $scope.hike.photo_landscape);
+		if ($scope.hike.photo_facts) $scope.local_photo_facts = jQuery.extend(true, {}, $scope.hike.photo_facts);
+		if ($scope.hike.photo_preview) $scope.local_photo_preview = jQuery.extend(true, {}, $scope.hike.photo_preview);
+		$scope.local_photos_generic = jQuery.extend(true, [], $scope.hike.photos_generic);
 	};
 
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
@@ -38,6 +57,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			disableLinksIfEditing();
+			cloneToLocalPhotos();
 			$scope.isLoaded = true;
 			$scope.htmlReady();
 		}).
@@ -96,9 +116,34 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		return result;
 	};
 
-	var doUploadPhoto = function(file, type) {
+	var previewPhoto = function(file, type, id) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$scope.$apply(function() {
+				var photo = { id: id, src: e.target.result };
+				switch (type) {
+				case "landscape":
+					$scope.local_photo_landscape = photo;
+					break;
+				case "facts":
+					$scope.local_photo_facts  = photo;
+					break;
+				case "preview":
+					$scope.local_photo_preview = photo;
+					break;
+				case "generic":
+					$scope.local_photos_generic.push(photo);
+					break;
+				}
+			});
+		};
+		reader.readAsDataURL(file);
+	};
+
+	var doUploadPhoto = function(file, type, id) {
 		var data = new FormData();
 		data.append("file", file);
+		$scope.numPhotosUploading++;
 		$http({
 				method: "POST",
 				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos",
@@ -109,6 +154,15 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				}
 			}).
 			success(function(data, status, headers, config) {
+				if (canceledUploadedPhotoIdMap[id]) {
+					// Local version of the photo has already been removed, don't add it.
+					// numPhotosUploading should already be updated to account for the fact that this
+					// upload was essentially canceled.
+					return;
+				}
+				uploadedPhotoIdMap[id] = data;
+				$scope.isDirty = true;
+				$scope.numPhotosUploading--;
 				switch (type) {
 				case "landscape":
 					$scope.hike.photo_landscape = data;
@@ -123,9 +177,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					$scope.hike.photos_generic.push(data);
 					break;
 				}
-				$scope.isDirty = true;
 			}).
 			error(function(data, status, headers, config) {
+				$scope.numPhotosUploading--;
 				$log.error(data, status, headers, config);
 			});
 	};
@@ -133,27 +187,58 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.uploadPhotos = function(files, type) {
 		$scope.$apply(function() {
 			for (var i = 0; i < files.length; i++) {
-				doUploadPhoto(files[i], type);
+				lastUploadedPhotoId++;
+				previewPhoto(files[i], type, lastUploadedPhotoId);
+				doUploadPhoto(files[i], type, lastUploadedPhotoId);
 			}
 		});
 	};
 
-	$scope.removePhoto = function(type, photo) {
+	$scope.isPhotoDataUriEncoded = function(photo) {
+		return photo.string_id == null;
+	};
+
+	$scope.removePhoto = function(type, index) {
+		// Remove the "local" and "real" version of the photo it's possible we're trying to remove 
+		// it before it's actually been process by the backend. If that happends, simply don't process
+		// the photo in doUploadPhoto's callback.
+		var removedPhoto = null;
 		switch (type) {
 		case "landscape":
+			removedPhoto = $scope.local_photo_landscape;
 			$scope.hike.photo_landscape = null;
+			$scope.local_photo_landscape = null;
 			break;
 		case "facts":
+			removedPhoto = $scope.local_photo_facts;
 			$scope.hike.photo_facts = null;
+			$scope.local_photo_facts = null;
 			break;
 		case "preview":
+			removedPhoto = $scope.local_photo_preview;
 			$scope.hike.photo_preview = null;
+			$scope.local_photo_preview = null;
 			break;
 		case "generic":
-			$scope.hike.photos_generic.splice($scope.hike.photos_generic.indexOf(photo), 1);
+			removedPhoto = $scope.local_photos_generic.splice(index, 1)[0];
+			for (var i = 0; i < $scope.hike.photos_generic.length; i++) {
+				var photo = $scope.hike.photos_generic[i];
+				if (($scope.isPhotoDataUriEncoded(removedPhoto) && uploadedPhotoIdMap[removedPhoto.id] === photo) || 
+					(!$scope.isPhotoDataUriEncoded(removedPhoto) && photo.string_id === removedPhoto.string_id)) {
+					$scope.hike.photos_generic.splice(i, 1);
+					break;
+				}
+			}
 			break;
 		}
-		$scope.isDirty = true;
+
+		// If this photo hasn't yet finished uploading, cancel it
+		if ($scope.isPhotoDataUriEncoded(removedPhoto) && !uploadedPhotoIdMap[removedPhoto.id]) {
+			$scope.numPhotosUploading--;
+			canceledUploadedPhotoIdMap[removedPhoto.id] = true;
+		} else {
+			$scope.isDirty = true;
+		}
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {

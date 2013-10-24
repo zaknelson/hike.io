@@ -4,29 +4,7 @@
 
 $edit-banner-height: 50px;
 
-.edit-banner {
-	width: 100%;
-	height: $edit-banner-height;
-	background-color: #eb593c;
-	text-align: center;
-	position: relative;
 
-	h3 {
-		color: white;
-		line-height: $edit-banner-height;
-		margin-left: 10px;
-		display: inline;
-		font-size: 18px;
-		font-weight: bold;
-	}
-
-	div {
-		position: absolute;
-		right: 0px;
-		padding: 8px 8px;
-		margin-top: -$edit-banner-height;
-	}
-}
 
 @media all and (max-width: $mobile-width) {
 	.edit-banner {
@@ -66,6 +44,30 @@ $edit-banner-height: 50px;
 		}
 	}
 
+	.edit-banner {
+		width: 100%;
+		height: $edit-banner-height;
+		background-color: #eb593c;
+		text-align: center;
+		position: relative;
+
+		h3 {
+			color: white;
+			line-height: $edit-banner-height;
+			margin-left: 10px;
+			display: inline;
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		div {
+			position: absolute;
+			right: 0px;
+			padding: 8px 8px;
+			margin-top: -$edit-banner-height;
+		}
+	}
+
 	.trash-icon {
 		position: absolute;
 		right: 5px;
@@ -76,5 +78,11 @@ $edit-banner-height: 50px;
 		color: white;
 		text-shadow: 1px 1px 3px #111;
 		@include user-select(none);
+	}
+
+	.metadata-section {
+		img {
+			width: 400px;
+		}
 	}
 }

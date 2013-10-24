@@ -145,8 +145,15 @@ $header-landscape-footer-height-mobile: 40px;
 				float: left;
 				width: 25%;
 
-				img {
+				img, .img-div {
 					width: 100%;
+				}
+				.img-div {
+					/* Tricky way to get div's width=height http://stackoverflow.com/questions/14088200/how-can-i-make-a-divs-height-and-width-the-same-using-responsive-design */
+					height: 0;
+					padding-bottom: 100%;
+					background-position: center center;
+					background-size:cover;
 				}
 			}
 
