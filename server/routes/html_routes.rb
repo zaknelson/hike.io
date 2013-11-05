@@ -148,7 +148,9 @@ class HikeApp < Sinatra::Base
 	# Temporary, need a better way of setting admin status than in a cookie
 	get "/cookie", :provides => "html" do
 		params.each do |key, value|
-			response.set_cookie key, value
+			response.set_cookie(key, {
+				:value => value,
+				:httponly => true })
 		end
 		redirect "/"
 	end
