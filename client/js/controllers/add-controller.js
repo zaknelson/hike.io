@@ -1,6 +1,20 @@
 "use strict";
 var AddController = function($http, $log, $rootScope, $scope, $timeout, navigation, resourceCache) {
 
+	var capitalizeWords = function(str) {
+		var result = "";
+		var words = str.split(" ");
+		for (var i = 0; i < words.length; i++) {
+			var word = words[i];
+			word = word.charAt(0).toUpperCase() + word.slice(1);
+			if (i !== 0) {
+				word = " " + word;
+			}
+			result += word;
+		}
+		return result;
+	};
+
 	var resetScope = function() {
 		$scope.hike = {};
 		$scope.hike.location = {};
@@ -13,7 +27,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 		resetScope();
 	});
 	$scope.$on("prepopulateAddHikeName", function(event, name) {
-		$scope.hike.name = name;
+		$scope.hike.name = capitalizeWords(name);
 	});
 	$scope.$on("fancyboxLoaded", function() {
 		$scope.$apply(function() {
