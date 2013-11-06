@@ -522,10 +522,11 @@ function MediumEditor(elements, options) {
             var i,
                 pasteWrapper = function (e) {
                     e.target.classList.remove('medium-editor-placeholder');
-                    if (e.clipboardData && e.clipboardData.getData) {
-                        e.preventDefault();
-                        document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain').replace(/[\r\n]/g, '<br>'));
-                    }
+                    // begin edit
+                    //if (e.clipboardData && e.clipboardData.getData) {
+                        //e.preventDefault();
+                        //document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain').replace(/[\r\n]/g, '<br>'));
+                    //}
                 };
             for (i = 0; i < this.elements.length; i += 1) {
                 this.elements[i].addEventListener('paste', pasteWrapper);
