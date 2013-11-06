@@ -123,7 +123,7 @@ class Photo < Sequel::Model
 			bucket = AmazonUtils.s3.buckets["assets.hike.io"]
 			src = "hike-images/" + self.string_id
 			dst = "hike-images/tmp/deleted/" + self.string_id
-			Photo.each_rendition do |rendition|
+			Photo.each_rendition_including_original do |rendition|
 				suffix = Photo.get_rendition_suffix(rendition)
 				bucket.objects[src + suffix].move_to(dst + suffix)
 			end
@@ -131,7 +131,7 @@ class Photo < Sequel::Model
 			src = HikeApp.root + "/public/hike-images/" + self.string_id
 			dst_dir = HikeApp.root + "/public/hike-images/tmp/deleted/"
 			FileUtils.mkdir_p(dst_dir)
-			Photo.each_rendition do |rendition|
+			Photo.each_rendition_including_original do |rendition|
 				FileUtils.mv(src + Photo.get_rendition_suffix(rendition), dst_dir)
 			end
 		end
