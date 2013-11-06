@@ -101,8 +101,10 @@ $header-landscape-footer-height-mobile: 40px;
 			.overview-description {
 				width: 100%;
 				min-height: 100px;
+				line-height: 28px;
 
 				p, div {
+					line-height: 28px;
 					margin-bottom: 15px;
 				}
 			}
