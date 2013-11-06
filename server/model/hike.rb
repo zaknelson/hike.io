@@ -87,6 +87,7 @@ class Hike < Sequel::Model
 		previous_name = self.name
 
 		self.name = Hike.clean_string_input(json["name"])
+		self.update_keywords if json["name"] != previous_name
 		self.description = Hike.clean_html_input(json["description"])
 		self.distance = json["distance"]
 		self.elevation_gain = json["elevation_gain"]
@@ -94,8 +95,7 @@ class Hike < Sequel::Model
 		self.locality = Hike.clean_string_input(json["locality"])
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
-		self.update_keywords if json["name"] != previous_name
-
+		
 		removed_photos = []
 		Hike.each_special_photo_key do |photo_key|
 			existing_photo = self.send(photo_key)
@@ -141,8 +141,13 @@ class Hike < Sequel::Model
 	end
 
 	def update_keywords
-		keywords = KeywordUtils.sanitize_to_keywords(self.name)
-		keywords.each do |keyword|
+		previous_keywords = self.keywords
+		self.remove_all_keywords
+		self.save_changes
+		previous_keywords.each { |k| k.destroy if k.hikes.length == 0 }
+
+		new_keywords = KeywordUtils.sanitize_to_keywords(self.name)
+		new_keywords.each do |keyword|
 			add_keyword(Keyword.find_or_create(:keyword => keyword))
 		end
 	end
@@ -164,7 +169,7 @@ class Hike < Sequel::Model
 		self.save_changes
 		
 		# Destroy downstream objects if they are not referenced elsewhere
-		location.destroy if location && location.hikes.length == 0
+		location.destroy if location 
 		static_html.destroy if static_html
 		keywords.each { |k| k.destroy if k.hikes.length == 0 }
 		photos.each do |photo|
