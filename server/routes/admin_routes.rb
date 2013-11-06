@@ -16,7 +16,7 @@ class HikeApp < Sinatra::Base
 		return 403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
 		return 404 if not review
-		return 400 if review.api_verb != "put" && review.api_verb != "post"
+		return 400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
 		return 409 if review.status != Review::STATUS_UNREVIEWED
 
 		if review.api_verb == "put"
@@ -31,6 +31,10 @@ class HikeApp < Sinatra::Base
 			hike.creation_time = review.creation_time
 			hike.edit_time = review.creation_time
 			hike.save
+		elsif review.api_verb == "delete"
+			hike = Hike[:string_id => review.hike_string_id]
+			return 409 if not hike
+			hike.cascade_destroy
 		end
 
 		review.reviewer = current_user_id
@@ -45,7 +49,7 @@ class HikeApp < Sinatra::Base
 		return 403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
 		return 404 if not review
-		return 400 if review.api_verb != "put" && review.api_verb != "post"
+		return 400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
 		return 409 if review.status != Review::STATUS_UNREVIEWED
 		review.reviewer = current_user_id
 		review.status = Review::STATUS_REJECTED
@@ -59,7 +63,7 @@ class HikeApp < Sinatra::Base
 			else
 				redirect "/"
 			end
-		elsif review.api_verb == "post" 
+		else
 			redirect "/"
 		end
 	end

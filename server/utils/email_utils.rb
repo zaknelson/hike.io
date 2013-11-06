@@ -6,7 +6,7 @@ require_relative "../model/hike"
 
 class EmailUtils
 
-	def self.send_review body, base_url, title=""
+	def self.send_review review, body, base_url, title
 		api_key = ENV["MAILGUN_API_KEY"]
 		api_url = "https://api:#{api_key}@api.mailgun.net/v2/hike.io.mailgun.org"
 		html = "<html>"
@@ -14,8 +14,8 @@ class EmailUtils
 		html += "<body>"
 		html += body
 		html += "<div>"
-		html += '<a href="' + "#{base_url}/accept" + '" style="color: #fff; text-decoration: none; display: inline-block; position: relative; padding-top: 0; padding-right: 20px; padding-bottom: 0; padding-left: 20px; border: 0; font-size: 18px; line-height: 39px; text-align: center; font-style: normal; cursor: pointer; border-bottom: 1px solid rgba(0 , 0 , 0 , 0.1); font-family: sans-serif; border-radius: 3px; background-color: #009900; margin-top: 5px; margin-right: 5px;">Accept</a>'
-		html += '<a href="' + "#{base_url}/reject" + '" style="color: #fff; text-decoration: none; display: inline-block; position: relative; padding-top: 0; padding-right: 20px; padding-bottom: 0; padding-left: 20px; border: 0; font-size: 18px; line-height: 39px; text-align: center; font-style: normal; cursor: pointer; border-bottom: 1px solid rgba(0 , 0 , 0 , 0.1); font-family: sans-serif; border-radius: 3px; background-color: #CC0000; margin-top: 5px; margin-right: 5px;">Reject</a>'
+		html += '<a href="' + "#{base_url}/admin/v1/reviews/#{review.string_id}/accept" + '" style="color: #fff; text-decoration: none; display: inline-block; position: relative; padding-top: 0; padding-right: 20px; padding-bottom: 0; padding-left: 20px; border: 0; font-size: 18px; line-height: 39px; text-align: center; font-style: normal; cursor: pointer; border-bottom: 1px solid rgba(0 , 0 , 0 , 0.1); font-family: sans-serif; border-radius: 3px; background-color: #009900; margin-top: 5px; margin-right: 5px;">Accept</a>'
+		html += '<a href="' + "#{base_url}/admin/v1/reviews/#{review.string_id}/reject" + '" style="color: #fff; text-decoration: none; display: inline-block; position: relative; padding-top: 0; padding-right: 20px; padding-bottom: 0; padding-left: 20px; border: 0; font-size: 18px; line-height: 39px; text-align: center; font-style: normal; cursor: pointer; border-bottom: 1px solid rgba(0 , 0 , 0 , 0.1); font-family: sans-serif; border-radius: 3px; background-color: #CC0000; margin-top: 5px; margin-right: 5px;">Reject</a>'
 		html += "</div>"
 		html += "</body>"
 		html += "</html>"
@@ -28,17 +28,24 @@ class EmailUtils
 
 	def self.send_new_review(review, base_url)
 		new_json = JSON.pretty_generate(JSON.parse(review.api_body))
-		send_review(new_json, base_url, "New hike")
+		send_review(review, new_json, base_url, "New hike")
 	end
 
 	def self.send_diff_review(review, base_url)
 		hike = Hike[:string_id => review.hike_string_id]
+		title = "Update for #{review.hike_string_id}"
 		# Because the review process allows users to perform updates on hikes that haven't been
 		# created yet, there might not yet be a before.
-		title = hike ? "Update for #{hike.name}" : "Update for pending hike"
 		before = hike ? JSON.pretty_generate(JSON.parse(hike.as_json)) : ""
 		after = JSON.pretty_generate(JSON.parse(review.api_body))
 		html = Diffy::Diff.new(before, after).to_s(:html)
-		send_review(html, base_url, title)
+		send_review(review, html, base_url, title)
+	end
+
+	def self.send_delete_review(review, base_url)
+		hike = Hike[:string_id => review.hike_string_id]
+		title = "Delete for #{review.hike_string_id}"
+		body = hike ? "<a href='#{base_url}/hikes/#{hike.string_id}'>#{base_url}/hikes/#{hike.string_id}</a>" : "<p>Hike doesn't yet exist</p>"
+		send_review(review, body, base_url, title)
 	end
 end

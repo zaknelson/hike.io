@@ -104,7 +104,7 @@ migration "create reviews table" do
 		String :string_id,						:null => false, :unique => true
 		String :status,							:null => false
 		String :api_verb,						:null => false
-		String :api_body,						:null => false
+		String :api_body						#optional
 		Time :creation_time,					:null => false
 		Time :edit_time,						:null => false
 		String :hike_string_id # This is actually a foreign key into the Hike table, but the Hike may not yet exist because of the reviewal process

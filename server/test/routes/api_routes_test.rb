@@ -201,6 +201,26 @@ class ApiRoutesTest < HikeAppTestCase
 		put_and_validate data.to_json, 400
 	end
 
+
+	#
+	# DELETE /api/v1/hikes/:id
+	#
+
+	def test_delete_hike_without_credentials
+		delete "/api/v1/hikes/empty"
+		assert_equal 202, last_response.status
+	end
+
+	def test_delete_hike_with_credentials
+		set_admin_cookie
+		delete "/api/v1/hikes/scotchman-peak"
+		assert_equal 200, last_response.status
+
+		get "/api/v1/hikes/scotchman-peak"
+		assert_equal 404, last_response.status
+	end
+
+
 	#
 	# Helpers
 	#

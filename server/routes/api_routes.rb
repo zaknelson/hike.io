@@ -25,7 +25,7 @@ class HikeApp < Sinatra::Base
 				:api_body => json_str,
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_new_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}") if Sinatra::Application.environment() != :test
+			EmailUtils.send_new_review(review, request.base_url) if Sinatra::Application.environment() != :test
 			return 202
 		end
 
@@ -68,13 +68,30 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_diff_review(review, request.base_url + "/admin/v1/reviews/#{review.string_id}") if Sinatra::Application.environment() != :test
+			EmailUtils.send_diff_review(review, request.base_url) if Sinatra::Application.environment() != :test
 			return 202
 		elsif not hike
 			return 404
 		end
 		hike.update_from_json(json)
 		hike.as_json
+	end
+
+	delete "/api/v1/hikes/:hike_id", :provides => "json" do
+		hike = RoutesUtils.get_hike_from_id params[:hike_id]
+		if user_needs_changes_reviewed?
+			review = Review.create({
+				:api_verb => "delete",
+				:hike_string_id => params[:hike_id],
+				:reviewee => current_user_id
+			})
+			EmailUtils.send_delete_review(review, request.base_url) if Sinatra::Application.environment() != :test
+			return 202
+		elsif not hike
+			return 404
+		end
+		hike.cascade_destroy
+		return 200
 	end
 
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do

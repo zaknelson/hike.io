@@ -97,7 +97,7 @@ class Hike < Sequel::Model
 		self.update_keywords if json["name"] != previous_name
 
 		removed_photos = []
-		Hike.each_photo_type do |photo_key|
+		Hike.each_special_photo_key do |photo_key|
 			existing_photo = self.send(photo_key)
 			if json[photo_key] != nil
 				new_photo = Photo.find(:id => json[photo_key]["id"])
@@ -136,7 +136,7 @@ class Hike < Sequel::Model
 		self.save_changes
 		
 		removed_photos.each do |photo|
-			photo.delete_and_move_on_s3
+			photo.destroy_and_move_on_s3
 		end
 	end
 
@@ -147,10 +147,46 @@ class Hike < Sequel::Model
 		end
 	end
 
-	def self.each_photo_type
+	def cascade_destroy
+		# Store current values
+		location = self.location
+		keywords = self.keywords
+		photos = self.all_photos
+		static_html = StaticHtml[:url => "/hikes/#{self.string_id}"]
+
+		# Remove all references from hike to remove foreign key constraints
+		self.location = nil
+		self.remove_all_keywords
+		self.remove_all_photos_generic
+		Hike.each_special_photo_key do |photo_key|
+			self.send "#{photo_key}=", nil
+		end
+		self.save_changes
+		
+		# Destroy downstream objects if they are not referenced elsewhere
+		location.destroy if location && location.hikes.length == 0
+		static_html.destroy if static_html
+		keywords.each { |k| k.destroy if k.hikes.length == 0 }
+		photos.each do |photo|
+			photo.destroy_and_move_on_s3
+		end
+
+		self.destroy
+	end
+
+	def self.each_special_photo_key
 		yield "photo_facts"
 		yield "photo_landscape"
 		yield "photo_preview"
+	end
+
+	def all_photos
+		photos = []
+		photos.push self.photo_facts if self.photo_facts
+		photos.push self.photo_landscape if self.photo_landscape
+		photos.push self.photo_preview if self.photo_preview
+		photos += self.photos_generic
+		photos
 	end
 
 	def self.is_valid_json? json

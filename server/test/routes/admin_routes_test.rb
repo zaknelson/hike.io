@@ -77,6 +77,16 @@ class AdminRoutesTest < HikeAppTestCase
 		assert_equal 409, last_response.status
 	end
 
+	def test_accept_delete
+		delete "/api/v1/hikes/scotchman-peak"
+		set_admin_cookie
+		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
+		assert_equal 302, last_response.status
+
+		get "/api/v1/hikes/scotchman-peak"
+		assert_equal 404, last_response.status
+	end
+
 	def test_accept_post_and_put
 		# Setup reviews
 		json_obj = get_basic_hike_json

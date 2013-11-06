@@ -26,8 +26,8 @@ migration "seed scotchman peak" do
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo3", :width => 1594, :height => 2400))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo4", :width => 2400, :height => 2400))
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Scotchman"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "scotchman"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "peak"))
 
 	hike.save
 end
@@ -51,8 +51,8 @@ migration "seed nakoa trail" do
 
 	hike.photo_preview = Photo.create(:string_id => "nakoa-trail/preview", :width => 2400, :height => 2400)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Nakoa"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Trail"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "nakoa"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "trail"))
 
 	hike.save
 end
@@ -76,8 +76,8 @@ migration "seed the narrows" do
 
 	hike.photo_preview = Photo.create(:string_id => "the-narrows/preview", :width => 1594, :height => 2400)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "The"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Narrows"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "the"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "narrows"))
 
 	hike.save
 end
@@ -100,7 +100,7 @@ migration "seed empty hike" do
 		:longitude => -118.289783
 	)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Empty"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "empty"))
 
 	hike.save
 end
@@ -122,8 +122,8 @@ migration "seed lake 22" do
 		:longitude => -123.289783
 	)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Lake"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Twenty-two"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "lake"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "twenty-two"))
 
 	hike.save
 end
@@ -145,8 +145,8 @@ migration "seed pike's peak" do
 		:longitude => -113.289783
 	)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Pike's"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Peak"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "pike's"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "peak"))
 
 	hike.save
 end
@@ -168,8 +168,8 @@ migration "seed mt. kilimanjaro" do
 		:longitude => -123.289783
 	)
 
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Mount"))
-	hike.add_keyword(Keyword.find_or_create(:keyword => "Kilimanjaro"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "mount"))
+	hike.add_keyword(Keyword.find_or_create(:keyword => "kilimanjaro"))
 
 	hike.save
 end
