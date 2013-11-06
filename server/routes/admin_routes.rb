@@ -19,6 +19,7 @@ class HikeApp < Sinatra::Base
 		return 400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
 		return 409 if review.status != Review::STATUS_UNREVIEWED
 
+		redirect_url = "/hikes/#{hike.string_id}"
 		if review.api_verb == "put"
 			hike = Hike[:string_id => review.hike_string_id]
 			return 409 if not hike
@@ -35,6 +36,7 @@ class HikeApp < Sinatra::Base
 			hike = Hike[:string_id => review.hike_string_id]
 			return 409 if not hike
 			hike.cascade_destroy
+			redirect_url = "/"
 		end
 
 		review.reviewer = current_user_id
@@ -42,7 +44,7 @@ class HikeApp < Sinatra::Base
 		review.edit_time = Time.now
 		review.save_changes
 
-		redirect "/hikes/#{hike.string_id}"
+		redirect redirect_url
 	end
 
 	get "/admin/v1/reviews/:review_id/reject", :provides => "json" do
