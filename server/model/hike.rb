@@ -26,6 +26,14 @@ class Hike < Sequel::Model
 		to_json(options)
 	end
 
+	def self.get_hike_from_id hike_id
+		hike = Hike[:string_id => hike_id]
+		if not hike and StringUtils.is_integer? hike_id
+			hike = Hike[:id => Integer(hike_id)]
+		end
+		hike
+	end
+
 	def self.create_from_json json
 		name = Hike.clean_string_input(json["name"])
 		hike = Hike.create(
