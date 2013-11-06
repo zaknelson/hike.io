@@ -60,6 +60,7 @@ class HikeApp < Sinatra::Base
 		json_str = request.body.read
 		json = JSON.parse json_str rescue return 400
 		return 400 if not Hike.is_valid_json? json
+		return 409 if json["string_id"] && json["string_id"] != params[:hike_id] && RoutesUtils.get_hike_from_id(json["string_id"])
 
 		if user_needs_changes_reviewed?
 			review = Review.create({

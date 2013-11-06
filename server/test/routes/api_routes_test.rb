@@ -189,16 +189,28 @@ class ApiRoutesTest < HikeAppTestCase
 		put_and_validate get_basic_hike_json, 200
 	end
 
+	def test_put_hike_string_id
+		data = get_basic_hike_json
+		data["string_id"] = "new-hike"
+		put_and_validate data, 200
+	end
+
+	def test_put_hike_string_id_conflicting
+		data = get_basic_hike_json
+		data["string_id"] = "scotchman-peak"
+		put_and_validate data, 409
+	end
+
 	def test_put_invalid_distance
 		data = get_basic_hike_json
 		data["distance"] = "not-a-number"
-		put_and_validate data.to_json, 400
+		put_and_validate data, 400
 	end
 
 	def test_put_hike_invalid_latitude
 		data = get_basic_hike_json
 		data["location"]["latitude"] = -91
-		put_and_validate data.to_json, 400
+		put_and_validate data, 400
 	end
 
 
@@ -229,7 +241,8 @@ class ApiRoutesTest < HikeAppTestCase
 		set_admin_cookie
 		put "/api/v1/hikes/empty", data.to_json
 		if response_code == 200
-			validate data, "empty"
+			string_id = data["string_id"] || "empty"
+			validate data, string_id
 		else
 			assert_equal response_code, last_response.status
 		end

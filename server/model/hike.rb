@@ -95,6 +95,14 @@ class Hike < Sequel::Model
 		self.locality = Hike.clean_string_input(json["locality"])
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
+
+		if json["string_id"] && self.string_id != json["string_id"]
+			self.string_id = json["string_id"]
+			all_photos.each do |photo|
+				photo.move_on_s3(self)
+			end
+			# TODO update the static_html and review tables?
+		end
 		
 		removed_photos = []
 		Hike.each_special_photo_key do |photo_key|
@@ -102,7 +110,7 @@ class Hike < Sequel::Model
 			if json[photo_key] != nil
 				new_photo = Photo.find(:id => json[photo_key]["id"])
 				self.send "#{photo_key}=", new_photo
-				new_photo.move_on_s3_if_needed(self)
+				new_photo.move_on_s3(self) if new_photo.is_in_tmp_folder_on_s3?
 			elsif existing_photo
 				removed_photos.push existing_photo
 				self.send "#{photo_key}=", nil
@@ -121,7 +129,7 @@ class Hike < Sequel::Model
 
 			added_generic_photos.each do |photo|
 				self.add_photos_generic(photo)
-				photo.move_on_s3_if_needed(self)
+				photo.move_on_s3(self) if new_photo.is_in_tmp_folder_on_s3?
 			end
 
 			removed_photos += removed_generic_photos
