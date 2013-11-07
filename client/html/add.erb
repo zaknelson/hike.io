@@ -1,6 +1,6 @@
 <article id="add-page" data-ng-cloak class="add-page" data-ng-controller="AddController" data-meta-description="Add a new hike by specifying name, locality, distance, elevation and latitude / longitude.">
 	<h2>Add a hike</h2>
-	<form data-ng-submit="add()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}" data-reset-form="true">
+	<form data-ng-submit="add()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}" data-reset-form="isLoaded">
 		<div>
 			<div>
 				<label for="name">Name</label>
