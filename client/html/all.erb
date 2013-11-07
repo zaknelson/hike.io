@@ -1,4 +1,4 @@
-<article class="default-container all-page"  data-meta-description="All hikes on hike.io listed in alphabetical order.">
+<article class="all-page"  data-meta-description="All hikes on hike.io listed in alphabetical order.">
 	<ul>
 		<li data-ng-repeat='hike in hikes | orderBy:"name"'>
 			<a href='/hikes/{{hike.string_id}}'><h2>{{hike.name}}</h2></a>
