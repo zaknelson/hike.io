@@ -1,16 +1,16 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("giveFocus", function() {
+	directive("giveFocus", ["$timeout", function($timeout) {
 	return {
 		link: function(scope, element, attributes) {
 			scope.$watch(attributes.giveFocus, function(value) {
 				if (value) {
-					setTimeout(function() {
+					$timeout(function() {
 						element.focus();
 					});
 				}
 			});
 		}
 	};
-});
+}]);
