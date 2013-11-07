@@ -1,5 +1,5 @@
 "use strict";
-var AddController = function($http, $log, $rootScope, $scope, $timeout, navigation, resourceCache) {
+var AddController = function($http, $log, $rootScope, $scope, $timeout, capabilities, navigation, resourceCache) {
 
 	var capitalizeWords = function(str) {
 		var result = "";
@@ -20,6 +20,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 		$scope.hike.location = {};
 		$scope.isLoaded = false;
 		$scope.isSubmitted = false;
+		$scope.prepopulatedName = null;
 	};
 	resetScope();
 
@@ -27,16 +28,19 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 		resetScope();
 	});
 	$scope.$on("prepopulateAddHikeName", function(event, name) {
-		$scope.hike.name = capitalizeWords(name);
+		if (capabilities.isPrepopulatingFormsSupported) {
+			$scope.prepopulatedName = capitalizeWords(name);
+		}
 	});
 	$scope.$on("fancyboxLoaded", function() {
 		$scope.$apply(function() {
 			$scope.isLoaded = true;
+			$scope.hike.name = $scope.prepopulatedName;
 		});
 	});
 	$scope.$on("fancyboxClosed", function() {
 		$scope.$apply(function() {
-			$scope.isLoaded = false;
+			resetScope();
 		});
 	});
 
@@ -74,4 +78,4 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, navigati
 	$scope.htmlReady();
 };
 
-AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "navigation", "resourceCache"];
+AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "capabilities", "navigation", "resourceCache"];

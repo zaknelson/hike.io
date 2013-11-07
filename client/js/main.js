@@ -46,6 +46,7 @@ angular.module("hikeio", ["seo", "ui"]).
 	}]).
 	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "capabilities", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, capabilities, config, navigation) {
 		$rootScope.config = config;
+		$rootScope.capabilities = capabilities;
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
