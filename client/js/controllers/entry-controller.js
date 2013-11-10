@@ -77,7 +77,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 
 	$scope.save = function() {
-		if ($scope.isDirty) {
+		if ($scope.isDirty && $scope.numPhotosUploading === 0) {
 			$scope.isSaving = true;
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
@@ -241,6 +241,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {
+
 		$scope.save();
 	});
 };
