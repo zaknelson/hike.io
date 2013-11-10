@@ -73,7 +73,11 @@ $facts-external-link-svg-size: 12px;
 
 		.hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
 			min-width: 10px;
-			display: inline-block;
+			display: inline;
+		}
+
+		a:not(.disabled) > div {
+			color: #39c;
 		}
 	}
 }

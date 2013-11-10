@@ -61,9 +61,9 @@
 							<td>Lat. / Lng.</td>
 							<td>
 							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
-								<div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span>,</span>
+								<div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span>,</span>
 								
-								<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+								<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 							</a>
 							<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
 						</td>
