@@ -60,9 +60,12 @@ angular.module("hikeio").
 						event.preventDefault();
 						element.blur();
 						return true;
+					} else if (event.metaKey || // On firefox, the meta key, delete, and arrows need to be ignored.
+						charCode === 8 || 
+						charCode === 0) { 
+						return true;
 					} else if (attributes.type === "numeric" &&
-						!event.metaKey && 
-						(charCode !== 8) && // Is not delete key
+						
 						(charCode !== 46 && (charCode < 48 || charCode > 57) || // Is anything other than 0-9, a dash, or a period
 						(charCode === 46 && element.text().indexOf(".") > -1))) { // Make sure if we're adding a period, we don't already have one
 
