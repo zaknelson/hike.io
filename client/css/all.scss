@@ -1,9 +1,10 @@
 .all-page {
+	padding: 10px;
 	ul {
 		overflow: hidden;
 	}
 	li {
-		margin-top: 10px;
-		margin-left: 10px;
+		display: block;
+		margin-bottom: 10px;
 	}
 }
