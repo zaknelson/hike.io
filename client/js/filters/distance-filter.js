@@ -5,6 +5,10 @@ angular.module("hikeio").
 	return function (value, from, to, truncateTo) {
 		var result = null;
 
+		if (typeof value !== "number") {
+			value = parseFloat(value);
+		}
+
 		if (from === "meters" && to === "feet") {
 			result = value * 3.28084;
 		} else if (from === "feet" && to === "meters") {
