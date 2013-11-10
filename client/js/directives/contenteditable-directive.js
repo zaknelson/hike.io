@@ -55,14 +55,18 @@ angular.module("hikeio").
 				});
 
 				element.keypress(function(event) {
-					if (event.keyCode === 13 && attributes.singleLine) { // return
+					var charCode = (typeof event.which == "number") ? event.which : charCode;
+					if (charCode === 13 && attributes.singleLine) { // Return
 						event.preventDefault();
 						element.blur();
+						return true;
 					} else if (attributes.type === "numeric" &&
-						(event.keyCode !== 46 && (event.keyCode < 48 || event.keyCode > 57) || // is anything other than 0-9, a dash, or a period
-						(event.keyCode === 46 && element.text().indexOf(".") > -1))) { // make sure if we're adding a period, we don't already have one
+						!event.metaKey && 
+						(charCode !== 8) && // Is not delete key
+						(charCode !== 46 && (charCode < 48 || charCode > 57) || // Is anything other than 0-9, a dash, or a period
+						(charCode === 46 && element.text().indexOf(".") > -1))) { // Make sure if we're adding a period, we don't already have one
 
-						if (event.keyCode === 45 && element.text().indexOf("-") === -1) {
+						if (charCode === 45 && element.text().indexOf("-") === -1) {
 							var before = element.text();
 							setTimeout(function(){
 								if (!$.isNumeric(element.text())) {

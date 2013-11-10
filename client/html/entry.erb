@@ -24,18 +24,18 @@
 					<table>
 						<tr>
 							<td>Hike</td>
-							<td class="facts-hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
+							<td class="hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
 						<tr data-ng-show="hike.locality != null || isEditing">
 							<td>Location</td>
-							<td class="facts-hike-location" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
+							<td class="hike-location" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
 						</tr>
 						<tr data-ng-show="hike.distance != null || isEditing">
 							<td>Distance</td>
 							<td>
-								<div class="facts-hike-distance || isEditing">
-									<span class="facts-hike-distance-value" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
-									<span class="facts-hike-distance-units">mi.</span>
+								<div>
+									<div class="hike-distance" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+									<span>mi.</span>
 								</div>
 							</td>
 						</tr>
@@ -43,7 +43,7 @@
 							<td>Elev. Gain</td>
 							<td>
 								<div>
-									<span contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
+									<div class="hike-elevation-gain" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 									<span>ft.</span>
 								</div>
 							</td>
@@ -52,7 +52,7 @@
 							<td>Elev. Max</td>
 							<td>
 								<div>
-									<span contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
+									<div class="hike-elevation-max" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 									<span>ft.</span>
 								</div>
 							</td>
@@ -61,9 +61,9 @@
 							<td>Lat. / Lng.</td>
 							<td>
 							<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
-								<span class="facts-hike-latitude-value" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span><span>,</span>
+								<div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span>,</span>
 								
-								<span class="facts-hike-longitude-value" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></span>
+								<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 2 || 3}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 							</a>
 							<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
 						</td>
