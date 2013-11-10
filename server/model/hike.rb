@@ -137,7 +137,7 @@ class Hike < Sequel::Model
 
 			added_generic_photos.each do |photo|
 				self.add_photos_generic(photo)
-				photo.move_on_s3(self) if new_photo.is_in_tmp_folder_on_s3?
+				photo.move_on_s3(self) if photo.is_in_tmp_folder_on_s3?
 			end
 
 			removed_photos += removed_generic_photos
