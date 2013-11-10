@@ -33,6 +33,16 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.local_photos_generic = jQuery.extend(true, [], $scope.hike.photos_generic);
 	};
 
+	var normalizeHikeBeforeSave = function() {
+		var hike = $scope.hike;
+		// Firefox's contenteditable implementation can change these properties to strings, normalize them before uploading
+		if (typeof hike.distance !== "number")				hike.distance = parseFloat(hike.distance);
+		if (typeof hike.elevation_gain !== "number")		hike.elevation_gain = parseFloat(hike.elevation_gain);
+		if (typeof hike.elevation_max !== "number")			hike.elevation_max = parseFloat(hike.elevation_max);
+		if (typeof hike.location.latitude !== "number")		hike.location.latitude = parseFloat(hike.location.latitude);
+		if (typeof hike.location.longitude !== "number")	hike.location.longitude = parseFloat(hike.location.longitude);
+	};
+
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
 		$scope.isJustAdded = true;
 		$scope.isBeingReviewed = isBeingReviewed;
@@ -79,6 +89,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.save = function() {
 		if ($scope.isDirty && $scope.numPhotosUploading === 0) {
 			$scope.isSaving = true;
+			normalizeHikeBeforeSave();
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
 					$scope.isJustAdded = false;

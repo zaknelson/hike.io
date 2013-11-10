@@ -55,17 +55,16 @@ angular.module("hikeio").
 				});
 
 				element.keypress(function(event) {
-					var charCode = (typeof event.which == "number") ? event.which : charCode;
+					var charCode = (typeof event.which === "number") ? event.which : charCode;
 					if (charCode === 13 && attributes.singleLine) { // Return
 						event.preventDefault();
 						element.blur();
 						return true;
 					} else if (event.metaKey || // On firefox, the meta key, delete, and arrows need to be ignored.
-						charCode === 8 || 
-						charCode === 0) { 
+						charCode === 8 ||
+						charCode === 0) {
 						return true;
 					} else if (attributes.type === "numeric" &&
-						
 						(charCode !== 46 && (charCode < 48 || charCode > 57) || // Is anything other than 0-9, a dash, or a period
 						(charCode === 46 && element.text().indexOf(".") > -1))) { // Make sure if we're adding a period, we don't already have one
 
