@@ -41,6 +41,11 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		if (typeof hike.elevation_max !== "number")			hike.elevation_max = parseFloat(hike.elevation_max);
 		if (typeof hike.location.latitude !== "number")		hike.location.latitude = parseFloat(hike.location.latitude);
 		if (typeof hike.location.longitude !== "number")	hike.location.longitude = parseFloat(hike.location.longitude);
+
+		if (hike.location.latitude < -90)	hike.location.latitude = -90;
+		if (hike.location.latitude >  90)	hike.location.latitude =  90;
+		if (hike.location.longitude < -180)	hike.location.longitude = -180;
+		if (hike.location.longitude >  180)	hike.location.longitude =  180;
 	};
 
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
