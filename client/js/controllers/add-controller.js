@@ -1,5 +1,5 @@
 "use strict";
-var AddController = function($http, $log, $rootScope, $scope, $timeout, capabilities, navigation, resourceCache) {
+var AddController = function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, resourceCache) {
 
 	var capitalizeWords = function(str) {
 		var result = "";
@@ -63,7 +63,12 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, capabili
 				// Keep this hike in the user's session cache (even in the case when the add is under review, otherwise
 				// the redirect to the entry page would fail)
 				resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
-				navigation.toEntryEdit(id);
+				if (capabilities.isEditPageSupported) {
+					navigation.toEntryEdit(id);
+				} else {
+					$rootScope.$broadcast("fancyboxClose");
+					$window.alert("Nice add! Normally, you could edit this hike further, but the edit page doesn't support your browser. Sorry about that.")
+				}
 				resetScope();
 				$timeout(function() {
 					var isBeingReviewed = (status === 202);
@@ -78,4 +83,4 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, capabili
 	$scope.htmlReady();
 };
 
-AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "capabilities", "navigation", "resourceCache"];
+AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "resourceCache"];

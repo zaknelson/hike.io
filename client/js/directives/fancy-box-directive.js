@@ -7,6 +7,9 @@ angular.module("hikeio").
 				scope.$on("$routeChangeStart", function () {
 					$.fancybox.close();
 				});
+				scope.$on("fancyboxClose", function () {
+					$.fancybox.close();
+				});
 				$(element).find(attrs.fancybox).fancybox({
 					afterLoad: function(current, previous) {
 						$rootScope.$broadcast("fancyboxLoaded");
