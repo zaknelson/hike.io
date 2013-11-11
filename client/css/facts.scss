@@ -79,6 +79,10 @@ $facts-external-link-svg-size: 12px;
 			float: left;
 		}
 
+		.hike-name, .hike-locality {
+			min-width: 100px;
+		}
+
 		.hike-latitude-and-label {
 			float: none !important;
 		}
