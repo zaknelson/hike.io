@@ -45,11 +45,13 @@ $facts-external-link-svg-size: 12px;
 			width: 75px;
 			color: #333;
 			font-weight: bold;
+			float: left;
 		}
 
 		tr td:nth-child(2) {
 			font-weight: 300;
 			padding-left: 15px;
+			float: left;
 		}
 
 		tr:not(:first-child) td {
@@ -73,11 +75,24 @@ $facts-external-link-svg-size: 12px;
 
 		.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
 			min-width: 10px;
-			display: inline;
+			display: block;
+			float: left;
 		}
 
-		a:not(.disabled) > div {
-			color: #39c;
+		.hike-longitude-and-label {
+			padding-left: 5px;
+			float:left;
+		}
+
+		a:not(.disabled) {
+			div,span {
+				color: #39c;
+			}
+		}
+
+		.unit-label {
+			float: left;
+			margin-left: 5px;
 		}
 	}
 }
