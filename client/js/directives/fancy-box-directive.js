@@ -21,7 +21,7 @@ angular.module("hikeio").
 					nextEffect : "none",
 					prevEffect : "none",
 					closeEffect : "none",
-					closeBtn : false,
+					closeBtn : true,
 					arrows : false,
 					keys : true,
 					nextClick : true
