@@ -24,9 +24,12 @@ footer {
 	width: 100%;
 	a {
 		float: right;
-		color: #888;
+		color: #777;
 		display: inline-block;
 		margin-left: 20px;
+	}
+	a:hover {
+		color: #777;
 	}
 }
 
