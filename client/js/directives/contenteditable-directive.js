@@ -23,6 +23,10 @@ angular.module("hikeio").
 							}
 						} else {
 							viewValue = element.html();
+							if (element.text() === "" && viewValue !== "") {
+								viewValue = "";
+								element.html("");
+							}
 						}
 
 						if (attributes.filterModel) {
