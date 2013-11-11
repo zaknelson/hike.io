@@ -13,6 +13,14 @@ angular.module("hikeio").
 						var viewValue = "";
 						if (attributes.type === "text") {
 							viewValue = element.text();
+						} else if (attributes.type === "numeric") {
+							viewValue = parseFloat(element.html()) + "";
+							if (isNaN(viewValue)) {
+								element.html("");
+								viewValue = 0;
+							} else if (viewValue !== element.html() && !element.html().match(/[0-9\.]*/)) { // Firefox adds <br>'s everywehre, this cleans them up
+								element.html(viewValue);
+							}
 						} else {
 							viewValue = element.html();
 						}
