@@ -51,41 +51,62 @@
 		}
 	}
 
-	.content {
+	.search-box {
 		position: absolute;
 		top:30%;
-		width: 100%;
-		text-align: center;
+		left:50%;
+		width: 520px;
+		margin-left: -260px;
+		@include border-radius(2px, 2px);
+		border: 1px solid rgba(1, 1, 1, 0.3);
+		background-color: white;
 
-		input { 
-			border: 3px solid rgba(1, 1, 1, 0.3);
-			@include border-radius(2px, 2px);
+		input {
+			border: none;
+			border-color: transparent;
+			color: #555;
 			font-size: 18px;
 			font-weight: 300;
-			padding: 7px;
-			width: 500px;
-			max-width: 80%;
-			margin-left: 15px; /* offset for search button width, surely there is a better way */
+			height: 44px;
+			padding: 9px;
+			width: 100%;
+		}
+		input::-ms-clear {
+			display: none;
 		}
 		.search-input-button {
+			position: absolute;
+			top: 0px;
+			right: 0px;
 			display: inline;
 			cursor: pointer;
+			padding: 14px 12px;
+			text-align: center;
 			opacity: .65;
 			svg, img {
-				position: relative;
-				left: -35px;
 				width: 15px;
 				height: 15px;
 			}
 		}
 		.search-input-button:hover {
-			opacity: .8;
+			opacity: .9;
 		}
 	}
 
 	@media all and (max-width: $mobile-width) { 
-		.content input {
-			font-size: 24px;
+		.search-box {
+			width: 80%;
+			margin-left: -40%;
+			input {
+				height: 50px;
+				font-size: 24px;
+			}
+			.search-input-button {
+				svg, img {
+					width: 21px;
+					height: 21px;
+				}
+			}
 		}
 	}
 }
