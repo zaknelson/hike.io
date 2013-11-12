@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("headerEntry", ["$document", function($document) {
+	directive("headerEntry", function() {
 		return {
 			scope: {
 				align: "@",
@@ -28,4 +28,4 @@ angular.module("hikeio").
 			"</a>",
 			transclude: true
 		};
-	}]);
+	});
