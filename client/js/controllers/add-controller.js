@@ -67,7 +67,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 					navigation.toEntryEdit(id);
 				} else {
 					$rootScope.$broadcast("fancyboxClose");
-					$window.alert("Nice add! Normally, you could edit this hike further, but the edit page doesn't support your browser. Sorry about that.")
+					$window.alert("Nice add! Normally, you could edit this hike further, but the edit page doesn't support your browser. Sorry about that.");
 				}
 				resetScope();
 				$timeout(function() {
