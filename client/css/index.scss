@@ -67,7 +67,7 @@
 			color: #555;
 			font-size: 18px;
 			font-weight: 300;
-			height: 44px;
+			height: 42px;
 			padding: 9px;
 			width: 100%;
 		}
@@ -85,8 +85,8 @@
 			opacity: .65;
 			background-color: rgba(1, 1, 1, 0.001); /* Hack for IE 10, otherwise, it doesn't register clicks to the transparent parts of the svg  */
 			svg, img {
-				width: 15px;
-				height: 15px;
+				width: 16px;
+				height: 16px;
 			}
 		}
 		.search-input-button:hover {
