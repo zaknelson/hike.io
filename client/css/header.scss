@@ -55,7 +55,6 @@ header > .header-entries {
 
 header > .search-dropdown {
 	position: absolute;
-	display: none;
 	top: $header-height - 3;
 	height: $header-height;
 	right: 0px;
@@ -83,10 +82,6 @@ header > .search-dropdown {
 		height: 36px;
 		font-size: 24px;
 	}
-}
-
-.search-dropdown.active {
-	display: block;
 }
 
 @media all and (max-width: $mobile-width) {
