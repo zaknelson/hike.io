@@ -97,6 +97,13 @@ angular.module("hikeio").
 					return true;
 				});
 
+				// Redundant in most browsers, but in IE, input doesn't fire and keypress doesn't fire for all keys.
+				element.keydown(function(event) {
+					if (attributes.change) {
+						scope.$apply(attributes.change);
+					}
+				});
+
 				// model -> view
 				controller.$render = function() {
 
