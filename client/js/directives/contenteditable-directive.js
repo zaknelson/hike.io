@@ -67,6 +67,9 @@ angular.module("hikeio").
 				});
 
 				element.keypress(function(event) {
+					if (attributes.change) {
+						scope.$apply(attributes.change);
+					}
 					var charCode = (typeof event.which === "number") ? event.which : charCode;
 					if (charCode === 13 && attributes.singleLine) { // Return
 						event.preventDefault();
