@@ -85,7 +85,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		/* global MediumEditor: false */
 		new MediumEditor(".overview-description", {
 			anchorInputPlaceholder: "Relative link...",
-			excludedActions: ["u", "h4"],
+			excludedActions: ["blockquote", "u", "h4"],
 			placeholder: "Enter a description of the hike..."
 		});
 	}
