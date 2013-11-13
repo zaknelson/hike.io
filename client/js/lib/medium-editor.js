@@ -113,6 +113,8 @@ function MediumEditor(elements, options) {
                 var node = getSelectionStart();
                 if (node && node.getAttribute('data-medium-element') && node.children.length === 0) {
                     document.execCommand('formatBlock', false, 'p');
+                    // edit, no need because we're already in a keyup handler
+                    //this.triggerKeyUp();
                 }
                 if (e.which === 13 && !e.shiftKey) {
                     if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
@@ -121,6 +123,8 @@ function MediumEditor(elements, options) {
                         if (node.tagName.toLowerCase() === 'a') {
                             document.execCommand('unlink', null, false);
                         }
+                        // edit, no need because we're already in a keyup handler
+                        //this.triggerKeyUp();
                     }
                 }
             });
@@ -348,12 +352,16 @@ function MediumEditor(elements, options) {
             } else {
                 document.execCommand(action, null, false);
                 this.setToolbarPosition();
+                // edit
+                this.triggerKeyUp();
             }
         },
 
         triggerAnchorAction: function () {
             if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a') {
                 document.execCommand('unlink', null, false);
+                // edit
+                this.triggerKeyUp();
             } else {
                 if (this.anchorForm.style.display === 'block') {
                     this.showToolbarActions();
@@ -370,12 +378,15 @@ function MediumEditor(elements, options) {
             // allowing nesting, we need to use outdent
             // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
             if (el === 'blockquote' && selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
+                // edit
+                this.triggerKeyUp();
                 return document.execCommand('outdent', false, null);
             }
             if (selectionData.tagName === el) {
                 el = 'p';
             }
             // edit, added < >
+            this.triggerKeyUp();
             return document.execCommand('formatBlock', false, "<" + el + ">");
         },
 
@@ -467,6 +478,8 @@ function MediumEditor(elements, options) {
 
         createLink: function (input) {
             restoreSelection(this.savedSelection);
+            // edit
+            this.triggerKeyUp();
             document.execCommand('createLink', false, input.value);
             // begin edit
             // TODO can this be done in a directive instead?
@@ -554,6 +567,17 @@ function MediumEditor(elements, options) {
                 this.elements[i].addEventListener('keypress', placeholderWrapper);
             }
             return this;
+        },
+
+        triggerKeyUp: function() {
+            // edit, in IE execCommand doesn't trigger any events so we have to 
+            // manually trigger one that will register the change
+            var self = this;
+            setTimeout(function() {
+                for (var i = 0; i < self.elements.length; i++) {
+                    $(self.elements[i]).keyup();
+                }
+            });   
         }
 
     };
