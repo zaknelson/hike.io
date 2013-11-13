@@ -68,11 +68,25 @@ class Hike < Sequel::Model
 	def self.clean_html_input html
 		return html if not html
 		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
-		# TODO this code is inefficient
-		html.gsub!(/(<div>|<\/div>|<div\/>|<br>|<br\/>|<p>|<\/p>|<p\/>)/i, "\n")
-		html.gsub!("&nbsp;", "")
-		html.gsub!('href="javascript:void"', "")
-		html.gsub!("data-href", "href")
+		inputToReplaceMapping = {
+			"<div>"		=> "\n",
+			"</div>"	=> "\n",
+			"<br>"		=> "\n",
+			"<br/>"		=> "\n",
+			"</br>"		=> "\n",
+			"<p>"		=> "\n",
+			"</p>"		=> "\n",
+			"<strong>"	=> "<b>",
+			"</strong>"	=> "</b>",
+			"<em>"		=> "<i>",
+			"</em>"		=> "</i>",
+			"&nbsp;"	=> "",
+			"data-href"	=> "href",
+			'href="javascript:void"' => "\n",
+		}
+		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;|data-href|href="javascript:void")/i do |match|
+			inputToReplaceMapping[match.to_s]
+		end
 		cleaned_html = ""
 		html_elements = html.split("\n")
 		html_elements.each do |element|

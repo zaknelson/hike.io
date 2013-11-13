@@ -1,14 +1,13 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$timeout", "filterParser", function($timeout, filterParser) {
+	directive("contenteditable", ["$timeout", "capabilities", "filterParser", function($timeout, capabilities, filterParser) {
 
 		return {
 			require: "ngModel",
 			link: function(scope, element, attributes, controller) {
 
-				// view -> model
-				element.on("input", function() {
+				var storeViewValueInModel = function() {
 					scope.$apply(function() {
 						var viewValue = "";
 						if (attributes.type === "text") {
@@ -39,6 +38,11 @@ angular.module("hikeio").
 					if (attributes.change) {
 						scope.$apply(attributes.change);
 					}
+				};
+
+				// view -> model
+				element.on("input", function() {
+					storeViewValueInModel();
 				});
 
 				element.on("paste", function(event) {
@@ -56,6 +60,9 @@ angular.module("hikeio").
 								} else {
 									element.html(before);
 									element.blur();
+									if (!capabilities.contentEditableSupportsInput) {
+										storeViewValueInModel();
+									}
 								}
 							}
 						} else {
@@ -104,6 +111,12 @@ angular.module("hikeio").
 						scope.$apply(attributes.change);
 					}
 				});
+
+				if (!capabilities.contentEditableSupportsInput) {
+					element.keyup(function() {
+						storeViewValueInModel();
+					});
+				}
 
 				// model -> view
 				controller.$render = function() {

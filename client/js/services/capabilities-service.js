@@ -16,4 +16,6 @@ angular.module("hikeio").
 		// Firefox validates the whole form as soon as its modified.
 		// https://groups.google.com/forum/#!topic/angular/LJvPlyhpWVA
 		this.isPrepopulatingFormsSupported = userAgent.browser.name !== "Firefox";
+
+		this.contentEditableSupportsInput = userAgent.browser.name !== "IE";
 	}]);
