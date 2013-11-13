@@ -24,11 +24,15 @@
 					<table>
 						<tr data-redirect-focus=".hike-name">
 							<td>Hike</td>
-							<td class="hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
+							<td>
+								<div class="hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+							</td>
 						</tr>
 						<tr data-ng-show="hike.locality != null || isEditing" data-redirect-focus=".hike-locality">
 							<td>Location</td>
-							<td class="hike-locality" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></td>
+							<td>
+								<div class="hike-locality" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+							</td>
 						</tr>
 						<tr data-ng-show="hike.distance != null || isEditing" data-redirect-focus=".hike-distance">
 							<td>Distance</td>

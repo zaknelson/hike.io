@@ -52,11 +52,11 @@ $facts-external-link-svg-size: 12px;
 			font-weight: 300;
 			font-size: 16px;
 			padding-left: 15px;
-			float: left;
 		}
 
 		tr:not(:first-child) td {
 			padding-top: 5px;
+			vertical-align: top;
 		}
 
 		svg, img {
