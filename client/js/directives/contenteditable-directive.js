@@ -112,9 +112,12 @@ angular.module("hikeio").
 					}
 				});
 
-				if (!capabilities.contentEditableSupportsInput) {
-					element.keyup(function() {
-						storeViewValueInModel();
+				if (!capabilities.contentEditableSupportsInput ) {
+					element.keyup(function(event) {
+						var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
+						if (!event.ctrlKey && charCode !== 17) {
+							storeViewValueInModel();
+						}
 					});
 				}
 
