@@ -70,7 +70,7 @@ angular.module("hikeio").
 					if (attributes.change) {
 						scope.$apply(attributes.change);
 					}
-					var charCode = (typeof event.which === "number") ? event.which : charCode;
+					var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
 					if (charCode === 13 && attributes.singleLine) { // Return
 						event.preventDefault();
 						element.blur();
@@ -97,9 +97,10 @@ angular.module("hikeio").
 					return true;
 				});
 
-				// Redundant in most browsers, but in IE, input doesn't fire and keypress doesn't fire for all keys.
+				// Redundant in most browsers, but in IE, input doesn't fire for delete.
 				element.keydown(function(event) {
-					if (attributes.change) {
+					var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
+					if (charCode === 8 && attributes.change) {
 						scope.$apply(attributes.change);
 					}
 				});
