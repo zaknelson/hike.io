@@ -92,8 +92,7 @@ class Hike < Sequel::Model
 		html_elements.each do |element|
 			element.strip!
 			next if element.length == 0
-			if ((element.start_with?("<h3>") && element.end_with?("</h3>")) ||
-				(element.start_with?("<blockquote>") && element.end_with?("</blockquote>")))
+			if element.start_with?("<h3>") || element.end_with?("</h3>")
 				cleaned_html += element
 			else
 				cleaned_html += "<p>" + element + "</p>"
