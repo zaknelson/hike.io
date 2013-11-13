@@ -74,9 +74,6 @@ angular.module("hikeio").
 				});
 
 				element.keypress(function(event) {
-					if (attributes.change) {
-						scope.$apply(attributes.change);
-					}
 					var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
 					if (charCode === 13 && attributes.singleLine) { // Return
 						event.preventDefault();
@@ -104,18 +101,13 @@ angular.module("hikeio").
 					return true;
 				});
 
-				// Redundant in most browsers, but in IE, input doesn't fire for delete.
-				element.keydown(function(event) {
-					var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
-					if (charCode === 8 && attributes.change) {
-						scope.$apply(attributes.change);
-					}
-				});
-
-				if (!capabilities.contentEditableSupportsInput ) {
+				// Center browsers don't support input on contenteditable, in that case try to mimic the behavior here.
+				if (!capabilities.contentEditableSupportsInput) {
 					element.keyup(function(event) {
 						var charCode = (typeof event.which === "number") ? event.which : event.keyCode;
-						if (!event.ctrlKey && charCode !== 17) {
+						if (!charCode || // If charCode is undefined, this event must have been triggered by the medium editor, store the value
+							(!event.ctrlKey && charCode !== 17 && // Not the control key
+							!(charCode >= 37 && charCode <= 40))) { // Not the arrow keys
 							storeViewValueInModel();
 						}
 					});
@@ -123,7 +115,6 @@ angular.module("hikeio").
 
 				// model -> view
 				controller.$render = function() {
-
 					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
 					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
 					$timeout(function() {
