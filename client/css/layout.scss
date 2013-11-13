@@ -173,6 +173,10 @@ html.touch a:hover {
 	@include box-shadow(0 1px 3px rgba(34, 25, 25, 0.4));
 }
 
+.hide-ie-input-close::-ms-clear {
+	display: none;
+}
+
 @media all and (max-width: $container-width) {
 	.default-container { width: 100%; }
 }
