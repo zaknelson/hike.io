@@ -19,6 +19,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	var lastUploadedPhotoId = 0;
 	var uploadedPhotoIdMap = {};
 	var canceledUploadedPhotoIdMap = {};
+	var mediumEditor = null;
 
 	var disableLinksIfEditing = function(data) {
 		if ($scope.hike.description && $scope.isEditing) {
@@ -83,7 +84,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	if (isEditing) {
 		/* jshint nonew: false, undef: false */
 		/* global MediumEditor: false */
-		new MediumEditor(".overview-description", {
+		mediumEditor = new MediumEditor(".overview-description", {
 			anchorInputPlaceholder: "Relative link...",
 			excludedActions: ["blockquote", "u", "h4"],
 			placeholder: "Enter a description of the hike..."
@@ -92,7 +93,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 
 	$scope.save = function() {
-		if ($scope.isDirty && $scope.numPhotosUploading === 0) {
+		if ($scope.isEditing && $scope.isDirty && $scope.numPhotosUploading === 0) {
 			$scope.isSaving = true;
 			normalizeHikeBeforeSave();
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
@@ -112,6 +113,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						// Keep this temporary version in the user's session cache, in case they decide to make other changes.
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 					}
+					mediumEditor.checkSelection();
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
@@ -257,7 +259,6 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {
-
 		$scope.save();
 	});
 };
