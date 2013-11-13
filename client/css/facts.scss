@@ -40,6 +40,10 @@ $facts-external-link-svg-size: 12px;
 		line-height: 24px;
 		color: #555;
 
+		tr td {
+			vertical-align: top;
+		}
+
 		tr td:first-child {
 			width: 75px;
 			color: #333;
@@ -56,7 +60,6 @@ $facts-external-link-svg-size: 12px;
 
 		tr:not(:first-child) td {
 			padding-top: 5px;
-			vertical-align: top;
 		}
 
 		svg, img {
