@@ -375,7 +375,8 @@ function MediumEditor(elements, options) {
             if (selectionData.tagName === el) {
                 el = 'p';
             }
-            return document.execCommand('formatBlock', false, el);
+            // edit, added < >
+            return document.execCommand('formatBlock', false, "<" + el + ">");
         },
 
         getSelectionData: function (el) {
