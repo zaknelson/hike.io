@@ -42,8 +42,9 @@ angular.module("hikeio").
 				});
 
 				element.on("paste", function(event) {
-					if (event.originalEvent.clipboardData) {
-						var pastedData = event.originalEvent.clipboardData.getData("text/plain");
+					var clipboardData = event.originalEvent.clipboardData || window.clipboardData;
+					if (clipboardData) {
+						var pastedData = clipboardData.getData("text/plain");
 						if (attributes.type === "numeric") {
 							if (($.isNumeric(pastedData) && (!attributes.positive || parseFloat(pastedData) > 0)) || pastedData === ".") {
 								// programmatically paste to ensure that result will be numeric
@@ -62,7 +63,6 @@ angular.module("hikeio").
 							element.trigger("change");
 						}
 					}
-
 					return false;
 				});
 
