@@ -150,7 +150,7 @@ function MediumEditor(elements, options) {
                 '    <li><button class="medium-editor-action medium-editor-action-quote" data-action="append-blockquote" data-element="blockquote">&ldquo;</button></li>' +
                 '</ul>' +
                 '<div class="medium-editor-toolbar-form-anchor" id="medium-editor-toolbar-form-anchor">' +
-                '    <input type="text" value="" placeholder="' + this.options.anchorInputPlaceholder + '"><a href="#">&times;</a>' +
+                '    <input class="hide-ie-input-close" type="text" value="" placeholder="' + this.options.anchorInputPlaceholder + '"><a href="#">&times;</a>' +
                 '</div>';
         },
 
@@ -202,7 +202,7 @@ function MediumEditor(elements, options) {
                         break;
                     }
                 }
-                parent = parent.parentElement;
+                parent = parent.parentNode;
             }
             return isChild;
         },
