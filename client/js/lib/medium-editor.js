@@ -371,10 +371,26 @@ function MediumEditor(elements, options) {
         },
 
         triggerAnchorAction: function () {
-            if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a' || 
-                this.selection.focusNode.parentNode.tagName.toLowerCase() === 'a') {  // edit
-                document.execCommand('unlink', null, false);
-                // edit
+            // edit
+            var isAnchor = function(element) {
+                return element && element.tagName && element.tagName.toLowerCase() === 'a';
+            };
+
+            var anchor = null;
+            if (isAnchor(this.selection.anchorNode.parentNode)) {
+                anchor = this.selection.anchorNode.parentNode;
+            } else if (isAnchor(this.selection.focusNode.parentNode)) {
+                anchor = this.selection.focusNode.parentNode;
+            } else if ( this.selection.getRangeAt(0).commonAncestorContainer.childNodes &&
+                        isAnchor(this.selection.getRangeAt(0).commonAncestorContainer.childNodes[1])) {
+                anchor = this.selection.getRangeAt(0).commonAncestorContainer.childNodes[1];
+            } else if ( this.selection.getRangeAt(0).commonAncestorContainer.children &&
+                        isAnchor(this.selection.getRangeAt(0).commonAncestorContainer.children[1])) {
+                anchor = this.selection.getRangeAt(0).commonAncestorContainer.children[1];
+            }
+            if (anchor) {
+                anchor.href = "#"
+                document.execCommand('unlink', false, false);
                 this.triggerKeyUp();
             } else {
                 if (this.anchorForm.style.display === 'block') {
