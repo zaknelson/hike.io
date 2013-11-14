@@ -8,6 +8,9 @@ $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 
 .entry-page {
+	overflow-x: hidden;
+	width: $container-width;
+	@include center();
 
 	.placeholder-img {
 		border: 4px dashed #999;
@@ -178,4 +181,8 @@ $header-landscape-footer-height-mobile: 40px;
 			}
 		}
 	}
+}
+
+@media all and (max-width: $container-width) {
+	.entry-page { width: 100%; }
 }

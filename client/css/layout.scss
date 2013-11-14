@@ -163,12 +163,6 @@ html.touch a:hover {
 	text-decoration: none;
 }
 
-.default-container {
-	overflow-x: hidden;
-	width: $container-width;
-	@include center();
-}
-
 .shadow-light {
 	@include box-shadow(0 1px 3px rgba(34, 25, 25, 0.4));
 }
@@ -176,11 +170,6 @@ html.touch a:hover {
 .hide-ie-input-close::-ms-clear {
 	display: none;
 }
-
-@media all and (max-width: $container-width) {
-	.default-container { width: 100%; }
-}
-
 @media all and (max-width: $mobile-width) {
 	footer {
 		padding-right: 10px;
