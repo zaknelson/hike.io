@@ -355,24 +355,18 @@ function MediumEditor(elements, options) {
                 this.triggerKeyUp();
                 // edit, http://stackoverflow.com/questions/7463908/how-to-change-output-html-tag-b-b-to-strong-strong
                 // replace the strong / em elements with b / i respectively. This allows us to maintain the selection.
-                var selection = saveSelection();
                 var strongElements = $(this.elements).find('strong');
                 for (var i = 0; i < strongElements.length; i++) {
                     var newElem = document.createElement('b');
-                    newElem.textContent = strongElements[i].textContent;
+                    newElem.innerHTML = strongElements[i].innerHTML;
                     strongElements[i].parentNode.replaceChild(newElem, strongElements[i]);
                 }
                 var emElements = $(this.elements).find('em');
                 for (var i = 0; i < emElements.length; i++) {
                     var newElem = document.createElement('i');
-                    newElem.textContent = emElements[i].textContent;
+                    newElem.innerHTML = emElements[i].innerHTML;
                     emElements[i].parentNode.replaceChild(newElem, emElements[i]);
                 }
-                if (strongElements.length > 0 || emElements.length > 0) {
-                     restoreSelection(selection);
-                }
-               
-                
             }
         },
 
@@ -595,6 +589,7 @@ function MediumEditor(elements, options) {
             setTimeout(function() {
                 for (var i = 0; i < self.elements.length; i++) {
                     $(self.elements[i]).keyup();
+                    self.checkSelection();
                 }
             });   
         }

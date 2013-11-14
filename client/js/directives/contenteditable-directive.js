@@ -110,6 +110,13 @@ angular.module("hikeio").
 							!(charCode >= 37 && charCode <= 40))) { // Not the arrow keys
 							storeViewValueInModel();
 						}
+
+						// TODO, refactor out of this directive
+						// IE is so unreliable w.r.t. restoring the text selection, that it's better to just remove the selection with each change.
+						if (!charCode) {
+							if (document.selection) document.selection.empty();
+							if (window.getSelection) window.getSelection().removeAllRanges();
+						}
 					});
 				}
 
