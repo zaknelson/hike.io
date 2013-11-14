@@ -113,7 +113,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						// Keep this temporary version in the user's session cache, in case they decide to make other changes.
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 					}
-					mediumEditor.checkSelection();
+					mediumEditor.deactivate();
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
