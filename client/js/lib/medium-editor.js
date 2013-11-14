@@ -475,7 +475,7 @@ function MediumEditor(elements, options) {
             this.anchorForm.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
-            input.addEventListener('keypress', function (e) {
+            input.addEventListener('keyup', function (e) {
                 if (e.keyCode === 13) {
                     e.preventDefault();
                     self.createLink(this);
