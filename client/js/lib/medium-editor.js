@@ -492,6 +492,17 @@ function MediumEditor(elements, options) {
             this.anchorForm.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
+
+            // edit
+            if (navigator.userAgent.indexOf("MSIE") > -1) {
+                input.addEventListener('keypress', function (e) {
+                   if (e.keyCode === 13) {
+                        self.createLink(this);
+                         e.preventDefault();
+                    }
+                });  
+            }
+
             input.addEventListener('keyup', function (e) {
                 if (e.keyCode === 13) {
                     e.preventDefault();
