@@ -371,7 +371,8 @@ function MediumEditor(elements, options) {
         },
 
         triggerAnchorAction: function () {
-            if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a') {
+            if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a' || 
+                this.selection.focusNode.parentNode.tagName.toLowerCase() === 'a') {  // edit
                 document.execCommand('unlink', null, false);
                 // edit
                 this.triggerKeyUp();
