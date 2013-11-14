@@ -4,6 +4,11 @@
 @import "compass/css3/border-radius";
 @import "compass/css3/box-sizing";
 
+.container.index-container {
+	min-height: 600px;
+	height: 100%;
+}
+
 .index-page {
 	width: 100%;
 	position: absolute;
@@ -11,7 +16,8 @@
 	bottom: 0px;
 	background: url("http://assets.hike.io/landing-page-images/the-narrows.jpg") no-repeat center bottom fixed;
 	@include background-size(cover);
-	min-height: 550px;
+	min-height: 555px;
+	height: auto;
 
 	.banner {
 		position: absolute;

@@ -15,6 +15,7 @@ body {
 	min-width: $min-width;
 	height: 100%;
 	position: relative;
+	min-height: 600px;
 }
 
 footer {
@@ -143,6 +144,7 @@ blockquote {
 }
 
 .container {
+	height: auto;
 	min-height:100%;
 	position:relative;
 }

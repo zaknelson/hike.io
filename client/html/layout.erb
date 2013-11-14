@@ -53,7 +53,7 @@ https://github.com/zaknelson/hike.io/
 	<% end %>
 </head>
 <body data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
-	<div class="container">
+	<div class="container" data-ng-class="{'index-container': navigation.onIndex()}">
 		<header data-ng-cloak data-ng-controller="HeaderController">
 			<div class="header-entries shadow-light">
 
