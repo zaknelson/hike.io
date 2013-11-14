@@ -216,7 +216,7 @@ function MediumEditor(elements, options) {
             if (this.keepToolbarAlive !== true) {
                 newSelection = window.getSelection();
                 if (newSelection.toString().trim() === '') {
-                    this.toolbar.style.display = 'none';
+                    this.hideToolbar();
                 } else if (this.isChildOfElements(newSelection.focusNode)) {
                     this.selection = newSelection;
                     this.selectionRange = this.selection.getRangeAt(0);
@@ -517,6 +517,10 @@ function MediumEditor(elements, options) {
             return this;
         },
 
+        hideToolbar: function() {
+            this.toolbar.style.display = 'none';
+        },
+
         activate: function () {
             var i;
             if (this.isActive) {
@@ -535,7 +539,7 @@ function MediumEditor(elements, options) {
                 return;
             }
             this.isActive = false;
-            this.toolbar.style.display = 'none';
+            this.hideToolbar();
             for (i = 0; i < this.elements.length; i += 1) {
                 this.elements[i].removeEventListener('mouseup', this.checkSelectionWrapper);
                 this.elements[i].removeEventListener('keyup', this.checkSelectionWrapper);
