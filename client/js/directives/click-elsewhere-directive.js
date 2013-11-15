@@ -23,9 +23,8 @@ angular.module("hikeio").
 							doc.on("click touchstart", documentClickHandler);
 						} else {
 							doc.off("click touchstart", documentClickHandler);
-						}				
-					})
-
+						}
+					});
 				});
 			}
 		};
