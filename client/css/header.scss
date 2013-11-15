@@ -1,5 +1,6 @@
 @import "_vars";
 @import "compass/css3/border-radius";
+@import "compass/css3/user-interface";
 
 $header-z-index: 100;
 $header-background-color: #fff;
@@ -37,6 +38,7 @@ header > .header-entries {
 		padding-left: 12px;
 		opacity: .65;
 		cursor: pointer;
+		@include user-select(none);
 
 		svg, img {
 			width: $icon-dimensions;
