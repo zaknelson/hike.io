@@ -59,10 +59,9 @@ header > .header-entries {
 header > .search-dropdown {
 	position: absolute;
 	top: $header-height - 3;
-	height: $header-height;
 	right: 0px;
+	height: $header-height;
 	z-index: $header-z-index - 1;
-	float: right;
 
 	div {
 		background-color: #fff;
@@ -88,7 +87,7 @@ header > .search-dropdown {
 }
 
 @media all and (max-width: $mobile-width) {
-	header span { 
-		display: none;
+	header span {
+		display: none; /* Disables the text in the header entries */
 	}
 }

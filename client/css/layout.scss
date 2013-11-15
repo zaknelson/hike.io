@@ -3,6 +3,15 @@
 @import "compass/css3/box-shadow";
 @import "compass/css3/box-sizing";
 
+* {
+	@include box-sizing(border-box);
+}
+
+*:focus { 
+	outline: none;
+}
+
+
 html { 
 	height: 100%;
 }
@@ -25,20 +34,15 @@ footer {
 	bottom:0;
 	padding: 20px;
 	width: 100%;
-	a,a:hover {
+	a {
 		float: right;
-		color: $text-color;
+		color: #777;
 		display: inline-block;
 		margin-left: 20px;
 	}
-}
-
-* {
-	@include box-sizing(border-box);
-}
- 
-*:focus { 
-	outline: none;
+	a:hover {
+		color: #777;
+	}
 }
 
 input, button {
@@ -148,15 +152,14 @@ blockquote {
 }
 
 .container {
+	position: relative;
 	height: auto;
-	min-height:100%;
-	position:relative;
+	min-height: 100%;
 }
 
 .noscript-message {
 	font-size: 20px;
 	padding: 20px 20px;
-	opacity: 1;
 }
 
 html.touch a:hover {
@@ -170,6 +173,7 @@ html.touch a:hover {
 .hide-ie-input-close::-ms-clear {
 	display: none;
 }
+
 @media all and (max-width: $mobile-width) {
 	footer {
 		padding-right: 10px;
