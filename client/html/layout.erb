@@ -56,8 +56,7 @@ https://github.com/zaknelson/hike.io/
 	<div class="container" data-ng-class="{'index-container': navigation.onIndex()}">
 		<header data-ng-cloak data-ng-controller="HeaderController">
 			<div class="header-entries shadow-light">
-
-				<div data-ng-click="hideSearchBox()">
+				<div>
 					<div data-header-entry data-url="/" data-align="left"><%= render_svg("#{@img_dir}/logo.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/logo.png"></img></div>
 				</div>
 
@@ -69,7 +68,7 @@ https://github.com/zaknelson/hike.io/
 					<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png"></img></div>
 				</div>
 
-				<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()">
+				<div data-ng-click="toggleSearchBox()" data-ng-show="!navigation.onIndex()" data-click-elsewhere="hideSearchBox()" data-is-active="isSearchBoxActive" data-ignore-class="search-dropdown">
 					<div data-header-entry data-label="Search" data-align="right"><%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png"></img></div>
 				</div>
 
@@ -84,7 +83,7 @@ https://github.com/zaknelson/hike.io/
 				</div>
 				
 			</div>
-			<div class="search-dropdown" data-ng-show="isSearchBoxActive">
+			<div class="search-dropdown" data-ng-show="isSearchBoxActive" >
 				<div class="header-right shadow-light">
 					 <input type="text" placeholder="Hike name..." data-ui-keypress="{'enter': 'document.activeElement.blur(); hideSearchBox(); search($event);'}" spellcheck="false" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" ></input>
 				</div>
@@ -97,7 +96,7 @@ https://github.com/zaknelson/hike.io/
 
 		<%= yield_content :add_modal %>
 
-		<div data-ng-view data-ng-click="hideSearchBox()">
+		<div data-ng-view>
 			<noscript><h1 class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></h1></noscript>
 		</div>
 		<footer>
