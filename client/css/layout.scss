@@ -7,17 +7,17 @@ html {
 	height: 100%;
 }
 
-body { 
+body {
+	position: relative;
+	height: 100%;
+	min-height: 600px;
+	min-width: 450px;
 	margin: 0px;
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
 	font-smoothing: antialiased;
-	background-image: url(/images/background.png);
+	background-image: url(/images/background.png?embed);
 	font-family: "facitweb", sans-serif;
-	min-width: 450px;
-	height: 100%;
-	position: relative;
-	min-height: 600px;
 }
 
 footer {
