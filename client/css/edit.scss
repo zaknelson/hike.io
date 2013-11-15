@@ -56,12 +56,17 @@ $edit-banner-height: 50px;
 		img {
 			width: 400px;
 		}
+		[data-file-uploader] {
+			display: inline;
+			img {
+				display: inline;
+			}
+		}
 	}
 	
 	@media all and (max-width: $mobile-width) {
 		.edit-banner {
 			text-align: left;
-			
 		}
 	}
 
