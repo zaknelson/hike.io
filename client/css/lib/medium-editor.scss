@@ -76,7 +76,6 @@ $button_size: 50px;
             @include box-shadow(0 2px 2px rgba(0,0,0,0.3));
             @include transition(background-color .2s ease-in);
             &:hover {
-                /* edit color: #eb593c; */
                 background-color: #000;
             }
         }
