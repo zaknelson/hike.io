@@ -87,7 +87,7 @@ angular.module("hikeio").
 						(charCode !== 46 && (charCode < 48 || charCode > 57) || // Is anything other than 0-9, a dash, or a period
 						(charCode === 46 && element.text().indexOf(".") > -1))) { // Make sure if we're adding a period, we don't already have one
 
-						if (charCode === 45 && element.text().indexOf("-") === -1) {
+						if (charCode === 45 && element.text().indexOf("-") === -1  && !attributes.positive) {
 							var before = element.text();
 							setTimeout(function(){
 								if (!$.isNumeric(element.text())) {
