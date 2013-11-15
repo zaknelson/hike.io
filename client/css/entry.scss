@@ -1,9 +1,6 @@
 @import "_vars";
 @import "_mixins";
 
-$map-dimensions: 800px;
-$section-padding: 10px;
-$section-padding-mobile: 10px;
 $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 
@@ -24,9 +21,6 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 
 		h1 {
-			font-weight: bold;
-			color: #fff;
-			margin: 0px;
 			font-size: $header-landscape-footer-height - 10;
 			line-height: $header-landscape-footer-height;	
 			white-space: nowrap;
@@ -40,15 +34,15 @@ $header-landscape-footer-height-mobile: 40px;
 			margin-top: 10px;
 			margin-bottom: -10px;
 			height: $header-landscape-footer-height;
-			color: #000;
+			color: $title-text-color;
 		}
 
 		.header-hike-name-with-image {
-			color: #fff;
+			color: $title-text-color-inverse;
 			padding-left: 10px;
 			position: relative;
 			background-color:rgba(0, 0, 0, 0.5);
-			margin-top: - $header-landscape-footer-height;
+			margin-top: -$header-landscape-footer-height;
 			height: $header-landscape-footer-height;
 		}
 
@@ -65,14 +59,8 @@ $header-landscape-footer-height-mobile: 40px;
 		}
 	}
 
-	a.disabled {
-		color: #555;
-		cursor: text;
-		text-decoration: none;
-	}
-
 	.content {
-		padding: 10px $section-padding;
+		padding: 10px;
 		h2 {
 			padding-bottom: 10px;
 		}
@@ -84,12 +72,6 @@ $header-landscape-footer-height-mobile: 40px;
 
 		section {
 			margin: 10px 0px 30px 0px;
-		}
-	}
-
-	@media all and (max-width: $mobile-width) {
-		.content {
-			padding: 10px $section-padding-mobile;
 		}
 	}
 

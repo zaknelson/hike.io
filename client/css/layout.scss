@@ -25,14 +25,11 @@ footer {
 	bottom:0;
 	padding: 20px;
 	width: 100%;
-	a {
+	a,a:hover {
 		float: right;
-		color: #777;
+		color: $text-color;
 		display: inline-block;
 		margin-left: 20px;
-	}
-	a:hover {
-		color: #777;
 	}
 }
 
@@ -67,19 +64,19 @@ img { display: block; }
 img::selection { background: rgba(0, 0, 0, 0.0); }
 
 h1 {
-	color: #333;
+	color: $title-text-color;
 	font-size: 48px;
 	font-weight: bold;
 }
 
 h2 {
-	color: #333;
+	color: $title-text-color;
 	font-size: 36px;
 	font-weight: bold;
 }
 
 h3 {
-	color: #333;
+	color: $title-text-color;
 	font-size: 18px;
 	line-height: 28px;
 	font-weight: bold;
@@ -154,7 +151,6 @@ blockquote {
 .noscript-message {
 	font-size: 40px;
 	padding: 20px 20px;
-	color: #333;
 	opacity: 1;
 }
 
