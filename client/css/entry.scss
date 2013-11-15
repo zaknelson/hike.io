@@ -169,18 +169,6 @@ $header-landscape-footer-height-mobile: 40px;
 			}
 		}
 	}
-
-	.map-section {
-		.map {
-			@include center-percentage(100%);
-		}
-
-		@media all and (min-width: $map-dimensions + 2 * $section-padding) {
-			.map {
-				@include center-relative($map-dimensions);
-			}
-		}
-	}
 }
 
 @media all and (max-width: $container-width) {
