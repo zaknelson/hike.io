@@ -6,7 +6,7 @@ $add-page-mobile-width: 400px;
 $add-page-width: 450px;
 
 .add-page {
-	display: none;
+	display: none; /* Modal is added to layout.erb, so hide it until it is needed */
 	margin: 25px 10px;
 	width: $add-page-width;
 
@@ -67,8 +67,7 @@ $add-page-width: 450px;
 	form.submitted {
 		.ng-invalid-required {
 			outline: none;
-			border: 0px solid rgba(1, 0, 0, 0.5);
-			box-shadow: 0 0 3px #c90707;
+			border: 1px solid $accent-color;
 		}
 	}
 }
