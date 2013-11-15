@@ -1,3 +1,6 @@
+@import "_vars";
+@import "_mixins";
+
 .all-page {
 	padding: 10px;
 	ul {
@@ -11,7 +14,7 @@
 			text-decoration: none;
 
 			h2 {
-				color: #069;
+				color: $link-hover-color;
 			}
 		}
 	}

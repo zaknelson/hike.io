@@ -37,7 +37,6 @@ $facts-external-link-svg-size: 12px;
 
 	table {
 		margin-left: 10px;
-		
 		line-height: 24px;
 		color: $text-color;
 
@@ -71,11 +70,11 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		svg {
-			fill: #39c;
+			fill: $link-color;
 		}
 
 		svg:hover {
-			fill: #069;
+			fill: $link-hover-color;
 		}
 
 		.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
@@ -94,13 +93,19 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		.hike-longitude-and-label {
-			padding-left: 5px;
 			float:left;
 		}
 
 		a:not(.disabled) {
 			div,span {
-				color: #39c;
+				color: $link-color;
+			}
+		}
+
+		a:not(.disabled):hover {
+			div,span {
+				color: $link-hover-color;
+				text-decoration: underline;
 			}
 		}
 

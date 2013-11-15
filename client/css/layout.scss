@@ -53,8 +53,13 @@ input::-webkit-inner-spin-button {
 }
 
 a {
-	color: #39c;
+	color: $link-color;
 	text-decoration: none;
+}
+
+a:hover {
+	color: $link-hover-color;
+	text-decoration: underline;
 }
 
 a img { border: none; }
@@ -152,11 +157,6 @@ blockquote {
 	font-size: 20px;
 	padding: 20px 20px;
 	opacity: 1;
-}
-
-a:hover {
-	color: #069;
-	text-decoration: underline;
 }
 
 html.touch a:hover {
