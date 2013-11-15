@@ -7,7 +7,7 @@ $edit-banner-height: 50px;
 .entry-edit-page {
 	.header-landscape {
 		h1 {
-			text-overflow: clip !important;
+			text-overflow: clip !important; /* Important so that it overrides the ellipses overflow set in edit.scss */
 		}
 	}
 
@@ -35,10 +35,11 @@ $edit-banner-height: 50px;
 		}
 	}
 
-	.trash-icon {
+	.delete-photo-icon {
 		position: absolute;
-		right: 5px;
+		right: 0px;
 		top: 0px;
+		padding: 3px 8px;
 		cursor: pointer;
 		font-size: 30px;
 		line-height: 30px;

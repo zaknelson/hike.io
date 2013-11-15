@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="header-landscape">
-		<div><div data-ui-if="isLoaded &amp;&amp; local_photo_landscape"><div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="trash-icon">×</div><img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}"></img><img data-ui-if="!local_photo_landscape.string_id" data-ng-src="{{local_photo_landscape.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div></div>
+		<div><div data-ui-if="isLoaded &amp;&amp; local_photo_landscape"><div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div><img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}"></img><img data-ui-if="!local_photo_landscape.string_id" data-ng-src="{{local_photo_landscape.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC"></img></div></div>
 		<div>
 			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape || isEditing}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
@@ -20,7 +20,7 @@
 
 				<div class="overview-facts">
 					<div class="page-curl shadow-bottom">
-						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="trash-icon">×</div><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}"></img><div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')' }"></div></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}"></img><div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')' }"></div></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
 						<table>
 							<tr data-redirect-focus=".hike-name">
 								<td>Hike</td>
@@ -95,7 +95,7 @@
 				<div data-ui-if="isEditing">
 					<a data-ng-repeat="photo in local_photos_generic" href="#" rel="photos" >
 						<div class="photo-thumb" style="position:relative">
-							<div data-ng-click="removePhoto('generic', $index)" class="trash-icon">×</div>
+							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
 							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')' }"></div>
 							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
 						</div>
@@ -108,7 +108,7 @@
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
 			<h2>Discover photo</h2>
-				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview"><div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="trash-icon">×</div><img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}"></img><img data-ui-if="!local_photo_preview.string_id" data-ng-src="{{local_photo_preview.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview"><div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div><img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}"></img><img data-ui-if="!local_photo_preview.string_id" data-ng-src="{{local_photo_preview.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
 		</section>
 	</div>
 </article>
