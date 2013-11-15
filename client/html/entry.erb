@@ -15,99 +15,100 @@
 		</div>
 	</div>
 	<div class="content">
-	<section class="overview-section">
-		<div>
+		<section class="overview-section">
+			<div>
 
-			<div class="overview-facts">
-				<div class="page-curl shadow-bottom">
-					<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="trash-icon">×</div><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}"></img><div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')' }"></div></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
-					<table>
-						<tr data-redirect-focus=".hike-name">
-							<td>Hike</td>
-							<td>
-								<div class="hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
-							</td>
-						</tr>
-						<tr data-ng-show="hike.locality != null || isEditing" data-redirect-focus=".hike-locality">
-							<td>Location</td>
-							<td>
-								<div class="hike-locality" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
-							</td>
-						</tr>
-						<tr data-ng-show="hike.distance != null || isEditing" data-redirect-focus=".hike-distance">
-							<td>Distance</td>
-							<td>
-								<div>
-									<div class="hike-distance" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
-									<span class="unit-label">mi.</span>
-								</div>
-							</td>
-						</tr>
-						<tr data-ng-show="hike.elevation_gain != null || isEditing" data-redirect-focus=".hike-elevation-gain">
-							<td>Elev. Gain</td>
-							<td>
-								<div>
-									<div class="hike-elevation-gain" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
-									<span class="unit-label">ft.</span>
-								</div>
-							</td>
-						</tr>
-						<tr data-ng-show="hike.elevation_max != null || isEditing" data-redirect-focus=".hike-elevation-max">
-							<td>Elev. Max</td>
-							<td>
-								<div>
-									<div class="hike-elevation-max" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
-									<span class="unit-label">ft.</span>
-								</div>
-							</td>
-						</tr>
-						<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
-							<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
-							<td>
-								<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
-									<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}"><div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,</span></div>
-									<div class="hike-longitude-and-label">
-									<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
-								</a>
-								<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
-							</td>
-						</tr>
-					</table>
+				<div class="overview-facts">
+					<div class="page-curl shadow-bottom">
+						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts"><div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="trash-icon">×</div><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}"></img><div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')' }"></div></div><div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+						<table>
+							<tr data-redirect-focus=".hike-name">
+								<td>Hike</td>
+								<td>
+									<div class="hike-name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+								</td>
+							</tr>
+							<tr data-ng-show="hike.locality != null || isEditing" data-redirect-focus=".hike-locality">
+								<td>Location</td>
+								<td>
+									<div class="hike-locality" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+								</td>
+							</tr>
+							<tr data-ng-show="hike.distance != null || isEditing" data-redirect-focus=".hike-distance">
+								<td>Distance</td>
+								<td>
+									<div>
+										<div class="hike-distance" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label">mi.</span>
+									</div>
+								</td>
+							</tr>
+							<tr data-ng-show="hike.elevation_gain != null || isEditing" data-redirect-focus=".hike-elevation-gain">
+								<td>Elev. Gain</td>
+								<td>
+									<div>
+										<div class="hike-elevation-gain" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label">ft.</span>
+									</div>
+								</td>
+							</tr>
+							<tr data-ng-show="hike.elevation_max != null || isEditing" data-redirect-focus=".hike-elevation-max">
+								<td>Elev. Max</td>
+								<td>
+									<div>
+										<div class="hike-elevation-max" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label">ft.</span>
+									</div>
+								</td>
+							</tr>
+							<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
+								<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
+								<td>
+									<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
+										<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}"><div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,</span></div>
+										<div class="hike-longitude-and-label">
+										<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
+									</a>
+									<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div class="overview-description" data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null || hike.description == ''" contenteditable="{{isEditing}}" data-ng-model="hike.description" data-change="isDirty = true"></div>
+				<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing">
+					<p>Uh oh, this hike doesn't yet have a description, but you can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
 				</div>
 			</div>
-
-			<div class="overview-description" data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null || hike.description == ''" contenteditable="{{isEditing}}" data-ng-model="hike.description" data-change="isDirty = true"></div>
-			<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing">
-				<p>Uh oh, this hike doesn't yet have a description, but you can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
+		</section>
+		<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
+			<h2>Photos</h2>
+			<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
+				<div data-ui-if="!isEditing">
+					<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
+						<div class="photo-thumb" style="position:relative">
+							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
+						</div>
+					</a>
+				</div>
+				<div data-ui-if="isEditing">
+					<a data-ng-repeat="photo in local_photos_generic" href="#" rel="photos" >
+						<div class="photo-thumb" style="position:relative">
+							<div data-ng-click="removePhoto('generic', $index)" class="trash-icon">×</div>
+							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')' }"></div>
+							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
+						</div>
+					</a>
+				</div>
+				<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
+					<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img>
+				</div></div>
 			</div>
-		</div>
-	</section>
-	<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
-		<h2>Photos</h2>
-		<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
-			<div data-ui-if="!isEditing">
-				<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
-					<div class="photo-thumb" style="position:relative">
-						<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
-					</div>
-				</a>
-			</div>
-			<div data-ui-if="isEditing">
-				<a data-ng-repeat="photo in local_photos_generic" href="#" rel="photos" >
-					<div class="photo-thumb" style="position:relative">
-						<div data-ng-click="removePhoto('generic', $index)" class="trash-icon">×</div>
-						<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')' }"></div>
-						<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
-					</div>
-				</a>
-			</div>
-			<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
-				<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img>
-			</div></div>
-		</div>
-	</section>
-	<section class="metadata-section" data-ui-if="isEditing">
-		<h2>Discover photo</h2>
-			<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview"><div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="trash-icon">×</div><img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}"></img><img data-ui-if="!local_photo_preview.string_id" data-ng-src="{{local_photo_preview.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
-	</section>
+		</section>
+		<section class="metadata-section" data-ui-if="isEditing">
+			<h2>Discover photo</h2>
+				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview"><div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="trash-icon">×</div><img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}"></img><img data-ui-if="!local_photo_preview.string_id" data-ng-src="{{local_photo_preview.src}}"></img></div><div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing"><img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></img></div>
+		</section>
+	</div>
 </article>
