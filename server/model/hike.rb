@@ -176,6 +176,7 @@ class Hike < Sequel::Model
 		previous_keywords.each { |k| k.destroy if k.hikes.length == 0 }
 
 		new_keywords = KeywordUtils.sanitize_to_keywords(self.name)
+		new_keywords.uniq!
 		new_keywords.each do |keyword|
 			add_keyword(Keyword.find_or_create(:keyword => keyword))
 		end
