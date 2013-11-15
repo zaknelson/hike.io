@@ -130,6 +130,7 @@ class Hike < Sequel::Model
 			existing_photo = self.send(photo_key)
 			if json[photo_key] != nil
 				new_photo = Photo.find(:id => json[photo_key]["id"])
+				next if !new_photo 
 				self.send "#{photo_key}=", new_photo
 				new_photo.move_on_s3(self) if new_photo.is_in_tmp_folder_on_s3?
 			elsif existing_photo
