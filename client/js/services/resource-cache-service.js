@@ -13,7 +13,7 @@ angular.module("hikeio").
 		};
 		cacheFactory.remove = function(key) {
 			delete allKeys[key];
-			superRemove();
+			superRemove(key);
 		};
 		cacheFactory.removeAll = function() {
 			allKeys = {};
@@ -25,7 +25,6 @@ angular.module("hikeio").
 					cacheFactory.remove(key);
 				}
 			}
-			return allKeys;
 		};
 		return cacheFactory;
 	}]);
