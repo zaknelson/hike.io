@@ -8,7 +8,7 @@ angular.module("hikeio").
 			link: function(scope, element, attributes, controller) {
 
 				var isValidNumericInput = function(str) {
-					return (!attributes.positive && str === "-") || ($.isNumeric(str) && (!attributes.positive || parseFloat(str) > 0));
+					return (!attributes.positive && str === "-") || ($.isNumeric(str) && (!attributes.positive || parseFloat(str) >= 0));
 				};
 
 				var setElementHtml = function(html) {
