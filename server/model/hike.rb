@@ -81,10 +81,8 @@ class Hike < Sequel::Model
 			"<em>"		=> "<i>",
 			"</em>"		=> "</i>",
 			"&nbsp;"	=> "",
-			"data-href"	=> "href",
-			'href="javascript:void"' => "",
 		}
-		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;|data-href|href="javascript:void")/i do |match|
+		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;")/i do |match|
 			inputToReplaceMapping[match.to_s]
 		end
 		cleaned_html = ""

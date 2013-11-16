@@ -523,10 +523,10 @@ function MediumEditor(elements, options) {
             this.triggerKeyUp();
             document.execCommand('createLink', false, input.value);
             // begin edit
-            // TODO can this be done in a directive instead?
             var link = $(this.elements).find("a[href='" + input.value + "']");
-            link.attr("data-href", input.value);
-            link.attr("href", "javascript:void");
+            link.click(function() {
+                return false;
+            })
             // end edit
             this.showToolbarActions();
             input.value = '';

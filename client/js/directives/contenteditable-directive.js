@@ -7,6 +7,17 @@ angular.module("hikeio").
 			require: "ngModel",
 			link: function(scope, element, attributes, controller) {
 
+				var setAnchorHandler = function() {
+					var handleAnchorClick = function() {
+						return false;
+					};
+					if (attributes.contenteditable === "true") {
+						element.find("a").on("click", handleAnchorClick);
+					} else {
+						element.find("a").off("click", handleAnchorClick);
+					}
+				};
+
 				var isValidNumericInput = function(str) {
 					return (!attributes.positive && str === "-") || ($.isNumeric(str) && (!attributes.positive || parseFloat(str) >= 0));
 				};
@@ -140,6 +151,7 @@ angular.module("hikeio").
 							viewValue = filterParser.filter(attributes.filterView, viewValue);
 						}
 						element.html(viewValue);
+						setAnchorHandler();
 
 						// Workaround for issue with medium-editor
 						if (viewValue && viewValue.length > 0 && element.hasClass("medium-editor-placeholder")) {
@@ -147,6 +159,10 @@ angular.module("hikeio").
 						}
 					});
 				};
+
+				scope.$watch(attributes.contenteditable, function(isEditing) {
+					setAnchorHandler();
+				});
 
 				// Load init value from DOM
 				controller.$setViewValue(element.html());
