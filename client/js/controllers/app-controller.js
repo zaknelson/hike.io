@@ -1,5 +1,5 @@
 "use strict";
-var AppController = function($scope) {
+var AppController = function($scope, $window) {
 	$scope.isSearchBoxActive = false;
 
 	$scope.hideSearchBox = function() {
@@ -14,7 +14,7 @@ var AppController = function($scope) {
 		if (event.keyCode === 8) { // delete
 			// Disable delete from accidentally navigating away from the page
 			var target = event.srcElement || event.target;
-			if (target === document.body) {
+			if (target === $window.document.body) {
 				event.preventDefault();
 			}
 		} else if (event.keyCode === 83 && (event.metaKey || event.ctrlKey)) { // save event
@@ -24,4 +24,4 @@ var AppController = function($scope) {
 	};
 };
 
-AppController.$inject = ["$scope"];
+AppController.$inject = ["$scope", "$window"];

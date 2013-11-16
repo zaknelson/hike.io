@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("redirectFocus", function() {
+	directive("redirectFocus", ["$window", function($window) {
 
 	var elementComesAfter = function(a, b) {
 		var comesAfter = false;
@@ -22,15 +22,15 @@ angular.module("hikeio").
 	// http://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
 	var setFocusToEnd = function(element) {
 		element.focus();
-		if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
-			var range = document.createRange();
+		if (typeof $window.getSelection !== "undefined" && typeof $window.document.createRange !== "undefined") {
+			var range = $window.document.createRange();
 			range.selectNodeContents(element[0]);
 			range.collapse(false);
-			var sel = window.getSelection();
+			var sel = $window.getSelection();
 			sel.removeAllRanges();
 			sel.addRange(range);
-		} else if (typeof document.body.createTextRange !== "undefined") {
-			var textRange = document.body.createTextRange();
+		} else if (typeof $window.document.body.createTextRange !== "undefined") {
+			var textRange = $window.document.body.createTextRange();
 			textRange.moveToElementText(element[0]);
 			textRange.collapse(false);
 			textRange.select();
@@ -53,4 +53,4 @@ angular.module("hikeio").
 			});
 		}
 	};
-});
+}]);

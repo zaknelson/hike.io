@@ -16,13 +16,12 @@ angular.module("hikeio").
 					}
 					scope.$apply(attrs.clickElsewhere);
 				};
-				var doc = $($window.document);
 				scope.$watch(attrs.isActive, function(isActive) {
 					$timeout(function() {
 						if (isActive) {
-							doc.on("click touchstart", documentClickHandler);
+							$($window.document).on("click touchstart", documentClickHandler);
 						} else {
-							doc.off("click touchstart", documentClickHandler);
+							$($window.document).off("click touchstart", documentClickHandler);
 						}
 					});
 				});

@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$document", "$rootScope", "$timeout", "config", function($document, $rootScope, $timeout, config) {
+	directive("photoStream", ["$rootScope", "$timeout", "config", function($rootScope, $timeout, config) {
 		var normalImage = "small";
 		var biggerImage = "medium";
 		var template = "<div class='preview-list'>" +

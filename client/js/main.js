@@ -50,7 +50,7 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
-		$rootScope.isMobile = $(window).width() < 650;
+		$rootScope.isMobile = $($window).width() < 650;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			if (current && current.$$route && current.$$route.title) {
 				$rootScope.title = current.$$route.title;

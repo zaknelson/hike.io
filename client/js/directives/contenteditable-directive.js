@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$timeout", "capabilities", "filterParser", "selection", function($timeout, capabilities, filterParser, selection) {
+	directive("contenteditable", ["$timeout", "$window", "capabilities", "filterParser", "selection", function($timeout, $window, capabilities, filterParser, selection) {
 
 		return {
 			require: "ngModel",
@@ -57,13 +57,13 @@ angular.module("hikeio").
 				});
 
 				element.on("paste", function(event) {
-					var clipboardData = event.originalEvent.clipboardData || window.clipboardData;
+					var clipboardData = event.originalEvent.clipboardData || $window.clipboardData;
 					if (clipboardData && clipboardData.types) {
 						var pastedData = clipboardData.getData("text/plain");
 						if (attributes.type === "numeric") {
 							// Programmatically paste to ensure that result will be numeric
 							var before = element.html();
-							document.execCommand("insertText", false, pastedData);
+							$window.document.execCommand("insertText", false, pastedData);
 							var after = element.html();
 							if (isValidNumericInput(after)) {
 								storeViewValueInModel();
@@ -72,7 +72,7 @@ angular.module("hikeio").
 								element.blur();
 							}
 						} else {
-							document.execCommand("insertText", false, pastedData);
+							$window.document.execCommand("insertText", false, pastedData);
 							storeViewValueInModel();
 						}
 						return false

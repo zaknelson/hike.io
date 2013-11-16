@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("selection", ["$document", "$window", function($document, $window) {
+	factory("selection", ["$window", function($window) {
 
 		var SelectionService = function() {
 		};
@@ -13,8 +13,8 @@ angular.module("hikeio").
 				} else if ($window.getSelection().removeAllRanges) {
 					$window.getSelection().removeAllRanges();
 				}
-			} else if ($document.selection) {
-				$document.selection.empty();
+			} else if ($window.document.selection) {
+				$window.document.selection.empty();
 			}
 		};
 

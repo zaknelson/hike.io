@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("mapTooltipFactory", function() {
+	factory("mapTooltipFactory", ["$window", function($window) {
 
 		var MapTooltip = function(marker) {
 			this.hikeData = marker.hikeData;
@@ -34,11 +34,11 @@ angular.module("hikeio").
 				left: containerOffset.left + markerPosition.x + buffer
 			};
 
-			if (tooltipOffset.top + height + buffer > $(document).height()) {
+			if (tooltipOffset.top + height + buffer > $($window.document).height()) {
 				tooltipOffset.top = tooltipOffset.top - height - buffer * 2;
 			}
 
-			if (tooltipOffset.left + width + buffer > $(document).width()) {
+			if (tooltipOffset.left + width + buffer > $($window.document).width()) {
 				tooltipOffset.left = markerPosition.x - width - buffer;
 			}
 			this.div.css("display", "block");
@@ -59,4 +59,4 @@ angular.module("hikeio").
 			return new MapTooltip(marker);
 		};
 		return mapTooltipService;
-	});
+	}]);
