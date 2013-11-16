@@ -75,7 +75,7 @@ angular.module("hikeio").
 							$window.document.execCommand("insertText", false, pastedData);
 							storeViewValueInModel();
 						}
-						return false
+						return false;
 					} else {
 						$timeout(function() {
 							storeViewValueInModel();
