@@ -105,7 +105,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						$scope.isSaving = false;
 						$scope.isDirty = false;
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
-						resourceCache.put("/api/v1/hikes", null);
+						resourceCache.removeAllWithRoot("/api/v1/hikes");
+						resourceCache.removeAllWithRoot("/api/v1/hikes/search");
 					} else if (status === 202) {
 						$scope.isBeingReviewed = true;
 						$scope.isSaving = false;

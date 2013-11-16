@@ -7,7 +7,7 @@ var SearchController = function($http, $location, $log, $rootScope, $scope, anal
 	$rootScope.$broadcast("prepopulateAddHikeName", $scope.query);
 
 	if ($scope.query) {
-		$http({method: "GET", url: "/api/v1/hikes/search", params: { q: $scope.query }}).
+		$http({method: "GET", url: "/api/v1/hikes/search", params: { q: $scope.query }, cache: resourceCache}).
 			success(function(data, status, headers, config) {
 				$scope.results = data;
 			}).
