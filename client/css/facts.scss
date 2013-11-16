@@ -1,7 +1,7 @@
 @import "_vars";
 @import "_mixins";
 
-$facts-width: 300px;
+$facts-width: 310px;
 $facts-padding: 25px;
 $facts-mobile-image-width: 135px;
 $facts-external-link-svg-size: 12px;
@@ -116,10 +116,17 @@ $facts-external-link-svg-size: 12px;
 	}
 }
 
+@media all and (max-width: $container-width) {
+	.overview-facts {
+		margin: 0px 10px 4px 15px;
+	}
+}
+
 @media all and (max-width: $facts-mobile-width) {
 	.overview-facts {
 		width: 100%;
 		margin-bottom: 10px;
+		margin-right: 0px;
 
 		.image-container {
 			width: $facts-mobile-image-width;
