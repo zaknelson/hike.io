@@ -34,14 +34,22 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.local_photos_generic = jQuery.extend(true, [], $scope.hike.photos_generic);
 	};
 
+	var parseToFloatOrZero = function(str) {
+		var result = parseFloat(str);
+		if (isNaN(result)) {
+			result = 0;
+		}
+		return result;
+	};
+
 	var normalizeHikeBeforeSave = function() {
 		var hike = $scope.hike;
 		// Firefox's contenteditable implementation can change these properties to strings, normalize them before uploading
-		if (typeof hike.distance !== "number")				hike.distance = parseFloat(hike.distance);
-		if (typeof hike.elevation_gain !== "number")		hike.elevation_gain = parseFloat(hike.elevation_gain);
-		if (typeof hike.elevation_max !== "number")			hike.elevation_max = parseFloat(hike.elevation_max);
-		if (typeof hike.location.latitude !== "number")		hike.location.latitude = parseFloat(hike.location.latitude);
-		if (typeof hike.location.longitude !== "number")	hike.location.longitude = parseFloat(hike.location.longitude);
+		if (typeof hike.distance !== "number")				hike.distance = parseToFloatOrZero(hike.distance);
+		if (typeof hike.elevation_gain !== "number")		hike.elevation_gain = parseToFloatOrZero(hike.elevation_gain);
+		if (typeof hike.elevation_max !== "number")			hike.elevation_max = parseToFloatOrZero(hike.elevation_max);
+		if (typeof hike.location.latitude !== "number")		hike.location.latitude = parseToFloatOrZero(hike.location.latitude);
+		if (typeof hike.location.longitude !== "number")	hike.location.longitude = parseToFloatOrZero(hike.location.longitude);
 
 		if (hike.location.latitude < -90)	hike.location.latitude = -90;
 		if (hike.location.latitude >  90)	hike.location.latitude =  90;
