@@ -39,9 +39,14 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 		});
 	});
 	$scope.$on("fancyboxClosed", function() {
-		$scope.$apply(function() {
+		// http://stackoverflow.com/questions/12729122/prevent-error-digest-already-in-progress-when-calling-scope-apply
+		if(!$scope.$$phase) {
+			$scope.$apply(function() {
+				resetScope();
+			});
+		} else {
 			resetScope();
-		});
+		}
 	});
 
 	$scope.attemptSubmit = function() {
