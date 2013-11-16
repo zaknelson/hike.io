@@ -160,6 +160,12 @@ $facts-external-link-svg-size: 12px;
 			tr td:nth-child(2) {
 				padding-left: 10px;
 				padding-top: 7px;
+				min-width: 145px;
+				width: 100%;
+			}
+
+			.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
+				max-width: none;
 			}
 		}
 	}
