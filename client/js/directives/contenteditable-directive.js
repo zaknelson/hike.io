@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$timeout", "capabilities", "filterParser", function($timeout, capabilities, filterParser) {
+	directive("contenteditable", ["$timeout", "capabilities", "filterParser", "selection", function($timeout, capabilities, filterParser, selection) {
 
 		return {
 			require: "ngModel",
@@ -120,8 +120,7 @@ angular.module("hikeio").
 						// TODO, refactor out of this directive
 						// IE is so unreliable w.r.t. restoring the text selection, that it's better to just remove the selection with each change.
 						if (!charCode) {
-							if (document.selection) document.selection.empty();
-							if (window.getSelection) window.getSelection().removeAllRanges();
+							selection.clear();
 						}
 					});
 					element.on("cut", function() {

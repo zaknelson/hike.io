@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, resourceCache) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, resourceCache, selection) {
 	$scope.hike = null;
 	$scope.isDirty = false;
 	$scope.isEditing = isEditing;
@@ -121,6 +121,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						// Keep this temporary version in the user's session cache, in case they decide to make other changes.
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 					}
+					selection.clear();
 					mediumEditor.hideToolbar();
 				}).
 				error(function(data, status, headers, config) {
@@ -271,4 +272,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "resourceCache"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "resourceCache", "selection"];
