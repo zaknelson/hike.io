@@ -55,7 +55,7 @@ angular.module("hikeio").
 
 				element.on("paste", function(event) {
 					var clipboardData = event.originalEvent.clipboardData || window.clipboardData;
-					if (clipboardData) {
+					if (clipboardData && clipboardData.types) {
 						var pastedData = clipboardData.getData("text/plain");
 						if (attributes.type === "numeric") {
 							// Programmatically paste to ensure that result will be numeric
@@ -72,8 +72,13 @@ angular.module("hikeio").
 							document.execCommand("insertText", false, pastedData);
 							storeViewValueInModel();
 						}
+						return false
+					} else {
+						$timeout(function() {
+							storeViewValueInModel();
+						});
+						return true;
 					}
-					return false;
 				});
 
 				element.keypress(function(event) {
@@ -103,6 +108,7 @@ angular.module("hikeio").
 					element.keyup(function(event) {
 						var charCode = event.which;
 						if (!charCode || // If charCode is undefined, this event must have been triggered by the medium editor, store the value
+							charCode === 8 ||
 							(!event.ctrlKey && charCode !== 17 && // Not the control key
 							!(charCode >= 37 && charCode <= 40))) { // Not the arrow keys
 							storeViewValueInModel();
@@ -114,6 +120,11 @@ angular.module("hikeio").
 							if (document.selection) document.selection.empty();
 							if (window.getSelection) window.getSelection().removeAllRanges();
 						}
+					});
+					element.on("cut", function() {
+						$timeout(function() {
+							storeViewValueInModel();
+						});
 					});
 				}
 
