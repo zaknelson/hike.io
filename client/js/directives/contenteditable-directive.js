@@ -24,7 +24,10 @@ angular.module("hikeio").
 						if (attributes.type === "text") {
 							viewValue = element.text();
 						} else if (attributes.type === "numeric") {
-							viewValue = element.html();
+							viewValue = element.text();
+							if (viewValue !== element.html()) {
+								element.html(viewValue);
+							}
 							if (!isValidNumericInput(viewValue)) {
 								return;
 							}
