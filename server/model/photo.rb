@@ -47,6 +47,7 @@ class Photo < Sequel::Model
 		resized_dimensions = Photo.get_resized_dimensions(original_image)
 		Thread.new do	
 			original_image.resize_to_fit!(2400, 2400)
+			original_image.auto_orient!
 			original_image.strip!
 			original_image.profile!("*", nil)
 			renditions = get_photo_renditions(original_image)

@@ -135,11 +135,34 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		return result;
 	};
 
+	var orientationToRotation = function(orientation) {
+		var rotation = 0;
+		switch (orientation) {
+		case 3:
+			rotation = 180;
+			break;
+		case 6:
+			rotation = 90;
+			break;
+		case 8:
+			rotation = 270;
+			break;
+		}
+		return rotation;
+	};
+
 	var previewPhoto = function(file, type, id) {
-		var reader = new FileReader();
-		reader.onload = function (e) {
+		var photo = null;
+		var rotation = null;
+
+		// TODO, is this the most efficient way to read both the data url and array buffer from the file?
+		var dataUrlReader = new FileReader();
+		dataUrlReader.onload = function (e) {
 			$scope.$apply(function() {
-				var photo = { id: id, src: e.target.result };
+				photo = { id: id, src: e.target.result };
+				if (rotation) {
+					photo.rotation = rotation;
+				}
 				switch (type) {
 				case "landscape":
 					$scope.local_photo_landscape = photo;
@@ -156,7 +179,22 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				}
 			});
 		};
-		reader.readAsDataURL(file);
+		dataUrlReader.readAsDataURL(file);
+
+		var arrayBufferReader = new FileReader();
+		arrayBufferReader.onload = function (e) {
+			$scope.$apply(function() {
+				/* global ExifReader: false */
+				var exif = new ExifReader();
+				exif.load(e.target.result);
+				var orientation = exif.getTagValue("Orientation");
+				rotation = orientationToRotation(orientation);
+				if (photo) {
+					photo.rotation = rotation;
+				}
+			});
+		};
+		arrayBufferReader.readAsArrayBuffer(file);
 	};
 
 	var doUploadPhoto = function(file, type, id) {

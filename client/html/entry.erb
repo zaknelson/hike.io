@@ -112,7 +112,7 @@
 					<a data-ng-repeat="photo in local_photos_generic" href="#" rel="photos" >
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
-							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')' }"></div>
+							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')',  'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
 							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}"></img>
 						</div>
 					</a>
