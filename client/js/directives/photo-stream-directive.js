@@ -49,6 +49,7 @@ angular.module("hikeio").
 							if (this.complete) {
 								$(this).load();
 							}
+							$(this).attr("src", $(this).attr("src")); // Workaround for IE, otherwise the load events are not being fired for all images.
 						});
 						element.masonry({
 							itemSelector: ".preview",
