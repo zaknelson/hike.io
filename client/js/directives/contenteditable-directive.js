@@ -106,13 +106,18 @@ angular.module("hikeio").
 						charCode === 0) {
 						return true;
 					} else if (attributes.type === "numeric") {
+						if (charCode > 57 || (charCode < 48 && charCode !== 43 && charCode !== 45 && charCode !== 46)) {
+							// If anything that's not +,-,.,0-9 then return false, technically redundant with the following code, but fixing jittering in UI.
+							return false;
+						}
 						var before = element.text();
-						setTimeout(function(){
+						var checkIfNumeric = function() {
 							var after = element.text();
 							if (!isValidNumericInput(after)) {
 								setElementHtml(before);
 							}
-						});
+						}
+						$timeout(checkIfNumeric, 0); // Check timeout slightly later, otherwise iOS7 on iPhone 4s isn't catching the change
 					}
 					return true;
 				});
