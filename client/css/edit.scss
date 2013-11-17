@@ -63,6 +63,10 @@ $edit-banner-height: 50px;
 				display: inline;
 			}
 		}
+		.discover-explanation {
+			font-size: 14px;
+			padding-bottom: 5px;
+		}
 	}
 	
 	@media all and (max-width: $mobile-width) {

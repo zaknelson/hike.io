@@ -123,7 +123,8 @@
 			</div>
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
-			<h2>Discover photo</h2>
+			<h2>Preview photo</h2>
+				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a preview photo that will show up on the Discover tab</p>
 				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
 					<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
 					<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}"></img>
