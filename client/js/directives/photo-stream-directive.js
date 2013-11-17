@@ -34,7 +34,15 @@ angular.module("hikeio").
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
 					$timeout(function() {
-						element.find(".preview > div > img").load(function() {
+
+						var previews = element.find(".preview");
+						var previewTitles = element.find(".preview-title");
+						var previewDivs = previews.children("div");
+						var images = previewDivs.children("img");
+						var featuredBox = previews.children(".featured-box");
+						var featuredBoxImage = featuredBox.children("img");
+
+						images.load(function() {
 							var preview = $(this).parent().parent();
 							preview.css("opacity", "1");
 							$timeout(function() {
@@ -59,17 +67,14 @@ angular.module("hikeio").
 								var boxes = Math.ceil(containerWidth / maxColumnWidth);
 								var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 
-								element.find(".preview-title").width(boxWidth - 73); // 50px for the distance on the right, and 20px for the outer padding, and 3 for the inner padding
-
-								// TODO: clean up these selectors
-								element.find(".preview > div").width(boxWidth);
-								element.find(".preview > div > img").each(function(i, img) {
+								previewTitles.width(boxWidth - 73); // 50px for the distance on the right, and 20px for the outer padding, and 3 for the inner padding
+								previewDivs.width(boxWidth);
+								images.each(function(i, img) {
 									var aspectRatio = parseFloat($(img).attr("data-aspect-ratio"), 10);
 									$(img).height(aspectRatio * boxWidth);
 								});
 								if (boxes !== 1) {
-									element.find(".preview > .featured-box").width(boxWidth * 2 + gutterWidth);
-									var featuredBoxImage = element.find(".preview > .featured-box > img");
+									featuredBox.width(boxWidth * 2 + gutterWidth);
 									var aspectRatio = parseFloat(featuredBoxImage.attr("data-aspect-ratio"), 10);
 									featuredBoxImage.height(aspectRatio * boxWidth * 2);
 								}
