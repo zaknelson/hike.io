@@ -111,13 +111,12 @@ angular.module("hikeio").
 							return false;
 						}
 						var before = element.text();
-						var checkIfNumeric = function() {
+						$timeout(function() {
 							var after = element.text();
 							if (!isValidNumericInput(after)) {
 								setElementHtml(before);
 							}
-						}
-						$timeout(checkIfNumeric, 0); // Check timeout slightly later, otherwise iOS7 on iPhone 4s isn't catching the change
+						}, 10); // Check timeout slightly later, otherwise iOS7 on iPhone 4s isn't catching the change
 					}
 					return true;
 				});
