@@ -6,7 +6,7 @@
 	<div class="search-box shadow-light">
 		<input class="hide-ie-input-close" type="text" placeholder="Hike name..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
 		<div class="search-input-button" data-ng-click="search()">
-			<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline"></img>
+			<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
 		</div>
 	</div>
 </article>
