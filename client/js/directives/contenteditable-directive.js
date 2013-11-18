@@ -88,8 +88,17 @@ angular.module("hikeio").
 						}
 						return false;
 					} else {
+						var before = element.html();
 						$timeout(function() {
-							storeViewValueInModel();
+							if (attributes.type === "numeric") {
+								if (isValidNumericInput(element.html())) {
+									storeViewValueInModel();
+								} else {
+									setElementHtml(before);
+								}
+							} else {
+								storeViewValueInModel();
+							}
 						});
 						return true;
 					}
@@ -126,9 +135,11 @@ angular.module("hikeio").
 					element.keyup(function(event) {
 						var charCode = event.which;
 						if (!charCode || // If charCode is undefined, this event must have been triggered by the medium editor, store the value
-							charCode === 8 ||
+							charCode === 8 || // The delete key
 							(!event.ctrlKey && charCode !== 17 && // Not the control key
-							!(charCode >= 37 && charCode <= 40))) { // Not the arrow keys
+							!(charCode >= 37 && charCode <= 40) &&  // Not the arrow keys
+							charCode !== 9 && // Not the tab key
+							charCode !== 16 )) { // Not the shift key
 							storeViewValueInModel();
 						}
 
