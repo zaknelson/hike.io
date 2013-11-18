@@ -16,6 +16,7 @@ angular.module("hikeio").
 			} else if ($window.document.selection) {
 				$window.document.selection.empty();
 			}
+			$window.document.activeElement.blur();
 		};
 
 		return new SelectionService();
