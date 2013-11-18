@@ -5,7 +5,7 @@ angular.module("hikeio").
 	return {
 		compile: function(tplElm, tplAttr) {
 			var mulitpleStr = tplAttr.multiple === "true" ? "multiple" : "";
-			tplElm.after("<input type='file' " + mulitpleStr + " style='display: none;'>");
+			tplElm.after("<input type='file' " + mulitpleStr + " accept='image/png, image/jpeg' style='display: none;'>");
 
 			return function(scope, elm, attr) {
 				if (scope.$eval(attr.enabled)) {
