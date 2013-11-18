@@ -72,4 +72,7 @@ angular.module("hikeio", ["seo", "ui"]).
 			$http.get("/partials/map.html",				{ cache:$templateCache });
 			$http.get("/partials/search.html",			{ cache:$templateCache });
 		}, 1000);
+
+		// IE 9 does its own caching, and requests are not hitting the server
+		jQuery.ajaxSetup({ cache: false });
 	}]);

@@ -257,12 +257,14 @@ function MediumEditor(elements, options) {
                 middleBoundary = (boundary.left + boundary.right) / 2,
                 halfOffsetWidth = this.toolbar.offsetWidth / 2;
             if (boundary.top < buttonHeight) {
-                this.toolbar.classList.add('medium-toolbar-arrow-over');
-                this.toolbar.classList.remove('medium-toolbar-arrow-under');
+                // edit
+                $(this.toolbar).addClass('medium-toolbar-arrow-over');
+                $(this.toolbar).removeClass('medium-toolbar-arrow-under');
                 this.toolbar.style.top = buttonHeight + boundary.bottom - this.options.diffTop + window.pageYOffset - this.toolbar.offsetHeight + 'px';
             } else {
-                this.toolbar.classList.add('medium-toolbar-arrow-under');
-                this.toolbar.classList.remove('medium-toolbar-arrow-over');
+                // edit
+                $(this.toolbar).addClass('medium-toolbar-arrow-under');
+                $(this.toolbar).removeClass('medium-toolbar-arrow-over');
                 this.toolbar.style.top = boundary.top + this.options.diffTop + window.pageYOffset - this.toolbar.offsetHeight + 'px';
             }
             if (middleBoundary < halfOffsetWidth) {
@@ -279,7 +281,8 @@ function MediumEditor(elements, options) {
             var buttons = this.toolbarActions.querySelectorAll('button'),
                 i;
             for (i = 0; i < buttons.length; i += 1) {
-                buttons[i].classList.remove('medium-editor-button-active');
+                // edit
+                $(buttons[i]).removeClass('medium-editor-button-active');
                 this.showHideButton(buttons[i]);
             }
             this.checkActiveButtons();
@@ -323,7 +326,8 @@ function MediumEditor(elements, options) {
                         self.checkSelection(e);
                     }
                     if (this.className.indexOf('medium-editor-button-active') > -1) {
-                        this.classList.remove('medium-editor-button-active');
+                        // edit
+                        $(this).removeClass('medium-editor-button-active');
                     } else {
                         this.className += ' medium-editor-button-active';
                     }
@@ -581,9 +585,11 @@ function MediumEditor(elements, options) {
             var i,
                 pasteWrapper = function (e) {
                     if (navigator.userAgent.indexOf("MSIE") > -1) {
-                        e.target.classList.remove('medium-editor-placeholder-ie');
+                        // edit
+                        $(e.target).removeClass('medium-editor-placeholder-ie');
                     } else {
-                        e.target.classList.remove('medium-editor-placeholder');
+                        // edit
+                        $(e.target).removeClass('medium-editor-placeholder');
                     }
                     // begin edit
                     //if (e.clipboardData && e.clipboardData.getData) {
@@ -603,17 +609,22 @@ function MediumEditor(elements, options) {
                     if (el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         // edit, see css for explanation
                         if (navigator.userAgent.indexOf("MSIE") > -1) {
-                            el.classList.add('medium-editor-placeholder-ie');
+                            // edit
+                            $(el).addClass('medium-editor-placeholder-ie');
                         } else {
-                            el.classList.add('medium-editor-placeholder');
+                            // edit
+                            $(el).addClass('medium-editor-placeholder');
                         }
                     }
                 },
                 placeholderWrapper = function (e) {
+                    // edit
                     if (navigator.userAgent.indexOf("MSIE") > -1) {
-                        this.classList.remove('medium-editor-placeholder-ie');
+                        // edit
+                        $(this).removeClass('medium-editor-placeholder-ie');
                     } else {
-                        this.classList.remove('medium-editor-placeholder');
+                        // edit
+                        $(this).removeClass('medium-editor-placeholder');
                     }
                    
                     if (e.type !== 'keypress') {
