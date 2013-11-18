@@ -159,3 +159,17 @@ $button_size: 50px;
         font-style: italic;
     }
 }
+
+/* edit, IE moves the cursor right due to the pseudo element. Instead, hide the placeholder
+ when element gets focus. This is constistent with IE's other placeholders anyway. */
+.medium-editor-placeholder-ie:not(:focus) {
+    position: relative;
+    &:before {
+        position: relative;
+        top: 0;
+        left: 0;
+        content: attr(data-placeholder);
+        color: #b3b3b1;
+        font-style: italic;
+    }
+}

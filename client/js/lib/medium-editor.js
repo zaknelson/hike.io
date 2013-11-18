@@ -597,7 +597,12 @@ function MediumEditor(elements, options) {
             var i,
                 activatePlaceholder = function (el) {
                     if (el.textContent.replace(/^\s+|\s+$/g, '') === '') {
-                        el.classList.add('medium-editor-placeholder');
+                        // edit, see css for explanation
+                        if (navigator.userAgent.indexOf("MSIE") > -1) {
+                            el.classList.add('medium-editor-placeholder-ie');
+                        } else {
+                            el.classList.add('medium-editor-placeholder');
+                        }
                     }
                 },
                 placeholderWrapper = function (e) {
