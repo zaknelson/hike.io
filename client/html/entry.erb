@@ -79,13 +79,15 @@
 							<tr data-ng-show="isEditing || (hike.location != null &amp;&amp; hike.location.latitude != null &amp;&amp; hike.location.longitude != null)">
 								<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
 								<td>
-									<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
-										<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
-											<div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
-										<div class="hike-longitude-and-label">
-											<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
-									</a>
-									<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
+									<div class="hike-latitude-and-longitude">
+										<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow">
+											<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
+												<div class="hike-latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
+											<div class="hike-longitude-and-label">
+												<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
+										</a>
+										<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
+									</div>
 								</td>
 							</tr>
 						</table>
