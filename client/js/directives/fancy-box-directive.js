@@ -20,7 +20,7 @@ angular.module("hikeio").
 					keys : true,
 					nextClick : true
 				};
-				
+
 				scope.$on("$routeChangeStart", function () {
 					$.fancybox.close();
 				});

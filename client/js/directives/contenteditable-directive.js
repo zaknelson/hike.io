@@ -68,12 +68,13 @@ angular.module("hikeio").
 				});
 
 				element.on("paste", function(event) {
+					var before = element.html();
 					var clipboardData = event.originalEvent.clipboardData || $window.clipboardData;
 					if (clipboardData && clipboardData.types) {
 						var pastedData = clipboardData.getData("text/plain");
 						if (attributes.type === "numeric") {
 							// Programmatically paste to ensure that result will be numeric
-							var before = element.html();
+
 							$window.document.execCommand("insertText", false, pastedData);
 							var after = element.html();
 							if (isValidNumericInput(after)) {
@@ -88,7 +89,6 @@ angular.module("hikeio").
 						}
 						return false;
 					} else {
-						var before = element.html();
 						$timeout(function() {
 							if (attributes.type === "numeric") {
 								if (isValidNumericInput(element.html())) {
@@ -170,7 +170,7 @@ angular.module("hikeio").
 
 						// Workaround for issue with medium-editor
 						if (viewValue && viewValue.length > 0) {
-							 if (element.hasClass("medium-editor-placeholder")) {
+							if (element.hasClass("medium-editor-placeholder")) {
 								element.removeClass("medium-editor-placeholder");
 							} else if (element.hasClass("medium-editor-placeholder-ie")) {
 								element.removeClass("medium-editor-placeholder-ie");
