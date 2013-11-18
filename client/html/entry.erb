@@ -85,7 +85,7 @@
 										<div class="hike-longitude-and-label">
 											<div class="hike-longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
 									</a>
-									<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %></span></a>
+									<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
 								</td>
 							</tr>
 						</table>
