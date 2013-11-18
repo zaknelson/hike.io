@@ -580,7 +580,11 @@ function MediumEditor(elements, options) {
             }
             var i,
                 pasteWrapper = function (e) {
-                    e.target.classList.remove('medium-editor-placeholder');
+                    if (navigator.userAgent.indexOf("MSIE") > -1) {
+                        e.target.classList.remove('medium-editor-placeholder-ie');
+                    } else {
+                        e.target.classList.remove('medium-editor-placeholder');
+                    }
                     // begin edit
                     //if (e.clipboardData && e.clipboardData.getData) {
                         //e.preventDefault();
@@ -606,7 +610,12 @@ function MediumEditor(elements, options) {
                     }
                 },
                 placeholderWrapper = function (e) {
-                    this.classList.remove('medium-editor-placeholder');
+                    if (navigator.userAgent.indexOf("MSIE") > -1) {
+                        this.classList.remove('medium-editor-placeholder-ie');
+                    } else {
+                        this.classList.remove('medium-editor-placeholder');
+                    }
+                   
                     if (e.type !== 'keypress') {
                         activatePlaceholder(this);
                     }

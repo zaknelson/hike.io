@@ -158,8 +158,12 @@ angular.module("hikeio").
 						setAnchorHandler();
 
 						// Workaround for issue with medium-editor
-						if (viewValue && viewValue.length > 0 && element.hasClass("medium-editor-placeholder")) {
-							element.removeClass("medium-editor-placeholder");
+						if (viewValue && viewValue.length > 0) {
+							 if (element.hasClass("medium-editor-placeholder")) {
+								element.removeClass("medium-editor-placeholder");
+							} else if (element.hasClass("medium-editor-placeholder-ie")) {
+								element.removeClass("medium-editor-placeholder-ie");
+							}
 						}
 					});
 				};
