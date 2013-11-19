@@ -35,32 +35,33 @@ $facts-external-link-svg-size: 12px;
 		position: relative;
 	}
 
+	/* For some reason the tr styles are not getting applied when nested under the table on IE8, so un-nest them for now. */
+	tr td {
+		vertical-align: top;
+	}
+
+	tr td:first-child {
+		width: 75px;
+		color: $title-text-color;
+		font-weight: bold;
+		font-size: 15px;
+		float: left;
+	}
+
+	tr td:first-child + td {
+		font-weight: 300;
+		font-size: 16px;
+		padding-left: 15px;
+	}
+
+	tr:not(:first-child) td {
+		padding-top: 5px;
+	}
+
 	table {
 		margin-left: 10px;
 		line-height: 24px;
 		color: $text-color;
-
-		tr td {
-			vertical-align: top;
-		}
-
-		tr td:first-child {
-			width: 75px;
-			color: $title-text-color;
-			font-weight: bold;
-			font-size: 15px;
-			float: left;
-		}
-
-		tr td:nth-child(2) {
-			font-weight: 300;
-			font-size: 16px;
-			padding-left: 15px;
-		}
-
-		tr:not(:first-child) td {
-			padding-top: 5px;
-		}
 
 		svg, img.external-link {
 			width: $facts-external-link-svg-size;
