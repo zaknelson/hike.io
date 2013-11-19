@@ -186,7 +186,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$scope.$apply(function() {
 				/* global ExifReader: false */
 				var exif = new ExifReader();
-				exif.load(e.target.result);
+				var loaded = exif.load(e.target.result);
+				if (!loaded) return;
 				var orientation = exif.getTagValue("Orientation");
 				rotation = orientationToRotation(orientation);
 				if (photo) {

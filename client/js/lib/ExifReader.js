@@ -74,7 +74,9 @@
 
 
     ExifReader.prototype.load = function(data) {
-      return this.loadView(new DataView(data));
+      // edit
+      var loaded = this.loadView(new DataView(data));
+      return loaded;
     };
 
     /*
@@ -88,8 +90,15 @@
     ExifReader.prototype.loadView = function(_dataView) {
       this._dataView = _dataView;
       this._tags = {};
-      this._checkImageHeader();
-      return this._readTags();
+
+      // edit
+      var headers = this._checkImageHeader();
+      if (!headers) return false;
+
+      this._readTags();
+
+      // edit
+      return true;
     };
 
     ExifReader.prototype._checkImageHeader = function() {
@@ -97,12 +106,16 @@
 
       dataView = this._dataView;
       if (dataView.byteLength < this._MIN_DATA_BUFFER_LENGTH || dataView.getUint16(0, false) !== this._JPEG_ID) {
-        throw new Error('Invalid image format');
+        //throw new Error('Invalid image format');
+        return false;
       }
       this._parseAppMarkers(dataView);
       if (!this._hasExifData()) {
-        throw new Error('No Exif data');
+        // edit, don't like throwing an Error, since not all images have EXIF
+        // throw new Error('No Exif data');
+        return false;
       }
+      return true;
     };
 
     ExifReader.prototype._parseAppMarkers = function(dataView) {
