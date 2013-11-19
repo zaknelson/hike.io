@@ -19,8 +19,9 @@ angular.module("hikeio").
 					});
 
 					elm.bind("click", function() {
-						if (input[0].disabled) {
-							$window.alert("Sorry this browser doesn't support file upload.");
+						if (input[0].disabled || !$window.FileReader || !window.FormData) {
+							$window.alert("Sorry, you cannot upload photos from this browser.");
+							return;
 						}
 						input[0].click();
 					});
