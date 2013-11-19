@@ -3,6 +3,7 @@
 
 $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
+$header-landscape-aspect-ratio: 3;
 
 .entry-page {
 	overflow-x: hidden;
@@ -16,8 +17,40 @@ $header-landscape-footer-height-mobile: 40px;
 	.header-landscape {
 		position: relative;
 
-		img {
+		/*
+			This is a tricky section of CSS. First we have a hack which maintains a div's aspect ratio: 
+			http://stackoverflow.com/questions/1495407/css-a-way-to-maintain-aspect-ratio-when-resizing-a-div
+
+			Next, for some images, we have to rotate them because of EXIF data. This transformation messes up
+			the aforementioned aspect ratio and we have to add some additional CSS to account for this.
+
+			Lastly, because the rotation messes up the layout, we have the div positioned absolutely and instead
+			use another placeholder div to take up the missing space.
+		 */
+
+		img, .img-div {
 			width: 100%;
+		}
+
+		.img-div {
+			height: 0;
+			padding-bottom: (100% / $header-landscape-aspect-ratio);
+			background-position: center center;
+			background-size:cover;
+		}
+		.img-div.flipped {
+			position: absolute;
+			width: (100% / $header-landscape-aspect-ratio);
+			padding-bottom: 100%;
+			margin-left: (100% / $header-landscape-aspect-ratio);
+			margin-top: (-100% / $header-landscape-aspect-ratio);
+			margin-bottom: (-100% / $header-landscape-aspect-ratio);
+		}
+
+		.flipped-placeholder {
+			height: 0;
+			width: 100%;
+			padding-bottom: (100% / $header-landscape-aspect-ratio);
 		}
 
 		h1 {

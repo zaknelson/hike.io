@@ -99,7 +99,7 @@ class HikeApp < Sinatra::Base
 		uploaded_file = params[:file]
 		return 404 if !hike && !user_needs_changes_reviewed?
 		return 400 if not uploaded_file
-		photo = Photo.create_with_renditions(uploaded_file[:tempfile])
+		photo = Photo.create_with_renditions(uploaded_file[:tempfile], params[:type] == "landscape")
 		photo.to_json
 	end
 

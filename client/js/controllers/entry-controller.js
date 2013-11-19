@@ -204,7 +204,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.numPhotosUploading++;
 		$http({
 				method: "POST",
-				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos",
+				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos?type=" + type,
 				data: data,
 				headers: { "Content-Type": false },
 				transformRequest: function(data) {

@@ -27,27 +27,35 @@ class Photo < Sequel::Model
 		renditions
 	end
 
-	def self.get_resized_dimensions image
+	def self.get_resized_dimensions image, cropToLandscape
 		width = image.columns
 		height = image.rows
-		if width > height
-			height *= (2400 / width).round
+		if (cropToLandscape)
 			width = 2400
+			height = 800
 		else
-			width *= (2400 / height).round
-			height = 2400
+			if width > height
+				height *= (2400 / width).round
+				width = 2400
+			else
+				width *= (2400 / height).round
+				height = 2400
+			end
 		end
-
 		{ :width => width, :height => height }
 	end
 
-	def self.create_with_renditions file
+	def self.create_with_renditions file, cropToLandscape=false
 		name = UUIDTools::UUID.random_create.to_s
 		original_image = Magick::Image.read(file.path).first
-		resized_dimensions = Photo.get_resized_dimensions(original_image)
-		Thread.new do	
-			original_image.resize_to_fit!(2400, 2400)
+		resized_dimensions = Photo.get_resized_dimensions(original_image, cropToLandscape)
+		Thread.new do
 			original_image.auto_orient!
+			if (cropToLandscape)
+				original_image.resize_to_fill!(2400, 800)
+			else
+				original_image.resize_to_fit!(2400, 2400)
+			end
 			original_image.strip!
 			original_image.profile!("*", nil)
 			renditions = get_photo_renditions(original_image)
