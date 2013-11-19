@@ -12,7 +12,7 @@
 			<div data-ui-if="isLoaded &amp;&amp; local_photo_landscape">
 				<div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div>
 				<img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
-				<div data-ui-if="!local_photo_landscape.string_id" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')',  'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
+				<div data-ui-if="!local_photo_landscape.string_id" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
 				<div class="flipped-placeholder" data-ui-if="local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270"></div>
 			</div>
 			<div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing">
@@ -32,7 +32,7 @@
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
 							<img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
-							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')' }"></div>
+							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
 						<div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing">
 							<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
@@ -115,7 +115,7 @@
 					<div data-ng-repeat="photo in local_photos_generic">
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
-							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')',  'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
+							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')', 'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
 							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</div>
