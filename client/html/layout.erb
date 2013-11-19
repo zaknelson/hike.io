@@ -11,7 +11,7 @@ https://github.com/zaknelson/hike.io/
 
 -->
 
-<html lang="en" data-ng-app="hikeio" data-ng-controller="AppController" data-ui-event="{keydown: 'handleGlobalKeydown($event)'}">
+<html lang="en" id="ng-app" data-ng-app="hikeio" data-ng-controller="AppController" data-ui-event="{keydown: 'handleGlobalKeydown($event)'}">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta id="viewport" name="viewport" content="width=device-width" />
@@ -51,6 +51,9 @@ https://github.com/zaknelson/hike.io/
 	<script src="//use.typekit.net/jce4miw.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
 	<% end %>
+	<!--[if lt IE 9]>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
+	<![endif]-->
 </head>
 <body data-ui-keydown="{esc: 'isSearchBoxActive = false'}">
 	<div class="container" data-ng-class="{'index-container': navigation.onIndex()}">
@@ -73,7 +76,7 @@ https://github.com/zaknelson/hike.io/
 				</div>
 
 				<div data-fancybox=".add-header-link">
-					<a class="add-header-link" data-fancybox-href="#add-page">
+					<a class="add-header-link" href="javascript:;" data-fancybox-href="#add-page">
 						<div data-header-entry data-label="Add" data-align="right"><%= render_svg("#{@img_dir}/add.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/add.png" /></div>
 					</a>
 				</div>
@@ -107,7 +110,7 @@ https://github.com/zaknelson/hike.io/
 		</footer>
 	</div>
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.4/angular.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>

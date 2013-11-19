@@ -41,6 +41,7 @@ $header-landscape-footer-height-mobile: 40px;
 			padding-left: 10px;
 			position: relative;
 			background-color:rgba(0, 0, 0, 0.5);
+			@include ie-opaque-black-background();
 			margin-top: -$header-landscape-footer-height;
 			height: $header-landscape-footer-height;
 		}

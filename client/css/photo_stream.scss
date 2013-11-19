@@ -37,6 +37,7 @@ $preview-subtext-font-size: 13px;
 		margin-top: -51px;
 		position: relative;
 		background-color:rgba(0, 0, 0, 0.6);
+		@include ie-opaque-black-background();
 		white-space: nowrap;
 		overflow: hidden;
 

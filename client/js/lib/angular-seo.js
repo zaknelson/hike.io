@@ -4,9 +4,11 @@
 		$rootScope.htmlReady = function() {
 			$rootScope.$evalAsync(function() { // fire after $digest
 					setTimeout(function() { // fire after DOM rendering
-						var evt = $window.document.createEvent("Event");
-						evt.initEvent("__htmlReady__", true, true);
-						$window.document.dispatchEvent(evt);
+						if ($window.document.createEvent) {
+							var evt = $window.document.createEvent("Event");
+							evt.initEvent("__htmlReady__", true, true);
+							$window.document.dispatchEvent(evt);
+						}
 					}, 0);
 			});
 		};

@@ -167,6 +167,7 @@ html.touch a:hover {
 
 .shadow-light {
 	@include box-shadow(0 1px 3px rgba(34, 25, 25, 0.4));
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1,Direction=180,Color='#333333')";
 }
 
 .hide-ie-input-close::-ms-clear {

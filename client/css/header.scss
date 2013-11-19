@@ -26,6 +26,8 @@ header > .header-entries {
 
 	.header-entry:hover {
 		opacity: .8;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
 	}
 
 	.header-entry {
@@ -37,6 +39,8 @@ header > .header-entries {
 		padding-right: 12px;
 		padding-left: 12px;
 		opacity: .65;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
+		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=65);
 		cursor: pointer;
 		@include user-select(none);
 

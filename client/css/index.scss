@@ -26,6 +26,7 @@
 		height: 125px;
 		margin-top: -125px;
 		background-color:rgba(0, 0, 0, 0.6);
+		@include ie-opaque-black-background();
 
 		h1 {
 			padding: 20px 0px 0px 20px;

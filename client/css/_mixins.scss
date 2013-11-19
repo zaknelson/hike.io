@@ -7,3 +7,7 @@
 	left: $percentage / 2;
 	width: $percentage;
 }
+
+@mixin ie-opaque-black-background() {
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr="#60000000", endColorstr="#60000000");
+}
