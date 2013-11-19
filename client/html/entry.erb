@@ -111,13 +111,13 @@
 					</a>
 				</div>
 				<div data-ui-if="isEditing">
-					<a data-ng-repeat="photo in local_photos_generic" href="#" rel="photos" >
+					<div data-ng-repeat="photo in local_photos_generic">
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
 							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')',  'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
 							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
 						</div>
-					</a>
+					</div>
 				</div>
 				<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
 					<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
