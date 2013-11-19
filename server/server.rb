@@ -129,6 +129,11 @@ class HikeApp < Sinatra::Base
 
 	before do
 		@user_agent = AgentOrange::UserAgent.new(request.user_agent)
+		# Let Angular take care of the caching in IE9
+		# http://stackoverflow.com/questions/16971831/better-way-to-prevent-ie-cache-in-angularjs
+		if (@user_agent.device.engine.browser.type.to_s == "ie" && @user_agent.device.engine.browser.version.major == "9")
+			headers["Cache-Control"] = "no-cache"
+		end
 	end
 end
 

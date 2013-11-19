@@ -17,7 +17,6 @@ class HikeApp < Sinatra::Base
 
 		@is_partial = request.path_info.start_with? "/partials/"
 		@img_dir = "/images"
-		@is_bot = AgentOrange::UserAgent.new(request.user_agent).device.is_bot?
 		inject_inlined_html
 	end
 
@@ -74,7 +73,7 @@ class HikeApp < Sinatra::Base
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
-		pass unless @is_bot
+		pass unless @user_agent.device.is_bot?
 		static_html = StaticHtml.find(:url => request.fullpath)
 		if not static_html
 			static_html = StaticHtml.new(
