@@ -213,6 +213,13 @@ class ApiRoutesTest < HikeAppTestCase
 		put_and_validate data, 400
 	end
 
+	def test_put_to_missing_hike
+		data = get_basic_hike_json
+		data["string_id"] = "not-a-real-hike"
+		put "/api/v1/hikes/not-a-real-hike", data.to_json
+		assert_equal 404, last_response.status
+	end
+
 
 	#
 	# DELETE /api/v1/hikes/:id

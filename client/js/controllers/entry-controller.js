@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, resourceCache, selection) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, persistentStorage, resourceCache, selection) {
 	$scope.hike = null;
 	$scope.isDirty = false;
 	$scope.isEditing = isEditing;
@@ -56,8 +56,19 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.isBeingReviewed = isBeingReviewed;
 	});
 
+	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
+			if (status === 202) {
+				// Hike doesn't yet exist but there is a pending POST to make it so. If this is the user that made the change, they'd
+				// like to be able to see their change, so retrieve it from local storage
+				data = persistentStorage.get(routeId);
+				if (!data) {
+					$log.error(data, status, headers, config);
+					return;
+				}
+			}
+
 			$scope.hike = data;
 			$rootScope.title = $scope.hike.name + " - hike.io";
 			var haveSetMetaDescription = false;
@@ -78,6 +89,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$scope.htmlReady();
 		}).
 		error(function(data, status, headers, config) {
+			persistentStorage.remove(routeId);
 			$log.error(data, status, headers, config);
 		}
 	);
@@ -304,4 +316,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "resourceCache", "selection"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];

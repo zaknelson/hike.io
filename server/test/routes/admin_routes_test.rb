@@ -87,6 +87,19 @@ class AdminRoutesTest < HikeAppTestCase
 		assert_equal 404, last_response.status
 	end
 
+
+	def test_accept_post
+		json_obj = get_basic_hike_json
+		post "/api/v1/hikes", json_obj.to_json
+		get "/api/v1/hikes/new-name"
+		assert_equal 202, last_response.status
+
+		set_admin_cookie
+		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
+		get "/api/v1/hikes/new-name"
+		assert_equal 200, last_response.status
+	end
+
 	def test_accept_post_and_put
 		# Setup reviews
 		json_obj = get_basic_hike_json

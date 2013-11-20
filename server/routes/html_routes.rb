@@ -134,11 +134,11 @@ class HikeApp < Sinatra::Base
 		get path, :provides => "html" do
 			hike_id = params[:hike_id]
 			hike = Hike.get_hike_from_id hike_id
-			return 404 if path != "/partials/entry.html" and !hike
+			return 404 if path != "/partials/entry.html" and !hike and !Review.has_pending_review_for_hike?(params[:hike_id])
 
 			if not @is_partial
 				resource_id = "/api/v1/hikes/" + hike_id
-				preload_resource resource_id, hike.as_json
+				preload_resource resource_id, hike.as_json if hike
 			end
 			render_template :entry
 		end

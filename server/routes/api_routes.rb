@@ -17,11 +17,13 @@ class HikeApp < Sinatra::Base
 		json_str = request.body.read 
 		json = JSON.parse json_str rescue return 400
 		return 400 if not Hike.is_valid_json? json
-		return 409 if Hike[:string_id => Hike.create_string_id_from_name(json["name"])]
+		string_id = Hike.create_string_id_from_name(json["name"])
+		return 409 if Hike[:string_id => string_id]
 		if user_needs_changes_reviewed?
 			review = Review.create({
 				:api_verb => "post",
 				:api_body => json_str,
+				:hike_string_id => string_id,
 				:reviewee => current_user_id
 			})
 			EmailUtils.send_new_review(review, request.base_url) if Sinatra::Application.environment() != :test
@@ -50,7 +52,10 @@ class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = Hike.get_hike_from_id params[:hike_id]
-		return 404 if not hike
+		if not hike
+			return 202 if Review[:status => Review::STATUS_UNREVIEWED, :hike_string_id => params[:hike_id], :api_verb => "post"]
+			return 404
+		end
 		hike.as_json get_fields_filter
 	end
 
@@ -60,8 +65,8 @@ class HikeApp < Sinatra::Base
 		json = JSON.parse json_str rescue return 400
 		return 400 if not Hike.is_valid_json? json
 		return 409 if json["string_id"] && json["string_id"] != params[:hike_id] && Hike.get_hike_from_id(json["string_id"])
-
-		if user_needs_changes_reviewed?
+		return 404 if !hike && !Review.has_pending_review_for_hike?(params[:hike_id])
+		if user_needs_changes_reviewed? 
 			review = Review.create({
 				:api_verb => "put",
 				:api_body => json_str,
@@ -70,8 +75,6 @@ class HikeApp < Sinatra::Base
 			})
 			EmailUtils.send_diff_review(review, request.base_url) if Sinatra::Application.environment() != :test
 			return 202
-		elsif not hike
-			return 404
 		end
 		hike.update_from_json(json)
 		hike.as_json

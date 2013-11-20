@@ -1,5 +1,5 @@
 "use strict";
-var AddController = function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, resourceCache) {
+var AddController = function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache) {
 
 	var capitalizeWords = function(str) {
 		var result = "";
@@ -61,6 +61,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 					// The logic for converting name into id needs to stay in sync with the same function on the server
 					id = $scope.hike.name.toLowerCase().replace(/#/g, "").split(" ").join("-");
 					$scope.hike.string_id = id;
+					persistentStorage.set("/api/v1/hikes/" + id, $scope.hike);
 				} else if (status === 200) {
 					id = data.string_id;
 					$scope.hike = data;
@@ -91,4 +92,4 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 	$scope.htmlReady();
 };
 
-AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "resourceCache"];
+AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache"];
