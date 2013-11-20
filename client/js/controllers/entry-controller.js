@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, isEditing, navigation, persistentStorage, resourceCache, selection) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
 	$scope.hike = null;
 	$scope.isDirty = false;
 	$scope.isEditing = isEditing;
@@ -59,17 +59,27 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
+			var hike = data;
+			var cachedHike = persistentStorage.get(routeId);
 			if (status === 202) {
-				// Hike doesn't yet exist but there is a pending POST to make it so. If this is the user that made the change, they'd
-				// like to be able to see their change, so retrieve it from local storage
-				data = persistentStorage.get(routeId);
-				if (!data) {
+				if (!cachedHike) {
 					$log.error(data, status, headers, config);
 					return;
 				}
+				// Hike doesn't exist yet but there is a pending POST to make it so. If this is the user that made the change, they'd
+				// like to be able to see their change, so retrieve it from local storage
+				hike = cachedHike;
+			} else if (status === 200) {
+				if (cachedHike) {
+					if (dateTime.after(data.edit_time, cachedHike.edit_time)) {
+						persistentStorage.remove(routeId);
+					} else {
+						hike = cachedHike;
+					}
+				}
 			}
 
-			$scope.hike = data;
+			$scope.hike = hike;
 			$rootScope.title = $scope.hike.name + " - hike.io";
 			var haveSetMetaDescription = false;
 			if ($scope.hike.description) {
@@ -123,8 +133,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						$scope.isBeingReviewed = true;
 						$scope.isSaving = false;
 						$scope.isDirty = false;
-						// Keep this temporary version in the user's session cache, in case they decide to make other changes.
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
+						persistentStorage.set("/api/v1/hikes/" + $scope.hike.string_id, $scope.hike);
 					}
 					selection.clear();
 					mediumEditor.hideToolbar();
@@ -316,4 +326,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
