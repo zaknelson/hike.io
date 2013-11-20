@@ -52,11 +52,24 @@ $edit-banner-height: 50px;
 	.metadata-section {
 		.image-container {
 			position: relative;
-			width: 400px;
+			width: 25%;
 		}
-		img {
-			width: 400px;
+
+		.placeholder-img {
+			width: 25%;	
 		}
+
+		img,.img-div {
+			width: 100%;
+		}
+	
+		.img-div {
+			height: 0;
+			padding-bottom: 100%;
+			background-position: center center;
+			background-size:cover;
+		}
+
 		[data-file-uploader] {
 			display: inline;
 			img {
@@ -64,14 +77,7 @@ $edit-banner-height: 50px;
 			}
 		}
 		.discover-explanation {
-			font-size: 14px;
 			padding-bottom: 5px;
-		}
-	}
-	
-	@media all and (max-width: $mobile-width) {
-		.edit-banner {
-			text-align: left;
 		}
 	}
 
@@ -90,7 +96,18 @@ $edit-banner-height: 50px;
 		}
 	}
 
+	@media all and (max-width: 600px) {
+		.metadata-section {
+			.image-container, .placeholder-img {
+				width: 33%;
+			}
+		}
+	}
+
 	@media all and (max-width: $mobile-width) {
+		.edit-banner {
+			text-align: left;
+		}
 		.edit-banner-review {
 			.live-soon-msg {
 				display: none;

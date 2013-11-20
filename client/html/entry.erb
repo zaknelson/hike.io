@@ -127,11 +127,11 @@
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
 			<h2>Preview photo</h2>
-				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a preview photo that will show up on the Discover tab</p>
+				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a photo for the Discover tab</p>
 				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
-					<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
-					<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-small.jpg" alt="{{local_photo_preview.alt}}" />
-					<img data-ui-if="!local_photo_preview.string_id" data-ng-src="{{local_photo_preview.src}}" />
+						<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
+						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_preview.alt}}" />
+						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
 				</div>
 				<div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing">
 					<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
