@@ -28,8 +28,9 @@ require_relative "model/review"
 require_relative "model/search_result"
 require_relative "model/static_html"
 require_relative "model/user"
-
 require_relative "model/seeds"
+require_relative "routes/photo_upload_hourly_throttle"
+require_relative "routes/photo_upload_daily_throttle"
 
 configure :production do
 	require "newrelic_rpm"
@@ -74,6 +75,12 @@ class HikeApp < Sinatra::Base
 		config.project_path = File.dirname(__FILE__)
 		config.sass_dir = "#{HikeApp.root}/css" 
 	end
+
+	# throttling setup
+	use PhotoUploadHourlyThrottle, :max => 100
+	use PhotoUploadDailyThrottle, :max => 200
+	use Rack::Throttle::Hourly, :max => 7200 # 2 requests / second
+	use Rack::Throttle::Daily, :max => 86400 # 1 request / second
 
 	# logging setup
 	configure :production, :development do

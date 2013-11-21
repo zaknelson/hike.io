@@ -41,6 +41,8 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rack-throttle (0.3.0)
+      rack (>= 1.0.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rmagick (2.13.2)
@@ -95,6 +97,7 @@ DEPENDENCIES
   pg (= 0.14.1)
   premailer (= 1.7.3)
   puma (= 2.4.0)
+  rack-throttle (= 0.3.0)
   rest-client (= 1.6.7)
   rmagick (= 2.13.2)
   roodi (= 2.1.0)
