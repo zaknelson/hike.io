@@ -45,6 +45,11 @@ angular.module("hikeio", ["seo", "ui"]).
 			});
 	}]).
 	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "capabilities", "config", "navigation", function($http, $location, $rootScope, $templateCache, $timeout, $window, capabilities, config, navigation) {
+		// HACK, if url parameters include _escaped_fragment_ we are being indexed and already have all of the html rendered
+		// If angular starts to render again, things won't look right, so throw an exception to essentially disable angular
+		if ($location.search()["_escaped_fragment_"] !== undefined) {
+			throw Error();
+		}
 		$rootScope.config = config;
 		$rootScope.capabilities = capabilities;
 		$rootScope.location = $location;

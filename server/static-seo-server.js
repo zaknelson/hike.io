@@ -24,6 +24,7 @@ var renderHtml = function(url) {
 			}, false);
 		});
 	};
+	page.viewportSize = { width: 1024, height: 800 };
 	setTimeout(function() {
 		console.log(page.content);
 		phantom.exit();
