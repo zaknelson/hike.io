@@ -71,13 +71,16 @@ class HikeApp < Sinatra::Base
 	get "*" do
 		pass unless params[:_escaped_fragment_]
 
-		url = base_url + request.path
+		url = request.path
 		url_params = request.env['rack.request.query_hash']
 		url_params.delete("_escaped_fragment_")
 		if (url_params.length != 0)
 			url += "?" + URI.escape(url_params.collect{|k,v| "#{k}=#{v}"}.join("&"))
 		end
-		static_html = StaticHtml.get_and_update_for_url(url)
+		static_html = StaticHtml.get_and_update_for_path(url)
+
+		# Should never pass here, but if for some reason we don't have static html, return dynamic and hopefully it will work next time
+		pass if not static_html 
 		static_html.html
 	end
 

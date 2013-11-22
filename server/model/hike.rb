@@ -36,8 +36,9 @@ class Hike < Sequel::Model
 
 	def self.create_from_json json
 		name = Hike.clean_string_input(json["name"])
+		string_id = Hike.create_string_id_from_name(name)
 		hike = Hike.create(
-			:string_id => Hike.create_string_id_from_name(name),
+			:string_id => string_id,
 			:name => name,
 			:locality => Hike.clean_string_input(json["locality"]),
 			:distance => json["distance"],
@@ -52,8 +53,7 @@ class Hike < Sequel::Model
 			);
 		hike.update_keywords
 		hike.save
-		# update the static html associated with this hike so that it will be available on the next request
-		Thread.new { StaticHtml.get_and_update_for_url(base_url + "/hikes/" + string_id) }
+		StaticHtml.get_and_update_for_path("/hikes/" + string_id)
 		hike
 	end
 
@@ -168,6 +168,8 @@ class Hike < Sequel::Model
 		removed_photos.each do |photo|
 			photo.destroy_and_move_on_s3
 		end
+
+		StaticHtml.get_and_update_for_path("/hikes/" + self.string_id)
 	end
 
 	def update_keywords

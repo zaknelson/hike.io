@@ -44,6 +44,14 @@ end
 
 class HikeApp < Sinatra::Base
 
+	configure :development, :test do
+		set :base_url, "http://localhost:4567"
+	end
+
+	configure :production do
+		set :base_url, "http://hike.io"
+	end
+
 	set :root, "#{File.dirname(__FILE__)}/../client"
 
 	# erb setup
@@ -84,7 +92,7 @@ class HikeApp < Sinatra::Base
 
 	# logging setup
 	configure :production, :development do
-    enable :logging
+    	enable :logging
 	end
 
 	assets {
@@ -122,10 +130,6 @@ class HikeApp < Sinatra::Base
 
 		def current_user_id
 			cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id) ? User.first.id : nil
-		end
-
-		def base_url
-			request.scheme + "://" + request.host_with_port
 		end
 
 		def array_as_json array, fields=nil

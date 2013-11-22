@@ -1,26 +1,27 @@
 class StaticHtml < Sequel::Model
 
-	def self.get_static_html_for_url url
-		`phantomjs --disk-cache=true server/static-seo-server.js #{url}`
+	def self.get_static_html_for_path url
+		if Sinatra::Application.environment() != :test
+			`phantomjs --load-images=false --disk-cache=true server/static-seo-server.js #{url}`
+		end
 	end
 
-	def self.get_and_update_for_url url
+	def self.get_and_update_for_path path
+		url = HikeApp.base_url + path
 		static_html = StaticHtml.find(:url => url)
-		if not static_html
-			puts "fetching #{url} first"
-			static_html = StaticHtml.new(
-				:url => url,
-				:html => get_static_html_for_url(url),
-				:fetch_time => Time.now
-				)
-			static_html.save
-		else
-			if Time.now - static_html.fetch_time > 86400 # one day
-				Thread.new do
-					static_html.html = get_static_html_for_url(url)
-					static_html.fetch_time = Time.now
-					static_html.save
-				end
+		Thread.new do
+			html = StaticHtml.get_static_html_for_path(url)
+			if not static_html
+				static_html = StaticHtml.new(
+					:url => url,
+					:html => html,
+					:fetch_time => Time.now
+					)
+				static_html.save
+			else
+				static_html.html = html
+				static_html.fetch_time = Time.now
+				static_html.save
 			end
 		end
 		static_html
