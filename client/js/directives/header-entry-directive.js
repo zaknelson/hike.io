@@ -21,7 +21,7 @@ angular.module("hikeio").
 				"<div data-ng-style='{float:align}' >" +
 					"<div class='header-separator' data-ng-show='align == \"right\"'></div>" +
 					"<div class='header-entry' data-ng-transclude>" +
-						"<span class='label' data-ng-show='label'>{{label}}</span>" +
+						"<span class='label' data-ng-show='label' data-ng-bind='label'></span>" +
 					"</div>" +
 					"<div class='header-separator' data-ng-show='align == \"left\"'></div>" +
 				"</div>" +
