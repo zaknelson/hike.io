@@ -88,10 +88,10 @@ migration "create hikes_keywords table" do
 end
 
 # Cached static HTML of site's url's, for SEO only
-migration "create static_html table" do
+migration "create static_html table 11/22/2013" do
 	database.create_table :static_htmls do
 		primary_key :id
-		String :url, 						:null => false, :unique => true
+		String :path, 						:null => false, :unique => true
 		String :html, 						:null => false
 		Time :fetch_time, 					:null => false
 	end
