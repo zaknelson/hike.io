@@ -189,7 +189,7 @@ class Hike < Sequel::Model
 		location = self.location
 		keywords = self.keywords
 		photos = self.all_photos
-		static_html = StaticHtml[:url => "/hikes/#{self.string_id}"]
+		static_html = StaticHtml[:path => "/hikes/#{self.string_id}"]
 
 		# Remove all references from hike to remove foreign key constraints
 		self.location = nil

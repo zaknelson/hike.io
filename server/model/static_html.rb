@@ -8,12 +8,12 @@ class StaticHtml < Sequel::Model
 
 	def self.get_and_update_for_path path
 		url = HikeApp.base_url + path
-		static_html = StaticHtml.find(:url => path)
+		static_html = StaticHtml.find(:path => path)
 		Thread.new do
 			html = StaticHtml.get_static_html_for_path(url)
 			if not static_html
 				static_html = StaticHtml.new(
-					:url => path,
+					:path => path,
 					:html => html,
 					:fetch_time => Time.now)
 				static_html.save
