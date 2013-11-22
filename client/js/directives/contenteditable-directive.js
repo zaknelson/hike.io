@@ -44,7 +44,7 @@ angular.module("hikeio").
 							}
 						} else {
 							viewValue = element.html();
-							if (element.text() === "" && viewValue !== "") { // Cleanup hidden characters
+							if (element.text().trim() === "" && viewValue !== "") { // Cleanup hidden characters
 								viewValue = "";
 								setElementHtml("");
 							}
