@@ -56,10 +56,6 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	def get_static_html_for_url url
-		`phantomjs --disk-cache=true server/static-seo-server.js #{url}`
-	end
-
 	get "/sitemap.xml", :provides => "xml" do
 		@hikes = Hike.all
 		erb :sitemap, :layout => false
@@ -74,31 +70,14 @@ class HikeApp < Sinatra::Base
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
 		pass unless params[:_escaped_fragment_]
-		
-		url_without_escaped_fragment = "http://" + request.host_with_port + request.path
+
+		url = base_url + request.path
 		url_params = request.env['rack.request.query_hash']
 		url_params.delete("_escaped_fragment_")
 		if (url_params.length != 0)
-			url_without_escaped_fragment += "?" + URI.escape(url_params.collect{|k,v| "#{k}=#{v}"}.join("&"))
+			url += "?" + URI.escape(url_params.collect{|k,v| "#{k}=#{v}"}.join("&"))
 		end
-
-		static_html = StaticHtml.find(:url => url_without_escaped_fragment)
-		if not static_html
-			static_html = StaticHtml.new(
-				:url => url_without_escaped_fragment,
-				:html => get_static_html_for_url(url_without_escaped_fragment),
-				:fetch_time => Time.now
-				)
-			static_html.save
-		else
-			if Time.now - static_html.fetch_time > 86400 # one day
-				Thread.new do
-					static_html.html = get_static_html_for_url url_without_escaped_fragment
-					static_html.fetch_time = Time.now
-					static_html.save
-				end
-			end
-		end
+		static_html = StaticHtml.get_and_update_for_url(url)
 		static_html.html
 	end
 

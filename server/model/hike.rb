@@ -52,6 +52,8 @@ class Hike < Sequel::Model
 			);
 		hike.update_keywords
 		hike.save
+		# update the static html associated with this hike so that it will be available on the next request
+		Thread.new { StaticHtml.get_and_update_for_url(base_url + "/hikes/" + string_id) }
 		hike
 	end
 

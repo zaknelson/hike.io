@@ -124,6 +124,10 @@ class HikeApp < Sinatra::Base
 			cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id) ? User.first.id : nil
 		end
 
+		def base_url
+			request.scheme + "://" + request.host_with_port
+		end
+
 		def array_as_json array, fields=nil
 			json = "["
 			array.each_with_index do |element, i|

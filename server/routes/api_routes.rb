@@ -29,7 +29,6 @@ class HikeApp < Sinatra::Base
 			EmailUtils.send_new_review(review, request.base_url) if Sinatra::Application.environment() != :test
 			return 202
 		end
-
 		hike = Hike.create_from_json json
 		hike.as_json
 	end
