@@ -82,8 +82,11 @@ class Hike < Sequel::Model
 			"<em>"		=> "<i>",
 			"</em>"		=> "</i>",
 			"&nbsp;"	=> "",
+
+			'href="http://hike.io'	=> 'href="',
+			'href="hike.io'			=> 'href="'
 		}
-		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;")/i do |match|
+		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;|href="http:\/\/hike\.io|href="hike\.io)/i do |match|
 			inputToReplaceMapping[match.to_s]
 		end
 		cleaned_html = ""
@@ -97,10 +100,25 @@ class Hike < Sequel::Model
 				cleaned_html += "<p>" + element + "</p>"
 			end
 		end
+
 		Sanitize.clean(cleaned_html, 
+			:add_attributes => {
+				"a" => {"rel" => "nofollow"}
+			},
 			:elements => ["h3", "b", "i", "blockquote", "p", "a"],
 			:attributes => { "a" => ["href"] },
-			:protocols => { "a" => { "href" => [:relative]}})
+			:transformers => lambda do |env|
+				# Remove rel=nofollow on relative links
+				node = env[:node]
+				node_name = env[:node_name]
+				return unless node_name == "a"
+				return unless node["href"].start_with?("/")
+				Sanitize.clean_node!(node, {
+					:elements => ["a"],
+					:attributes => { "a" => ["href"] }
+				})
+				{ :node_whitelist => [node] }
+			end)
 	end
 
 	def update_from_json json
