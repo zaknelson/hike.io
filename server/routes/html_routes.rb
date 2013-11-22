@@ -73,19 +73,27 @@ class HikeApp < Sinatra::Base
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
-		pass unless @user_agent.device.is_bot? || params[:_escaped_fragment_]
-		static_html = StaticHtml.find(:url => request.fullpath)
+		pass unless params[:_escaped_fragment_]
+		
+		url_without_escaped_fragment = "http://" + request.host_with_port + request.path
+		url_params = request.env['rack.request.query_hash']
+		url_params.delete("_escaped_fragment_")
+		if (url_params.length != 0)
+			url_without_escaped_fragment += "?" + URI.escape(url_params.collect{|k,v| "#{k}=#{v}"}.join("&"))
+		end
+
+		static_html = StaticHtml.find(:url => url_without_escaped_fragment)
 		if not static_html
 			static_html = StaticHtml.new(
-				:url => request.fullpath,
-				:html => get_static_html_for_url(request.url),
+				:url => url_without_escaped_fragment,
+				:html => get_static_html_for_url(url_without_escaped_fragment),
 				:fetch_time => Time.now
 				)
 			static_html.save
 		else
 			if Time.now - static_html.fetch_time > 86400 # one day
 				Thread.new do
-					static_html.html = get_static_html_for_url request.url
+					static_html.html = get_static_html_for_url url_without_escaped_fragment
 					static_html.fetch_time = Time.now
 					static_html.save
 				end
