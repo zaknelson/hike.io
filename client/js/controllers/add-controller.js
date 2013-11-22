@@ -58,8 +58,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 			success(function(data, status, headers, config) {
 				var id = "";
 				if (status === 202) {
-					// The logic for converting name into id needs to stay in sync with the same function on the server
-					id = $scope.hike.name.toLowerCase().replace(/#/g, "").split(" ").join("-");
+					id = headers("Hikeio-Hike-String-Id");
 					$scope.hike.string_id = id;
 					persistentStorage.set("/api/v1/hikes/" + id, $scope.hike);
 				} else if (status === 200) {
