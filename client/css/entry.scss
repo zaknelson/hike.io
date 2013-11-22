@@ -130,15 +130,9 @@ $header-landscape-aspect-ratio: 3;
 
 		@media all and (max-width: $mobile-width) {
 			.overview-description {
-				margin-right: 0px;
+				margin-top: 13px;
 				font-size: 16px;
 				line-height: 20px;
-			}
-		}
-
-		@media all and (max-width: $facts-mobile-width) {
-			.overview-description {
-				margin-top: 170px;
 			}
 		}
 	}

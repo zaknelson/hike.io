@@ -126,8 +126,8 @@ $facts-external-link-svg-size: 12px;
 @media all and (max-width: $facts-mobile-width) {
 	.overview-facts {
 		width: 100%;
-		margin-bottom: 10px;
-		margin-right: 0px;
+		margin: 0px;
+		float: none;
 
 		.image-container {
 			width: $facts-mobile-image-width;
