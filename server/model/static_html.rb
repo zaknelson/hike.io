@@ -15,8 +15,7 @@ class StaticHtml < Sequel::Model
 				static_html = StaticHtml.new(
 					:url => path,
 					:html => html,
-					:fetch_time => Time.now
-					)
+					:fetch_time => Time.now)
 				static_html.save
 			else
 				static_html.html = html
