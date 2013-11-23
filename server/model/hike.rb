@@ -66,6 +66,19 @@ class Hike < Sequel::Model
 		Sanitize.clean(str)
 	end
 
+	def self.clean_anchor_input html
+		return html if not html
+		puts html
+		cleaned = Sanitize.clean(html, 
+			:add_attributes => {
+				"a" => {"rel" => "nofollow"}
+			},
+			:elements => ["a"],
+			:attributes => { "a" => ["href"] })
+		puts cleaned
+		cleaned
+	end
+
 	def self.clean_html_input html
 		return html if not html
 		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
@@ -105,7 +118,7 @@ class Hike < Sequel::Model
 			:add_attributes => {
 				"a" => {"rel" => "nofollow"}
 			},
-			:elements => ["h3", "b", "i", "blockquote", "p", "a"],
+			:elements => ["h3", "b", "i", "p", "a"],
 			:attributes => { "a" => ["href"] },
 			:transformers => lambda do |env|
 				# Remove rel=nofollow on relative links
@@ -131,6 +144,7 @@ class Hike < Sequel::Model
 		self.elevation_gain = json["elevation_gain"]
 		self.elevation_max = json["elevation_max"]
 		self.locality = Hike.clean_string_input(json["locality"])
+		self.permit = Hike.clean_anchor_input(json["permit"])
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
 

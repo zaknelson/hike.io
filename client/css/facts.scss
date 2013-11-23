@@ -3,7 +3,8 @@
 
 $facts-width: 310px;
 $facts-padding: 25px;
-$facts-mobile-image-width: 135px;
+$facts-mobile-image-width: 122px;
+$facts-mobile-image-width-with-permit: 144px;
 $facts-external-link-svg-size: 12px;
 
 .overview-facts {
@@ -41,11 +42,12 @@ $facts-external-link-svg-size: 12px;
 	}
 
 	tr td:first-child {
-		width: 75px;
+		width: 82px;
 		color: $title-text-color;
 		font-weight: bold;
-		font-size: 15px;
+		font-size: 16px;
 		float: left;
+		text-align: right;
 	}
 
 	tr td:first-child + td {
@@ -78,15 +80,21 @@ $facts-external-link-svg-size: 12px;
 			fill: $link-hover-color;
 		}
 
-		.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
+		.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude, .hike-permit {
 			min-width: 10px;
 			display: block;
 			float: left;
 			max-width: 160px;
 		}
 
-		.hike-name, .hike-locality, .hike-latitude-and-longitude  {
-			min-width: 145px;
+		.hike-name, .hike-locality, .hike-latitude-and-longitude, .hike-permit {
+			min-width: 120px;
+		}
+
+		.hike-permit {
+			p {
+				line-height: inherit;
+			}
 		}
 		
 		.hike-latitude-and-label {
@@ -143,14 +151,26 @@ $facts-external-link-svg-size: 12px;
 			}
 		}
 
+		.permit {
+			.image-container {
+				width: $facts-mobile-image-width-with-permit;
+			}
+		}
+
+		.permit.page-curl {
+			img, .img-div {
+				width: $facts-mobile-image-width-with-permit;
+				height: $facts-mobile-image-width-with-permit;
+			}
+		}
+
 		> div {
 			padding: 13px 13px 20px 13px;
-			width: 95%;
+			width: 98%;
 			position: relative;
 		}
 
 		table {
-			font-size: 15px;
 			line-height: 18px;
 			margin-top: 0px;
 
@@ -158,14 +178,17 @@ $facts-external-link-svg-size: 12px;
 				display:none;
 			}
 
+			tr td:first-child {
+				text-align: left;
+			}
+
 			tr td:nth-child(2) {
 				padding-left: 10px;
-				padding-top: 7px;
-				min-width: 145px;
+				min-width: 120px;
 				width: 100%;
 			}
 
-			.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude {
+			.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude, .hike-permit {
 				max-width: none;
 			}
 		}

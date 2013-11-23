@@ -112,7 +112,7 @@ function MediumEditor(elements, options) {
             this.elements[index].addEventListener('keyup', function (e) {
                 var node = getSelectionStart();
                 if (node && node.getAttribute('data-medium-element') && node.children.length === 0) {
-                    document.execCommand('formatBlock', false, 'p');
+                    //document.execCommand('formatBlock', false, 'p');
                     // edit, no need because we're already in a keyup handler
                     //this.triggerKeyUp();
                 }
@@ -472,6 +472,10 @@ function MediumEditor(elements, options) {
                 timer;
             this.anchorForm.style.display = 'none';
             this.toolbarActions.style.display = 'block';
+            if (this.previousLeft) {
+                this.toolbar.style.left = this.previousLeft;
+                this.previousLeft = null;
+            }
             this.keepToolbarAlive = false;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -485,6 +489,13 @@ function MediumEditor(elements, options) {
             this.savedSelection = saveSelection();
             this.anchorForm.style.display = 'block';
             this.keepToolbarAlive = true;
+            // edit, if toolbar is too far to the right, shift it.
+            if (parseInt((this.toolbar.style.left)) + parseInt((this.toolbar.offsetWidth)) >= $(window).width()) {
+                //console.log(($(window).width() - parseInt((this.toolbar.offsetWidth)) - 20) + "px")
+                this.previousLeft = this.toolbar.style.left;
+                this.toolbar.style.left = ($(window).width() - parseInt((this.toolbar.offsetWidth)) - 50) + "px";
+            }
+
             input.focus();
             input.value = '';
         },

@@ -28,7 +28,7 @@
 			<div>
 
 				<div class="overview-facts">
-					<div class="page-curl shadow-bottom">
+					<div class="page-curl shadow-bottom" data-ng-class="{'permit':hike.permit || isEditing}">
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
 							<img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
@@ -89,6 +89,12 @@
 										</a>
 										<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
 									</div>
+								</td>
+							</tr>
+							<tr data-ng-show="isEditing || hike.permit">
+								<td>Permits</td>
+								<td>
+									<div class="hike-permit" contenteditable="{{isEditing}}" data-ng-model="hike.permit" data-single-line="true" data-change="isDirty = true"></div>
 								</td>
 							</tr>
 						</table>

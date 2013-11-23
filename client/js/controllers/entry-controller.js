@@ -19,7 +19,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	var lastUploadedPhotoId = 0;
 	var uploadedPhotoIdMap = {};
 	var canceledUploadedPhotoIdMap = {};
-	var mediumEditor = null;
+	var descriptionMediumEditor = null;
+	var permitMediumEditor = null;
 
 	var cloneToLocalPhotos = function() {
 		if ($scope.hike.photo_landscape) $scope.local_photo_landscape = jQuery.extend(true, {}, $scope.hike.photo_landscape);
@@ -107,10 +108,17 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	if (isEditing) {
 		/* jshint nonew: false, undef: false */
 		/* global MediumEditor: false */
-		mediumEditor = new MediumEditor(".overview-description", {
+		descriptionMediumEditor = new MediumEditor(".overview-description", {
 			anchorInputPlaceholder: "Enter a link...",
 			excludedActions: ["blockquote", "u", "h4"],
 			placeholder: "Enter a description of the hike..."
+		});
+
+
+		permitMediumEditor = new MediumEditor(".hike-permit", {
+			anchorInputPlaceholder: "Enter a link...",
+			excludedActions: ["b", "blockquote", "h3", "h4", "i", "u"],
+			placeholder: ""
 		});
 	}
 
@@ -137,7 +145,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 						persistentStorage.set("/api/v1/hikes/" + $scope.hike.string_id, $scope.hike);
 					}
 					selection.clear();
-					mediumEditor.hideToolbar();
+					descriptionMediumEditor.hideToolbar();
+					permitMediumEditor.hideToolbar();
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
