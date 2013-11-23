@@ -68,15 +68,12 @@ class Hike < Sequel::Model
 
 	def self.clean_anchor_input html
 		return html if not html
-		puts html
-		cleaned = Sanitize.clean(html, 
+		Sanitize.clean(html, 
 			:add_attributes => {
 				"a" => {"rel" => "nofollow"}
 			},
 			:elements => ["a"],
 			:attributes => { "a" => ["href"] })
-		puts cleaned
-		cleaned
 	end
 
 	def self.clean_html_input html
