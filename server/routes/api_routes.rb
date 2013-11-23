@@ -77,6 +77,7 @@ class HikeApp < Sinatra::Base
 			EmailUtils.send_diff_review(review, request.base_url) if Sinatra::Application.environment() != :test
 			return 202
 		end
+		return 409 if hike.edit_time.to_s != json["edit_time"]
 		hike.update_from_json(json)
 		hike.as_json
 	end
