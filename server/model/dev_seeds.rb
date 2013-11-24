@@ -41,7 +41,8 @@ migration "seed nakoa trail" do
 		:elevation_max => 1200,
 		:elevation_gain => 550,
 		:creation_time => Time.now,
-		:edit_time => Time.now
+		:edit_time => Time.now,
+		:permit => '<a href="http://wikipedia.org">Hawaiian Permit</a>'
 	)
 
 	hike.location = Location.create(
