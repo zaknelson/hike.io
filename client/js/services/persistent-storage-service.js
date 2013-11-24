@@ -11,7 +11,11 @@ angular.module("hikeio").
 			if (!Modernizr.localstorage) {
 				return null;
 			}
-			return JSON.parse($window.localStorage.getItem(key));
+			var value = $window.localStorage.getItem(key);
+			if (value === null) {
+				return null;
+			}
+			return JSON.parse(value);
 		};
 
 		PersistentStorageService.prototype.set = function(key, value) {
