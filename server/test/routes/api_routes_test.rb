@@ -117,12 +117,12 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 
 	def test_post_hike_without_credentials
-		post "/api/v1/hikes", get_basic_hike_json.to_json
+		post "/api/v1/hikes", get_post_json.to_json
 		assert_equal 202, last_response.status
 	end
 
 	def test_post_with_credentials
-		data = get_basic_hike_json
+		data = get_post_json
 		post_and_validate data, 200
 		validate data, "new-name"
 	end
@@ -132,43 +132,43 @@ class ApiRoutesTest < HikeAppTestCase
 	end
 
 	def test_post_hike_incomplete_input
-		data = get_basic_hike_json
+		data = get_post_json
 		data.delete("name")
 		post_and_validate data, 400
 	end
 
 	def test_post_hike_invalid_distance
-		data = get_basic_hike_json
+		data = get_post_json
 		data["distance"] = "not-a-number"
 		post_and_validate data, 400
 	end
 
 	def test_post_hike_invalid_elevation
-		data = get_basic_hike_json
+		data = get_post_json
 		data["elevation_max"] = "not-a-number"
 		post_and_validate data, 400
 	end
 
 	def test_post_hike_invalid_latitude
-		data = get_basic_hike_json
+		data = get_post_json
 		data["location"]["latitude"] = 91
 		post_and_validate data, 400
 	end
 
 	def test_post_hike_invalid_longitude
-		data = get_basic_hike_json
+		data = get_post_json
 		data["location"]["longitude"] = -181
 		post_and_validate data, 400
 	end
 
 	def test_post_with_hike_that_already_exists
-		data = get_basic_hike_json
+		data = get_post_json
 		data["name"] = "Empty"
 		post_and_validate data, 409
 	end
 
 	def test_post_hike_sets_keywords
-		data = get_basic_hike_json
+		data = get_post_json
 		data["name"] = "My new hike with unique keywords"
 		post_and_validate data, 200
 		get "/api/v1/hikes/search?q=unique+keywords"
@@ -181,40 +181,40 @@ class ApiRoutesTest < HikeAppTestCase
 	#
 
 	def test_put_hike_without_credentials
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		assert_equal 202, last_response.status
 	end
 
 	def test_put_hike_name
-		put_and_validate get_basic_hike_json, 200
+		put_and_validate get_put_json, 200
 	end
 
 	def test_put_hike_string_id
-		data = get_basic_hike_json
+		data = get_put_json
 		data["string_id"] = "new-hike"
 		put_and_validate data, 200
 	end
 
 	def test_put_hike_string_id_conflicting
-		data = get_basic_hike_json
+		data = get_put_json
 		data["string_id"] = "scotchman-peak"
 		put_and_validate data, 409
 	end
 
 	def test_put_invalid_distance
-		data = get_basic_hike_json
+		data = get_put_json
 		data["distance"] = "not-a-number"
 		put_and_validate data, 400
 	end
 
 	def test_put_hike_invalid_latitude
-		data = get_basic_hike_json
+		data = get_put_json
 		data["location"]["latitude"] = -91
 		put_and_validate data, 400
 	end
 
 	def test_put_to_missing_hike
-		data = get_basic_hike_json
+		data = get_put_json
 		data["string_id"] = "not-a-real-hike"
 		put "/api/v1/hikes/not-a-real-hike", data.to_json
 		assert_equal 404, last_response.status
@@ -276,7 +276,7 @@ class ApiRoutesTest < HikeAppTestCase
 		expected_hash.each do |key, value|
 			if value.class == Hash
 				validate_hashes value, actual_hash[key]
-			else
+			elsif (key != "edit_time") # It is expected that the edit time will change with each change
 				assert_equal value, actual_hash[key]
 			end
 		end

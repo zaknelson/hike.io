@@ -25,7 +25,7 @@ class AdminRoutesTest < HikeAppTestCase
 	end
 
 	def test_get_review
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id
 		json = JSON.parse(last_response.body)
@@ -40,7 +40,7 @@ class AdminRoutesTest < HikeAppTestCase
 	#
 
 	def test_accept_review
-		json_obj = get_basic_hike_json
+		json_obj = get_put_json
 		put "/api/v1/hikes/empty", json_obj.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
@@ -56,23 +56,23 @@ class AdminRoutesTest < HikeAppTestCase
 	end
 
 	def test_accept_without_credentials
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		assert_equal 403, last_response.status
 	end
 
 	def test_accept_already_accepted
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		assert_equal 409, last_response.status
 	end
 
-	def test_accept_already_updated
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+	def test_accept_conflicted
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		set_admin_cookie
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		assert_equal 409, last_response.status
 	end
@@ -89,7 +89,7 @@ class AdminRoutesTest < HikeAppTestCase
 
 
 	def test_accept_post
-		json_obj = get_basic_hike_json
+		json_obj = get_post_json
 		post "/api/v1/hikes", json_obj.to_json
 		get "/api/v1/hikes/new-name"
 		assert_equal 202, last_response.status
@@ -102,8 +102,8 @@ class AdminRoutesTest < HikeAppTestCase
 
 	def test_accept_post_and_put
 		# Setup reviews
-		json_obj = get_basic_hike_json
-		post "/api/v1/hikes", get_basic_hike_json.to_json
+		json_obj = get_post_json
+		post "/api/v1/hikes", json_obj.to_json
 		description = "<p>updated description</p>"
 		json_obj["description"] = description
 		put "/api/v1/hikes/new-name", json_obj.to_json
@@ -127,7 +127,7 @@ class AdminRoutesTest < HikeAppTestCase
 	#
 
 	def test_reject_review
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id + "/reject"
 		assert_equal 302, last_response.status
@@ -139,13 +139,13 @@ class AdminRoutesTest < HikeAppTestCase
 	end
 
 	def test_reject_without_credentials
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		get "/admin/v1/reviews/" + Review.first.string_id + "/reject"
 		assert_equal 403, last_response.status
 	end
 
 	def test_reject_already_accepted
-		put "/api/v1/hikes/empty", get_basic_hike_json.to_json
+		put "/api/v1/hikes/empty", get_put_json.to_json
 		set_admin_cookie
 		get "/admin/v1/reviews/" + Review.first.string_id + "/accept"
 		get "/admin/v1/reviews/" + Review.first.string_id + "/reject"
