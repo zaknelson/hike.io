@@ -3,6 +3,11 @@ require_relative "../model/hike"
 
 class HikeApp < Sinatra::Base
 
+	get "/admin/v1/reviews", :provides => "json" do
+		return 403 if user_needs_changes_reviewed?
+		Review.to_json(:only=>[:string_id, :status])
+	end
+
 	get "/admin/v1/reviews/:review_id", :provides => "json" do
 		return 403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
