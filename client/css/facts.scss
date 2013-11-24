@@ -68,6 +68,10 @@ $facts-external-link-svg-size: 12px;
 		svg, img.external-link {
 			width: $facts-external-link-svg-size;
 			height: $facts-external-link-svg-size;
+			max-width: $facts-external-link-svg-size;
+			max-height: $facts-external-link-svg-size;
+			margin: 0px;
+			padding: 0px;
 			margin-left: 4px;
 			display: inline;
 		}
@@ -166,7 +170,7 @@ $facts-external-link-svg-size: 12px;
 
 		> div {
 			padding: 13px 13px 20px 13px;
-			width: 98%;
+			width: 99%;
 			position: relative;
 		}
 
