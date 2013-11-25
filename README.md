@@ -7,6 +7,7 @@ Hike.io is an AngularJS / Sinatra app for finding [beautiful hikes](http://hike.
 * __It's open__. Site content is available under [Creative Commons Attribution-ShareAlike license](http://creativecommons.org/licenses/by-sa/3.0/). The code is available under [MIT license](http://opensource.org/licenses/MIT). 
 * __Anyone can edit__. Add new hikes, upload images, and make content changes using the WYSIWYG editor.
 * __Focus on hikes__. Detailed trail information, beautiful photos, and big maps.
+
 Setup
 -------------
 
