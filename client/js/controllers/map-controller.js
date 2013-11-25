@@ -121,11 +121,11 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	};
 
 	var compareLatLng = function(a, b) {
-		if			(a.lat() < b.lat())		{	return -1;}
+		if		(a.lat() < b.lat())		{	return -1;	}
 		else if (a.lat() > b.lat())		{	return 1;	}
-		else if (a.lng() < b.lng())		{	return -1;}
+		else if (a.lng() < b.lng())		{	return -1;	}
 		else if (a.lng() > b.lng())		{	return 1;	}
-		else													{	return 0;	}
+		else							{	return 0;	}
 	};
 
 	var mergeMarkers = function(newMarkers) {
