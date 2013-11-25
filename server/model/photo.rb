@@ -78,6 +78,7 @@ class Photo < Sequel::Model
 					renditions[rendition].write(object_path) {  self.quality = 87 }
 				end
 			end
+			original_image.destroy!
 		end
 		Photo.create({
 			:string_id => "tmp/uploading/" + name,
