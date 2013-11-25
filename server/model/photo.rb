@@ -35,10 +35,10 @@ class Photo < Sequel::Model
 			height = 800
 		else
 			if width > height
-				height *= (2400 / width).round
+				height = (height * 2400.0 / width).round
 				width = 2400
 			else
-				width *= (2400 / height).round
+				width = (width * 2400.0 / height).round
 				height = 2400
 			end
 		end
@@ -48,9 +48,9 @@ class Photo < Sequel::Model
 	def self.create_with_renditions file, cropToLandscape=false
 		name = UUIDTools::UUID.random_create.to_s
 		original_image = Magick::Image.read(file.path).first
+		original_image.auto_orient!
 		resized_dimensions = Photo.get_resized_dimensions(original_image, cropToLandscape)
 		Thread.new do
-			original_image.auto_orient!
 			if (cropToLandscape)
 				original_image.resize_to_fill!(2400, 800)
 			else
