@@ -1,5 +1,9 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4
+	var MAX_UPLOAD_PHOTO_WIDTH = 2400;
+	var MAX_UPLOAD_PHOTO_HEIGHT = 2400;
+
 	$scope.hike = null;
 	$scope.isDirty = false;
 	$scope.isEditing = isEditing;
@@ -182,61 +186,14 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		return rotation;
 	};
 
-	var previewPhoto = function(file, type, id) {
-		var photo = null;
-		var rotation = null;
-
-		// TODO, is this the most efficient way to read both the data url and array buffer from the file?
-		var dataUrlReader = new FileReader();
-		dataUrlReader.onload = function (e) {
-			$scope.$apply(function() {
-				photo = { id: id, src: e.target.result };
-				if (rotation) {
-					photo.rotation = rotation;
-				}
-				switch (type) {
-				case "landscape":
-					$scope.local_photo_landscape = photo;
-					break;
-				case "facts":
-					$scope.local_photo_facts  = photo;
-					break;
-				case "preview":
-					$scope.local_photo_preview = photo;
-					break;
-				case "generic":
-					$scope.local_photos_generic.push(photo);
-					break;
-				}
-			});
-		};
-		dataUrlReader.readAsDataURL(file);
-
-		var arrayBufferReader = new FileReader();
-		arrayBufferReader.onload = function (e) {
-			$scope.$apply(function() {
-				/* global ExifReader: false */
-				var exif = new ExifReader();
-				var loaded = exif.load(e.target.result);
-				if (!loaded) return;
-				var orientation = exif.getTagValue("Orientation");
-				rotation = orientationToRotation(orientation);
-				if (photo) {
-					photo.rotation = rotation;
-				}
-			});
-		};
-		arrayBufferReader.readAsArrayBuffer(file);
-	};
-
-	var doUploadPhoto = function(file, type, id) {
-		var data = new FormData();
-		data.append("file", file);
+	var doUploadPhoto = function(fileOrBlob, type, id) {
+		var formData = new FormData();
+		formData.append("file", fileOrBlob);
 		$scope.numPhotosUploading++;
 		$http({
 				method: "POST",
 				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos?type=" + type,
-				data: data,
+				data: formData,
 				headers: { "Content-Type": false },
 				transformRequest: function(data) {
 					return data;
@@ -273,12 +230,96 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			});
 	};
 
+	var downsizeAndUploadPhoto = function(urlEncodedPhotoData, type, id) {
+		var img = $window.document.createElement("img");
+		var canvas = document.createElement("canvas");
+		var context = canvas.getContext("2d");
+		img.onload = function() {
+			$scope.$apply(function() {
+				var width = img.width;
+				var height = img.height;
+				if (width > height) {
+					if (width > MAX_UPLOAD_PHOTO_WIDTH) {
+						height *= MAX_UPLOAD_PHOTO_WIDTH / width;
+						width = MAX_UPLOAD_PHOTO_WIDTH;
+					}
+				} else {
+					if (height > MAX_UPLOAD_PHOTO_HEIGHT) {
+						width *= MAX_UPLOAD_PHOTO_HEIGHT / height;
+						height = MAX_UPLOAD_PHOTO_HEIGHT;
+					}
+				}
+				canvas.width = width;
+				canvas.height = height;
+				context.drawImage(img, 0, 0, width, height);
+				canvas.toBlob(function(blob) { doUploadPhoto(blob, type, id) }, "image/jpeg");
+			});
+		};
+		img.src = urlEncodedPhotoData;
+	};
+
+	var processPhoto = function(file, type, id) {
+		var photo = null;
+		var rotation = null;
+		var downsizeBeforeUpload = false;
+		if (file.size > 2621440) { // 2.5 MB
+			downsizeBeforeUpload = true;
+		} else {
+			// Upload the file as is.
+			doUploadPhoto(file, type, id);		
+		}
+		// TODO, is this the most efficient way to read both the data url and array buffer from the file?
+		var dataUrlReader = new FileReader();
+		dataUrlReader.onload = function (e) {
+			var urlEncodedPhotoData = e.target.result;
+			$scope.$apply(function() {
+				photo = { id: id, src: urlEncodedPhotoData };
+				if (rotation) {
+					photo.rotation = rotation;
+				}
+				switch (type) {
+				case "landscape":
+					$scope.local_photo_landscape = photo;
+					break;
+				case "facts":
+					$scope.local_photo_facts  = photo;
+					break;
+				case "preview":
+					$scope.local_photo_preview = photo;
+					break;
+				case "generic":
+					$scope.local_photos_generic.push(photo);
+					break;
+				}
+			});
+			if (downsizeBeforeUpload) {
+				downsizeAndUploadPhoto(urlEncodedPhotoData, type, id);
+			}
+		};
+		dataUrlReader.readAsDataURL(file);
+
+		var arrayBufferReader = new FileReader();
+		arrayBufferReader.onload = function (e) {
+			$scope.$apply(function() {
+				/* global ExifReader: false */
+				var exif = new ExifReader();
+				var loaded = exif.load(e.target.result);
+				if (!loaded) return;
+				var orientation = exif.getTagValue("Orientation");
+				rotation = orientationToRotation(orientation);
+				if (photo) {
+					photo.rotation = rotation;
+				}
+			});
+		};
+		arrayBufferReader.readAsArrayBuffer(file);
+	};
+
 	$scope.uploadPhotos = function(files, type) {
 		$scope.$apply(function() {
-			for (var i = 0; i < files.length; i++) {
+			for (var i = 0; i < Math.min(MAX_PHOTOS_TO_UPLOAD_AT_ONCE, files.length); i++) {
 				lastUploadedPhotoId++;
-				previewPhoto(files[i], type, lastUploadedPhotoId);
-				doUploadPhoto(files[i], type, lastUploadedPhotoId);
+				processPhoto(files[i], type, lastUploadedPhotoId);
 			}
 		});
 	};
@@ -335,4 +376,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
