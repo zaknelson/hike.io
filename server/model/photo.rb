@@ -24,6 +24,7 @@ class Photo < Sequel::Model
 		end
 		renditions["thumb"] = sharpened_image.crop_resized(400, 400)
 		renditions["thumb-tiny"] = sharpened_image.crop_resized(200, 200)
+		sharpened_image.destroy!
 		renditions
 	end
 
@@ -50,41 +51,51 @@ class Photo < Sequel::Model
 		original_image = Magick::Image.read(file.path).first
 		original_image.auto_orient!
 		resized_dimensions = Photo.get_resized_dimensions(original_image, cropToLandscape)
-		Thread.new do
-			if (cropToLandscape)
-				original_image.resize_to_fill!(2400, 800)
-			else
-				original_image.resize_to_fit!(2400, 2400)
-			end
-			original_image.strip!
-			original_image.profile!("*", nil)
-			renditions = get_photo_renditions(original_image)
-			if Sinatra::Application.environment() == :production
-				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
-				dst_dir = "hike-images/tmp/uploading/"
-				Photo.each_rendition_including_original do |rendition|
-					object_path = dst_dir + name + get_rendition_suffix(rendition)
-					if rendition == "original"
-						bucket.objects[object_path].write(renditions[rendition].to_blob)
-					else
-						bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
-					end
-				end
-			else
-				dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
-				FileUtils.mkdir_p(dst_dir)
-				Photo.each_rendition_including_original do |rendition|
-					object_path = dst_dir + name + get_rendition_suffix(rendition)
-					renditions[rendition].write(object_path) {  self.quality = 87 }
-				end
-			end
-			original_image.destroy!
-		end
-		Photo.create({
+		photo = Photo.create({
 			:string_id => "tmp/uploading/" + name,
 			:width => resized_dimensions[:width],
 			:height => resized_dimensions[:height]
 		})
+		Thread.new do
+			Photo.db.transaction do
+				begin
+					photo.lock!
+					if (cropToLandscape)
+						original_image.resize_to_fill!(2400, 800)
+					else
+						original_image.resize_to_fit!(2400, 2400)
+					end
+					original_image.strip!
+					original_image.profile!("*", nil)
+					renditions = get_photo_renditions(original_image)
+					if Sinatra::Application.environment() == :production
+						bucket = AmazonUtils.s3.buckets["assets.hike.io"]
+						dst_dir = "hike-images/tmp/uploading/"
+						Photo.each_rendition_including_original do |rendition|
+							object_path = dst_dir + name + get_rendition_suffix(rendition)
+							if rendition == "original"
+								bucket.objects[object_path].write(renditions[rendition].to_blob)
+							else
+								bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
+							end
+						end
+					else
+						dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
+						FileUtils.mkdir_p(dst_dir)
+						Photo.each_rendition_including_original do |rendition|
+							object_path = dst_dir + name + get_rendition_suffix(rendition)
+							renditions[rendition].write(object_path) { self.quality = 87 }
+						end
+					end
+				rescue => exception
+					puts exception.backtrace
+				ensure
+					GC.start
+					original_image.destroy!
+				end
+			end
+		end
+		photo
 	end
 
 	def self.each_rendition &block
@@ -110,6 +121,7 @@ class Photo < Sequel::Model
 		src = "hike-images/" + self.string_id
 		dst_dir = "hike-images/" + hike.string_id + "/"
 		dst = dst_dir + photo_id
+
 		if Sinatra::Application.environment() == :production
 			Photo.each_rendition_including_original do |rendition_name|
 				suffix = Photo.get_rendition_suffix(rendition_name)
