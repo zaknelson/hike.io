@@ -131,29 +131,31 @@ class Photo < Sequel::Model
 	end
 
 	def destroy_and_move_on_s3
-		# Perform the destroy before moving the images on s3, just in case there is something corrupted on s3
-		# and we just want to get rid of the image.
 		Photo.db.transaction do
-			self.lock!
-			self.destroy
-		end
-		Photo.db.transaction do
-			self.lock!
-			if Sinatra::Application.environment() == :production
-				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
-				src = "hike-images/" + self.string_id
-				dst = "hike-images/tmp/deleted/" + self.string_id
-				Photo.each_rendition_including_original do |rendition|
-					suffix = Photo.get_rendition_suffix(rendition)
-					bucket.objects[src + suffix].move_to(dst + suffix)
+			begin
+				self.lock!
+				self.destroy
+				if Sinatra::Application.environment() == :production
+					bucket = AmazonUtils.s3.buckets["assets.hike.io"]
+					src = "hike-images/" + self.string_id
+					dst = "hike-images/tmp/deleted/" + self.string_id
+					Photo.each_rendition_including_original do |rendition|
+						suffix = Photo.get_rendition_suffix(rendition)
+						bucket.objects[src + suffix].move_to(dst + suffix)
+					end
+				elsif Sinatra::Application.environment() == :development
+					src = HikeApp.root + "/public/hike-images/" + self.string_id
+					dst_dir = HikeApp.root + "/public/hike-images/tmp/deleted/"
+					FileUtils.mkdir_p(dst_dir)
+					Photo.each_rendition_including_original do |rendition|
+						FileUtils.mv(src + Photo.get_rendition_suffix(rendition), dst_dir)
+					end
 				end
-			elsif Sinatra::Application.environment() == :development
-				src = HikeApp.root + "/public/hike-images/" + self.string_id
-				dst_dir = HikeApp.root + "/public/hike-images/tmp/deleted/"
-				FileUtils.mkdir_p(dst_dir)
-				Photo.each_rendition_including_original do |rendition|
-					FileUtils.mv(src + Photo.get_rendition_suffix(rendition), dst_dir)
-				end
+			rescue => exception
+				# Something bad happened, catch the exception so that the record will still be destroyed
+				# this is mainly a last ditch effort (maybe some of the images on s3 disappeared and we just
+				# want to get back to a sane state).
+				puts exception.backtrace
 			end
 		end
 	end
