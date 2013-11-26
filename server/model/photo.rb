@@ -27,7 +27,7 @@ class Photo < Sequel::Model
 		{ :width => width, :height => height }
 	end
 
-	def self.do_create_photo_renditions(path)
+	def self.do_create_photo_renditions(path, crop_to_landscape)
 		# This command strips the original image, resizes it and then saves it. Then it applies 
 		# sharpening and quality to the other renditions, and resizes them appropriately.
 
@@ -36,7 +36,8 @@ class Photo < Sequel::Model
 		# Mini_magick is considerably better in terms of memory, and faster, except I can't
 		# figure out how to chain together a command like this. And chaining gives you a huge boost
 		# in speed, in this case ~6s -> ~1.5s.
-		str = "convert #{path} -auto-orient +profile '*' -resize 2400x2400 #{path + Photo.get_rendition_suffix('original')};" \
+		resize_params = crop_to_landscape ? "-resize 2400x800^ -gravity center -extent 2400x800" : "-resize 2400x2400"
+		str = "convert #{path} -auto-orient +profile '*' #{resize_params} #{path + Photo.get_rendition_suffix('original')};" \
 			"convert #{path + Photo.get_rendition_suffix('original')} -unsharp 2x0.5+0.7+0 -quality 87 " \
 			"\\( +clone -resize 1200x1200 -write #{path + Photo.get_rendition_suffix('large')} +delete \\) " \
 			"\\( +clone -resize 800x800 -write #{path + Photo.get_rendition_suffix('medium')} +delete \\) " \
@@ -61,7 +62,7 @@ class Photo < Sequel::Model
 			Photo.db.transaction do
 				begin
 					photo.lock!
-					Photo.do_create_photo_renditions(file.path)
+					Photo.do_create_photo_renditions(file.path, crop_to_landscape)
 					if Sinatra::Application.environment() == :production
 						bucket = AmazonUtils.s3.buckets["assets.hike.io"]
 						dst_dir = "hike-images/tmp/uploading/"
