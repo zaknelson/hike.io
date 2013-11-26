@@ -108,43 +108,52 @@ class Photo < Sequel::Model
 	end
 
 	def move_on_s3 hike
-		src = "hike-images/" + self.string_id
-		dst_dir = "hike-images/" + hike.string_id + "/"
-		dst = dst_dir + photo_id
-
-		if Sinatra::Application.environment() == :production
-			Photo.each_rendition_including_original do |rendition_name|
-				suffix = Photo.get_rendition_suffix(rendition_name)
-				AmazonUtils.s3.buckets["assets.hike.io"].objects[src + suffix].move_to(dst + suffix)
+		Photo.db.transaction do
+			self.lock!
+			src = "hike-images/" + self.string_id
+			dst_dir = "hike-images/" + hike.string_id + "/"
+			dst = dst_dir + photo_id
+			if Sinatra::Application.environment() == :production
+				Photo.each_rendition_including_original do |rendition_name|
+					suffix = Photo.get_rendition_suffix(rendition_name)
+					AmazonUtils.s3.buckets["assets.hike.io"].objects[src + suffix].move_to(dst + suffix)
+				end
+			elsif Sinatra::Application.environment() == :development
+				FileUtils.mkdir_p(HikeApp.root + "/public/" + dst_dir)
+				Photo.each_rendition_including_original do |rendition_name|
+					suffix = Photo.get_rendition_suffix(rendition_name)
+					FileUtils.mv(HikeApp.root + "/public/" + src + suffix, HikeApp.root + "/public/" + dst + suffix)
+				end
 			end
-		elsif Sinatra::Application.environment() == :development
-			FileUtils.mkdir_p(HikeApp.root + "/public/" + dst_dir)
-			Photo.each_rendition_including_original do |rendition_name|
-				suffix = Photo.get_rendition_suffix(rendition_name)
-				FileUtils.mv(HikeApp.root + "/public/" + src + suffix, HikeApp.root + "/public/" + dst + suffix)
-			end
+			self.string_id = hike.string_id + "/" + photo_id
+			self.save_changes
 		end
-
-		self.string_id = hike.string_id + "/" + photo_id
-		self.save_changes
 	end
 
 	def destroy_and_move_on_s3
-		self.destroy
-		if Sinatra::Application.environment() == :production
-			bucket = AmazonUtils.s3.buckets["assets.hike.io"]
-			src = "hike-images/" + self.string_id
-			dst = "hike-images/tmp/deleted/" + self.string_id
-			Photo.each_rendition_including_original do |rendition|
-				suffix = Photo.get_rendition_suffix(rendition)
-				bucket.objects[src + suffix].move_to(dst + suffix)
-			end
-		elsif Sinatra::Application.environment() == :development
-			src = HikeApp.root + "/public/hike-images/" + self.string_id
-			dst_dir = HikeApp.root + "/public/hike-images/tmp/deleted/"
-			FileUtils.mkdir_p(dst_dir)
-			Photo.each_rendition_including_original do |rendition|
-				FileUtils.mv(src + Photo.get_rendition_suffix(rendition), dst_dir)
+		# Perform the destroy before moving the images on s3, just in case there is something corrupted on s3
+		# and we just want to get rid of the image.
+		Photo.db.transaction do
+			self.lock!
+			self.destroy
+		end
+		Photo.db.transaction do
+			self.lock!
+			if Sinatra::Application.environment() == :production
+				bucket = AmazonUtils.s3.buckets["assets.hike.io"]
+				src = "hike-images/" + self.string_id
+				dst = "hike-images/tmp/deleted/" + self.string_id
+				Photo.each_rendition_including_original do |rendition|
+					suffix = Photo.get_rendition_suffix(rendition)
+					bucket.objects[src + suffix].move_to(dst + suffix)
+				end
+			elsif Sinatra::Application.environment() == :development
+				src = HikeApp.root + "/public/hike-images/" + self.string_id
+				dst_dir = HikeApp.root + "/public/hike-images/tmp/deleted/"
+				FileUtils.mkdir_p(dst_dir)
+				Photo.each_rendition_including_original do |rendition|
+					FileUtils.mv(src + Photo.get_rendition_suffix(rendition), dst_dir)
+				end
 			end
 		end
 	end
