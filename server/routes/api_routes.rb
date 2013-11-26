@@ -1,5 +1,4 @@
 require "sanitize"
-require "RMagick"
 require "uuidtools"
 
 require_relative "../server"

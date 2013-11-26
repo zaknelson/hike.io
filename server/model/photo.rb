@@ -1,3 +1,4 @@
+require "mini_magick"
 require_relative "../utils/amazon_utils"
 
 class Photo < Sequel::Model
@@ -7,31 +8,11 @@ class Photo < Sequel::Model
 		"-" + rendition + ".jpg"
 	end
 
-	def self.get_photo_renditions original_image
-		renditions = {}
-		sharpened_image = original_image.unsharp_mask(2, 0.5, 0.7, 0) #http://even.li/imagemagick-sharp-web-sized-photographs/
-		renditions["original"] = original_image
-		if original_image.columns > original_image.rows
-			renditions["large"] = sharpened_image.resize_to_fit(1200)
-			renditions["medium"] = sharpened_image.resize_to_fit(800)
-			renditions["small"] = sharpened_image.resize_to_fit(400)
-			renditions["tiny"] = sharpened_image.resize_to_fit(200)
-		else
-			renditions["large"] = sharpened_image.resize_to_fit(1200, 2400)
-			renditions["medium"] = sharpened_image.resize_to_fit(800, 1600)
-			renditions["small"] = sharpened_image.resize_to_fit(400, 800)
-			renditions["tiny"] = sharpened_image.resize_to_fit(200, 400)
-		end
-		renditions["thumb"] = sharpened_image.crop_resized(400, 400)
-		renditions["thumb-tiny"] = sharpened_image.crop_resized(200, 200)
-		sharpened_image.destroy!
-		renditions
-	end
-
-	def self.get_resized_dimensions image, cropToLandscape
-		width = image.columns
-		height = image.rows
-		if (cropToLandscape)
+	def self.get_resized_dimensions image, crop_to_landscape
+		dimensions = image["%w %h"].split()
+		width = dimensions[0].to_i
+		height = dimensions[1].to_i
+		if (crop_to_landscape)
 			width = 2400
 			height = 800
 		else
@@ -46,54 +27,60 @@ class Photo < Sequel::Model
 		{ :width => width, :height => height }
 	end
 
-	def self.create_with_renditions file, cropToLandscape=false
+	def self.do_create_photo_renditions(path)
+		# This command strips the original image, resizes it and then saves it. Then it applies 
+		# sharpening and quality to the other renditions, and resizes them appropriately.
+
+		# Ideally this would be done with a higher level library like RMagick or mini_magick.
+		# But... RMagick really eats up memory. So much so that the app started failing on Heroku.
+		# Mini_magick is considerably better in terms of memory, and faster, except I can't
+		# figure out how to chain together a command like this. And chaining gives you a huge boost
+		# in speed, in this case ~6s -> ~1.5s.
+		str = "convert #{path} -auto-orient +profile '*' -resize 2400x2400 #{path + Photo.get_rendition_suffix('original')};" \
+			"convert #{path + Photo.get_rendition_suffix('original')} -unsharp 2x0.5+0.7+0 -quality 87 " \
+			"\\( +clone -resize 1200x1200 -write #{path + Photo.get_rendition_suffix('large')} +delete \\) " \
+			"\\( +clone -resize 800x800 -write #{path + Photo.get_rendition_suffix('medium')} +delete \\) " \
+			"\\( +clone -resize 400x400 -write #{path + Photo.get_rendition_suffix('small')} +delete \\) " \
+			"\\( +clone -resize 200x200 -write #{path + Photo.get_rendition_suffix('tiny')} +delete \\) " \
+			"\\( +clone -resize 400x400^ -gravity center -extent 400x400  -write #{path + Photo.get_rendition_suffix('thumb')} +delete \\) " \
+			"-resize 200x200^ -gravity center -extent 200x200 #{path + Photo.get_rendition_suffix('thumb-tiny')}";
+		system(str)
+	end
+
+
+	def self.create_with_renditions file, crop_to_landscape=false
 		name = UUIDTools::UUID.random_create.to_s
-		original_image = Magick::Image.read(file.path).first
-		original_image.auto_orient!
-		resized_dimensions = Photo.get_resized_dimensions(original_image, cropToLandscape)
+		uploaded_image = MiniMagick::Image.open(file.path)
+		dimensions = Photo.get_resized_dimensions(uploaded_image, crop_to_landscape)
 		photo = Photo.create({
 			:string_id => "tmp/uploading/" + name,
-			:width => resized_dimensions[:width],
-			:height => resized_dimensions[:height]
+			:width => dimensions[:width],
+			:height => dimensions[:height]
 		})
 		Thread.new do
 			Photo.db.transaction do
 				begin
 					photo.lock!
-					if (cropToLandscape)
-						original_image.resize_to_fill!(2400, 800)
-					else
-						original_image.resize_to_fit!(2400, 2400)
-					end
-					original_image.strip!
-					original_image.profile!("*", nil)
-					renditions = get_photo_renditions(original_image)
+					Photo.do_create_photo_renditions(file.path)
 					if Sinatra::Application.environment() == :production
 						bucket = AmazonUtils.s3.buckets["assets.hike.io"]
 						dst_dir = "hike-images/tmp/uploading/"
-						Photo.each_rendition_including_original do |rendition|
-							object_path = dst_dir + name + get_rendition_suffix(rendition)
-							if rendition == "original"
-								bucket.objects[object_path].write(renditions[rendition].to_blob)
-							else
-								bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
-							end
-							renditions[rendition].destroy!
+						Photo.each_rendition_including_original do |rendition_name|
+							object_path = dst_dir + name + get_rendition_suffix(rendition_name)
+							rendition_path = file.path + Photo.get_rendition_suffix(rendition_name)
+							bucket.objects[object_path].write(rendition_path)
 						end
 					else
 						dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
 						FileUtils.mkdir_p(dst_dir)
-						Photo.each_rendition_including_original do |rendition|
-							object_path = dst_dir + name + get_rendition_suffix(rendition)
-							renditions[rendition].write(object_path) { self.quality = 87 }
-							renditions[rendition].destroy!
+						Photo.each_rendition_including_original do |rendition_name|
+							object_path = dst_dir + name + get_rendition_suffix(rendition_name)
+							rendition_path = file.path + Photo.get_rendition_suffix(rendition_name)
+							FileUtils.mv(rendition_path, object_path)
 						end
 					end
 				rescue => exception
 					puts exception.backtrace
-				ensure
-					original_image.destroy!
-					GC.start
 				end
 			end
 		end
@@ -101,16 +88,17 @@ class Photo < Sequel::Model
 	end
 
 	def self.each_rendition &block
-		yield "large"
-		yield "medium"
-		yield "small"
-		yield "tiny"
-		yield "thumb"
-		yield "thumb-tiny"
+		# rendition_name, max_size, is_thumb
+		yield "large", 1200
+		yield "medium", 800
+		yield "small", 400
+		yield "tiny", 200
+		yield "thumb", 400, true
+		yield "thumb-tiny", 200, true
 	end
 
 	def self.each_rendition_including_original &block
-		yield "original"
+		yield "original", 2400
 		self.each_rendition &block
 	end
 
