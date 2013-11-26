@@ -170,7 +170,7 @@ $facts-external-link-svg-size: 12px;
 
 		> div {
 			padding: 13px 13px 20px 13px;
-			width: 99%;
+			width: 92%;
 			position: relative;
 		}
 
@@ -195,6 +195,14 @@ $facts-external-link-svg-size: 12px;
 			.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude, .hike-permit {
 				max-width: none;
 			}
+		}
+	}
+}
+
+@media all and (max-width: 500px) {
+	.overview-facts {
+		> div {
+			width: 99%;
 		}
 	}
 }
