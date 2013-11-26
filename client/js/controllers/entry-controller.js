@@ -1,6 +1,6 @@
 "use strict";
 var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
-	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4
+	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
 	var MAX_UPLOAD_PHOTO_WIDTH = 2400;
 	var MAX_UPLOAD_PHOTO_HEIGHT = 2400;
 
@@ -252,7 +252,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				canvas.width = width;
 				canvas.height = height;
 				context.drawImage(img, 0, 0, width, height);
-				canvas.toBlob(function(blob) { doUploadPhoto(blob, type, id) }, "image/jpeg");
+				canvas.toBlob(function(blob) { doUploadPhoto(blob, type, id); }, "image/jpeg");
 			});
 		};
 		img.src = urlEncodedPhotoData;
@@ -266,7 +266,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			downsizeBeforeUpload = true;
 		} else {
 			// Upload the file as is.
-			doUploadPhoto(file, type, id);		
+			doUploadPhoto(file, type, id);
 		}
 		// TODO, is this the most efficient way to read both the data url and array buffer from the file?
 		var dataUrlReader = new FileReader();
