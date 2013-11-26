@@ -69,7 +69,7 @@ class Photo < Sequel::Model
 						Photo.each_rendition_including_original do |rendition_name|
 							object_path = dst_dir + name + get_rendition_suffix(rendition_name)
 							rendition_path = file.path + Photo.get_rendition_suffix(rendition_name)
-							bucket.objects[object_path].write(rendition_path)
+							bucket.objects[object_path].write(Pathname.new(rendition_path))
 						end
 					else
 						dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
