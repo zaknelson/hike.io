@@ -26,7 +26,10 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => string_id,
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_new_review(review, request.base_url) if Sinatra::Application.environment() != :test
+			if Sinatra::Application.environment() != :test
+				Thread.new { EmailUtils.send_new_review(review, request.base_url) }
+			end
+			
 			response.headers["Hikeio-Hike-String-Id"] = string_id
 			return 202
 		end
@@ -73,7 +76,9 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_diff_review(review, request.base_url) if Sinatra::Application.environment() != :test
+			if Sinatra::Application.environment() != :test
+				Thread.new { EmailUtils.send_diff_review(review, request.base_url) }
+			end
 			return 202
 		end
 		return 409 if hike.edit_time.to_s != json["edit_time"]
@@ -89,7 +94,9 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
-			EmailUtils.send_delete_review(review, request.base_url) if Sinatra::Application.environment() != :test
+			if Sinatra::Application.environment() != :test
+				Thread.new { EmailUtils.send_delete_review(review, request.base_url) }
+			end
 			return 202
 		elsif not hike
 			return 404
