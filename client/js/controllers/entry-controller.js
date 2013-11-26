@@ -128,23 +128,21 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 
 	$scope.save = function() {
-		if ($scope.isEditing && $scope.isDirty && $scope.numPhotosUploading === 0) {
+		if (!$scope.isSaving && $scope.isEditing && $scope.isDirty && $scope.numPhotosUploading === 0) {
 			$scope.isSaving = true;
+			$scope.isDirty = false;
 			normalizeHikeBeforeSave();
 			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
 				success(function(data, status, headers, config) {
 					$scope.isJustAdded = false;
+					$scope.isSaving = false;
 					if (status === 200) {
 						$scope.hike = data;
-						$scope.isSaving = false;
-						$scope.isDirty = false;
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 						resourceCache.removeAllWithRoot("/api/v1/hikes");
 						resourceCache.removeAllWithRoot("/api/v1/hikes/search");
 					} else if (status === 202) {
 						$scope.isBeingReviewed = true;
-						$scope.isSaving = false;
-						$scope.isDirty = false;
 						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 						persistentStorage.set("/api/v1/hikes/" + $scope.hike.string_id, $scope.hike);
 					}
