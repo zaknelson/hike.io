@@ -78,6 +78,7 @@ class Photo < Sequel::Model
 							else
 								bucket.objects[object_path].write(renditions[rendition].to_blob { self.quality = 87 }) 
 							end
+							renditions[rendition].destroy!
 						end
 					else
 						dst_dir = HikeApp.root + "/public/hike-images/tmp/uploading/"
@@ -85,13 +86,14 @@ class Photo < Sequel::Model
 						Photo.each_rendition_including_original do |rendition|
 							object_path = dst_dir + name + get_rendition_suffix(rendition)
 							renditions[rendition].write(object_path) { self.quality = 87 }
+							renditions[rendition].destroy!
 						end
 					end
 				rescue => exception
 					puts exception.backtrace
 				ensure
-					GC.start
 					original_image.destroy!
+					GC.start
 				end
 			end
 		end
