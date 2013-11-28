@@ -7,6 +7,15 @@ angular.module("hikeio").
 				var context = {
 					afterLoad: function(current, previous) {
 						$rootScope.$broadcast("fancyboxLoaded");
+						var attributionLink = this.element.attr("data-attribution-link");
+						if (attributionLink) {
+							var anchor = $("<a href='" + attributionLink + "'>");
+							anchor.append($(".attribution-link").clone());
+							anchor.click(function(event) {
+								event.stopPropagation();
+							});
+							$(".fancybox-inner").append(anchor);
+						}
 					},
 					afterClose: function(current, previous) {
 						$rootScope.$broadcast("fancyboxClosed");

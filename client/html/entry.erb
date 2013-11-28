@@ -11,6 +11,10 @@
 		<div>
 			<div data-ui-if="isLoaded &amp;&amp; local_photo_landscape">
 				<div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div>
+				<a data-ng-show="local_photo_landscape.attribution_link &amp;&amp; !isEditing" data-ng-href="{{local_photo_landscape.attribution_link}}">
+					<%= render_svg("#{@img_dir}/creative-commons.svg", :class => "attribution-link") %>
+					<img data-ui-if="!Modernizr.svg" class="attribution-link" data-ng-src="/images/creative-commons.png" />
+				</a>
 				<img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
 				<div data-ui-if="!local_photo_landscape.string_id" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
 				<div class="flipped-placeholder" data-ui-if="local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270"></div>
@@ -26,12 +30,16 @@
 	<div class="content">
 		<section class="overview-section">
 			<div>
-
 				<div class="overview-facts">
 					<div class="page-curl shadow-bottom" data-ng-class="{'permit':hike.permit || isEditing}">
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
-							<img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
+							<div data-ui-if="isEditing">
+								<img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
+							</div>
+							<div data-ui-if="!isEditing" data-fancybox=".facts-img-link">
+								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
+							</div>
 							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
 						<div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing">
@@ -100,7 +108,6 @@
 						</table>
 					</div>
 				</div>
-
 				<div class="overview-description" data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null || hike.description == ''" contenteditable="{{isEditing}}" data-ng-model="hike.description" data-change="isDirty = true"></div>
 				<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing">
 					<p>Uh oh, this hike doesn't yet have a description, but you can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
@@ -111,7 +118,7 @@
 			<h2>Photos</h2>
 			<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
 				<div data-ui-if="!isEditing">
-					<a data-ng-repeat="photo in hike.photos_generic" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
+					<a data-ng-repeat="photo in hike.photos_generic" data-attribution-link="{{photo.attribution_link}}" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
 						<div class="photo-thumb" style="position:relative">
 							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
 						</div>

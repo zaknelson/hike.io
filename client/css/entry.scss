@@ -5,6 +5,22 @@ $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 $header-landscape-aspect-ratio: 3;
 
+.attribution-link {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	right: auto;
+	width: 20px !important;
+	height: 20px !important;
+	padding: 0px;
+	opacity: .15;
+	cursor: pointer;
+}
+
+.attribution-link:hover {
+	opacity: .8;
+}
+
 .entry-page {
 	overflow-x: hidden;
 	width: $container-width;
@@ -51,6 +67,12 @@ $header-landscape-aspect-ratio: 3;
 			height: 0;
 			width: 100%;
 			padding-bottom: (100% / $header-landscape-aspect-ratio);
+		}
+
+		.attribution-link {
+			top: 8px;
+			right: 8px;
+			left: auto;
 		}
 
 		h1 {

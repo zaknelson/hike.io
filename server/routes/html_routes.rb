@@ -22,9 +22,10 @@ class HikeApp < Sinatra::Base
 
 	helpers do
 		# Assumes the svg file has already passed through the process_svg script
-		def render_svg(path)
+		def render_svg(path, attrs=nil)
 			render_str = File.open("#{root}/#{path}", "rb").read
-			render_str.sub("<svg", '<svg data-ui-if="Modernizr.svg"');
+			attrs_str = attrs.map{|k,v| "#{k}=\"#{v}\""}.join(' ') if attrs
+			render_str.sub("<svg", "<svg data-ui-if=\"Modernizr.svg\" #{attrs_str}");
 		end
 	end
 
