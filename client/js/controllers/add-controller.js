@@ -88,7 +88,6 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 			}
 		);
 	};
-	$scope.htmlReady();
 };
 
 AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache"];

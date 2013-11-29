@@ -15,8 +15,8 @@
 					<%= render_svg("#{@img_dir}/creative-commons.svg", :class => "attribution-link") %>
 					<img data-ui-if="!Modernizr.svg" class="attribution-link" data-ng-src="/images/creative-commons.png" />
 				</a>
-				<img data-ui-if="local_photo_landscape.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
-				<div data-ui-if="!local_photo_landscape.string_id" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
+				<img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+				<div data-ui-if="!local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
 				<div class="flipped-placeholder" data-ui-if="local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270"></div>
 			</div>
 			<div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing">
@@ -35,12 +35,12 @@
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
 							<div data-ui-if="isEditing">
-								<img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
+								<img data-ui-if="local_photo_facts.string_id" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
 							</div>
 							<div data-ui-if="!isEditing" data-fancybox=".facts-img-link">
 								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
 							</div>
-							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
+							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
 						<div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing">
 							<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
@@ -128,8 +128,8 @@
 					<div data-ng-repeat="photo in local_photos_generic">
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
-							<div data-ui-if="!photo.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')', 'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
-							<img data-ui-if="photo.string_id" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
+							<div data-ui-if="!photo.string_id" data-ng-click="openPhotoDetails(photo)" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')', 'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
+							<img data-ui-if="photo.string_id" data-ng-click="openPhotoDetails(photo)" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</div>
 				</div>
@@ -143,8 +143,8 @@
 				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a photo for the Discover tab</p>
 				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
 						<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
-						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_preview.alt}}" />
-						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
+						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
+						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_preview)" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
 				</div>
 				<div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing">
 					<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
@@ -152,3 +152,5 @@
 		</section>
 	</div>
 </article>
+
+<%= yield_content :photo_details_modal %>

@@ -44,8 +44,12 @@ footer {
 	}
 }
 
-input, button {
+input, textarea, button {
 	font-family: "facitweb", sans-serif;
+}
+
+textarea {
+	height: 112px;
 }
 
 input::-webkit-outer-spin-button,

@@ -19,9 +19,9 @@ migration "seed scotchman peak" do
 	)
 
 	hike.photo_landscape = Photo.create(:string_id => "scotchman-peak/landscape", :width => 2400, :height => 800, :attribution_link => "http://wikipedia.org")
-	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/preview", :width => 2400, :height => 2400, :attribution_link => "http://wikipedia.org")
-	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594, :attribution_link => "http://wikipedia.org")
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo1", :width => 2400, :height => 812, :attribution_link => "http://wikipedia.org"))
+	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/preview", :width => 2400, :height => 2400, :attribution_link => "http://flickr.com")
+	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594, :attribution_link => "http://google.com")
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo1", :width => 2400, :height => 812, :attribution_link => "http://example.com"))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo2", :width => 1594, :height => 2400))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo3", :width => 1594, :height => 2400))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo4", :width => 2400, :height => 2400))

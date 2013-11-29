@@ -168,6 +168,23 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		return result;
 	};
 
+	$scope.$on("photoDetailsUpdated", function() {
+		$scope.isDirty = true;
+	});
+
+	$scope.openPhotoDetails = function(photo) {
+		if (!isEditing) {
+			return;
+		}
+		$.fancybox.open( $("#photo-details-page"), {
+			closeBtn : true,
+			closeEffect : "none",
+			keys : true,	
+			padding : 2
+		});
+		$rootScope.$broadcast("setPhotoDetailsPhoto", photo);
+	};
+
 	var orientationToRotation = function(orientation) {
 		var rotation = 0;
 		switch (orientation) {

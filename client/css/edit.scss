@@ -11,6 +11,10 @@ $edit-banner-height: 50px;
 		}
 	}
 
+	img, .img-div {
+		cursor: pointer;
+	}
+
 	.edit-banner {
 		width: 100%;
 		height: $edit-banner-height;

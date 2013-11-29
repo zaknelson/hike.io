@@ -1,96 +1,20 @@
 @import "_vars";
 @import "_mixins";
 @import "compass/css3/border-radius";
-
-$add-page-mobile-width: 400px;
-$add-page-width: 450px;
-
 .add-page {
-	display: none; /* Modal is added to layout.erb, so hide it until it is needed */
-	margin: 25px 10px;
-	width: $add-page-width;
-
-	h2 {
-		padding-bottom: 15px;
-		padding-left: 10px;
-		font-size: 40px;
+	#distance, #elevationMax, #elevationGain {
+		width: 71px;
 	}
 
-	form {
-		width: $add-page-width;
-
-		label {
-			float: left;
-			clear: left;
-			width: 150px;
-			text-align: right;
-			font-size: 18px;
-			line-height: 45px;
-			margin-right: 8px;
-		}
-
-		input[type=text], input[type=number] {
-			display: inline-block;
-			float: left;
-			border: 1px solid rgba(1, 1, 1, 0.3);
-			@include border-radius(2px, 2px);
-			font-size: 18px;
-			font-weight: 200;
-			padding: 7px;
-			width: 265px;
-		}
-
-		.units {
-			line-height: 45px;
-			float: left;
-			margin-left: 5px;
-		}
-
-		#distance, #elevationMax, #elevationGain {
-			width: 71px;
-		}
-
-		#latitude, #longitude {
-			width: 130px;
-			margin-right: 5px;
-			display: inline;
-		}
-
-		input[type=submit] {
-			float: right;
-			clear: left;
-			display: block;
-			margin: 12px 10px 15px 10px;
-		}
+	#latitude, #longitude {
+		width: 130px;
+		margin-right: 5px;
+		display: inline;
 	}
 
-	form.submitted {
-		.ng-invalid-required {
-			outline: none;
-			border: 1px solid $accent-color;
-		}
-	}
-}
-
-@media all and (max-width: $mobile-width) { 
-	.add-page {
-		width: $add-page-mobile-width;
-		margin: 25px 5px;
-
-		form {
-			width: $add-page-mobile-width;
-
-			input[type=text], input[type=number] {
-				font-size: 24px;
-			}
-
-			input[type=submit] {
-				margin-right: 25px;
-			}
-
-			label {
-				width: 100px;
-			}
-		}
+	.units {
+		line-height: 45px;
+		float: left;
+		margin-left: 5px;
 	}
 }

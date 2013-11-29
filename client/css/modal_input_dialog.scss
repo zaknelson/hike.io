@@ -1,0 +1,85 @@
+@import "_vars";
+@import "_mixins";
+@import "compass/css3/border-radius";
+
+$modal-input-dialog-mobile-width: 400px;
+$modal-input-dialog-width: 450px;
+
+.modal-input-dialog {
+	display: none; /* Modal is added to layout.erb, so hide it until it is needed */
+	margin: 25px 10px;
+	width: $modal-input-dialog-width;
+
+	h2 {
+		padding-bottom: 15px;
+		padding-left: 10px;
+		font-size: 40px;
+	}
+
+	form {
+		width: $modal-input-dialog-width;
+
+		label {
+			float: left;
+			clear: left;
+			width: 150px;
+			text-align: right;
+			font-size: 18px;
+			line-height: 45px;
+			margin-right: 8px;
+		}
+
+		input[type=text], input[type=number], textarea {
+			display: inline-block;
+			float: left;
+			border: 1px solid rgba(1, 1, 1, 0.3);
+			@include border-radius(2px, 2px);
+			font-size: 18px;
+			font-weight: 200;
+			padding: 7px;
+			width: 265px;
+			resize: none;
+		}
+
+		input[type=submit] {
+			float: right;
+			clear: left;
+			display: block;
+			margin: 12px 10px 15px 10px;
+		}
+	}
+
+	form.submitted {
+		.ng-invalid-required {
+			outline: none;
+			border: 1px solid $accent-color;
+		}
+	}
+}
+
+@media all and (max-width: $mobile-width) { 
+	.modal-input-dialog {
+		width: $modal-input-dialog-mobile-width;
+		margin: 25px 5px;
+
+		form {
+			width: $modal-input-dialog-mobile-width;
+
+			input[type=text], input[type=number], textarea{
+				font-size: 24px;
+			}
+
+			input[type=submit] {
+				margin-right: 25px;
+			}
+
+			textarea {
+				height: 110px;
+			}
+
+			label {
+				width: 100px;
+			}
+		}
+	}
+}

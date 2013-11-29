@@ -55,6 +55,9 @@ class HikeApp < Sinatra::Base
 		content_for :add_modal do
 			erb :add
 		end
+		content_for :photo_details_modal do
+			erb :photo_details
+		end
 	end
 
 	get "/sitemap.xml", :provides => "xml" do

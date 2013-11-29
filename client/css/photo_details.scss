@@ -1,0 +1,10 @@
+@import "_vars";
+@import "_mixins";
+
+@media all and (max-width: $mobile-width) { 
+	.photo-details-page {
+		label {
+			width: 110px !important;
+		}
+	}
+}

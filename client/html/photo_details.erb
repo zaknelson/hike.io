@@ -1,0 +1,18 @@
+<article id="photo-details-page" data-ng-cloak class="photo-details-page modal-input-dialog" data-ng-controller="PhotoDetailsController">
+	<h2 data-ui-if="isLoaded">Photo details</h2>
+	<form data-ng-submit="update()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}" data-ui-if="isLoaded">
+		<div>
+			<div>
+				<label for="attribution-link">Source</label>
+				<input id="attribution-link" type="text" required="true" autocomplete="off" data-ng-model="photo.attribution_link" placeholder="http://www.flickr.com/photos/96151552@N06/11105027134/" />
+			</div>
+			<div>
+				<label for="alt">Description</label>
+				<textarea id="alt" type="text" data-ui-keypress="{enter:'update()'}" onkeydown="if (event.keyCode == '13') update()" required="true" autocomplete="off" data-ng-model="photo.alt" data-give-focus="isLoaded" placeholder="Panoramic view of a snowy Pike's Peak with the sun setting in the horizon." />
+			</div>
+			<div>
+				<input type="submit" class="btn" value="Update details" ng-click="update()" />
+			</div>
+		</div>
+	</form>
+</article>
