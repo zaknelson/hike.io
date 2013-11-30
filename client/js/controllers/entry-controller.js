@@ -1,5 +1,7 @@
 "use strict";
 var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+	// TODO this file really needs to be cleaned up
+
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
 	var MAX_UPLOAD_PHOTO_WIDTH = 2400;
 	var MAX_UPLOAD_PHOTO_HEIGHT = 2400;
@@ -21,16 +23,20 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.local_photos_generic = [];
 
 	var lastUploadedPhotoId = 0;
-	var uploadedPhotoIdMap = {};
-	var canceledUploadedPhotoIdMap = {};
+	var uploadingPhotoIdMap = {}; // "local" photos that are uploading or uploaded
+	var uploadedPhotoIdMap = {}; // "real" photos that are uploaded
+	var canceledUploadedPhotoIdMap = {}; // photos that havent finished uploading and are already removed
 	var descriptionMediumEditor = null;
 	var permitMediumEditor = null;
 
 	var cloneToLocalPhotos = function() {
-		if ($scope.hike.photo_landscape) $scope.local_photo_landscape = jQuery.extend(true, {}, $scope.hike.photo_landscape);
-		if ($scope.hike.photo_facts) $scope.local_photo_facts = jQuery.extend(true, {}, $scope.hike.photo_facts);
-		if ($scope.hike.photo_preview) $scope.local_photo_preview = jQuery.extend(true, {}, $scope.hike.photo_preview);
-		$scope.local_photos_generic = jQuery.extend(true, [], $scope.hike.photos_generic);
+		$scope.local_photo_landscape = $scope.hike.photo_landscape;
+		$scope.local_photo_facts = $scope.hike.photo_facts;
+		$scope.local_photo_preview = $scope.hike.photo_preview;
+		$scope.local_photos_generic = [];
+		for (var i = 0; i < $scope.hike.photos_generic.length; i++) {
+			$scope.local_photos_generic.push($scope.hike.photos_generic[i]);
+		}
 	};
 
 	var parseToFloatOrZero = function(str) {
@@ -168,8 +174,17 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		return result;
 	};
 
-	$scope.$on("photoDetailsUpdated", function() {
+	$scope.$on("photoDetailsUpdated", function(event, photo) {
 		$scope.isDirty = true;
+		if (uploadedPhotoIdMap[photo.id]) {
+			var uploadedPhoto = uploadedPhotoIdMap[photo.id];
+			if (photo.attribution_link) {
+				uploadedPhoto.attribution_link = photo.attribution_link;
+			}
+			if (photo.alt) {
+				uploadedPhoto.alt = photo.alt;
+			}
+		}
 	});
 
 	$scope.openPhotoDetails = function(photo) {
@@ -179,7 +194,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$.fancybox.open( $("#photo-details-page"), {
 			closeBtn : true,
 			closeEffect : "none",
-			keys : true,	
+			keys : true,
 			padding : 2
 		});
 		$rootScope.$broadcast("setPhotoDetailsPhoto", photo);
@@ -220,8 +235,16 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					// numPhotosUploading should already be updated to account for the fact that this
 					// upload was essentially canceled.
 					return;
+				} else if (uploadingPhotoIdMap[id]) {
+					if (uploadingPhotoIdMap[id].attribution_link) {
+						data.attribution_link = uploadingPhotoIdMap[id].attribution_link;
+					}
+					if (uploadingPhotoIdMap[id].alt) {
+						data.alt = uploadingPhotoIdMap[id].alt;
+					}
 				}
 				uploadedPhotoIdMap[id] = data;
+
 				$scope.isDirty = true;
 				$scope.numPhotosUploading--;
 				switch (type) {
@@ -240,6 +263,12 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				}
 			}).
 			error(function(data, status, headers, config) {
+				if (canceledUploadedPhotoIdMap[id]) {
+					// Local version of the photo has already been removed, don't add it.
+					// numPhotosUploading should already be updated to account for the fact that this
+					// upload was essentially canceled.
+					return;
+				}
 				$scope.numPhotosUploading--;
 				$log.error(data, status, headers, config);
 			});
@@ -289,6 +318,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			var urlEncodedPhotoData = e.target.result;
 			$scope.$apply(function() {
 				photo = { id: id, src: urlEncodedPhotoData };
+				uploadingPhotoIdMap[id] = photo;
 				if (rotation) {
 					photo.rotation = rotation;
 				}

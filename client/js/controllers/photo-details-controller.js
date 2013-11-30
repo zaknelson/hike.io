@@ -14,7 +14,7 @@ var PhotoDetailsController = function($rootScope, $scope) {
 	$scope.update = function() {
 		$scope.originalPhoto.attribution_link = $scope.photo.attribution_link;
 		$scope.originalPhoto.alt = $scope.photo.alt;
-		$rootScope.$broadcast("photoDetailsUpdated");
+		$rootScope.$broadcast("photoDetailsUpdated", $scope.originalPhoto);
 		$.fancybox.close();
 	};
 };

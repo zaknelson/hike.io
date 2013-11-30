@@ -103,6 +103,20 @@ class Photo < Sequel::Model
 		self.each_rendition &block
 	end
 
+	def update_from_json json
+		# Can only change the alt and attribution links
+		needs_save = false
+		if json["attribution_link"] != self.attribution_link
+			self.attribution_link = json["attribution_link"]
+			needs_save = true
+		end
+		if json["alt"] != self.alt
+			self.alt = json["alt"]
+			needs_save = true
+		end
+		self.save_changes() if needs_save
+	end
+
 	def photo_id
 		s = self.string_id
 		s[s.rindex("/")+1..-1]

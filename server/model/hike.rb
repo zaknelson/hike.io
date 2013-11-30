@@ -159,6 +159,7 @@ class Hike < Sequel::Model
 			if json[photo_key] != nil
 				new_photo = Photo.find(:id => json[photo_key]["id"])
 				next if !new_photo 
+				new_photo.update_from_json(json[photo_key])
 				self.send "#{photo_key}=", new_photo
 				new_photo.move_on_s3(self) if new_photo.is_in_tmp_folder_on_s3?
 			elsif existing_photo
@@ -169,8 +170,9 @@ class Hike < Sequel::Model
 
 		if json["photos_generic"]
 			new_generic_photos = []
-			json["photos_generic"].each do |photo|
-				photo = Photo.find(:id => photo["id"])
+			json["photos_generic"].each do |photo_json|
+				photo = Photo.find(:id => photo_json["id"])
+				photo.update_from_json(photo_json)
 				new_generic_photos.push(photo) if photo
 			end
 
