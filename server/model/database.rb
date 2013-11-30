@@ -24,6 +24,7 @@ migration "create photos table" do
 		Integer :width							#:null => false
 		Integer :height							#:null => false
 		String :alt								#optional
+		String :attribution_link				#optional
 	end
 end
 
@@ -113,11 +114,5 @@ migration "create reviews table" do
 		foreign_key :reviewee, :users, :key => :id, :type => String
 
 		index :id
-	end
-end
-
-migration "add attribution_link column 11/27/2013" do
-	database.alter_table :photos do
-		add_column :attribution_link, String
 	end
 end
