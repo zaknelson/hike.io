@@ -6,14 +6,19 @@ angular.module("hikeio").
 			scope: {
 				align: "@",
 				label: "@",
-				url: "@"
+				url: "@",
+				nofollow: "@"
 			},
 			compile: function(tplElm, tplAttr) {
 				// Include link only if url is included (otherwise, on some browsers it implies /)
+				var link = tplElm.children()[0];
 				if (!tplAttr.url) {
-					var link = tplElm.children()[0];
 					tplElm.empty();
 					tplElm.append(link.children);
+				} else {
+					if (tplAttr.nofollow) {
+						link.setAttribute("rel", "nofollow");
+					}
 				}
 			},
 

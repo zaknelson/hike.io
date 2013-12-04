@@ -83,7 +83,7 @@ https://github.com/zaknelson/hike.io/
 				</div>
 
 				<div data-ng-show="navigation.onEntry()">
-					<div data-header-entry data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png" /></div>
+					<div data-header-entry data-nofollow="true" data-label="Edit" data-url="{{location.path()}}/edit" data-align="right"><%= render_svg("#{@img_dir}/edit.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/edit.png" /></div>
 				</div>
 				
 			</div>
