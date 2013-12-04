@@ -44,16 +44,7 @@ angular.module("hikeio").
 
 						images.load(function() {
 							var preview = $(this).parent().parent();
-							var previewFooter = preview.find(".preview-footer");
 							preview.css("opacity", "1");
-							$timeout(function() {
-								preview.addClass("no-transition");
-								preview.hover(function() {
-									previewFooter.css("background-color", "rgba(0, 0, 0, 0.65)");
-								}, function() {
-									previewFooter.css("background-color", "rgba(0, 0, 0, 0.6)");
-								});
-							}, 400);
 						}).each(function() {
 							if (this.complete) {
 								$(this).load();
