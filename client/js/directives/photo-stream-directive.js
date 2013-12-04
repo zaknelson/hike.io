@@ -2,14 +2,11 @@
 
 angular.module("hikeio").
 	directive("photoStream", ["$rootScope", "$timeout", "config", function($rootScope, $timeout, config) {
-		var normalImage = "small";
-		var biggerImage = "medium";
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview'>" +
 					"<div data-ng-class='{\"featured-box\": $first}' >" +
-						"<img class='preview-img' data-ui-if='hike.photo_preview' data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_preview.string_id}}{{ $first && \"-" + biggerImage + "\" || \"-" + normalImage + "\" }}.jpg' data-aspect-ratio='{{hike.photo_preview.height / hike.photo_preview.width}}' alt='{{hike.photo_preview.alt}}' />" +
-						"<img class='preview-img' data-ui-if='!hike.photo_preview && hike.photo_facts' data-ng-src='" + config.hikeImagesPath + "/{{hike.photo_facts.string_id}}{{ $first && \"-" + biggerImage + "\" || \"-" + normalImage + "\" }}.jpg' data-aspect-ratio='{{hike.photo_facts.height / hike.photo_facts.width}}' alt='{{hike.photo_facts.alt}}' />" +
+						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $first)}}' data-aspect-ratio='{{hike.photo_preview.height / hike.photo_preview.width}}' alt='{{hike.photo_preview.alt}}' />" +
 						"<div class='preview-footer'>" +
 							"<div>" +
 								"<h4 class='preview-title'>{{hike.name}}</h4>" +
@@ -32,6 +29,16 @@ angular.module("hikeio").
 			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 400;
+				scope.getPreviewImageSrc = function(hike, isFirst) {
+					var photo = hike.photo_preview || hike.photo_facts;
+					var rendition = "small";
+					if (isFirst || photo.height > photo.width) {
+						rendition = "medium";
+					} else if (photo.width > photo.height) {
+						rendition = "thumb";
+					}
+					return config.hikeImagesPath + "/" + photo.string_id + "-" + rendition + ".jpg";
+				};
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
 					$timeout(function() {
