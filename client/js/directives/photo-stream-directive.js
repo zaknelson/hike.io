@@ -5,8 +5,8 @@ angular.module("hikeio").
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview'>" +
-					"<div data-ng-class='{\"featured-box\": $first}' >" +
-						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $first)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $first)}}' alt='{{hike.photo_preview.alt}}' />" +
+					"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
+						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
 						"<div class='preview-footer'>" +
 							"<div>" +
 								"<h4 class='preview-title'>{{hike.name}}</h4>" +
@@ -29,10 +29,17 @@ angular.module("hikeio").
 			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 400;
-				scope.getPreviewImageSrc = function(hike, isFirst) {
+				scope.isFeatured = function(hike, index) {
+					if (index === 0) {
+						return true;
+					}
+					// TODO more logic here to make other photos featured
+					return false;
+				};
+				scope.getPreviewImageSrc = function(hike, index) {
 					var photo = hike.photo_preview || hike.photo_facts;
 					var rendition = "small";
-					if (isFirst || photo.height > photo.width) {
+					if (scope.isFeatured(hike, index) || photo.height > photo.width) {
 						rendition = "medium";
 					} else if (photo.width > photo.height) {
 						rendition = "thumb";
@@ -40,10 +47,10 @@ angular.module("hikeio").
 					return config.hikeImagesPath + "/" + photo.string_id + "-" + rendition + ".jpg";
 				};
 
-				scope.getPreviewImageAspectRatio = function(hike, isFirst) {
+				scope.getPreviewImageAspectRatio = function(hike, index) {
 					var photo = hike.photo_preview || hike.photo_facts;
 					var aspectRatio = photo.height / photo.width;
-					if (!isFirst && photo.width > photo.height) {
+					if (!scope.isFeatured(hike, index) && photo.width > photo.height) {
 						// Using the thumbnail version of the photo, therefore the aspect ratio will be 1:1
 						aspectRatio = 1;
 					}
