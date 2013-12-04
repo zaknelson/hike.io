@@ -19,19 +19,18 @@ class HikeApp < Sinatra::Base
 		string_id = Hike.create_string_id_from_name(json["name"])
 		return 404 if string_id.length == 0
 		return 409 if Hike[:string_id => string_id]
-		if Sinatra::Application.environment() != :test
-			Thread.new { EmailUtils.send_new_review(json_str, string_id, request.base_url, user_needs_changes_reviewed?) }
-		end
 		if user_needs_changes_reviewed?
 			review = Review.create({
 				:api_verb => "post",
 				:api_body => json_str,
 				:hike_string_id => string_id,
 				:reviewee => current_user_id
-			})			
+			})
+			Thread.new { EmailUtils.send_new_review(json_str, string_id, request.base_url, review) }
 			response.headers["Hikeio-Hike-String-Id"] = string_id
 			return 202
 		end
+		Thread.new { EmailUtils.send_new_review(json_str, string_id, request.base_url) }
 		hike = Hike.create_from_json json
 		hike.as_json
 	end
@@ -68,9 +67,6 @@ class HikeApp < Sinatra::Base
 		return 400 if not Hike.is_valid_json? json
 		return 409 if json["string_id"] && json["string_id"] != params[:hike_id] && Hike.get_hike_from_id(json["string_id"])
 		return 404 if !hike && !Review.has_pending_review_for_hike?(params[:hike_id])
-		if Sinatra::Application.environment() != :test
-			Thread.new { EmailUtils.send_diff_review(json_str, params[:hike_id], request.base_url, user_needs_changes_reviewed?) }
-		end
 		if user_needs_changes_reviewed? 
 			review = Review.create({
 				:api_verb => "put",
@@ -78,28 +74,29 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
+			Thread.new { EmailUtils.send_diff_review(json_str, params[:hike_id], request.base_url, review) }
 			return 202
 		end
 		return 409 if hike.edit_time.to_s != json["edit_time"]
+		Thread.new { EmailUtils.send_diff_review(json_str, params[:hike_id], request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json
 	end
 
 	delete "/api/v1/hikes/:hike_id", :provides => "json" do
 		hike = Hike.get_hike_from_id params[:hike_id]
-		if Sinatra::Application.environment() != :test
-			Thread.new { EmailUtils.send_delete_review(params[:hike_id], request.base_url, user_needs_changes_reviewed?) }
-		end
 		if user_needs_changes_reviewed?
 			review = Review.create({
 				:api_verb => "delete",
 				:hike_string_id => params[:hike_id],
 				:reviewee => current_user_id
 			})
+			Thread.new { EmailUtils.send_delete_review(params[:hike_id], request.base_url, review) }
 			return 202
 		elsif not hike
 			return 404
 		end
+		Thread.new { EmailUtils.send_delete_review(params[:hike_id], request.base_url) }
 		hike.cascade_destroy
 		return 200
 	end
