@@ -44,13 +44,14 @@ angular.module("hikeio").
 
 						images.load(function() {
 							var preview = $(this).parent().parent();
+							var previewFooter = preview.find(".preview-footer");
 							preview.css("opacity", "1");
 							$timeout(function() {
 								preview.addClass("no-transition");
 								preview.hover(function() {
-									preview.css("opacity", ".95");
+									previewFooter.css("background-color", "rgba(0, 0, 0, 0.65)");
 								}, function() {
-									preview.css("opacity", "1");
+									previewFooter.css("background-color", "rgba(0, 0, 0, 0.6)");
 								});
 							}, 400);
 						}).each(function() {
