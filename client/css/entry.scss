@@ -6,6 +6,7 @@ $header-landscape-footer-height-mobile: 40px;
 $header-landscape-aspect-ratio: 3;
 
 .attribution-link {
+	display: none; /* Is only displayed when fancybox is open */
 	position: absolute;
 	top: 8px;
 	left: 8px;
@@ -13,12 +14,12 @@ $header-landscape-aspect-ratio: 3;
 	width: 20px !important;
 	height: 20px !important;
 	padding: 0px;
-	opacity: .25;
+	opacity: .75;
 	cursor: pointer;
 }
 
-.attribution-link:hover {
-	opacity: 0.75;
+.attribution-link.active {
+	display: inline;
 }
 
 .entry-page {

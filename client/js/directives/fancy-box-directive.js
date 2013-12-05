@@ -11,6 +11,7 @@ angular.module("hikeio").
 						if (attributionLink) {
 							var anchor = $(".attribution-link").clone();
 							anchor.attr("href", attributionLink);
+							anchor.addClass("active");
 							anchor.click(function(event) {
 								event.stopPropagation();
 							});

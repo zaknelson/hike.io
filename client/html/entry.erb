@@ -1,3 +1,8 @@
+<a class="attribution-link">
+	<%= render_svg("#{@img_dir}/creative-commons.svg") %>
+	<img data-ui-if="!Modernizr.svg" data-ng-src="/images/creative-commons.png" />
+</a>
+
 <article class="entry-page" data-ng-show="isLoaded" data-ng-class="{'entry-edit-page': isEditing}">
 	<div class="edit-banner" data-ng-show="isEditing" data-ng-class="{'edit-banner-review': isBeingReviewed}">
 		<h3 data-ng-show="!isBeingReviewed">You are editing this page.</h3>
@@ -11,11 +16,13 @@
 		<div>
 			<div data-ui-if="isLoaded &amp;&amp; local_photo_landscape">
 				<div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div>
-				<a data-ng-show="local_photo_landscape.attribution_link &amp;&amp; !isEditing" data-ng-href="{{local_photo_landscape.attribution_link}}" class="attribution-link">
-					<%= render_svg("#{@img_dir}/creative-commons.svg") %>
-					<img data-ui-if="!Modernizr.svg" data-ng-src="/images/creative-commons.png" />
-				</a>
-				<img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+				<div data-ui-if="isEditing">
+					<img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+				</div>
+				<div data-ui-if="!isEditing" data-fancybox=".landscape-img-link">
+					<a class="landscape-img-link" href="javascript:;" data-attribution-link="{{local_photo_landscape.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+					</a>
+				</div>
 				<div data-ui-if="!local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
 				<div class="flipped-placeholder" data-ui-if="local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270"></div>
 			</div>
