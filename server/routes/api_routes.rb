@@ -14,11 +14,11 @@ class HikeApp < Sinatra::Base
 
 	post "/api/v1/hikes", :provides => "json" do
 		json_str = request.body.read 
-		json = JSON.parse json_str rescue return 400
-		return 400 if not Hike.is_valid_json? json
+		json = JSON.parse json_str rescue return err_400
+		return err_400 if not Hike.is_valid_json? json
 		string_id = Hike.create_string_id_from_name(json["name"])
-		return 404 if string_id.length == 0
-		return 409 if Hike[:string_id => string_id]
+		return err_404 if string_id.length == 0
+		return err_409 if Hike[:string_id => string_id]
 		if user_needs_changes_reviewed?
 			review = Review.create({
 				:api_verb => "post",
@@ -37,7 +37,7 @@ class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes/search", :provides => "json" do
 		query = params[:q]
-		return 400 if not query
+		return err_400 if not query
 
 		search_executor = SearchExecutor.new
 		search_executor.logger = logger
@@ -55,7 +55,7 @@ class HikeApp < Sinatra::Base
 		hike = Hike.get_hike_from_id params[:hike_id]
 		if not hike
 			return 202 if Review[:status => Review::STATUS_UNREVIEWED, :hike_string_id => params[:hike_id], :api_verb => "post"]
-			return 404
+			return err_404
 		end
 		hike.as_json get_fields_filter
 	end
@@ -64,10 +64,10 @@ class HikeApp < Sinatra::Base
 		hike_id = params[:hike_id]
 		hike = Hike.get_hike_from_id hike_id
 		json_str = request.body.read
-		json = JSON.parse json_str rescue return 400
-		return 400 if not Hike.is_valid_json? json
-		return 409 if json["string_id"] && json["string_id"] != hike_id && Hike.get_hike_from_id(json["string_id"])
-		return 404 if !hike && !Review.has_pending_review_for_hike?(hike_id)
+		json = JSON.parse json_str rescue return err_400
+		return err_400 if not Hike.is_valid_json? json
+		return err_409 if json["string_id"] && json["string_id"] != hike_id && Hike.get_hike_from_id(json["string_id"])
+		return err_404 if !hike && !Review.has_pending_review_for_hike?(hike_id)
 		if user_needs_changes_reviewed? 
 			review = Review.create({
 				:api_verb => "put",
@@ -78,7 +78,7 @@ class HikeApp < Sinatra::Base
 			Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url, review) }
 			return 202
 		end
-		return 409 if hike.edit_time.to_s != json["edit_time"]
+		return err_409 if hike.edit_time.to_s != json["edit_time"]
 		Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json
@@ -96,7 +96,7 @@ class HikeApp < Sinatra::Base
 			Thread.new { EmailUtils.send_delete_review(hike_id, request.base_url, review) }
 			return 202
 		elsif not hike
-			return 404
+			return err_404
 		end
 		Thread.new { EmailUtils.send_delete_review(hike_id, request.base_url) }
 		hike.cascade_destroy
@@ -106,8 +106,8 @@ class HikeApp < Sinatra::Base
 	post "/api/v1/hikes/:hike_id/photos", :provides => "json" do
 		hike = Hike.get_hike_from_id params[:hike_id]
 		uploaded_file = params[:file]
-		return 404 if !hike && !user_needs_changes_reviewed?
-		return 400 if not uploaded_file
+		return err_404 if !hike && !user_needs_changes_reviewed?
+		return err_400 if not uploaded_file
 		photo = Photo.create_with_renditions(uploaded_file[:tempfile], params[:type] == "landscape")
 		photo.to_json
 	end

@@ -4,30 +4,30 @@ require_relative "../model/hike"
 class HikeApp < Sinatra::Base
 
 	get "/admin/v1/reviews", :provides => "json" do
-		return 403 if user_needs_changes_reviewed?
+		return err_403 if user_needs_changes_reviewed?
 		Review.to_json(:only=>[:string_id, :status])
 	end
 
 	get "/admin/v1/reviews/:review_id", :provides => "json" do
-		return 403 if user_needs_changes_reviewed?
+		return err_403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
-		return 404 if not review
+		return err_404 if not review
 		review.to_json
 	end
 
 	# Ideally this would be a PUT on the review, but since email clients 
 	# don't appreciate javascript, a GET seemed like a better option
 	get "/admin/v1/reviews/:review_id/accept", :provides => "json" do
-		return 403 if user_needs_changes_reviewed?
+		return err_403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
-		return 404 if not review
-		return 400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
-		return 409 if review.status != Review::STATUS_UNREVIEWED
+		return err_404 if not review
+		return err_400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
+		return err_409("Review has already been reviewed.") if review.status != Review::STATUS_UNREVIEWED
 
 		if review.api_verb == "put"
 			hike = Hike[:string_id => review.hike_string_id]
-			return 409 if not hike
-			return 409 if hike.edit_time > review.creation_time
+			return err_409("Hike no longer exists.") if not hike
+			return err_409("Hike has been edited since review's creation.") if hike.edit_time > review.creation_time
 			hike.update_from_json(JSON.parse(review.api_body))
 			hike.edit_time = review.creation_time
 			hike.save_changes
@@ -40,7 +40,7 @@ class HikeApp < Sinatra::Base
 			redirect_url = "/hikes/#{hike.string_id}"
 		elsif review.api_verb == "delete"
 			hike = Hike[:string_id => review.hike_string_id]
-			return 409 if not hike
+			return err_409("Hike no longer exists.") if not hike
 			hike.cascade_destroy
 			redirect_url = "/"
 		end
@@ -54,11 +54,11 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/admin/v1/reviews/:review_id/reject", :provides => "json" do
-		return 403 if user_needs_changes_reviewed?
+		return err_403 if user_needs_changes_reviewed?
 		review = Review[:string_id => params[:review_id]]
-		return 404 if not review
-		return 400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
-		return 409 if review.status != Review::STATUS_UNREVIEWED
+		return err_404 if not review
+		return err_400 if review.api_verb != "put" && review.api_verb != "post" && review.api_verb != "delete"
+		return err_409("Review has already been reviewed.") if review.status != Review::STATUS_UNREVIEWED
 		review.reviewer = current_user_id
 		review.status = Review::STATUS_REJECTED
 		review.edit_time = Time.now

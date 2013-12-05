@@ -140,6 +140,23 @@ class HikeApp < Sinatra::Base
 			end
 			json += "]"
 		end
+
+		# Error responses
+		def err_400 msg=nil
+			return 400, {:status => 400, :message => msg || "Bad request."}.to_json
+		end
+
+		def err_403 msg=nil
+			return 403, {:status => 403, :message => msg || "Forbidden."}.to_json
+		end
+
+		def err_404 msg=nil
+			return 404, {:status => 404, :message => msg || "Resource not found."}.to_json
+		end
+
+		def err_409 msg=nil
+			return 409, {:status => 409, :message => msg || "Conflict with a previous change."}.to_json
+		end
 	end
 
 	before do
