@@ -5,8 +5,9 @@
 
 <article class="entry-page" data-ng-show="isLoaded" data-ng-class="{'entry-edit-page': isEditing}">
 	<div class="edit-banner" data-ng-show="isEditing" data-ng-class="{'edit-banner-review': isBeingReviewed}">
-		<h3 data-ng-show="!isBeingReviewed">You are editing this page.</h3>
-		<h3 data-ng-show="isBeingReviewed">Nice! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
+		<h3 data-ng-show="error" data-ng-bind="error"></h3>
+		<h3 data-ng-show="!error &amp;&amp; !isBeingReviewed">You are editing this page.</h3>
+		<h3 data-ng-show="!error &amp;&amp; isBeingReviewed">Nice! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
 		<div>
 			<button class="save-button btn" data-ng-class="{disabled: !isDirty || isSaving || numPhotosUploading != 0, loading: true}" autocomplete="off" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || (numPhotosUploading != 0 &amp;&amp; 'Uploading...' || 'Save')}}</button>
 			<button class="done-button btn" data-ng-click="done()">Done</button>

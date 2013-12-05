@@ -18,8 +18,8 @@ class HikeApp < Sinatra::Base
 		field_err = Hike.validate_json_fields(json)
 		return err_400(field_err) if field_err
 		string_id = Hike.create_string_id_from_name(json["name"])
-		return err_404 if string_id.length == 0
-		return err_409 if Hike[:string_id => string_id]
+		return err_400("Invalid hike name.") if string_id.length == 0
+		return err_409("Hike already exists.") if Hike[:string_id => string_id]
 		if user_needs_changes_reviewed?
 			review = Review.create({
 				:api_verb => "post",
@@ -68,7 +68,7 @@ class HikeApp < Sinatra::Base
 		json = JSON.parse json_str rescue return err_400("Unable to parse json.")
 		field_err = Hike.validate_json_fields(json)
 		return err_400(field_err) if field_err
-		return err_409 if json["string_id"] && json["string_id"] != hike_id && Hike.get_hike_from_id(json["string_id"])
+		return err_409("Hike with that id already exists.") if json["string_id"] && json["string_id"] != hike_id && Hike.get_hike_from_id(json["string_id"])
 		return err_404 if !hike && !Review.has_pending_review_for_hike?(hike_id)
 		if user_needs_changes_reviewed? 
 			review = Review.create({
@@ -80,7 +80,7 @@ class HikeApp < Sinatra::Base
 			Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url, review) }
 			return 202
 		end
-		return err_409 if hike.edit_time.to_s != json["edit_time"]
+		return err_409("Update conflicts with another change.") if hike.edit_time.to_s != json["edit_time"]
 		Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json

@@ -157,6 +157,14 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					permitMediumEditor.hideToolbar();
 				}).
 				error(function(data, status, headers, config) {
+					$scope.isSaving = false;
+					$scope.isDirty = true;
+					if (data.message) {
+						$scope.error = "Error: " + data.message;
+					} else {
+						$scope.error = "Error: " + status;
+					}
+					$window.document.body.scrollTop = $window.document.documentElement.scrollTop = 0;
 					$log.error(data, status, headers, config);
 				});
 		}
