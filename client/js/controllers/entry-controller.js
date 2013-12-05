@@ -34,7 +34,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.local_photo_facts = $scope.hike.photo_facts;
 		$scope.local_photo_preview = $scope.hike.photo_preview;
 		$scope.local_photos_generic = [];
-		for (var i = 0; i < $scope.hike.photos_generic.length; i++) {
+		for (var i = 0; $scope.hike.photos_generic && i < $scope.hike.photos_generic.length; i++) {
 			$scope.local_photos_generic.push($scope.hike.photos_generic[i]);
 		}
 	};
