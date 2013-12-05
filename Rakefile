@@ -20,7 +20,7 @@ task :clean do
 	`rm -rf .sass-cache`
 end
 
-task :push do
+task :push => [:clean, :static, :test] do
 	`git push heroku master`
 end
 
