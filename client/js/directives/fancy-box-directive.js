@@ -9,8 +9,8 @@ angular.module("hikeio").
 						$rootScope.$broadcast("fancyboxLoaded");
 						var attributionLink = this.element.attr("data-attribution-link");
 						if (attributionLink) {
-							var anchor = $("<a href='" + attributionLink + "'>");
-							anchor.append($(".attribution-link").clone());
+							var anchor = $(".attribution-link").clone();
+							anchor.attr("href", attributionLink);
 							anchor.click(function(event) {
 								event.stopPropagation();
 							});
