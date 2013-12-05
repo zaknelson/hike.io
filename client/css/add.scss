@@ -6,6 +6,10 @@
 		width: 71px;
 	}
 
+	div {
+		display: inline-block;
+	}
+
 	#latitude, #longitude {
 		width: 130px;
 		margin-right: 5px;
@@ -16,5 +20,23 @@
 		line-height: 45px;
 		float: left;
 		margin-left: 5px;
+	}
+
+	.error {
+		font-weight: bold;
+		font-size: 13px;
+		line-height: 18px;
+		padding-top: 20px;
+		padding-left: 10px;
+		padding-bottom: 10px;
+		max-width: 330px;
+	}
+	
+	@media all and (max-width: $mobile-width) { 
+		.error {
+			padding-top: 10px;
+			max-width: 250px;
+			font-size: 13px;
+		}
 	}
 }

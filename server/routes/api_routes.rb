@@ -14,8 +14,9 @@ class HikeApp < Sinatra::Base
 
 	post "/api/v1/hikes", :provides => "json" do
 		json_str = request.body.read 
-		json = JSON.parse json_str rescue return err_400
-		return err_400 if not Hike.is_valid_json? json
+		json = JSON.parse json_str rescue return err_400("Unable to parse json.")
+		field_err = Hike.validate_json_fields(json)
+		return err_400(field_err) if field_err
 		string_id = Hike.create_string_id_from_name(json["name"])
 		return err_404 if string_id.length == 0
 		return err_409 if Hike[:string_id => string_id]
@@ -64,8 +65,9 @@ class HikeApp < Sinatra::Base
 		hike_id = params[:hike_id]
 		hike = Hike.get_hike_from_id hike_id
 		json_str = request.body.read
-		json = JSON.parse json_str rescue return err_400
-		return err_400 if not Hike.is_valid_json? json
+		json = JSON.parse json_str rescue return err_400("Unable to parse json.")
+		field_err = Hike.validate_json_fields(json)
+		return err_400(field_err) if field_err
 		return err_409 if json["string_id"] && json["string_id"] != hike_id && Hike.get_hike_from_id(json["string_id"])
 		return err_404 if !hike && !Review.has_pending_review_for_hike?(hike_id)
 		if user_needs_changes_reviewed? 

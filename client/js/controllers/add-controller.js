@@ -21,6 +21,7 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 		$scope.isLoaded = false;
 		$scope.isSubmitted = false;
 		$scope.prepopulatedName = null;
+		$scope.error = null;
 	};
 	resetScope();
 
@@ -84,6 +85,11 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 				});
 			}).
 			error(function(data, status, headers, config) {
+				if (data.message) {
+					$scope.error = "Error: " + data.message;
+				} else {
+					$scope.error = "Error: " + status;
+				}
 				$log.error(data, status, headers, config);
 			}
 		);

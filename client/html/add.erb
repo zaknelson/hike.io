@@ -27,9 +27,10 @@
 					<input id="latitude" type="number" step="any" min="-90" max="90" required="true" autocomplete="off" data-ng-model="hike.location.latitude" placeholder="{{isMobile &amp;&amp; '37.3066' || '37.30669'}}" />
 					<input id="longitude" type="number" step="any" min="-180" max="180" required="true" autocomplete="off" data-ng-model="hike.location.longitude" placeholder="{{isMobile &amp;&amp; '-112.9474' || '-112.94745'}}" />
 			</div>
-			<div>
+			<span>
+				<div data-ng-bind="error" class="error"></div>
 				<input type="submit" class="btn" value="Add Hike" ng-click="attemptSubmit()" />
-			</div>
+			</span>
 		</div>
 	</form>
 </article>

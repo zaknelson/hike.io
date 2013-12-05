@@ -257,22 +257,24 @@ class Hike < Sequel::Model
 		photos
 	end
 
-	def self.is_valid_json? json
-		json["name"] &&
-			json["locality"] &&
-			json["distance"] &&
-			json["elevation_gain"] &&
-			json["elevation_max"] &&
-			json["location"] && 
-			json["location"]["latitude"] &&
-			json["location"]["longitude"] &&
-			StringUtils.is_numeric?(json["distance"]) &&
-			StringUtils.is_numeric?(json["elevation_gain"]) &&
-			StringUtils.is_numeric?(json["elevation_max"]) &&
-			StringUtils.is_numeric?(json["location"]["latitude"]) &&
-			StringUtils.is_numeric?(json["location"]["longitude"]) &&
-			is_valid_latitude?(json["location"]["latitude"]) &&
-			is_valid_longitude?(json["location"]["longitude"])
+	def self.validate_json_fields json
+		error = nil
+		if !json["name"]
+			error = "Name is a required field."
+		elsif !json["locality"]
+			error = "Location is a required field." # A bit hacky, on the front end, we call the locality field, location.
+		elsif !json["distance"] || !StringUtils.is_numeric?(json["distance"])
+			error = "Distance must be a number."
+		elsif !json["elevation_gain"] || !StringUtils.is_numeric?(json["elevation_gain"])
+			error = "Elevation gain must be a number."
+		elsif !json["elevation_max"] || !StringUtils.is_numeric?(json["elevation_max"])
+			error = "Elevation max must be a number."
+		elsif !json["location"] || !json["location"]["latitude"] || !StringUtils.is_numeric?(json["location"]["latitude"]) || !is_valid_latitude?(json["location"]["latitude"])
+			error = "Latitude must be a number between -90 and 90."
+		elsif !json["location"]["longitude"] || !StringUtils.is_numeric?(json["location"]["longitude"]) || !is_valid_longitude?(json["location"]["longitude"])
+			error = "Longitude must be number between -180 and 180."
+		end
+		error
 	end
 
 	def self.is_valid_latitude? latitude
