@@ -2,7 +2,7 @@
 require "sinatra"
 require "sinatra/sequel"
 require "aws-sdk"
-require "RMagick"
+#require "RMagick"
 
 def s3
 	@s3 = @s3 || AWS::S3.new(
@@ -12,7 +12,7 @@ def s3
 	@s3
 end
 
-set :database, ENV["DATABASE_URL"]
+#set :database, ENV["DATABASE_URL"]
 
 def strip_metadata object
 	blob = object.read
@@ -69,6 +69,14 @@ def update_photo_size object
 	end
 end
 
+def set_cache_control object
+	key = object.key
+	if key.start_with?("hike-images/") and key.end_with?(".jpg")
+		puts "Setting cache control for #{key}"
+		object.copy_to(key, :cache_control => "max-age=31556926")
+	end
+end
+
 def trace object
 	key = object.key
 	puts key
@@ -77,9 +85,10 @@ end
 def main
 	bucket = s3.buckets["assets.hike.io"]
 	bucket.objects.each do |object|
+		trace object
 		#strip_metadata object
 		#create_tiny object, bucket
-		trace object
+		#set_cache_control object
 		#create_tiny_thumb object, bucket
 		#update_photo_size object
 	end
