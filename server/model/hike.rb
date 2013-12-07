@@ -91,7 +91,7 @@ class Hike < Sequel::Model
 			"</strong>"	=> "</b>",
 			"<em>"		=> "<i>",
 			"</em>"		=> "</i>",
-			"&nbsp;"	=> "",
+			"&nbsp;"	=> " ",
 
 			'href="http://hike.io'	=> 'href="',
 			'href="hike.io'			=> 'href="'
