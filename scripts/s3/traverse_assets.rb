@@ -144,6 +144,16 @@ def delete_photos_in_db_that_are_unassigned
 	end
 end
 
+def replace_with_progressive_jpg object, bucket
+	key = object.key
+	if key.start_with?("hike-images/") and !key.end_with?("-original.jpg") and key.end_with?(".jpg")
+		puts key
+		File.open("before.jpg", 'w') { |file| file.write(object.read) }
+	 	`convert before.jpg -interlace Plane after.jpg`
+		object.write(Pathname.new("after.jpg"))
+	end
+end
+
 def trace object
 	key = object.key
 	puts key
@@ -155,6 +165,7 @@ def main
 	#delete_photos_in_db_that_are_unassigned
 	bucket.objects.each do |object|
 		trace object
+		#replace_with_progressive_jpg object, bucket
 		#strip_metadata object
 		#create_tiny object, bucket
 		#set_cache_control object
