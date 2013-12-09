@@ -13,7 +13,7 @@
 			<button class="done-button btn" data-ng-click="done()">Done</button>
 		</div>
 	</div>
-	<div class="header-landscape">
+	<div class="header-landscape" data-ng-class="{'header-landscape-with-image' : !local_photo_landscape}">
 		<div>
 			<div data-ui-if="isLoaded &amp;&amp; local_photo_landscape">
 				<div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div>

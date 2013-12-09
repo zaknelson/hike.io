@@ -31,8 +31,15 @@ $header-landscape-aspect-ratio: 3;
 		border: 4px dashed #999;
 	}
 
+	.header-landscape.header-landscape-with-image {
+		height: auto;
+		padding-bottom: 0px;
+	}
+
 	.header-landscape {
 		position: relative;
+		height: 0;
+		padding-bottom: (100% / $header-landscape-aspect-ratio);
 
 		/*
 			This is a tricky section of CSS. First we have a hack which maintains a div's aspect ratio: 
@@ -47,7 +54,7 @@ $header-landscape-aspect-ratio: 3;
 
 		img, .img-div {
 			width: 100%;
-			height: (100% / $header-landscape-aspect-ratio);
+			max-height: 341px;
 		}
 
 		.img-div {
@@ -96,7 +103,9 @@ $header-landscape-aspect-ratio: 3;
 		.header-hike-name-with-image {
 			color: $title-text-color-inverse;
 			padding-left: 10px;
-			position: relative;
+			position: absolute;
+			bottom: 10px;
+			width: 100%;
 			background-color:rgba(0, 0, 0, 0.5);
 			@include ie-opaque-black-background();
 			margin-top: -$header-landscape-footer-height;
@@ -118,6 +127,7 @@ $header-landscape-aspect-ratio: 3;
 
 	.content {
 		padding: 10px;
+		padding-top: 1px;
 		h2 {
 			padding-bottom: 10px;
 		}
