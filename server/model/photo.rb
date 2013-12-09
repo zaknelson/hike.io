@@ -38,7 +38,7 @@ class Photo < Sequel::Model
 		# in speed, in this case ~6s -> ~1.5s.
 		resize_params = crop_to_landscape ? "-resize 2400x800^ -gravity center -extent 2400x800" : "-resize 2400x2400"
 		str = "convert #{path} -auto-orient +profile '*' #{resize_params} #{path + Photo.get_rendition_suffix('original')};" \
-			"convert #{path + Photo.get_rendition_suffix('original')} -unsharp 2x0.5+0.7+0 -quality 87 " \
+			"convert #{path + Photo.get_rendition_suffix('original')} -unsharp 2x0.5+0.7+0 -quality 87 -interlace Plane " \
 			"\\( +clone -resize 1200x1200 -write #{path + Photo.get_rendition_suffix('large')} +delete \\) " \
 			"\\( +clone -resize 800x800 -write #{path + Photo.get_rendition_suffix('medium')} +delete \\) " \
 			"\\( +clone -resize 400x400 -write #{path + Photo.get_rendition_suffix('small')} +delete \\) " \
