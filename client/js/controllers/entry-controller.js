@@ -67,6 +67,33 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.isBeingReviewed = isBeingReviewed;
 	});
 
+	if ($rootScope.isProduction) {
+		var beforeUnloadFunction = function() {
+			return "You have unsaved changes.";
+		};
+
+		$scope.$watch("isDirty", function() {
+			if ($scope.isDirty) {
+				$window.onbeforeunload = beforeUnloadFunction;
+			} else {
+				$window.onbeforeunload = null;
+			}
+		});
+
+		// Ideally would be able to use onbeforeunload, but that doesn't work for single page apps.
+		$scope.$on("$locationChangeStart", function(event) {
+			if ($scope.isDirty) {
+				if ($window.confirm("You have unsaved changes. Are you sure you want to leave this page?")) {
+					$window.onbeforeunload = null;
+				} else {
+					event.preventDefault();
+				}
+			} else {
+				$window.onbeforeunload = null;
+			}
+		});
+	}
+
 	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
