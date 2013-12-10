@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$rootScope", "$timeout", "config", function($rootScope, $timeout, config) {
+	directive("photoStream", ["$rootScope", "$timeout", "capabilities", "config", function($rootScope, $timeout, capabilities, config) {
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
 				"<div class='preview'>" +
@@ -38,8 +38,10 @@ angular.module("hikeio").
 				};
 				scope.getPreviewImageSrc = function(hike, index) {
 					var photo = hike.photo_preview || hike.photo_facts;
-					var rendition = "small";
-					if (scope.isFeatured(hike, index) || photo.height > photo.width) {
+					var rendition = capabilities.hidpiPhotosSupported ? "medium" : "small";
+					if (scope.isFeatured(hike, index)) {
+						rendition = capabilities.hidpiPhotosSupported ? "large" : "medium";
+					} else if (photo.height > photo.width) {
 						rendition = "medium";
 					} else if (photo.width > photo.height) {
 						rendition = "thumb";

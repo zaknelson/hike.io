@@ -19,4 +19,6 @@ angular.module("hikeio").
 		this.isPrepopulatingFormsSupported = userAgent.browser.name !== "Firefox";
 
 		this.contentEditableSupportsInput = userAgent.browser.name !== "IE";
+
+		this.hidpiPhotosSupported = userAgent.os.name === "iOS" && userAgent.device.model === "iPad";
 	}]);
