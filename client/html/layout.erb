@@ -19,7 +19,22 @@ https://github.com/zaknelson/hike.io/
 	<meta name="robots" content="noodp" />
 	<meta name="fragment" content="!" />
 	<title data-ng-bind="title">hike.io</title>
-	<link href="<%= @img_dir %>/favicon.png" rel="icon" type="image/x-icon" />
+
+	<link href="<%= @img_dir %>/favicon.ico" rel="icon" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= @img_dir %>/favicon-152.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= @img_dir %>/favicon-144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="<%= @img_dir %>/favicon-120.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= @img_dir %>/favicon-114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= @img_dir %>/favicon-72.png">
+	<link rel="apple-touch-icon-precomposed" href="/path/to/favicon-57.png">
+	<link rel="icon" href="<%= @img_dir %>/favicon-96.png" sizes="96x96">
+	<link rel="icon" href="<%= @img_dir %>/favicon-64.png" sizes="64x64">
+	<link rel="icon" href="<%= @img_dir %>/favicon-48.png" sizes="48x48">
+	<link rel="icon" href="<%= @img_dir %>/favicon-32.png" sizes="32x32">
+	<link rel="icon" href="<%= @img_dir %>/favicon-16.png" sizes="16x16">
+
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="<%= @img_dir %>/favicon-144.png">
 	<%= css :app %>
 	<style>
 		[data-ng-cloak], [data-preload-resource] {
