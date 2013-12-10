@@ -71,7 +71,7 @@
 			border: none;
 			border-color: transparent;
 			color: $text-color;
-			font-size: 18px;
+		font-size: 18px;
 			font-weight: 300;
 			height: 42px;
 			padding: 9px;
@@ -93,6 +93,17 @@
 		.search-input-button:hover {
 			opacity: .9;
 		}
+
+		.loading-spinner {
+			position: absolute;
+			top: 10px;
+			right: 7px;
+			width: 22px;
+			height: 22px;
+			background-size: 22px 22px;
+			opacity: .65;
+			background-image: url('/images/spinner.png?embed');
+		}
 	}
 
 	@media all and (max-width: $mobile-width) { 
@@ -109,6 +120,13 @@
 					width: 20px;
 					height: 20px;
 				}
+			}
+
+			.loading-spinner {
+				right: 10px;
+				width: 28px;
+				height: 28px;
+				background-size: 28px 28px;
 			}
 		}
 	}

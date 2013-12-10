@@ -178,6 +178,34 @@ html.touch a:hover {
 	display: none;
 }
 
+@-o-keyframes rotate {
+	from { -ms-transform: rotate(0deg); }
+	to { -ms-transform: rotate(360deg); }
+}
+@-ms-keyframes rotate {
+	from { -ms-transform: rotate(0deg); }
+	to { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes rotate {
+	from { -moz-transform: rotate(0deg); }
+	to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes rotate {
+	from { -webkit-transform: rotate(0deg); }
+	to { -webkit-transform: rotate(360deg); }
+}
+@keyframes rotate {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+.rotate {
+	@include experimental('animation-name', rotate, webkit, moz, o, ms, not khtml);
+	@include experimental('animation-duration', .75s, webkit, moz, o, ms, not khtml);
+	@include experimental('animation-iteration-count', infinite, webkit, moz, o, ms, not khtml);
+	@include experimental('animation-timing-function', linear, webkit, moz, o, ms, not khtml);
+}
+
 @media all and (max-width: $mobile-width) {
 	footer {
 		padding-right: 10px;
