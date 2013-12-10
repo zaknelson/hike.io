@@ -6,7 +6,7 @@ require_relative "../model/hike"
 
 class EmailUtils
 
-	def self.send_review string_id, body, base_url, title, review
+	def self.send_review string_id, body, base_url, title, review=nil
 		return if Sinatra::Application.environment() == :test
 		api_key = ENV["MAILGUN_API_KEY"]
 		api_url = "https://api:#{api_key}@api.mailgun.net/v2/hike.io.mailgun.org"
@@ -29,12 +29,12 @@ class EmailUtils
 			:html => Premailer.new(html, :with_html_string => true).to_inline_css
 	end
 
-	def self.send_new_review(json_str, string_id, base_url, review)
+	def self.send_new_review(json_str, string_id, base_url, review=nil)
 		new_json = JSON.pretty_generate(JSON.parse(json_str))
 		send_review(string_id, new_json, base_url, "New hike", review)
 	end
 
-	def self.send_diff_review(json_str, string_id, base_url, review)
+	def self.send_diff_review(json_str, string_id, base_url, review=nil)
 		hike = Hike[:string_id => string_id]
 		title = "Update for #{string_id}"
 		# Because the review process allows users to perform updates on hikes that haven't been
@@ -45,7 +45,7 @@ class EmailUtils
 		send_review(string_id, html, base_url, title, review)
 	end
 
-	def self.send_delete_review(string_id, base_url, review)
+	def self.send_delete_review(string_id, base_url, review=nil)
 		hike = Hike[:string_id => string_id]
 		title = "Delete for #{string_id}"
 		body = hike ? "<a href='#{base_url}/hikes/#{hike.string_id}'>#{base_url}/hikes/#{hike.string_id}</a>" : "<p>Hike doesn't yet exist</p>"
