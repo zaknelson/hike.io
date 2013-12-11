@@ -43,10 +43,10 @@
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
 							<div data-ui-if="isEditing">
-								<img data-ui-if="local_photo_facts.string_id" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" />
+								<img data-ui-if="local_photo_facts.string_id" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" />
 							</div>
 							<div data-ui-if="!isEditing" data-fancybox=".facts-img-link">
-								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
+								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
 							</div>
 							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
@@ -128,7 +128,7 @@
 				<div data-ui-if="!isEditing">
 					<a data-ng-repeat="photo in hike.photos_generic" data-attribution-link="{{photo.attribution_link}}" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
 						<div class="photo-thumb" style="position:relative">
-							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
+							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</a>
 				</div>
@@ -137,7 +137,7 @@
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
 							<div data-ui-if="!photo.string_id" data-ng-click="openPhotoDetails(photo)" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')', 'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
-							<img data-ui-if="photo.string_id" data-ng-click="openPhotoDetails(photo)" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{photo.alt}}" />
+							<img data-ui-if="photo.string_id" data-ng-click="openPhotoDetails(photo)" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</div>
 				</div>
@@ -151,7 +151,7 @@
 				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a photo for the Discover tab</p>
 				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
 						<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
-						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb{{isMobile &amp;&amp; '-tiny' || ''}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
+						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
 						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_preview)" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
 				</div>
 				<div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing">
