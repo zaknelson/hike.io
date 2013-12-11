@@ -109,7 +109,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr data-ng-show="isEditing || hike.permit" data-static-html-hidden="{{hike.permit != null}}">
+							<tr data-ng-show="isEditing || hike.permit" data-static-html-hidden="{{hike.permit == null || hike.permit == ''}}">
 								<td>Permits</td>
 								<td>
 									<div itemprop="permit" itemscope itemtype="http://schema.org/Permit">
