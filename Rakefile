@@ -33,11 +33,13 @@ task :static do
 	if not $?.success?
 		puts "----- jshint errors -----"
 		puts output
+		exit
 	end
 	output = `roodi --config=config/roodi.yml server/**/**/**/**/**/**/**/**/**/**/*.rb`
 	if not $?.success?
 		puts "----- roodi errors -----"
 		puts output
+		exit
 	end
 end
 
