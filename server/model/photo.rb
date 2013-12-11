@@ -43,6 +43,7 @@ class Photo < Sequel::Model
 			"\\( +clone -resize 800x800 -write #{path + Photo.get_rendition_suffix('medium')} +delete \\) " \
 			"\\( +clone -resize 400x400 -write #{path + Photo.get_rendition_suffix('small')} +delete \\) " \
 			"\\( +clone -resize 200x200 -write #{path + Photo.get_rendition_suffix('tiny')} +delete \\) " \
+			"\\( +clone -resize 800x800^ -gravity center -extent 800x800  -write #{path + Photo.get_rendition_suffix('thumb-medium')} +delete \\) " \
 			"\\( +clone -resize 400x400^ -gravity center -extent 400x400  -write #{path + Photo.get_rendition_suffix('thumb-small')} +delete \\) " \
 			"-resize 200x200^ -gravity center -extent 200x200 #{path + Photo.get_rendition_suffix('thumb-tiny')}";
 		system(str)
@@ -94,6 +95,7 @@ class Photo < Sequel::Model
 		yield "medium", 800
 		yield "small", 400
 		yield "tiny", 200
+		yield "thumb-medium", 800, true
 		yield "thumb-small", 400, true
 		yield "thumb-tiny", 200, true
 	end
