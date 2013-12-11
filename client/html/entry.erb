@@ -112,7 +112,7 @@
 							<tr data-ng-show="isEditing || hike.permit">
 								<td>Permits</td>
 								<td>
-									<div itemscope itemtype="http://schema.org/Permit">
+									<div itemprop="permit" itemscope itemtype="http://schema.org/Permit">
 										<div class="hike-permit" itemprop="name" contenteditable="{{isEditing}}" data-ng-model="hike.permit" data-single-line="true" data-change="isDirty = true"></div>
 									</div>
 								</td>
