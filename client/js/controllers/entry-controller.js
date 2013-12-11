@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -136,7 +136,12 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			if (!haveSetMetaDescription) {
-				$rootScope.metaDescription = $scope.hike.name + " is a hike in " + $scope.hike.locality + ".";
+				var filter = $filter("distance");
+				var distance = filter($scope.hike.distance, "kilometers", "miles", 1);
+				var elevationGain = filter($scope.hike.elevation_gain, "meters", "feet", 0);
+				var elevationMax = filter($scope.hike.elevation_max, "meters", "feet", 0);
+				$rootScope.metaDescription = $scope.hike.name + " is a " + distance +  " mile hike in " + $scope.hike.locality + ". " + 
+					"The hike gains " + elevationGain + " feet and reaches a maximum elevation of " + elevationMax + " feet. It doesn't yet have a description, but you can fix that by editing the page.";
 			}
 
 			cloneToLocalPhotos();
@@ -463,4 +468,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
+EntryController.$inject = ["$filter", "$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
