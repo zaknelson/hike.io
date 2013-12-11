@@ -10,7 +10,7 @@ var url = system.args[1];
 // Search engines are getting tripped up on some of the angular magic. For example, it thinks one of the primary keywords
 // of the site is string_id. In order to combat this, cleanup some non visible elements from the static html.
 var cleanup = function(page) {
-	var result = page.evaluate(function () {
+	page.evaluate(function () {
 		var allElements = document.getElementsByTagName("*");
 		var dataPrefix = "data-";
 		for (var i = allElements.length - 1; i >= 0; i--) {
@@ -20,7 +20,7 @@ var cleanup = function(page) {
 			for (var j = attributesLength - 1; j >=0; j--) {
 				var attribute = attributes[j].name;
 				var attributeValue = attributes[j].value;
-				if ((attribute === "type" && attributeValue === "text/ng-template") || 
+				if ((attribute === "type" && attributeValue === "text/ng-template") ||
 					(attribute === "data-static-html-hidden" && attributeValue === "true") ||
 					attribute === "data-preload-resource") {
 					element.parentNode.removeChild(element);
