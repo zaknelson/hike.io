@@ -71,7 +71,7 @@
 							<tr data-ng-show="hike.distance != null || isEditing" data-redirect-focus=".hike-distance">
 								<td>Distance</td>
 								<td>
-									<div itemprop="distance" itemscope itemtype="http://schema.org/Distance">
+									<div itemprop="distance" itemtype="http://schema.org/Distance">
 										<div class="hike-distance" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-positive="true" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label">mi.</span>
 									</div>
@@ -80,7 +80,7 @@
 							<tr data-ng-show="hike.elevation_gain != null || isEditing" data-redirect-focus=".hike-elevation-gain">
 								<td>Elev. Gain</td>
 								<td>
-									<div itemprop="elevationGain" itemscope itemtype="http://schema.org/Distance">
+									<div itemprop="elevationGain" itemtype="http://schema.org/Distance">
 										<div class="hike-elevation-gain" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label">ft.</span>
 									</div>
@@ -89,7 +89,7 @@
 							<tr data-ng-show="hike.elevation_max != null || isEditing" data-redirect-focus=".hike-elevation-max">
 								<td>Elev. Max</td>
 								<td>
-									<div itemprop="elevationMax" itemscope itemtype="http://schema.org/Distance">
+									<div itemprop="elevationMax" itemtype="http://schema.org/Distance">
 										<div class="hike-elevation-max" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label">ft.</span>
 									</div>
