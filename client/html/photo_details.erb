@@ -1,6 +1,6 @@
-<article id="photo-details-page" data-ng-cloak class="photo-details-page modal-input-dialog" data-ng-controller="PhotoDetailsController">
-	<h2 data-ui-if="isLoaded">Photo details</h2>
-	<form data-ng-submit="update()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}" data-ui-if="isLoaded">
+<article id="photo-details-page" data-ng-cloak class="photo-details-page modal-input-dialog" data-ng-controller="PhotoDetailsController" data-ui-if="isLoaded">
+	<h2>Photo details</h2>
+	<form data-ng-submit="update()" action="javascript:void(0);" onkeyup="if (event.keyCode == '27') $.fancybox.close()" data-ng-class="{'submitted': isSubmitted}">
 		<div>
 			<div>
 				<label for="attribution-link">Source</label>
