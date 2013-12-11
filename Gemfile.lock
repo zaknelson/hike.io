@@ -3,7 +3,7 @@ GEM
   specs:
     addressable (2.3.5)
     agent_orange (0.1.6)
-    aws-sdk (1.9.2)
+    aws-sdk (1.29.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -90,7 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   agent_orange (= 0.1.6)
-  aws-sdk (= 1.9.2)
+  aws-sdk (= 1.29.1)
   compass (= 0.12.2)
   diffy (= 3.0.1)
   humanize (= 1.1.0)
