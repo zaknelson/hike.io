@@ -44,7 +44,7 @@ angular.module("hikeio").
 					} else if (photo.height > photo.width) {
 						rendition = "medium";
 					} else if (photo.width > photo.height) {
-						rendition = "thumb-small";
+						rendition = capabilities.hidpiPhotosSupported ? "thumb-medium" : "thumb-small";
 					}
 					return config.hikeImagesPath + "/" + photo.string_id + "-" + rendition + ".jpg";
 				};
