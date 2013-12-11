@@ -66,7 +66,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		var firstParagraph = description.substring("<p>".length, description.indexOf("</p>"));
 		var div = $window.document.createElement("div");
 		div.innerHTML = firstParagraph;
-		return div.innertText;
+		return div.innerText;
 	};
 
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
