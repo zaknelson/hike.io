@@ -140,7 +140,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 				var distance = filter($scope.hike.distance, "kilometers", "miles", 1);
 				var elevationGain = filter($scope.hike.elevation_gain, "meters", "feet", 0);
 				var elevationMax = filter($scope.hike.elevation_max, "meters", "feet", 0);
-				$rootScope.metaDescription = $scope.hike.name + " is a " + distance +  " mile hike in " + $scope.hike.locality + ". " + 
+				$rootScope.metaDescription = $scope.hike.name + " is a " + distance +  " mile hike in " + $scope.hike.locality + ". " +
 					"The hike gains " + elevationGain + " feet and reaches a maximum elevation of " + elevationMax + " feet. It doesn't yet have a description, but you can fix that by editing the page.";
 			}
 
