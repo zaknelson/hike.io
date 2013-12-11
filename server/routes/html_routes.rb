@@ -148,6 +148,13 @@ class HikeApp < Sinatra::Base
 		redirect "/"
 	end
 
+	# Workaround for bug in sinatra-assetpack, https://github.com/rstacruz/sinatra-assetpack/pull/147
+	["/images/favicon.ico", "/favicon.ico",].each do |path|
+		get path do
+			send_file "#{root}/images/favicon.ico", :type => "image/x-icon"
+		end
+	end
+
 	get %r{^\/(.*)\/$}, :provides => "html" do
 		# Redirect urls with trailing /'s
 		redirect params[:captures].first, 301
