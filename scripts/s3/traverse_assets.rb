@@ -154,6 +154,15 @@ def replace_with_progressive_jpg object, bucket
 	end
 end
 
+def rename_thumb_to_thumb_small object, bucket
+	key = object.key
+	if key.start_with?("hike-images/") and key.end_with?("-thumb.jpg")
+		puts key
+		new_key = key.sub("thumb", "thumb-small")
+		object.move_to(new_key)
+	end
+end
+
 def trace object
 	key = object.key
 	puts key
@@ -165,6 +174,7 @@ def main
 	#delete_photos_in_db_that_are_unassigned
 	bucket.objects.each do |object|
 		trace object
+		#rename_thumb_to_thumb_small object, bucket
 		#replace_with_progressive_jpg object, bucket
 		#strip_metadata object
 		#create_tiny object, bucket
