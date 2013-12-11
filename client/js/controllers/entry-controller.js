@@ -62,6 +62,13 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		if (hike.location.longitude >  180)	hike.location.longitude =  180;
 	};
 
+	var getMetaDescriptionFromHikeDescription = function(description) {
+		var firstParagraph = description.substring("<p>".length, description.indexOf("</p>"));
+		var div = $window.document.createElement("div");
+		div.innerHTML = firstParagraph;
+		return div.innertText;
+	};
+
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
 		$scope.isJustAdded = true;
 		$scope.isBeingReviewed = isBeingReviewed;
@@ -123,7 +130,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			if ($scope.hike.description) {
 				var description = $scope.hike.description;
 				if (description.indexOf("<p>") === 0 && description.indexOf("</p>") > 0) {
-					$rootScope.metaDescription = description.substring("<p>".length, description.indexOf("</p>"));
+					$rootScope.metaDescription = getMetaDescriptionFromHikeDescription(description);
 					haveSetMetaDescription = true;
 				}
 			}
