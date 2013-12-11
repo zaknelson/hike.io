@@ -163,17 +163,31 @@ def rename_thumb_to_thumb_small object, bucket
 	end
 end
 
+def create_medium_thumb_rendition object, bucket
+	key = object.key
+	if key.start_with?("hike-images/") and key.end_with?("-original.jpg")
+		puts key
+		File.open("before.jpg", 'w') { |file| file.write(object.read) }
+		new_key = key.chomp("-original.jpg") + "-thumb-medium.jpg"
+		return if bucket.objects[new_key].exists?
+	 	`convert before.jpg -unsharp 2x0.5+0.7+0 -quality 87 -interlace Plane -resize 800x800^ -gravity center -extent 800x800 after.jpg`
+	 	bucket.objects[new_key].write(Pathname.new("after.jpg"), :cache_control => "max-age=31556926")
+	end
+end
+
 def trace object
 	key = object.key
 	puts key
 end
 
 def main
+	#AWS.config(:http_wire_trace => true, :logger => nil)
 	bucket = s3.buckets["assets.hike.io"]
 	#delete_abdandoned_photos_on_s3 bucket
 	#delete_photos_in_db_that_are_unassigned
 	bucket.objects.each do |object|
 		trace object
+		#create_medium_thumb_rendition object, bucket
 		#rename_thumb_to_thumb_small object, bucket
 		#replace_with_progressive_jpg object, bucket
 		#strip_metadata object
@@ -182,6 +196,7 @@ def main
 		#create_tiny_thumb object, bucket
 		#update_photo_size object
 	end
+	exit
 end
 
 main
