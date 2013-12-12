@@ -60,6 +60,15 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	def sitemap_image_element photo, hike
+		caption = photo.alt ? "<image:caption>#{photo.alt}</image:caption>" : ""
+		return "<image:image> \
+					<image:loc>http://assets.hike.io/hike-images/#{photo.string_id}-large.jpg</image:loc> \
+					#{caption} \
+					<image:geo_location>#{hike.locality}</image:geo_location> \
+				</image:image>"
+	end
+
 	get "/sitemap.xml", :provides => "xml" do
 		@hikes = Hike.all
 		erb :sitemap, :layout => false

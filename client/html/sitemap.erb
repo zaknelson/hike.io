@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 	<url>
 		<loc>http://hike.io</loc>
 		<priority>1.0</priority>
@@ -25,6 +25,20 @@
 		<loc>http://hike.io/hikes/<%= hike.string_id %></loc>
 		<priority>1.0</priority>
 		<changefreq>daily</changefreq>
+		<% if hike.photo_landscape %>
+		<%= sitemap_image_element(hike.photo_landscape, hike) %>
+		<% end %>
+		<% if hike.photo_facts %>
+		<%= sitemap_image_element(hike.photo_facts, hike) %>
+		<% end %>
+		<% if hike.photo_preview %>
+		<%= sitemap_image_element(hike.photo_preview, hike) %>
+		<% end %>
+		<% if hike.photos_generic %>
+		<% for photo in hike.photos_generic %>
+		<%= sitemap_image_element(photo, hike) %>
+		<% end %>
+		<% end %>
 	</url>
 	<% end %>
 </urlset>
