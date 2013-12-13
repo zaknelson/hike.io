@@ -70,6 +70,9 @@ angular.module("hikeio", ["seo", "ui"]).
 			}
 		});
 
+		/* global FastClick: false */
+		FastClick.attach($window.document.body);
+
 		// Pre-populate template
 		$timeout(function() {
 			$http.get("/partials/entry.html",			{ cache:$templateCache });
