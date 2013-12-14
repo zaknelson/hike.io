@@ -9,7 +9,7 @@
 		<h3 data-ng-show="!error &amp;&amp; !isBeingReviewed">You are editing this page.</h3>
 		<h3 data-ng-show="!error &amp;&amp; isBeingReviewed">Nice! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
 		<div>
-			<button class="save-button btn" data-ng-class="{disabled: !isDirty || isSaving || numPhotosUploading != 0, loading: true}" autocomplete="off" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || (numPhotosUploading != 0 &amp;&amp; 'Uploading...' || 'Save')}}</button>
+			<button class="save-button btn" data-ng-class="{disabled: !isDirty || isSaving || numPhotosUploading != 0, loading: true}" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || (numPhotosUploading != 0 &amp;&amp; 'Uploading...' || 'Save')}}</button>
 			<button class="done-button btn" data-ng-click="done()">Done</button>
 		</div>
 	</div>
