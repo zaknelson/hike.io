@@ -11,8 +11,10 @@ class HikeApp < Sinatra::Base
 	def invalidate_cache_after_updating_hike hike
 		$cache.remove("/discover")
 		$cache.remove("/hikes")
-		$cache.remove("/hikes/" + hike.string_id)
+		$cache.remove("/hikes/#{hike.string_id}")
 		$cache.remove("/api/v1/hikes", true)
+		$cache.remove("/api/v1/hikes/#{hike.string_id}", true)
+		$cache.remove("/api/v1/hikes/#{hike.id}", true)
 	end
 
 	get "/api/v1/hikes", :provides => "json" do
@@ -66,16 +68,19 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
+		cache_key = request.fullpath
+		cached_json = $cache.get(cache_key)
+		return cached_json if cached_json
+
 		before = Time.now
 		hike = Hike.get_hike_from_id params[:hike_id]
 		if not hike
 			return 202 if Review[:status => Review::STATUS_UNREVIEWED, :hike_string_id => params[:hike_id], :api_verb => "post"]
 			return err_404
 		end
-		result = hike.as_json get_fields_filter
-		after = Time.now
-		puts (after - before) * 1000
-		result
+		json = hike.as_json get_fields_filter
+		$cache.set(cache_key, json)
+		json
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
