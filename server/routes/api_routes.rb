@@ -9,13 +9,14 @@ require_relative "../utils/string_utils"
 class HikeApp < Sinatra::Base
 
 	def invalidate_cache_after_updating_hike hike
-		$cache.remove("html_/hikes/" + hike.string_id)
-		$cache.remove("html_/discover")
-		$cache.remove("api_/api/v1/hikes", true)
+		$cache.remove("/discover")
+		$cache.remove("/hikes")
+		$cache.remove("/hikes/" + hike.string_id)
+		$cache.remove("/api/v1/hikes", true)
 	end
 
 	get "/api/v1/hikes", :provides => "json" do
-		cache_key = "api_" + request.fullpath
+		cache_key = request.fullpath
 		cached_json = $cache.get(cache_key)
 		return cached_json if cached_json
 

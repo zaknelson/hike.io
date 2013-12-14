@@ -30,7 +30,7 @@ class HikeApp < Sinatra::Base
 	end
 
 	def render_template template_id
-		cache_key = "html_" + request.fullpath
+		cache_key = request.fullpath
 		cached_template = $cache.get(cache_key)
 		return cached_template if cached_template
 
