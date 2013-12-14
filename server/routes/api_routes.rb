@@ -10,7 +10,11 @@ class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
 		#TODO, consider caching this
-		array_as_json(Hike.order(:id).all, get_fields_filter) 
+		before = Time.now
+		result = array_as_json(Hike.order(:id).all, get_fields_filter)
+		after = Time.now
+		puts (after - before) * 1000
+		result
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
