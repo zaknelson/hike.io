@@ -66,12 +66,16 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
+		before = Time.now
 		hike = Hike.get_hike_from_id params[:hike_id]
 		if not hike
 			return 202 if Review[:status => Review::STATUS_UNREVIEWED, :hike_string_id => params[:hike_id], :api_verb => "post"]
 			return err_404
 		end
-		hike.as_json get_fields_filter
+		result = hike.as_json get_fields_filter
+		after = Time.now
+		puts (after - before) * 1000
+		result
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do
