@@ -18,6 +18,7 @@ require "will_paginate"
 require "will_paginate/sequel"
 
 require_relative "controller/search"
+require_relative "model/cache"
 require_relative "model/database"
 require_relative "model/hike"
 require_relative "model/keyword"

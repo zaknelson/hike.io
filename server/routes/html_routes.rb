@@ -29,19 +29,32 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	def wrap_template_with_script str, template_id
-		result = "<script type='text/ng-template' id='/partials/#{template_id}.html'>"
-		result += str
-		result += "</script>"
+	def get_wrapped_partial str, template_id, cache=true
+		cache_key = "html_wrapped_partial_" + template_id.to_s if cache
+		wrapped_partial_str = cache ? Cache.get(cache_key) : nil
+		if !wrapped_partial_str
+			wrapped_partial_str = erb("<script type='text/ng-template' id='/partials/#{template_id}.html'>#{str}</script>")
+			Cache.set(cache_key, wrapped_partial_str) if cache
+		end
+		wrapped_partial_str
 	end
 
-	def render_template template_id
-		rendered_template = partial template_id
+	def get_partial template_id
+		cache_key = "html_partial_" + template_id.to_s
+		partial_str = Cache.get(cache_key)
+		if !partial_str
+			partial_str = partial(template_id)
+			Cache.set(cache_key, partial_str)
+		end
+		partial_str
+	end
+
+	def render_template template_id, cache=true
+		partial_str = get_partial(template_id)
 		if @is_partial
-			rendered_template
+			partial_str
 		else
-			wrapped_partial = wrap_template_with_script rendered_template, template_id
-			erb wrapped_partial
+			get_wrapped_partial(partial_str, template_id, cache)
 		end
 	end
 
@@ -108,7 +121,7 @@ class HikeApp < Sinatra::Base
 			if not @is_partial
 				preload_resource "/api/v1/hikes?fields=locality,name,string_id", array_as_json(Hike.order(:id).all, [:locality, :name, :string_id])
 			end
-			render_template :all
+			render_template(:all, false)
 		end
 	end
 
@@ -117,7 +130,7 @@ class HikeApp < Sinatra::Base
 			if not @is_partial
 				preload_resource "/api/v1/hikes?fields=distance,locality,name,photo_preview,string_id", array_as_json(Hike.order(:id).all, [:distance, :locality, :name, :photo_preview, :string_id])
 			end
-			render_template :photo_stream
+			render_template(:photo_stream, false)
 		end
 	end
 
@@ -143,7 +156,7 @@ class HikeApp < Sinatra::Base
 				resource_id = "/api/v1/hikes/" + hike_id
 				preload_resource resource_id, hike.as_json if hike
 			end
-			render_template :entry
+			render_template(:entry, false)
 		end
 	end
 

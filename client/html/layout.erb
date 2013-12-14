@@ -14,7 +14,7 @@ https://github.com/zaknelson/hike.io/
 <html lang="en" id="ng-app" data-ng-app="hikeio" data-ng-controller="AppController" data-ui-event="{keydown: 'handleGlobalKeydown($event)'}">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta id="viewport" name="viewport" content="width=device-width<% if !@user_agent.device.platform.to_s.downcase.include?('android') %>,initial-scale=1<% end %>"/>
+	<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1"/>
 	<meta id="description" name="description" data-ng-attr-content="{{metaDescription}}" />
 	<meta name="robots" content="noodp" />
 	<meta name="fragment" content="!" />
@@ -63,10 +63,9 @@ https://github.com/zaknelson/hike.io/
 		}
 
 	</script>
-	<% if !@user_agent.is_mobile? || @user_agent.device.platform.to_s.downcase.include?('ipad') %>
+	<!-- TODO, consider removing typekit for mobile browsers to speed up load time -->
 	<script src="//use.typekit.net/jce4miw.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
-	<% end %>
 	<!--[if lt IE 9]>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
 	<![endif]-->
