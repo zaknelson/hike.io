@@ -9,6 +9,7 @@ require_relative "../utils/string_utils"
 class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
+		#TODO, consider caching this
 		array_as_json(Hike.order(:id).all, get_fields_filter) 
 	end
 
@@ -81,7 +82,9 @@ class HikeApp < Sinatra::Base
 			return 202
 		end
 		return err_409("Update conflicts with another change.") if hike.edit_time.to_s != json["edit_time"]
-		$cache.set("html_/hikes/" + hike.string_id, nil) # Invalidate cached html
+		 # Invalidate cached html
+		$cache.set("html_/hikes/" + hike.string_id, nil)
+		$cache.set("html_/discover", nil)
 		Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json
@@ -101,7 +104,8 @@ class HikeApp < Sinatra::Base
 		elsif not hike
 			return err_404
 		end
-		$cache.set("html_/hikes/" + hike.string_id, nil) # Invalidate cached html
+		$cache.set("html_/hikes/" + hike.string_id, nil)
+		$cache.set("html_/discover", nil)
 		Thread.new { EmailUtils.send_delete_review(hike_id, request.base_url) }
 		hike.cascade_destroy
 		return 200
