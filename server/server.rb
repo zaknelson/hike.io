@@ -141,10 +141,12 @@ class HikeApp < Sinatra::Base
 		def array_as_json array, fields=nil
 			json = "["
 			array.each_with_index do |element, i|
-				json += element.as_json fields
-				json += "," if i != array.length - 1
+				json << element.as_json(fields)
+				if i != array.length - 1
+					json << ","
+				end
 			end
-			json += "]"
+			json << "]"
 		end
 
 		# Error responses
