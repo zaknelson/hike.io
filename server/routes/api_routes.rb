@@ -15,17 +15,12 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes", :provides => "json" do
-		before = Time.now
 		cache_key = "api_" + request.fullpath
 		cached_json = $cache.get(cache_key)
-		middle = Time.now
-		puts "cached time #{(middle - before)*1000}"
 		return cached_json if cached_json
 
 		json = array_as_json(Hike.order(:id).all, get_fields_filter)
 		$cache.set(cache_key, json)
-		after = Time.now
-		puts "non-cached time #{(after - before)*1000}"
 		json
 	end
 
