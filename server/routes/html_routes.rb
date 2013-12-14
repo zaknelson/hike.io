@@ -29,33 +29,17 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
-	def get_wrapped_partial str, template_id, cache=true
-		cache_key = "html_wrapped_partial_" + template_id.to_s if cache
-		wrapped_partial_str = cache ? $cache.get(cache_key) : nil
-		if !wrapped_partial_str
-			wrapped_partial_str = erb("<script type='text/ng-template' id='/partials/#{template_id}.html'>#{str}</script>")
-			$cache.set(cache_key, wrapped_partial_str) if cache
-		end
-		wrapped_partial_str
-	end
+	def render_template template_id
+		cache_key = "html_" + request.path_info
+		cached_template = $cache.get(cache_key)
+		return cached_template if cached_template
 
-	def get_partial template_id
-		cache_key = "html_partial_" + template_id.to_s
-		partial_str = $cache.get(cache_key)
-		if !partial_str
-			partial_str = partial(template_id)
-			$cache.set(cache_key, partial_str)
+		html = partial(template_id)
+		if !@is_partial
+			html = erb("<script type='text/ng-template' id='/partials/#{template_id}.html'>#{html}</script>")
 		end
-		partial_str
-	end
-
-	def render_template template_id, cache=true
-		partial_str = get_partial(template_id)
-		if @is_partial
-			partial_str
-		else
-			get_wrapped_partial(partial_str, template_id, cache)
-		end
+		$cache.set(cache_key, html)
+		html
 	end
 
 	def preload_resource resource_id, resource
@@ -121,7 +105,7 @@ class HikeApp < Sinatra::Base
 			if not @is_partial
 				preload_resource "/api/v1/hikes?fields=locality,name,string_id", array_as_json(Hike.order(:id).all, [:locality, :name, :string_id])
 			end
-			render_template(:all, false)
+			render_template :all
 		end
 	end
 
@@ -130,7 +114,7 @@ class HikeApp < Sinatra::Base
 			if not @is_partial
 				preload_resource "/api/v1/hikes?fields=distance,locality,name,photo_preview,string_id", array_as_json(Hike.order(:id).all, [:distance, :locality, :name, :photo_preview, :string_id])
 			end
-			render_template(:photo_stream, false)
+			render_template :photo_stream
 		end
 	end
 
@@ -149,14 +133,14 @@ class HikeApp < Sinatra::Base
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path, :provides => "html" do
 			hike_id = params[:hike_id]
-			hike = Hike.get_hike_from_id hike_id
+			hike = Hike[:string_id => hike_id]
 			return 404 if path != "/partials/entry.html" and !hike and !Review.has_pending_review_for_hike?(params[:hike_id])
 
 			if not @is_partial
 				resource_id = "/api/v1/hikes/" + hike_id
 				preload_resource resource_id, hike.as_json if hike
 			end
-			render_template(:entry, false)
+			render_template :entry
 		end
 	end
 
