@@ -93,7 +93,12 @@ class HikeApp < Sinatra::Base
 
 	# logging setup
 	configure :production, :development do
-    	enable :logging
+		enable :logging
+	end
+
+	# persistent cache
+	configure do
+		$cache = Cache.new
 	end
 
 	assets {

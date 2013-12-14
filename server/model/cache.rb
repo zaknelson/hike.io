@@ -1,11 +1,15 @@
 class Cache
-	@@cache = {}
+	
 
-	def self.set key, value
-		@@cache[key] = value
+	def initialize
+		@cache = {}
 	end
 
-	def self.get key
-		@@cache[key]
+	def set key, value
+		@cache[key] = value
+	end
+
+	def get key
+		@cache[key]
 	end
 end

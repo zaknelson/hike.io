@@ -31,20 +31,20 @@ class HikeApp < Sinatra::Base
 
 	def get_wrapped_partial str, template_id, cache=true
 		cache_key = "html_wrapped_partial_" + template_id.to_s if cache
-		wrapped_partial_str = cache ? Cache.get(cache_key) : nil
+		wrapped_partial_str = cache ? $cache.get(cache_key) : nil
 		if !wrapped_partial_str
 			wrapped_partial_str = erb("<script type='text/ng-template' id='/partials/#{template_id}.html'>#{str}</script>")
-			Cache.set(cache_key, wrapped_partial_str) if cache
+			$cache.set(cache_key, wrapped_partial_str) if cache
 		end
 		wrapped_partial_str
 	end
 
 	def get_partial template_id
 		cache_key = "html_partial_" + template_id.to_s
-		partial_str = Cache.get(cache_key)
+		partial_str = $cache.get(cache_key)
 		if !partial_str
 			partial_str = partial(template_id)
-			Cache.set(cache_key, partial_str)
+			$cache.set(cache_key, partial_str)
 		end
 		partial_str
 	end
