@@ -8,15 +8,6 @@ require_relative "../utils/string_utils"
 
 class HikeApp < Sinatra::Base
 
-	def invalidate_cache_after_updating_hike hike
-		$cache.remove("/discover")
-		$cache.remove("/hikes")
-		$cache.remove("/hikes/#{hike.string_id}")
-		$cache.remove("/api/v1/hikes", true)
-		$cache.remove("/api/v1/hikes/#{hike.string_id}", true)
-		$cache.remove("/api/v1/hikes/#{hike.id}", true)
-	end
-
 	get "/api/v1/hikes", :provides => "json" do
 		cache_key = request.fullpath
 		cached_json = $cache.get(cache_key)
@@ -103,10 +94,7 @@ class HikeApp < Sinatra::Base
 			return 202
 		end
 		return err_409("Update conflicts with another change.") if hike.edit_time.to_s != json["edit_time"]
-		Thread.new do
-			invalidate_cache_after_updating_hike(hike)
-			EmailUtils.send_diff_review(json_str, hike_id, request.base_url)
-		end
+		Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json
 	end
@@ -125,10 +113,7 @@ class HikeApp < Sinatra::Base
 		elsif not hike
 			return err_404
 		end
-		Thread.new do
-			invalidate_cache_after_updating_hike(hike)
-			EmailUtils.send_delete_review(hike_id, request.base_url)
-		end
+		Thread.new { EmailUtils.send_delete_review(hike_id, request.base_url) }
 		hike.cascade_destroy
 		return 200
 	end
