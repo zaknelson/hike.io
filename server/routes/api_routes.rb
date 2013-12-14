@@ -11,8 +11,7 @@ class HikeApp < Sinatra::Base
 	def invalidate_cache_after_updating_hike hike
 		$cache.remove("/discover")
 		$cache.remove("/hikes")
-		$cache.remove("/hikes/" + hike.string_id, true)
-		$cache.remove("/hikes/" + hike.id.to_s, true)
+		$cache.remove("/hikes/" + hike.string_id)
 		$cache.remove("/api/v1/hikes", true)
 	end
 
