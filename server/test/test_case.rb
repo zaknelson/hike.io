@@ -12,6 +12,7 @@ class HikeAppTestCase < Test::Unit::TestCase
 
 	def run(*args, &block)
 		result = nil
+		$cache = Cache.new
 		Sequel::Model.db.transaction(:rollback => :always){ result = super }
 		result
 	end
