@@ -12,6 +12,7 @@ class HikeApp < Sinatra::Base
 		$cache.remove("/discover")
 		$cache.remove("/hikes")
 		$cache.remove("/hikes/" + hike.string_id)
+		$cache.remove("/hikes/" + hike.id.to_s)
 		$cache.remove("/api/v1/hikes", true)
 	end
 
