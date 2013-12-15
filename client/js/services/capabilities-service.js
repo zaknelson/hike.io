@@ -5,6 +5,8 @@ angular.module("hikeio").
 		/* global UAParser: true */
 		var userAgent = new UAParser().getResult();
 
+		this.isMobile = $($window).width() < 650;
+
 		//http://stackoverflow.com/questions/7843150/detect-if-browser-supports-contenteditable
 		this.isEditPageSupported = true;
 		if ((userAgent.browser.name === "IE" && parseFloat(userAgent.browser.version) < 9) ||

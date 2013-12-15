@@ -55,7 +55,6 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.location = $location;
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
-		$rootScope.isMobile = $($window).width() < 650;
 		$rootScope.isProduction = $location.absUrl().indexOf("hike.io") > -1;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			if (current && current.$$route && current.$$route.title) {

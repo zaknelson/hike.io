@@ -38,7 +38,7 @@ angular.module("hikeio").
 				};
 				scope.getPreviewImageSrc = function(hike, index) {
 					var photo = hike.photo_preview || hike.photo_facts;
-					var useLargerImages = capabilities.hidpiSupported && !$rootScope.isMobile;
+					var useLargerImages = capabilities.hidpiSupported && !capabilities.isMobile;
 					var rendition = useLargerImages ? "medium" : "small";
 					if (scope.isFeatured(hike, index)) {
 						rendition = useLargerImages ? "large" : "medium";

@@ -18,10 +18,10 @@
 			<div data-ui-if="isLoaded &amp;&amp; local_photo_landscape">
 				<div data-ui-if="isEditing" data-ng-click="removePhoto('landscape')" class="delete-photo-icon">×</div>
 				<div data-ui-if="isEditing">
-					<img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+					<img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
 				</div>
 				<div data-ui-if="!isEditing" data-fancybox=".landscape-img-link">
-					<a class="landscape-img-link" href="javascript:;" data-attribution-link="{{local_photo_landscape.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
+					<a class="landscape-img-link" href="javascript:;" data-attribution-link="{{local_photo_landscape.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img data-ui-if="local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_landscape.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg" alt="{{local_photo_landscape.alt}}" />
 					</a>
 				</div>
 				<div data-ui-if="!local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
@@ -43,10 +43,10 @@
 						<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_facts">
 							<div data-ui-if="isEditing" data-ng-click="removePhoto('facts')" class="delete-photo-icon">×</div>
 							<div data-ui-if="isEditing">
-								<img data-ui-if="local_photo_facts.string_id" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" />
+								<img data-ui-if="local_photo_facts.string_id" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" />
 							</div>
 							<div data-ui-if="!isEditing" data-fancybox=".facts-img-link">
-								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img itemprop="image" data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
+								<a class="facts-img-link" href="javascript:;" data-attribution-link="{{local_photo_facts.attribution_link}}" data-fancybox-href="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg"><img itemprop="image" data-ui-if="local_photo_facts.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_facts.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_facts.alt}}" /></a>
 							</div>
 							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
@@ -101,9 +101,9 @@
 									<div class="hike-latitude-and-longitude" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
 										<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow" itemprop="map">
 											<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
-												<div class="hike-latitude" itemprop="latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
+												<div class="hike-latitude" itemprop="latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || capabilities.isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
 											<div class="hike-longitude-and-label">
-												<div class="hike-longitude" itemprop="longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
+												<div class="hike-longitude" itemprop="longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || capabilities.isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
 										</a>
 										<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
 									</div>
@@ -130,9 +130,9 @@
 			<h2>Photos</h2>
 			<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
 				<div data-ui-if="!isEditing">
-					<a data-ng-repeat="photo in hike.photos_generic" data-attribution-link="{{photo.attribution_link}}" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
+					<a data-ng-repeat="photo in hike.photos_generic" data-attribution-link="{{photo.attribution_link}}" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
 						<div class="photo-thumb" style="position:relative">
-							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
+							<img  data-ui-if="isLoaded" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</a>
 				</div>
@@ -141,7 +141,7 @@
 						<div class="photo-thumb" style="position:relative">
 							<div data-ng-click="removePhoto('generic', $index)" class="delete-photo-icon">×</div>
 							<div data-ui-if="!photo.string_id" data-ng-click="openPhotoDetails(photo)" class="img-div" data-ng-style="{'background-image' : 'url(' + photo.src + ')', 'transform' : 'rotate(' + photo.rotation + 'deg)'}"></div>
-							<img data-ui-if="photo.string_id" data-ng-click="openPhotoDetails(photo)" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
+							<img data-ui-if="photo.string_id" data-ng-click="openPhotoDetails(photo)" data-ng-src="{{config.hikeImagesPath}}/{{photo.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{photo.alt}}" />
 						</div>
 					</div>
 				</div>
@@ -155,7 +155,7 @@
 				<p data-ng-show="!local_photo_preview &amp;&amp; isEditing" class="discover-explanation">Add a photo for the Discover tab</p>
 				<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
 						<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
-						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb-{{isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
+						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
 						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_preview)" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
 				</div>
 				<div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing">
