@@ -22,6 +22,16 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 		$scope.isSubmitted = false;
 		$scope.prepopulatedName = null;
 		$scope.error = null;
+		$scope.locatingLatLng = false;
+		$scope.latitude = null;
+		$scope.longitude = null;
+		$scope.mapMarker = null;
+		$scope.mapOptions = {
+			center: new google.maps.LatLng(39.833333, -98.583333),
+			zoom: 4,
+			mapTypeId: google.maps.MapTypeId.TERRAIN,
+			streetViewControl: false
+		};
 	};
 	resetScope();
 
@@ -93,6 +103,40 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 				$log.error(data, status, headers, config);
 			}
 		);
+	};
+
+	$scope.locateLatLng = function() {
+		$scope.locatingLatLng = true;
+	};
+
+	var hideMap = function() {
+		$scope.locatingLatLng = false;
+		if ($scope.mapMarker) {
+			$scope.mapMarker.setMap(null);
+		}
+		$scope.mapMarker = null;
+	};
+
+	$scope.saveLatLng = function() {
+		hideMap();
+	};
+
+	$scope.cancelLatLng = function() {
+		hideMap();
+		$scope.hike.location = {};
+	};
+
+	$scope.addMarker = function($event, map) {
+		if ($scope.mapMarker) {
+			$scope.mapMarker.setMap(null);
+		}
+		$scope.mapMarker = new google.maps.Marker({
+			map: map,
+			position: $event.latLng,
+			draggable: true
+		});
+		$scope.hike.location.latitude = $event.latLng.lat();
+		$scope.hike.location.longitude = $event.latLng.lng();
 	};
 };
 
