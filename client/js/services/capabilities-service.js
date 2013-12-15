@@ -27,5 +27,5 @@ angular.module("hikeio").
             (min--moz-device-pixel-ratio: 1.5),\
             (-o-min-device-pixel-ratio: 3/2),\
             (min-resolution: 1.5dppx)";
-		this.hidpiSupported = (window.devicePixelRatio > 1) || (window.matchMedia && window.matchMedia(mediaQuery).matches)
+		this.hidpiSupported = (window.devicePixelRatio > 1) || (window.matchMedia && window.matchMedia(mediaQuery).matches);
 	}]);
