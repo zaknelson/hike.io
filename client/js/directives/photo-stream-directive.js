@@ -38,13 +38,14 @@ angular.module("hikeio").
 				};
 				scope.getPreviewImageSrc = function(hike, index) {
 					var photo = hike.photo_preview || hike.photo_facts;
-					var rendition = capabilities.hidpiPhotosSupported ? "medium" : "small";
+					var useLargerImages = capabilities.hidpiSupported && !$rootScope.isMobile;
+					var rendition = useLargerImages ? "medium" : "small";
 					if (scope.isFeatured(hike, index)) {
-						rendition = capabilities.hidpiPhotosSupported ? "large" : "medium";
+						rendition = useLargerImages ? "large" : "medium";
 					} else if (photo.height > photo.width) {
 						rendition = "medium";
 					} else if (photo.width > photo.height) {
-						rendition = capabilities.hidpiPhotosSupported ? "thumb-medium" : "thumb-small";
+						rendition = useLargerImages ? "thumb-medium" : "thumb-small";
 					}
 					return config.hikeImagesPath + "/" + photo.string_id + "-" + rendition + ".jpg";
 				};
