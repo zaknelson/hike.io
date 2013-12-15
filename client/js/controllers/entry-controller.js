@@ -173,40 +173,38 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 
 
 	$scope.save = function() {
-		if (!$scope.isSaving && $scope.isEditing && $scope.isDirty && $scope.numPhotosUploading === 0) {
-			$scope.isSaving = true;
-			$scope.isDirty = false;
-			normalizeHikeBeforeSave();
-			$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
-				success(function(data, status, headers, config) {
-					$scope.isJustAdded = false;
-					$scope.isSaving = false;
-					if (status === 200) {
-						$scope.hike = data;
-						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
-						resourceCache.removeAllWithRoot("/api/v1/hikes");
-						resourceCache.removeAllWithRoot("/api/v1/hikes/search");
-					} else if (status === 202) {
-						$scope.isBeingReviewed = true;
-						resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
-						persistentStorage.set("/api/v1/hikes/" + $scope.hike.string_id, $scope.hike);
-					}
-					selection.clear();
-					descriptionMediumEditor.hideToolbar();
-					permitMediumEditor.hideToolbar();
-				}).
-				error(function(data, status, headers, config) {
-					$scope.isSaving = false;
-					$scope.isDirty = true;
-					if (data.message) {
-						$scope.error = "Error: " + data.message;
-					} else {
-						$scope.error = "Error: " + status;
-					}
-					$window.document.body.scrollTop = $window.document.documentElement.scrollTop = 0;
-					$log.error(data, status, headers, config);
-				});
-		}
+		$scope.isSaving = true;
+		$scope.isDirty = false;
+		normalizeHikeBeforeSave();
+		$http({method: "PUT", url: "/api/v1/hikes/" + $scope.hike.string_id, data: $scope.hike}).
+			success(function(data, status, headers, config) {
+				$scope.isJustAdded = false;
+				$scope.isSaving = false;
+				if (status === 200) {
+					$scope.hike = data;
+					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
+					resourceCache.removeAllWithRoot("/api/v1/hikes");
+					resourceCache.removeAllWithRoot("/api/v1/hikes/search");
+				} else if (status === 202) {
+					$scope.isBeingReviewed = true;
+					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
+					persistentStorage.set("/api/v1/hikes/" + $scope.hike.string_id, $scope.hike);
+				}
+				selection.clear();
+				descriptionMediumEditor.hideToolbar();
+				permitMediumEditor.hideToolbar();
+			}).
+			error(function(data, status, headers, config) {
+				$scope.isSaving = false;
+				$scope.isDirty = true;
+				if (data.message) {
+					$scope.error = "Error: " + data.message;
+				} else {
+					$scope.error = "Error: " + status;
+				}
+				$window.document.body.scrollTop = $window.document.documentElement.scrollTop = 0;
+				$log.error(data, status, headers, config);
+			});
 	};
 
 	$scope.done = function() {
