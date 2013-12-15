@@ -1,7 +1,7 @@
 require "rubygems"
 require "sinatra"
-require "sinatra/sequel"
 require "uuidtools"
+require_relative "../lib/sinatra-sequel"
 
 Sequel::Model.plugin :json_serializer, :naked => true
 
