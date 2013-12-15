@@ -107,7 +107,8 @@
 	height: 28px;
 	cursor: pointer;
 	z-index: 8040;
-	background: url('/images/close.png?embed') center center no-repeat;
+	background-size: 28px 28px;
+	background-image: url('/images/close.png?embed');
 }
 
 .fancybox-nav {
