@@ -103,6 +103,18 @@ $banner-height: 50px;
 		}
 	}
 
+	@media all and (max-width: 800px) {
+		.banner {
+			text-align: left;
+		}
+	}
+
+	@media all and (max-width: $mobile-width) {	
+		.banner-extra-text {
+			display: none;
+		}
+	}
+
 	.map-container {
 		position: absolute;
 		width: 100%;
