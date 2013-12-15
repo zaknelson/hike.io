@@ -96,7 +96,8 @@
 	@include experimental('animation-duration', .75s, webkit, moz, o, ms, not khtml);
 	@include experimental('animation-iteration-count', infinite, webkit, moz, o, ms, not khtml);
 	@include experimental('animation-timing-function', linear, webkit, moz, o, ms, not khtml);
-	background: url('/images/spinner-white.png?embed') center center no-repeat;
+	background-image: url('/images/spinner-white.png?embed');
+	background-size: 50px 50px;
 }
 
 .fancybox-close {
