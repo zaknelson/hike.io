@@ -127,7 +127,7 @@
 			</div>
 		</section>
 		<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
-			<h2>Photos</h2>
+			<h2 data-ui-if="isEditing">Photos</h2>
 			<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
 				<div data-ui-if="!isEditing">
 					<a data-ng-repeat="photo in hike.photos_generic" data-attribution-link="{{photo.attribution_link}}" class="fancybox-thumb-link" href="javascript:;" rel="photos" data-fancybox-href="{{config.hikeImagesPath}}/{{photo.string_id}}-{{capabilities.isMobile &amp;&amp; 'medium' || 'large'}}.jpg">
