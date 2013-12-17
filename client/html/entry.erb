@@ -4,7 +4,7 @@
 </a>
 
 <article class="entry-page" data-ng-show="isLoaded" data-ng-class="{'entry-edit-page': isEditing}">
-	<div class="edit-banner" data-ng-show="isEditing" data-ng-class="{'edit-banner-review': isBeingReviewed}">
+	<div class="edit-banner" data-static-html-hidden="true" data-ng-show="isEditing" data-ng-class="{'edit-banner-review': isBeingReviewed}">
 		<h3 data-ng-show="error" data-ng-bind="error"></h3>
 		<h3 data-ng-show="!error &amp;&amp; !isBeingReviewed">You are editing this page.</h3>
 		<h3 data-ng-show="!error &amp;&amp; isBeingReviewed">Nice! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
