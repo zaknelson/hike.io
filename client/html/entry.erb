@@ -126,7 +126,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing">
+		<section class="photos-section" data-ng-show="hike.photos_generic.length > 0 || isEditing" data-ng-style="{'float' : isEditing &amp;&amp; 'none' || 'left'}">
 			<h2 data-ui-if="isEditing">Photos</h2>
 			<div class="photo-thumb-list" data-fancybox=".fancybox-thumb-link">
 				<div data-ui-if="!isEditing">
