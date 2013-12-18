@@ -129,6 +129,11 @@ blockquote {
 	border-left: 5px solid #ddd;
 }
 
+img { 
+	font-size: 10px !important;
+	color: rgba(0, 0, 0, 0.0) !important;
+}
+
 ::-webkit-input-placeholder {
 	font-weight: 300;
 	opacity: .7;
