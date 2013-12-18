@@ -131,7 +131,7 @@ blockquote {
 
 img { 
 	font-size: 10px !important;
-	color: rgba(0, 0, 0, 0.0) !important;
+	color: rgba(0, 0, 0, 0.0) !important; /* Firefox renders alt text before image is loaded, hide it. */
 }
 
 ::-webkit-input-placeholder {
