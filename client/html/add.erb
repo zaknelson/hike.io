@@ -29,6 +29,7 @@
 					<input id="longitude" type="number" step="any" min="-180" max="180" required="true" autocomplete="off" data-ng-model="hike.location.longitude" placeholder="{{capabilities.isMobile &amp;&amp; '-112.9474' || '-112.94745'}}" />
 					<button type="button" class="locate-btn btn" data-ng-click="locateLatLng()">
 						<%= render_svg("#{@img_dir}/map.svg") %>
+						<img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png" />
 					</button>
 				</div>
 				<span>
