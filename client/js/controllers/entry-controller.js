@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -69,6 +69,24 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 		return div.innerText;
 	};
 
+	var getMetaImagePathFromPhoto = function(photo) {
+		return config.hikeImagesPath + "/" + photo.string_id + "-thumb-small.jpg";
+	};
+
+	var getMetaImageFromHike = function(hike) {
+		if (hike.photo_facts) {
+			return getMetaImagePathFromPhoto(hike.photo_facts);
+		} else if (hike.photo_preview) {
+			return getMetaImagePathFromPhoto(hike.photo_preview);
+		} else if (hike.photo_landscape) {
+			return getMetaImagePathFromPhoto(hike.photo_landscape);
+		} else if (hike.photos_generic && hike.photos_generic.length > 0) {
+			return getMetaImagePathFromPhoto(hike.photos_generic[0]);
+		} else {
+			return null;
+		}
+	};
+
 	$scope.$on("hikeAdded", function(event, hike, isBeingReviewed) {
 		$scope.isJustAdded = true;
 		$scope.isBeingReviewed = isBeingReviewed;
@@ -126,6 +144,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 
 			$scope.hike = hike;
 			$rootScope.title = $scope.hike.name + " - hike.io";
+			$rootScope.metaImage = getMetaImageFromHike(hike);
 			var haveSetMetaDescription = false;
 			if ($scope.hike.description) {
 				var description = $scope.hike.description;
@@ -466,4 +485,4 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 	});
 };
 
-EntryController.$inject = ["$filter", "$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
+EntryController.$inject = ["$filter", "$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];

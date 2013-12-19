@@ -53,6 +53,7 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.config = config;
 		$rootScope.capabilities = capabilities;
 		$rootScope.location = $location;
+		$rootScope.metaImage = config.landingPageImagesPath + "/the-narrows-thumb.jpg";
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
 		$rootScope.isProduction = $location.absUrl().indexOf("hike.io") > -1;
