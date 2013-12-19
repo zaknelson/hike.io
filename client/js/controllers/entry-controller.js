@@ -70,7 +70,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 	};
 
 	var getMetaImagePathFromPhoto = function(photo) {
-		return config.hikeImagesPath + "/" + photo.string_id + "-thumb-small.jpg";
+		return config.hikeImagesPath + "/" + photo.string_id + "-thumb-medium.jpg";
 	};
 
 	var getMetaImageFromHike = function(hike) {
