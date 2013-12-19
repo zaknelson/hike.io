@@ -22,10 +22,10 @@ https://github.com/zaknelson/hike.io/
 	<meta name="msapplication-TileColor" content="#FFFFFF" />
 	<meta name="msapplication-TileImage" content="<%= @img_dir %>/favicon-144.png" />
 	<meta property="og:site_name" data-ng-attr-content="hike.io" />
+	<meta property="og:url" data-ng-attr-content="{{location.path()}}" />
 	<meta data-ui-if="title" property="og:title" data-ng-attr-content="{{title}}" />
 	<meta data-ui-if="metaDescription" property="og:description" data-ng-attr-content="{{metaDescription}}" />
 	<meta data-ui-if="metaImage" property="og:image" data-ng-attr-content="{{metaImage}}" />
-	<meta id="description" name="description" data-ng-attr-content="{{metaDescription}}" />
 	<link rel="canonical" data-ng-attr-href="{{location.path()}}" />
 	<link href="<%= @img_dir %>/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= @img_dir %>/favicon-152.png" />
