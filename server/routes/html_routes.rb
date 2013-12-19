@@ -79,9 +79,7 @@ class HikeApp < Sinatra::Base
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
-		puts request.user_agent
-		pass unless params[:_escaped_fragment_]
-
+		pass unless params[:_escaped_fragment_] || request.user_agent.include?("facebookexternalhit")
 		url = request.path
 		url_params = request.env['rack.request.query_hash']
 		url_params.delete("_escaped_fragment_")
