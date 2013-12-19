@@ -21,9 +21,15 @@ $banner-height: 50px;
 	}
 
 	#latitude, #longitude {
+		margin-top: 0px;
 		width: 108px;
+		margin-top: 0px;
 		margin-right: 5px;
 		display: inline;
+	}
+
+	.latitude-and-longitude {
+		padding-top: 2px;
 	}
 
 	.units {
@@ -43,7 +49,7 @@ $banner-height: 50px;
 	}
 
 	.locate-btn {
-		margin-top: 2px;
+		float: left;
 		width: 41px;
 		height: 41px;
 		padding: 10px;
