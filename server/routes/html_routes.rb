@@ -99,6 +99,11 @@ class HikeApp < Sinatra::Base
 
 		# Should never pass here, but if for some reason we don't have static html, return dynamic and hopefully it will work next time
 		pass if not static_html 
+
+		html = static_html.html
+		if request.url.include?("static.hike.io")
+			html.sub("<!-- NOSCRIPT_PLACEHOLDER -->", '<noscript><div class="noscript-header">hike.io works better with <a href="http://www.activatejavascript.org/">JavaScript enabled</a>.</div></noscript>')
+		end
 		static_html.html
 	end
 

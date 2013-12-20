@@ -170,9 +170,14 @@ img {
 	min-height: 100%;
 }
 
-.noscript-message {
-	font-size: 20px;
-	padding: 20px 20px;
+.noscript-header {
+	width: 100%;
+	font-size: 16px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #333;
+	text-align: center;
+	color: #EEE;
 }
 
 html.touch a:hover {
