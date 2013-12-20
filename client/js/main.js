@@ -58,7 +58,7 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.navigation = navigation;
 		$rootScope.isProduction = $location.absUrl().indexOf("hike.io") > -1;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
-			$rootScope.metaCanonical = 'http://hike.io' + ($location.path() === "/" ? ""  : $location.path());
+			$rootScope.metaCanonical = "http://hike.io" + ($location.path() === "/" ? ""  : $location.path());
 			if (current && current.$$route && current.$$route.title) {
 				$rootScope.title = current.$$route.title;
 			}
