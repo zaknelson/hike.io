@@ -46,34 +46,37 @@ https://github.com/zaknelson/hike.io/
 		}
 	</style>
 	<script>
-		var doUpdateViewport = function() {
-			var minWidth = 450;
-			var width = screen.width
-			if (width < minWidth) {
-				var viewport = document.getElementById("viewport");
-				viewport.content = "width=" + minWidth;
-				updated = true;
-			}
-		};
-		
-		var updateViewport = function() {
-			doUpdateViewport();
-			// Workaround for bug http://stackoverflow.com/questions/5021090/screen-width-android
-			var userAgent = navigator.userAgent.toLowerCase();
-			var isAndroidVersionWithBug = userAgent.indexOf("android 2.2") > -1 || userAgent.indexOf("android 2.3") > -1;
-			if (isAndroidVersionWithBug) {
-				setTimeout(doUpdateViewport, 1000);
-			}
-		};
+		(function() {
+			var doUpdateViewport = function() {
+				var minWidth = 450;
+				var width = screen.width
+				if (width < minWidth) {
+					var viewport = document.getElementById("viewport");
+					viewport.content = "width=" + minWidth;
+					updated = true;
+				}
+			};
+			
+			var updateViewport = function() {
+				doUpdateViewport();
+				// Workaround for bug http://stackoverflow.com/questions/5021090/screen-width-android
+				var userAgent = navigator.userAgent.toLowerCase();
+				var isAndroidVersionWithBug = userAgent.indexOf("android 2.2") > -1 || userAgent.indexOf("android 2.3") > -1;
+				if (isAndroidVersionWithBug) {
+					setTimeout(doUpdateViewport, 1000);
+				}
+			};
 
-		var redirectIfOnStatic = function() {
-			if (window.location.host === "static.hike.io") {
-				// User has javascript enabled, but is on the static site, redirect them.
-				window.location.replace("http://hike.io/" + window.location.pathname);
-			}
-		};
+			var redirectIfOnStatic = function() {
+				if (window.location.host === "static.hike.io") {
+					// User has javascript enabled, but is on the static site, redirect them.
+					window.location.replace("http://hike.io/" + window.location.pathname);
+				}
+			};
 
-		updateViewport();
+			redirectIfOnStatic();
+			updateViewport();
+		})();
 	</script>
 	<!-- TODO, consider removing typekit for mobile browsers to speed up load time -->
 	<script src="//use.typekit.net/jce4miw.js"></script>
