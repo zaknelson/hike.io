@@ -26,7 +26,7 @@ https://github.com/zaknelson/hike.io/
 	<meta data-ui-if="title" property="og:title" data-ng-attr-content="{{title}}" />
 	<meta data-ui-if="metaDescription" property="og:description" data-ng-attr-content="{{metaDescription}}" />
 	<meta data-ui-if="metaImage" property="og:image" data-ng-attr-content="{{metaImage}}" />
-	<link rel="canonical" data-ng-attr-href="{{'http://hike.io' + location.path()}}" />
+	<link rel="canonical" data-ng-attr-href="{{metaCanonical}}" />
 	<link href="<%= @img_dir %>/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= @img_dir %>/favicon-152.png" />
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= @img_dir %>/favicon-144.png" />
@@ -73,10 +73,11 @@ https://github.com/zaknelson/hike.io/
 
 					// To account for browser quirks in what is returned from pathname
 					path = path.replace("http://static.hike.io", "");
-					if (path[0] === "/") {
-						path = path.substring(1);
+					if (path.length === 0) {
+						path = "";
+					} else if (path[0] !== "/") {
+						path = "/" + path;
 					}
-					
 					window.location.replace("http://hike.io" + path);
 				}
 			};
