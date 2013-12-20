@@ -39,8 +39,8 @@ var renderHtml = function(url) {
 	page.settings.loadImages = false;
 	page.settings.localToRemoteUrlAccessEnabled = true;
 	page.onCallback = function() {
-		cleanup(page);
 		setTimeout(function() {
+			cleanup(page);
 			console.log(page.content);
 			phantom.exit();
 		}, 100);
