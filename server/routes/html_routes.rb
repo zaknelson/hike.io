@@ -89,7 +89,7 @@ class HikeApp < Sinatra::Base
 	get "*" do
 		pass unless params[:_escaped_fragment_] || request.user_agent.include?("facebookexternalhit") || request.url.include?("static.hike.io")
 		url = request.path
-		return erb(:error) if url.start_with?("/hikes/") && url.end_with?("/edit")
+		return 403 if url.start_with?("/hikes/") && url.end_with?("/edit")
 		url_params = request.env['rack.request.query_hash']
 		url_params.delete("_escaped_fragment_")
 		if (url_params.length != 0)
