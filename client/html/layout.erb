@@ -69,8 +69,15 @@ https://github.com/zaknelson/hike.io/
 
 			var redirectIfOnStatic = function() {
 				if (window.location.host === "static.hike.io") {
-					// User has javascript enabled, but is on the static site, redirect them.
-					window.location.replace("http://hike.io/" + window.location.pathname);
+					var path = window.location.pathname;
+
+					// To account for browser quirks in what is returned from pathname
+					path = path.replace("http://static.hike.io", "");
+					if (path[0] === "/") {
+						path = path.substring(1);
+					}
+					
+					window.location.replace("http://hike.io" + path);
 				}
 			};
 
