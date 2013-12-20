@@ -102,9 +102,9 @@ class HikeApp < Sinatra::Base
 
 		html = static_html.html
 		if request.url.include?("static.hike.io")
-			html.sub("<!-- NOSCRIPT_PLACEHOLDER -->", '<noscript><div class="noscript-header">hike.io works better with <a href="http://www.activatejavascript.org/">JavaScript enabled</a>.</div></noscript>')
+			html.sub!("<!-- NOSCRIPT_PLACEHOLDER -->", '<noscript><div class="noscript-header">hike.io works better with <a href="http://www.activatejavascript.org/">JavaScript enabled</a>.</div></noscript>')
 		end
-		static_html.html
+		html
 	end
 
 	["/", "/partials/index.html"].each do |path|
