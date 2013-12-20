@@ -76,11 +76,20 @@ class HikeApp < Sinatra::Base
 		redirect request.scheme + "://hike.io" + request.fullpath, 301
 	end
 
+	get "/robots.txt", :provides => "text/plain"  do
+		if request.url.include?("static.hike.io")
+			"User-agent: *\nDisallow: /"
+		else
+			"User-agent: *\nDisallow: /partials/\nDisallow: /search \nDisallow: /hikes/*/edit"
+		end
+	end 
+
 	# Route for crawlers only, if url already has a cached result return that immediately
 	# then fetch the most recent one and cache that for next time.
 	get "*" do
-		pass unless params[:_escaped_fragment_] || request.user_agent.include?("facebookexternalhit")
+		pass unless params[:_escaped_fragment_] || request.user_agent.include?("facebookexternalhit") || request.url.include?("static.hike.io")
 		url = request.path
+		return erb(:error) if url.start_with?("/hikes/") && url.end_with?("/edit")
 		url_params = request.env['rack.request.query_hash']
 		url_params.delete("_escaped_fragment_")
 		if (url_params.length != 0)

@@ -26,7 +26,7 @@ https://github.com/zaknelson/hike.io/
 	<meta data-ui-if="title" property="og:title" data-ng-attr-content="{{title}}" />
 	<meta data-ui-if="metaDescription" property="og:description" data-ng-attr-content="{{metaDescription}}" />
 	<meta data-ui-if="metaImage" property="og:image" data-ng-attr-content="{{metaImage}}" />
-	<link rel="canonical" data-ng-attr-href="{{location.path()}}" />
+	<link rel="canonical" data-ng-attr-href="{{'http://hike.io' + location.path()}}" />
 	<link href="<%= @img_dir %>/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= @img_dir %>/favicon-152.png" />
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= @img_dir %>/favicon-144.png" />
@@ -119,7 +119,7 @@ https://github.com/zaknelson/hike.io/
 		<%= yield_content :add_modal %>
 
 		<div data-ng-view>
-			<noscript><p class="noscript-message">hike.io requires JavaScript. <a href="http://www.activatejavascript.org/">Please enable it.</a></p></noscript>
+			<noscript><meta http-equiv="refresh" content="0; url=http://static.hike.io<%= request.path %>" /></noscript>
 		</div>
 		<footer>
 			<a href="http://creativecommons.org/licenses/by-sa/3.0/"><h4>LICENSE</h4></a>
