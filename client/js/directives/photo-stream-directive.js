@@ -1,9 +1,9 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$rootScope", "$timeout", "capabilities", "config", function($rootScope, $timeout, capabilities, config) {
+	directive("photoStream", ["$rootScope", "$timeout", "$window", "capabilities", "config", function($rootScope, $timeout, $window, capabilities, config) {
 		var template = "<div class='preview-list'>" +
-			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes'>" +
+			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes | limitTo:hikesToShow'>" +
 				"<div class='preview'>" +
 					"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
 						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
@@ -29,6 +29,54 @@ angular.module("hikeio").
 			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 400;
+				var previewsToLoadAtATime = 5;
+				var infiniteScrollDistance = 3; // 3x the height of the window
+				var doneScrolling = false;
+				scope.hikesToShow = 1;
+
+				var setupLoadHandlerForPreviewImages = function(images) {
+					images.load(function() {
+						var preview = $(this).parent().parent();
+						preview.css("opacity", "1");
+					}).each(function() {
+						if (this.complete) {
+							$(this).load();
+						}
+						$(this).attr("src", $(this).attr("src")); // Workaround for IE, otherwise the load events are not being fired for all images.
+					});
+				}
+
+				var scrollHandler = function() {
+					if (doneScrolling) return;
+					var windowBottom = $($window).height() + $($window).scrollTop();
+					var elementBottom = element.offset().top + element.height();
+					var remaining = elementBottom - windowBottom;
+					var shouldScroll = remaining <= $($window).height() * infiniteScrollDistance;
+					if (shouldScroll) {
+						scope.$apply(function() {
+							scope.hikesToShow =+ previewsToLoadAtATime;
+							if (scope.hikesToShow >= scope.hikes.length) {
+								doneScrolling = true;
+							}
+							$timeout(function() {
+								var previews = element.find(".preview:not(.masonry-brick)");
+								var images = previews.children("div").children("img");
+								setupLoadHandlerForPreviewImages(images);
+								element.masonry("appended", previews, true);
+								element.masonry();
+							});
+						});
+					}
+				};
+
+				$($window).on("scroll", scrollHandler);
+				scope.$on("$destroy", function() {
+					return $($window).off("scroll", scrollHandler);
+				});
+				$timeout(function() {
+					scrollHandler();
+				}, 100);
+
 				scope.isFeatured = function(hike, index) {
 					if (index === 0) {
 						return true;
@@ -70,21 +118,18 @@ angular.module("hikeio").
 						var images = previewDivs.children("img");
 						var featuredBox = previews.children(".featured-box");
 						var featuredBoxImage = featuredBox.children("img");
-
-						images.load(function() {
-							var preview = $(this).parent().parent();
-							preview.css("opacity", "1");
-						}).each(function() {
-							if (this.complete) {
-								$(this).load();
-							}
-							$(this).attr("src", $(this).attr("src")); // Workaround for IE, otherwise the load events are not being fired for all images.
-						});
+						setupLoadHandlerForPreviewImages(images);
 						element.masonry({
 							itemSelector: ".preview",
 							gutterWidth: gutterWidth,
-							isAnimated: true,
+							isAnimated: false,
 							columnWidth: function(containerWidth) {
+								// refresh these values, they may be newly added ones after scrolling
+								previews = element.find(".preview");
+								previewTitles = element.find(".preview-title");
+								previewDivs = previews.children("div");
+								images = previewDivs.children("img");
+
 								var boxes = Math.ceil(containerWidth / maxColumnWidth);
 								var boxWidth = Math.floor((containerWidth - (boxes - 1) * gutterWidth) / boxes);
 
