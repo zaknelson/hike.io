@@ -44,7 +44,7 @@ angular.module("hikeio").
 						}
 						$(this).attr("src", $(this).attr("src")); // Workaround for IE, otherwise the load events are not being fired for all images.
 					});
-				}
+				};
 
 				var scrollHandler = function() {
 					if (doneScrolling) return;
