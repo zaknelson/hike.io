@@ -4,7 +4,7 @@ angular.module("hikeio").
 	directive("photoStream", ["$rootScope", "$timeout", "$window", "capabilities", "config", function($rootScope, $timeout, $window, capabilities, config) {
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes | limitTo:hikesToShow'>" +
-				"<div class='preview" + (capabilities.isMobile ? "" : " preview-fade-in") + "'>" +
+				"<div class='preview preview-fade-in'>" +
 					"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
 						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
 						"<div class='preview-footer'>" +
@@ -34,10 +34,20 @@ angular.module("hikeio").
 				var doneScrolling = false;
 				scope.hikesToShow = 5;
 
+				var isInViewport = function(element) {
+					return element.offset().top < $($window).height();
+				};
+
 				var setupLoadHandlerForPreviewImages = function(images) {
 					images.load(function() {
-						var preview = $(this).parent().parent();
-						preview.css("opacity", "1");
+						var self = this;
+						$timeout(function() {
+							var preview = $(self).parent().parent();
+							if (!isInViewport(preview)) {
+								preview.removeClass("preview-fade-in"); // Remove the fade-in effect from elements that aren't in the viewport, so it's a smoother scroll
+							}
+							preview.css("opacity", "1");
+						});
 					}).each(function() {
 						if (this.complete) {
 							$(this).load();
