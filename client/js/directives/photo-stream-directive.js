@@ -32,7 +32,7 @@ angular.module("hikeio").
 				var previewsToLoadAtATime = 5;
 				var infiniteScrollDistance = 3; // 3x the height of the window
 				var doneScrolling = false;
-				scope.hikesToShow = 5;
+				scope.hikesToShow = 20;
 
 				var setupLoadHandlerForPreviewImages = function(images) {
 					images.load(function() {
