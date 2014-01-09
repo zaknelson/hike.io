@@ -4,7 +4,7 @@ angular.module("hikeio").
 	directive("photoStream", ["$rootScope", "$timeout", "$window", "capabilities", "config", function($rootScope, $timeout, $window, capabilities, config) {
 		var template = "<div class='preview-list'>" +
 			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes | limitTo:hikesToShow'>" +
-				"<div class='preview'>" +
+				"<div class='preview" + (capabilities.isMobile ? "" : " preview-fade-in") + "'>" +
 					"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
 						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
 						"<div class='preview-footer'>" +

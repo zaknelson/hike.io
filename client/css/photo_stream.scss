@@ -22,8 +22,10 @@ $preview-subtext-font-size: 13px;
 
 		img {
 			width: 100%;
-		}
+		}		
+	}
 
+	.preview-fade-in {
 		@include transition(opacity 0.4s ease-in-out);
 	}
 
