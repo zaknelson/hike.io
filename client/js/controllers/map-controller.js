@@ -40,7 +40,14 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	};
 
 	$scope.markerClicked = function(marker) {
-		navigation.toEntry(marker.hikeData.string_id);
+		if (Modernizr.touch) {
+			markerActivate(marker);
+			$(marker.tooltips[0]).click(function() {
+				navigation.toEntry(marker.hikeData.string_id);
+			});
+		} else {
+			navigation.toEntry(marker.hikeData.string_id);
+		}
 	};
 
 	$scope.updateMarkers = function(event) {
