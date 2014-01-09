@@ -32,7 +32,7 @@ angular.module("hikeio").
 				var previewsToLoadAtATime = 5;
 				var infiniteScrollDistance = 3; // 3x the height of the window
 				var doneScrolling = false;
-				scope.hikesToShow = 1;
+				scope.hikesToShow = 5;
 
 				var setupLoadHandlerForPreviewImages = function(images) {
 					images.load(function() {
@@ -54,7 +54,7 @@ angular.module("hikeio").
 					var shouldScroll = remaining <= $($window).height() * infiniteScrollDistance;
 					if (shouldScroll) {
 						scope.$apply(function() {
-							scope.hikesToShow =+ previewsToLoadAtATime;
+							scope.hikesToShow += previewsToLoadAtATime;
 							if (scope.hikesToShow >= scope.hikes.length) {
 								doneScrolling = true;
 							}
@@ -64,6 +64,7 @@ angular.module("hikeio").
 								setupLoadHandlerForPreviewImages(images);
 								element.masonry("appended", previews, true);
 								element.masonry();
+								scrollHandler(); // We might still not have a bottom, continue scrolling
 							});
 						});
 					}
