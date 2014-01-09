@@ -22,7 +22,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 		}
 	};
 
-	$scope.markerActivate = function(marker) {
+	var doActivateMarker = function(marker) {
 		if ($scope.activeMarker && $scope.activeMarker !== marker) {
 			doDeactivateMarker($scope.activeMarker);
 			$scope.activeMarker = null;
@@ -33,6 +33,10 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 		$scope.activeMarker = marker;
 	};
 
+	$scope.markerActivate = function(marker) {
+		doActivateMarker(marker);
+	};
+
 	$scope.markerDeactivate = function(marker) {
 		$timeout(function() {
 			doDeactivateMarker(marker);
@@ -41,7 +45,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 
 	$scope.markerClicked = function(marker) {
 		if (Modernizr.touch) {
-			markerActivate(marker);
+			doActivateMarker(marker);
 			$(marker.tooltips[0]).click(function() {
 				navigation.toEntry(marker.hikeData.string_id);
 			});
