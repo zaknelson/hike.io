@@ -137,7 +137,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 					if (dateTime.after(data.edit_time, cachedHike.edit_time)) {
 						persistentStorage.remove(routeId);
 					} else {
-						$window.alert("cached");
+						$window.alert(cachedHike.edit_time);
 						hike = cachedHike;
 					}
 				}
