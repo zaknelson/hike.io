@@ -16,10 +16,10 @@
 		max-width: 300px;
 		position: absolute;
 		background-color: #fefefe;
+		@include border-radius(2px, 2px);
 		h3 {
 			font-weight: normal;
 			white-space: nowrap;
-			@include border-radius(2px, 2px);
 		}
 	}
 
