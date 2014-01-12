@@ -18,7 +18,7 @@ angular.module("hikeio").
 		};
 
 		MapTooltip.prototype.draw = function() {
-			this.div.find("name").text(this.hikeData.name);
+			this.div.find(".name").text(this.hikeData.name);
 			var buffer = 10;
 			var width = this.div.outerWidth();
 			var height = this.div.outerHeight();
