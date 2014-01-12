@@ -14,18 +14,18 @@ angular.module("hikeio").
 
 		MapTooltip.prototype.onAdd = function() {
 			if (Modernizr.touch) {
-				this.div = $(".touch-tooltip").clone();
+				this.html = $(".touch-tooltip").clone();
 			} else {
-				this.div = $(".tooltip").clone();
+				this.html = $(".tooltip").clone();
 			}
-			this.getPanes().floatShadow.appendChild(this.div[0]);
+			this.getPanes().floatShadow.appendChild(this.html[0]);
 		};
 
 		MapTooltip.prototype.draw = function() {
-			this.div.find(".name").text(this.hikeData.name);
+			this.html.find(".name").text(this.hikeData.name);
 			var buffer = 10;
-			var width = this.div.outerWidth();
-			var height = this.div.outerHeight();
+			var width = this.html.outerWidth();
+			var height = this.html.outerHeight();
 
 			var overlayProjection = this.getProjection();
 			var markerPosition = overlayProjection.fromLatLngToContainerPixel(this.marker.getPosition());
@@ -46,16 +46,16 @@ angular.module("hikeio").
 				tooltipOffset.left = markerPosition.x - width - buffer;
 			}
 			if (Modernizr.touch) {
-				this.div.attr("href", "/hikes/" + this.hikeData.string_id);
+				this.html.attr("href", "/hikes/" + this.hikeData.string_id);
 			}
-			this.div.css("display", "block");
-			this.div.offset(tooltipOffset);
-			this.div.css("opacity", "1");
+			this.html.css("display", "block");
+			this.html.offset(tooltipOffset);
+			this.html.css("opacity", "1");
 		};
 
 		MapTooltip.prototype.onRemove = function() {
-			this.div.remove();
-			this.div = null;
+			this.html.remove();
+			this.html = null;
 		};
 
 		MapTooltip.prototype.destroy = function() {
