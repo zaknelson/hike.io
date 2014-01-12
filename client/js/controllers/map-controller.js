@@ -44,7 +44,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	};
 
 	$scope.markerClicked = function(marker) {
-		if (Modernizr.touch) {
+		if (Modernizr.touch && marker !== $scope.activeMarker) {
 			doActivateMarker(marker);
 			// Link to the entry will be on the tooltip itself.
 		} else {
