@@ -10,14 +10,14 @@
 	z-index: 2;
 
 	.tooltip {
+		display: none;
+		padding: 5px 10px;
+		max-width: 300px;
+		position: absolute;
+		background-color: #fefefe;
 		h3 {
-			position: absolute;
-			background-color: #fefefe;
-			padding: 5px 10px;
-			max-width: 300px;
 			font-weight: normal;
 			white-space: nowrap;
-			display: none;
 			@include border-radius(2px, 2px);
 		}
 	}
