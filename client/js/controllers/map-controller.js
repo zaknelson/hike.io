@@ -46,12 +46,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	$scope.markerClicked = function(marker) {
 		if (Modernizr.touch) {
 			doActivateMarker(marker);
-			var tooltip = marker.tooltips[0].div;
-			tooltip.css("cursor", "pointer"); // http://stackoverflow.com/questions/15095868/jquery-click-not-working-in-ios
-			tooltip.on("click touchstart", function() {
-				alert("clicked");
-				navigation.toEntry(marker.hikeData.string_id);
-			});
+			// Link to the entry will be on the tooltip itself.
 		} else {
 			navigation.toEntry(marker.hikeData.string_id);
 		}

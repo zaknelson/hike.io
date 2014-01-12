@@ -9,7 +9,7 @@
 	bottom: 0px;
 	z-index: 2;
 
-	.tooltip {
+	.tooltip, .touch-tooltip {
 		display: none;
 		opacity: 0;
 		padding: 5px 10px;

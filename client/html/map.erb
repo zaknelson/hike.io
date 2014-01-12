@@ -2,6 +2,9 @@
 	<div class="tooltip">
 		<h3 class="name"></h3>
 	</div>
+	<div class="touch-tooltip">
+		<a class="link"><h3 class="name"></h3></a>
+	</div>
 	<div class="map-container" data-ui-map="map" data-ui-options="mapOptions" data-ui-event="{'map-idle': 'updateMarkers($event)', 'map-zoom_changed': 'updateMarkers($event)', 'map-center_changed': 'updateMarkers($event)'}"></div>
 	<div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'markerClicked(marker)', 'map-mouseover': 'markerActivate(marker)', 'map-mouseout': 'markerDeactivate(marker)'}"></div>
 </article>
