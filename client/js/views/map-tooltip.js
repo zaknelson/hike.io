@@ -46,7 +46,7 @@ angular.module("hikeio").
 				tooltipOffset.left = markerPosition.x - width - buffer;
 			}
 			if (Modernizr.touch) {
-				this.div.find(".link").attr("href", "/hikes/" + this.hikeData.string_id);
+				this.div.attr("href", "/hikes/" + this.hikeData.string_id);
 			}
 			this.div.css("display", "block");
 			this.div.offset(tooltipOffset);
