@@ -16,6 +16,7 @@
 		max-width: 300px;
 		position: absolute;
 		background-color: #fefefe;
+		z-index: 100;
 		@include border-radius(2px, 2px);
 		h3 {
 			font-weight: normal;
