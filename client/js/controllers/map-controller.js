@@ -46,7 +46,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	$scope.markerClicked = function(marker) {
 		if (Modernizr.touch) {
 			doActivateMarker(marker);
-			marker.tooltips[0].div.on("click", function() {
+			marker.tooltips[0].div.on("click touchstart", function() {
 				alert("clicked");
 				navigation.toEntry(marker.hikeData.string_id);
 			});
