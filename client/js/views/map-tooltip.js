@@ -41,8 +41,8 @@ angular.module("hikeio").
 			if (tooltipOffset.left + width + buffer > $($window.document).width()) {
 				tooltipOffset.left = markerPosition.x - width - buffer;
 			}
-			this.div.css("display", "block");
 			this.div.offset(tooltipOffset);
+			this.div.css("display", "block");
 		};
 
 		MapTooltip.prototype.onRemove = function() {
