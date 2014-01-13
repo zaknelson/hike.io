@@ -9,6 +9,10 @@ angular.module("hikeio", ["seo", "ui"]).
 				templateUrl: "/partials/index.html",
 				title: "hike.io"
 			}).
+			when("/about", {
+				templateUrl: "/partials/about.html",
+				title: "About - hike.io"
+			}).
 			when("/hikes", {
 				controller: "AllController",
 				templateUrl: "/partials/all.html",
