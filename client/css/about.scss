@@ -3,6 +3,28 @@
 @import "compass/css3/background-size";
 @import "compass/css3/text-shadow";
 
+@-o-keyframes rotate-fade {
+	from { -ms-transform: rotate(-8deg); opacity: 1; }
+	to { -ms-transform: rotate(30deg); opacity: 0; }
+}
+@-ms-keyframes rotate-fade {
+	from { -ms-transform: rotate(-8deg); opacity: 1; }
+	to { -ms-transform: rotate(30deg); opacity: 0; }
+}
+@-moz-keyframes rotate-fade {
+	from { -moz-transform: rotate(-8deg); opacity: 1; }
+	to { -moz-transform: rotate(30deg); opacity: 0; }
+}
+@-webkit-keyframes rotate-fade {
+	from { -webkit-transform: rotate(-8deg); opacity: 1; }
+	to { -webkit-transform: rotate(30deg); opacity: 0; }
+}
+@keyframes rotate-fade {
+	from {transform:rotate(-8deg); opacity: 1; }
+	to {transform:rotate(30deg); opacity: 0;}
+}
+
+
 .about-page {
 	position: absolute;
 	top: 0;
@@ -23,8 +45,29 @@
 		width: 100%;
 		height: 100%;
 		margin-bottom: 2px;
+		position: relative;
 
-		div {
+		.shooting-star {
+			position: absolute;
+			background-image: url("/images/star.png?embed");
+			background-repeat: no-repeat;
+			top: 20%;
+			left: 20%;
+			width: 144px;
+			height: 11px;
+			padding-bottom: 2400px;
+			-webkit-transform: rotate(-8deg);
+		}
+
+		.shooting-star.animate {
+			@include experimental("animation-name", rotate-fade, webkit, moz, o, ms, not khtml);
+			@include experimental("animation-fill-mode", forwards, webkit, moz, o, ms, not khtml);
+			@include experimental("animation-duration", .75s, webkit, moz, o, ms, not khtml);
+			@include experimental("animation-iteration-count", 1, webkit, moz, o, ms, not khtml);
+			@include experimental("animation-timing-function", linear, webkit, moz, o, ms, not khtml);
+		}
+
+		.text-container {
 			position: relative;
 			top: 43%;
 			left: 50%;
@@ -55,7 +98,7 @@
 		}
 
 		@media all and (max-width: $mobile-width) {
-			div {
+			.text-container {
 				width: 416px;
 				margin-left: -208px;
 			}
