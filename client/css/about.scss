@@ -101,7 +101,7 @@
 		}
 
 		.free {
-			background: url("http://assets.hike.io/about-page-images/rachel-lake-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/the-narrows-wall-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
@@ -111,12 +111,12 @@
 		}
 
 		.open {
-			background: url("http://assets.hike.io/about-page-images/hawaii-oahu-north-shore-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/rachel-lake-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
 		.edit {
-			background: url("http://assets.hike.io/about-page-images/the-narrows-wall-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/hawaii-oahu-north-shore-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 	}
