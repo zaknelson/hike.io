@@ -75,7 +75,7 @@
 	}
 
 	.free {
-		background: url("/about-page-images/rachel-lake.jpg") no-repeat center bottom;
+		background: url("/about-page-images/the-narrows-wall.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
@@ -85,12 +85,12 @@
 	}
 
 	.open {
-		background: url("/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
+		background: url("/about-page-images/rachel-lake.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	.edit {
-		background: url("/about-page-images/pikes-peak.jpg") no-repeat center bottom;
+		background: url("/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
@@ -116,7 +116,7 @@
 		}
 
 		.edit {
-			background: url("/about-page-images/pikes-peak-mobile.jpg") no-repeat center bottom;
+			background: url("/about-page-images/the-narrows-wall-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 	}
