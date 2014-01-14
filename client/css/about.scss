@@ -2,10 +2,11 @@
 @import "_mixins";
 @import "compass/css3/background-size";
 @import "compass/css3/text-shadow";
+@import "compass/css3/transform";
 
 @-o-keyframes rotate-fade {
-	from { -ms-transform: rotate(-8deg); opacity: 1; }
-	to { -ms-transform: rotate(30deg); opacity: 0; }
+	from { -o-transform: rotate(-8deg); opacity: 1; }
+	to { -o-transform: rotate(30deg); opacity: 0; }
 }
 @-ms-keyframes rotate-fade {
 	from { -ms-transform: rotate(-8deg); opacity: 1; }
@@ -23,7 +24,6 @@
 	from {transform:rotate(-8deg); opacity: 1; }
 	to {transform:rotate(30deg); opacity: 0;}
 }
-
 
 .about-page {
 	position: absolute;
@@ -56,7 +56,7 @@
 			width: 144px;
 			height: 11px;
 			padding-bottom: 2400px;
-			-webkit-transform: rotate(-8deg);
+			@include transform(rotate(-8deg));
 		}
 
 		.shooting-star.animate {
