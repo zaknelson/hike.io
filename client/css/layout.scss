@@ -180,6 +180,23 @@ img {
 	color: #EEE;
 }
 
+.attribution-link {
+	display: none; /* Is only displayed when fancybox is open */
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	right: auto;
+	width: 20px !important;
+	height: 20px !important;
+	padding: 0px;
+	opacity: .75;
+	cursor: pointer;
+}
+
+.attribution-link.active {
+	display: inline;
+}
+
 html.touch a:hover {
 	text-decoration: none;
 }

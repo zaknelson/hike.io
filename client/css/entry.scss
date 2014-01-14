@@ -5,23 +5,6 @@ $header-landscape-footer-height: 55px;
 $header-landscape-footer-height-mobile: 40px;
 $header-landscape-aspect-ratio: 3;
 
-.attribution-link {
-	display: none; /* Is only displayed when fancybox is open */
-	position: absolute;
-	top: 8px;
-	left: 8px;
-	right: auto;
-	width: 20px !important;
-	height: 20px !important;
-	padding: 0px;
-	opacity: .75;
-	cursor: pointer;
-}
-
-.attribution-link.active {
-	display: inline;
-}
-
 .entry-page {
 	overflow-x: hidden;
 	width: $container-width;

@@ -1,27 +1,124 @@
 @import "_vars";
 @import "_mixins";
+@import "compass/css3/background-size";
+@import "compass/css3/text-shadow";
 
 .about-page {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	width: 100%;
+	height: 100%;
+	z-index: 2;
+
+	.attribution-link {
+		display: inline;
+		top: auto;
+		bottom: 8px;
+		left: 8px;
+		opacity: .5;
+	}
+
 	.sub-page {
 		width: 100%;
 		height: 100%;
-		margin-top: -20px;
+		margin-bottom: 2px;
+
+		div {
+			position: relative;
+			top: 43%;
+			left: 50%;
+			width: 520px;
+			margin-left: -260px;
+		}
+
 		h2 {
 			font-size: 56px;
+			padding-bottom: 5px;
 		}
+
+		h3 {
+			font-size: 16px;
+		}
+
 		h2, h3 {
 			text-align: center;
-			color: $title-text-color;
+			color: $title-text-color-inverse;
 			vertical-align: middle;
-			position: relative;
-			top: 50%;
-			left: 50%;
-			width: 800px;
-			margin-left: -400px;
+			@include text-shadow(1px 1px 3px rgba(0, 0, 0, 0.5));
+			a {
+				color: $title-text-color-inverse;
+				text-decoration: underline;
+			}
+
+		}
+
+		@media all and (max-width: $mobile-width) {
+			div {
+				width: 416px;
+				margin-left: -208px;
+			}
+
+			h2 {
+				font-size: 40px;
+			}
+
+			h3 {
+				font-size: 13px;
+			}
+		}
+	}
+
+	.description {
+		background: url("/about-page-images/kilimanjaro-from-meru.jpg") no-repeat center bottom;
+		@include background-size(cover);
+	}
+
+	.free {
+		background: url("/about-page-images/rachel-lake.jpg") no-repeat center bottom;
+		@include background-size(cover);
+	}
+
+	.hikes {
+		background: url("/about-page-images/mawenzi-tarn-at-night.jpg") no-repeat center bottom;
+		@include background-size(cover);
+	}
+
+	.open {
+		background: url("/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
+		@include background-size(cover);
+	}
+
+	.edit {
+		background: url("/about-page-images/pikes-peak.jpg") no-repeat center bottom;
+		@include background-size(cover);
+	}
+
+	@media all and (max-width: $mobile-width) {
+		.description {
+			background: url("/about-page-images/kilimanjaro-from-meru-mobile.jpg") no-repeat center bottom;
+			@include background-size(cover);
+		}
+
+		.free {
+			background: url("/about-page-images/rachel-lake-mobile.jpg") no-repeat center bottom;
+			@include background-size(cover);
+		}
+
+		.hikes {
+			background: url("/about-page-images/mawenzi-tarn-at-night-mobile.jpg") no-repeat center bottom;
+			@include background-size(cover);
+		}
+
+		.open {
+			background: url("/about-page-images/hawaii-oahu-north-shore-mobile.jpg") no-repeat center bottom;
+			@include background-size(cover);
+		}
+
+		.edit {
+			background: url("/about-page-images/pikes-peak-mobile.jpg") no-repeat center bottom;
+			@include background-size(cover);
 		}
 	}
 }
+

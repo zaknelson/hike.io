@@ -21,6 +21,10 @@ angular.module("hikeio").
 			return $location.path() === "/";
 		};
 
+		NavigationService.prototype.onAbout = function() {
+			return $location.path() === "/about";
+		};
+
 		NavigationService.prototype.toEntry = function(id) {
 			$location.url("/hikes/" + id);
 		};
