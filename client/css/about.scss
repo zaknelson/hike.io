@@ -70,53 +70,53 @@
 	}
 
 	.description {
-		background: url("/about-page-images/kilimanjaro-from-meru.jpg") no-repeat center bottom;
+		background: url("http://assets.hike.io/about-page-images/kilimanjaro-from-meru.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	.free {
-		background: url("/about-page-images/the-narrows-wall.jpg") no-repeat center bottom;
+		background: url("http://assets.hike.io/about-page-images/the-narrows-wall.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	.hikes {
-		background: url("/about-page-images/mawenzi-tarn-at-night.jpg") no-repeat center bottom;
+		background: url("http://assets.hike.io/about-page-images/mawenzi-tarn-at-night.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	.open {
-		background: url("/about-page-images/rachel-lake.jpg") no-repeat center bottom;
+		background: url("http://assets.hike.io/about-page-images/rachel-lake.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	.edit {
-		background: url("/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
+		background: url("http://assets.hike.io/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
 		@include background-size(cover);
 	}
 
 	@media all and (max-width: $mobile-width) {
 		.description {
-			background: url("/about-page-images/kilimanjaro-from-meru-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/kilimanjaro-from-meru-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
 		.free {
-			background: url("/about-page-images/rachel-lake-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/rachel-lake-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
 		.hikes {
-			background: url("/about-page-images/mawenzi-tarn-at-night-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/mawenzi-tarn-at-night-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
 		.open {
-			background: url("/about-page-images/hawaii-oahu-north-shore-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/hawaii-oahu-north-shore-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 
 		.edit {
-			background: url("/about-page-images/the-narrows-wall-mobile.jpg") no-repeat center bottom;
+			background: url("http://assets.hike.io/about-page-images/the-narrows-wall-mobile.jpg") no-repeat center bottom;
 			@include background-size(cover);
 		}
 	}
