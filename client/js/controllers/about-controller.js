@@ -5,7 +5,7 @@ var AboutController = function($scope, $window, analytics) {
 		if (!$scope.scrolledToSubPageTwo && $window.pageYOffset > $($window).height() * 0.75) {
 			$scope.$apply(function() {
 				$scope.scrolledToSubPageTwo = true;
-			})
+			});
 		}
 	};
 	$scope.htmlReady();
