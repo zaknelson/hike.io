@@ -79,7 +79,7 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 		defaultMarker = {
 			path: google.maps.SymbolPath.CIRCLE,
 			fillOpacity: 1,
-			fillColor: "#FF6262",
+			fillColor: "#EB593C",
 			strokeWeight: 1.0,
 			scale: 4
 		};
