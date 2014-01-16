@@ -179,4 +179,5 @@ end
 
 require_relative "routes/api_routes"
 require_relative "routes/admin_routes"
+require_relative "routes/html_redirect_routes"
 require_relative "routes/html_routes"
