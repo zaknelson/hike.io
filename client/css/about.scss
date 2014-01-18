@@ -103,8 +103,8 @@
 
 		@media all and (max-width: $mobile-width) {
 			.text-container {
-				width: 416px;
-				margin-left: -208px;
+				width: 440px;
+				margin-left: -220px;
 			}
 
 			h2 {
@@ -113,7 +113,7 @@
 
 			h3 {
 				line-height: 20px;
-				font-size: 13px;
+				font-size: 12px;
 			}
 		}
 	}
@@ -141,6 +141,12 @@
 	.edit {
 		background: url("http://assets.hike.io/about-page-images/hawaii-oahu-north-shore.jpg") no-repeat center bottom;
 		@include background-size(cover);
+	}
+
+	.hikes, .open, .edit {
+		.text-container {
+			top: 38%;
+		}
 	}
 
 	@media all and (max-width: $mobile-width) {
