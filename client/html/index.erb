@@ -3,11 +3,15 @@
 		<h1>hike.io</h1>
 		<h2>Find beautiful hikes</h2>
 	</div>
-	<div class="search-box shadow-light">
-		<input class="hide-ie-input-close" type="text" placeholder="Hike name..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
-		<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
-			<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
+	<div class="content">
+		<div class="search-box shadow-light">
+			<input class="hide-ie-input-close" type="text" placeholder="Enter a hike name..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
+			<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
+				<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
+			</div>
+			<div data-ui-if="isSearching" class="loading-spinner rotate"></div>
 		</div>
-		<div data-ui-if="isSearching" class="loading-spinner rotate"></div>
+		<a href="/discover" class="discover-link">or discover new hikes</a>
 	</div>
+	
 </article>
