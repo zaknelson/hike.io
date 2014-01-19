@@ -63,9 +63,11 @@
 		top: 30%;
 		left: 50%;
 		text-align: right;
+		width: 520px;
+		margin-left: -260px;
 
 		.discover-link {
-			font-size: 14px;
+			font-size: 13px;
 			font-weight: bold;
 			line-height: 32px;
 			color: $title-text-color-inverse;
@@ -74,8 +76,6 @@
 		}
 		
 		.search-box {
-			width: 520px;
-			margin-left: -260px;
 			@include border-radius(2px, 2px);
 			border: 1px solid rgba(1, 1, 1, 0.3);
 			background-color: white;
@@ -121,7 +121,7 @@
 	}
 
 	@media all and (max-width: $mobile-width) { 
-		.search-box {
+		.content {
 			width: 80%;
 			margin-left: -40%;
 			input {
