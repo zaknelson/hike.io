@@ -17,6 +17,10 @@ angular.module("hikeio").
 			return $location.url("/");
 		};
 
+		NavigationService.prototype.toDiscover = function() {
+			return $location.url("/discover");
+		};
+
 		NavigationService.prototype.onIndex = function() {
 			return $location.path() === "/";
 		};

@@ -6,7 +6,7 @@ var IndexController = function($scope, $window, analytics, navigation, search) {
 		$window.document.activeElement.blur();
 		$scope.isSearching = true;
 		if ($scope.searchQuery.trim && $scope.searchQuery.trim().length === 0) {
-			navigation.toEntry("the-narrows");
+			navigation.toDiscover();
 		} else {
 			search.search($scope.searchQuery).then(function() {
 				$scope.isSearching = false;
