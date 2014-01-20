@@ -10,7 +10,7 @@ class HikeApp < Sinatra::Base
 		else
 			reviews = Review
 		end
-		reviews.select(:status, :string_id).order(:creation_time).all.to_json
+		reviews.order(:creation_time).all.to_json
 	end
 
 	get "/admin/v1/reviews/:review_id", :provides => "json" do

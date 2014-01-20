@@ -149,6 +149,13 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	["/admin", "/partials/admin.html"].each do |path|
+		get path, :provides => "html" do
+			# Permissions will get checked at the API layer
+			render_template :admin
+		end
+	end
+
 	["/hikes/:hike_id", "/hikes/:hike_id/edit", "/partials/entry.html"].each do |path|
 		get path, :provides => "html" do
 			hike_id = params[:hike_id]

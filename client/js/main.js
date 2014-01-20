@@ -34,6 +34,11 @@ angular.module("hikeio", ["seo", "ui"]).
 				templateUrl: "/partials/search.html",
 				title: "Search - hike.io"
 			}).
+			when("/admin", { // Any user can attempt to view this page, but the api layer will give no results unless they have admin credentials
+				controller: "AdminController",
+				templateUrl: "/partials/admin.html",
+				title: "Admin - hike.io"
+			}).
 			when("/hikes/:hikeId", {
 				controller: "EntryController",
 				templateUrl: "/partials/entry.html",

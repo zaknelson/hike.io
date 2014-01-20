@@ -1,0 +1,15 @@
+@import "_vars";
+@import "_mixins";
+
+.admin-page {
+	padding: 15px;
+
+	tr:first-child td {
+		font-weight: bold;
+	}
+	td {
+		padding: 10px;
+		max-width: 500px;
+		word-wrap: break-word;
+	}
+}
