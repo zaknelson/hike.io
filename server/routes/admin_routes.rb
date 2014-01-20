@@ -5,7 +5,12 @@ class HikeApp < Sinatra::Base
 
 	get "/admin/v1/reviews", :provides => "json" do
 		return err_403 if user_needs_changes_reviewed?
-		Review.to_json(:only=>[:string_id, :status])
+		if (params[:status])
+			reviews = Review.where(:status => params[:status])
+		else
+			reviews = Review
+		end
+		reviews.select(:status, :string_id).order(:creation_time).all.to_json
 	end
 
 	get "/admin/v1/reviews/:review_id", :provides => "json" do
