@@ -15,4 +15,8 @@ class HikeApp < Sinatra::Base
 	get "/hikes/ghorepani-gandruk-loop-6-days", :provides => "html" do
 		redirect "/hikes/ghorepani-ghandruk", 301
 	end
+
+	get "/hikes/hanakapai-falls", :provides => "html" do
+		redirect "/hikes/hanakapiai-falls", 301
+	end
 end
