@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $location, $timeout, analytics, config, mapTooltipFactory, navigation) {
+var MapController = function($scope, $timeout, analytics, config, mapTooltipFactory, navigation, persistentStorage) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
@@ -61,17 +61,29 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 		}
 
 		lastMarkerUpdateTime = event.timestamp;
-		var mapBounds = $scope.map.getBounds();
-		var northEast = mapBounds.getNorthEast();
+
+		var bounds = $scope.map.getBounds();
+		var center = $scope.map.getCenter();
+		var zoomLevel = $scope.map.getZoom();
+
+		var northEast = bounds.getNorthEast();
 		var northEastLatLng = {
 			latitude: northEast.lat(),
 			longitude: northEast.lng()
 		};
-		var southWest = mapBounds.getSouthWest();
+		var southWest = bounds.getSouthWest();
 		var southWestLatLng = {
 			latitude: southWest.lat(),
 			longitude: southWest.lng()
 		};
+
+		persistentStorage.set("/map", {
+			lastLocation: {
+				latitude: center.lat(),
+				longitude: center.lng(),
+				zoomLevel: zoomLevel
+			}
+		});
 		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
 	};
 
@@ -94,25 +106,21 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 
 	var initMapOptions = function() {
 		// Default to a central view of the US
-		var centerLatLng = new google.maps.LatLng(39.833333, -98.583333);
-		var zoomLevel = 4;
+		var centerLatLng = new google.maps.LatLng(15, -90); // Center over the Americas since they have the most hikes currently.
+		var zoomLevel = 3;
 
-		// If the url parameters lat / lng are set, zoom in there
-		var urlParams = $location.search();
-		var latString = urlParams.lat;
-		var lngString = urlParams.lng;
-		if ($.isNumeric(latString) && $.isNumeric(lngString)) {
-			var lat = Number(latString);
-			var lng = Number(lngString);
-			centerLatLng = new google.maps.LatLng(lat, lng);
-			zoomLevel = 12;
+		// Attempt to zoom into the last location viewed.
+		var mapData = persistentStorage.get("/map");
+		if (mapData && mapData.lastLocation) {
+			centerLatLng = new google.maps.LatLng(mapData.lastLocation.latitude, mapData.lastLocation.longitude);
+			zoomLevel = mapData.lastLocation.zoomLevel;
 		}
 
 		// else if we can guess the user's location, zoom into this location
 		else if (google.loader.ClientLocation) {
 			var clientLocation = google.loader.ClientLocation;
 			centerLatLng = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
-			zoomLevel = 7;
+			zoomLevel = 5;
 		}
 
 		$scope.mapOptions = {
@@ -187,4 +195,4 @@ var MapController = function($scope, $location, $timeout, analytics, config, map
 	$scope.htmlReady();
 };
 
-MapController.$inject = ["$scope", "$location", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation"];
+MapController.$inject = ["$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "persistentStorage"];

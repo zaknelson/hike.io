@@ -230,12 +230,15 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 		navigation.toEntry($scope.hike.string_id);
 	};
 
-	$scope.getMapHref = function() {
-		var result = "";
-		if (!$scope.isEditing) {
-			result = "/map?lat=" + $scope.hike.location.latitude + "&lng=" + $scope.hike.location.longitude;
-		}
-		return result;
+	$scope.mapLinkClicked = function() {
+		// Set last location so that map is zoomed into that spot
+		persistentStorage.set("/map", {
+			lastLocation: {
+				latitude: $scope.hike.location.latitude,
+				longitude: $scope.hike.location.longitude,
+				zoomLevel: 12
+			}
+		});
 	};
 
 	$scope.$on("photoDetailsUpdated", function(event, photo) {

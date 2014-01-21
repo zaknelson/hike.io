@@ -99,7 +99,7 @@
 								<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
 								<td>
 									<div class="hike-latitude-and-longitude" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-										<a data-ng-class="{disabled: isEditing}" data-ng-href="{{getMapHref()}}" rel="nofollow" itemprop="map">
+										<a data-ng-class="{disabled: isEditing}" href="/map" data-ng-click="mapLinkClicked()" rel="nofollow" itemprop="map">
 											<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
 												<div class="hike-latitude" itemprop="latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || capabilities.isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
 											<div class="hike-longitude-and-label">
