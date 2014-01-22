@@ -19,4 +19,14 @@ class HikeApp < Sinatra::Base
 	get "/hikes/hanakapai-falls", :provides => "html" do
 		redirect "/hikes/hanakapiai-falls", 301
 	end
+
+	get "/hikes/white-dotwhite-cross-trail-mt-monadnock", :provides => "html" do
+		redirect "/hikes/white-dot-white-cross", 301
+	end
+
+	get "/hikes/magoebaskloof-trail", :provides => "html" do
+		redirect "/hikes/magoebaskloof", 301
+	end
+
+	
 end
