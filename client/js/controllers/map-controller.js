@@ -81,7 +81,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 			lastLocation: {
 				latitude: center.lat(),
 				longitude: center.lng(),
-				zoomLevel: zoomLevel
+				zoomLevel: Math.min(zoomLevel, 10)
 			}
 		});
 		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
