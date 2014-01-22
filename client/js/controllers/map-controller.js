@@ -111,7 +111,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 
 		// Attempt to zoom into the last location viewed.
 		var mapData = persistentStorage.get("/map");
-		if (mapData && mapData.lastLocation) {
+		if (mapData && mapData.lastLocation && mapData.lastLocation.latitude && mapData.lastLocation.longitude && mapData.lastLocation.zoomLevel) {
 			centerLatLng = new google.maps.LatLng(mapData.lastLocation.latitude, mapData.lastLocation.longitude);
 			zoomLevel = mapData.lastLocation.zoomLevel;
 		}
