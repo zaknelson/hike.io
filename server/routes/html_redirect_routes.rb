@@ -1,7 +1,7 @@
 require_relative "../server"
 
 # Sometimes hike id's are changed, redirect to correct route if we encounter one of those routes.
-# TODO: consider moving this into the db
+# TODO: this really belongs in the db (although have to be careful with string id's that change multiple times)
 class HikeApp < Sinatra::Base
 
 	get "/hikes/scotchman-peak-trail-65", :provides => "html" do
@@ -28,5 +28,7 @@ class HikeApp < Sinatra::Base
 		redirect "/hikes/magoebaskloof", 301
 	end
 
-	
+	get "/hikes/westcoast-trail", :provides => "html" do
+		redirect "/hikes/west-coast-trail", 301
+	end
 end
