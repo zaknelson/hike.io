@@ -3,6 +3,8 @@
 angular.module("hikeio").
 	factory("search", ["$http", "$log", "$q", "$rootScope", "navigation", "persistentStorage", "resourceCache", function($http, $log, $q, $rootScope, navigation, persistentStorage, resourceCache) {
 
+		var SEARCH_RELEVANCE_THRESHOLD = 0.7;
+
 		var SearchService = function() {
 		};
 
@@ -83,7 +85,7 @@ angular.module("hikeio").
 		var hasRelevantSearchResults = function(searchData) {
 			for (var i = 0; i < searchData.length; i++) {
 				var result = searchData[i];
-				if (result.relevance > relevanceThreshold) {
+				if (result.relevance > SEARCH_RELEVANCE_THRESHOLD) {
 					return true;
 				}
 			}
@@ -93,8 +95,7 @@ angular.module("hikeio").
 		var searchByName = function(query) {
 			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
-					var relevanceThreshold = 0.7;
-					if (data.length === 1 && data[0].relevance > relevanceThreshold) {
+					if (data.length === 1 && data[0].relevance > SEARCH_RELEVANCE_THRESHOLD) {
 						var hike = data[0].hike;
 						resourceCache.put("/api/v1/hikes/" + hike.string_id, jQuery.extend(true, {}, hike));
 						navigation.toEntry(hike.string_id);
