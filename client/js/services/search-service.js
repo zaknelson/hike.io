@@ -83,12 +83,21 @@ angular.module("hikeio").
 		var searchByName = function(query) {
 			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
-					if (data.length === 1 && data[0].relevance > 0.7) {
+					var relevanceThreshold = 0.7;
+					if (data.length === 1 && data[0].relevance > relevanceThreshold) {
 						var hike = data[0].hike;
 						resourceCache.put("/api/v1/hikes/" + hike.string_id, jQuery.extend(true, {}, hike));
 						navigation.toEntry(hike.string_id);
-					} else if (data.length > 0) {
-						navigation.toSearch(query);
+					} else {
+						// If any of the results are of high enough relevance, then we want to see those results first
+						// If they're low quality matches, try searching by location.
+						for (var i = 0; i < data.length) {
+							var result = data[i];
+							if (data.relevance > relevanceThreshold) {
+								navigation.toSearch(query);
+								break;
+							}
+						}
 					}
 				}).
 				error(function(data, status, headers, config) {
@@ -110,8 +119,8 @@ angular.module("hikeio").
 
 			// Otherwise, first check to see if there is a hike with this name
 			searchByName(query).then(function(result) {
-				if (result.data.length === 0) {
-					// Unable to find by name, try by location
+				if (result.data.length !== 0) {
+					// Unable to find good match name, try by location
 					searchByLocation(query).then(function(result) {
 						if (!getBestGeocodeResult(result.data)) {
 							navigation.toSearch(query);
