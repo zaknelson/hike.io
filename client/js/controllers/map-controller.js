@@ -142,7 +142,9 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
 					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
 					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
-					$scope.doneShowingBanner = false;
+					$timeout(function() {
+						$scope.doneShowingBanner = false;
+					});
 				});
 			} else if (viewport.latitude && viewport.longitude && viewport.zoomLevel) {
 				centerLatLng = new google.maps.LatLng(viewport.latitude, viewport.longitude);
