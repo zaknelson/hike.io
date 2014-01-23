@@ -91,9 +91,9 @@ angular.module("hikeio").
 					} else {
 						// If any of the results are of high enough relevance, then we want to see those results first
 						// If they're low quality matches, try searching by location.
-						for (var i = 0; i < data.length) {
+						for (var i = 0; i < data.length; i++) {
 							var result = data[i];
-							if (data.relevance > relevanceThreshold) {
+							if (result.relevance > relevanceThreshold) {
 								navigation.toSearch(query);
 								break;
 							}
