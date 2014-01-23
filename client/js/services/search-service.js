@@ -51,11 +51,11 @@ angular.module("hikeio").
 				var sin = Math.sin(lat * Math.PI / 180);
 				var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
 				return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
-			}
+			};
 
 			var zoom = function (mapPx, worldPx, fraction) {
 				return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
-			}
+			};
 
 			var ne = bounds.getNorthEast();
 			var sw = bounds.getSouthWest();

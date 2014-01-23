@@ -44,7 +44,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 
 		var viewport = mapData.viewport;
 		if (viewport &&
-			viewport.latitude && 
+			viewport.latitude &&
 			viewport.longitude &&
 			viewport.zoomLevel) {
 			$scope.center = new google.maps.LatLng(viewport.latitude, viewport.longitude);
@@ -52,8 +52,8 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		}
 		if (mapData.formattedLocationString) {
 			$scope.formattedLocationString = mapData.formattedLocationString;
-		}	
-	}
+		}
+	};
 
 	$scope.$on("resetMapViewport", function() {
 		updateViewportFromStoredValues();
