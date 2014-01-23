@@ -142,6 +142,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
 					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
 					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
+					$scope.doneShowingBanner = false;
 				});
 			} else if (viewport.latitude && viewport.longitude && viewport.zoomLevel) {
 				centerLatLng = new google.maps.LatLng(viewport.latitude, viewport.longitude);
@@ -168,7 +169,6 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 
 	var handleIncomingSocketData = function(data) {
 		$scope.$apply(function() {
-			console.log(data, $scope.formattedLocationString, !$scope.doneShowingBanner);
 			if (data.length === 0) {
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
 					$scope.showBanner = true;
