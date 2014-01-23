@@ -5,6 +5,11 @@ angular.module("hikeio").
 
 		var SEARCH_RELEVANCE_THRESHOLD = 0.7;
 
+		// Sometimes geocoding just doesn't work that well, here is a list of special cases
+		var GEOCODING_SPECIAL_CASES = {
+			"washington": { formattedAddress: "Washington, USA", viewport: { northEast: { latitude: 49.0024305, longitude: -116.91558 }, southWest: { latitude: 45.5485987, longitude: -124.7857167 }}}
+		};
+
 		var SearchService = function() {
 		};
 
@@ -63,6 +68,15 @@ angular.module("hikeio").
 		};
 
 		var searchByLocation = function(query) {
+			
+			var specialCaseGeoCode = GEOCODING_SPECIAL_CASES[query.toLowerCase()];
+			if (specialCaseGeoCode) {
+				var deferred = $q.defer();
+				persistentStorage.set("/map", { viewport: specialCaseGeoCode.viewport, formattedLocationString: specialCaseGeoCode.formattedAddress });
+				navigation.toMap();
+				deferred.resolve();
+				return deferred.promise;
+			}
 			// This request should be automatically biased based on where the request is coming from
 			return $http({method: "GET", url: "http://maps.googleapis.com/maps/api/geocode/json", params: { address: query, sensor: false }, cache: resourceCache}).
 				success(function(data) {
@@ -129,7 +143,7 @@ angular.module("hikeio").
 				if (!hasRelevantSearchResults(result.data)) {
 					// Unable to find good match name, try by location
 					searchByLocation(query).then(function(result) {
-						if (!getBestGeocodeResult(result.data)) {
+						if (result && !getBestGeocodeResult(result.data)) {
 							navigation.toSearch(query);
 						}
 						deferred.resolve();
