@@ -68,7 +68,6 @@ angular.module("hikeio").
 		};
 
 		var searchByLocation = function(query) {
-			
 			var specialCaseGeoCode = GEOCODING_SPECIAL_CASES[query.toLowerCase()];
 			if (specialCaseGeoCode) {
 				var deferred = $q.defer();
