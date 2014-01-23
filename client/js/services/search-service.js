@@ -80,6 +80,16 @@ angular.module("hikeio").
 				});
 		};
 
+		var hasRelevantSearchResults = function(searchData) {
+			for (var i = 0; i < searchData.length; i++) {
+				var result = searchData[i];
+				if (result.relevance > relevanceThreshold) {
+					return true;
+				}
+			}
+			return false;
+		};
+
 		var searchByName = function(query) {
 			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
@@ -91,12 +101,8 @@ angular.module("hikeio").
 					} else {
 						// If any of the results are of high enough relevance, then we want to see those results first
 						// If they're low quality matches, try searching by location.
-						for (var i = 0; i < data.length; i++) {
-							var result = data[i];
-							if (result.relevance > relevanceThreshold) {
-								navigation.toSearch(query);
-								break;
-							}
+						if (hasRelevantSearchResults(data)){
+							navigation.toSearch(query);
 						}
 					}
 				}).
@@ -119,7 +125,7 @@ angular.module("hikeio").
 
 			// Otherwise, first check to see if there is a hike with this name
 			searchByName(query).then(function(result) {
-				if (result.data.length !== 0) {
+				if (!hasRelevantSearchResults(result.data)) {
 					// Unable to find good match name, try by location
 					searchByLocation(query).then(function(result) {
 						if (!getBestGeocodeResult(result.data)) {
