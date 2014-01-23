@@ -10,7 +10,7 @@ angular.module("hikeio").
 		};
 
 		NavigationService.prototype.toSearch = function(query) {
-			$location.url("/search?q=" + query);
+			return $location.url("/search?q=" + query);
 		};
 
 		NavigationService.prototype.toIndex = function() {
@@ -29,12 +29,20 @@ angular.module("hikeio").
 			return $location.path() === "/about";
 		};
 
+		NavigationService.prototype.onMap = function() {
+			return $location.path() === "/map";
+		};
+
+		NavigationService.prototype.toMap = function(id) {
+			return $location.url("/map");
+		};
+
 		NavigationService.prototype.toEntry = function(id) {
-			$location.url("/hikes/" + id);
+			return $location.url("/hikes/" + id);
 		};
 
 		NavigationService.prototype.toEntryEdit = function(id) {
-			$location.url("/hikes/" + id + "/edit");
+			return $location.url("/hikes/" + id + "/edit");
 		};
 
 		NavigationService.prototype.onEntry = function() {

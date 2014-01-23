@@ -20,7 +20,7 @@
 	@include background-size(cover);
 	min-height: 555px;
 
-	.banner {
+	.footer-banner {
 		position: absolute;
 		top: 100%;
 		width: 100%;
@@ -45,7 +45,7 @@
 	}
 
 	@media all and (max-width: $mobile-width) { 
-		.banner {
+		.footer-banner {
 			height: 100px;
 			margin-top: -100px;
 

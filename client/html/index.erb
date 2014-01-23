@@ -1,11 +1,11 @@
 <article class="index-page" data-meta-description="The best place to find beautiful hikes from all over the world. Hike.io is free, open source, and anyone can make an edit.">
-	<div class="banner">
+	<div class="footer-banner">
 		<h1>hike.io</h1>
 		<h2>Find beautiful hikes</h2>
 	</div>
 	<div class="content">
 		<div class="search-box shadow-light">
-			<input class="hide-ie-input-close" type="text" placeholder="Hike name..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
+			<input class="hide-ie-input-close" type="text" placeholder="Hike name or location..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
 			<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
 				<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
 			</div>

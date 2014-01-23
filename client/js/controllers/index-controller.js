@@ -5,7 +5,7 @@ var IndexController = function($scope, $window, analytics, navigation, search) {
 	$scope.search = function() {
 		$window.document.activeElement.blur();
 		$scope.isSearching = true;
-		if ($scope.searchQuery.trim && $scope.searchQuery.trim().length === 0) {
+		if ($scope.searchQuery.trim().length === 0) {
 			navigation.toDiscover();
 		} else {
 			search.search($scope.searchQuery).then(function() {

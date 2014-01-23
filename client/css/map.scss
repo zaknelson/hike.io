@@ -9,6 +9,11 @@
 	bottom: 0px;
 	z-index: 2;
 
+	.banner {
+		position: absolute;
+		display: none;
+	}
+
 	.tooltip, .touch-tooltip {
 		display: none;
 		opacity: 0;
@@ -25,7 +30,18 @@
 	}
 
 	.map-container {
+		position: absolute;
+		top: 0;
+		bottom: 0;
 		width: 100%;
-		height: 100%;
+	}
+}
+
+.map-page.showBanner {
+	.banner {
+		display: block;
+	}
+	.map-container {
+		top: $banner-height;
 	}
 }

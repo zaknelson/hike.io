@@ -233,7 +233,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 	$scope.mapLinkClicked = function() {
 		// Set last location so that map is zoomed into that spot
 		persistentStorage.set("/map", {
-			lastLocation: {
+			viewport: {
 				latitude: $scope.hike.location.latitude,
 				longitude: $scope.hike.location.longitude,
 				zoomLevel: 12

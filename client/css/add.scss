@@ -2,8 +2,6 @@
 @import "_mixins";
 @import "compass/css3/border-radius";
 
-$banner-height: 50px;
-
 .add-page-container {
 	position: fixed;
 	width: 100%;
@@ -86,30 +84,6 @@ $banner-height: 50px;
 	top: 0;
 	bottom: 0;
 	z-index: 9000;
-
-	.banner {
-		width: 100%;
-		height: $banner-height;
-		background-color: $accent-color;
-		text-align: center;
-		position: relative;
-
-		h3 {
-			color: white;
-			line-height: $banner-height;
-			margin-left: 10px;
-			display: inline;
-			font-size: 18px;
-			font-weight: bold;
-		}
-
-		div {
-			position: absolute;
-			right: 0px;
-			padding: 8px 8px;
-			margin-top: -$banner-height;
-		}
-	}
 
 	@media all and (max-width: 800px) {
 		.banner {

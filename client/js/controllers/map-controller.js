@@ -11,6 +11,9 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	$scope.mapOptions = null;
 	$scope.markers = [];
 	$scope.activeMarker = null;
+	$scope.showBanner = false;
+	$scope.doneShowingBanner = false;
+	$scope.formattedLocationString = null;
 
 	var doDeactivateMarker = function(marker) {
 		var tooltip = marker.tooltips.pop();
@@ -32,6 +35,24 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		marker.setIcon(hoverMarker);
 		$scope.activeMarker = marker;
 	};
+
+	$scope.$on("resetMapViewport", function() {
+		// TODO could use some refactoring
+		var mapData = persistentStorage.get("/map");
+		if (mapData) {
+			if (mapData.viewport) {
+				var viewport = mapData.viewport;
+				if (viewport.southWest && viewport.northEast) {
+					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
+					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
+					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
+				}
+			}
+			if (mapData.formattedLocationString) {
+				$scope.formattedLocationString = mapData.formattedLocationString;
+			}
+		}
+	});
 
 	$scope.markerActivate = function(marker) {
 		doActivateMarker(marker);
@@ -78,7 +99,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		};
 
 		persistentStorage.set("/map", {
-			lastLocation: {
+			viewport: {
 				latitude: center.lat(),
 				longitude: center.lng(),
 				zoomLevel: Math.min(zoomLevel, 9)
@@ -111,9 +132,24 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 
 		// Attempt to zoom into the last location viewed.
 		var mapData = persistentStorage.get("/map");
-		if (mapData && mapData.lastLocation && mapData.lastLocation.latitude && mapData.lastLocation.longitude && mapData.lastLocation.zoomLevel) {
-			centerLatLng = new google.maps.LatLng(mapData.lastLocation.latitude, mapData.lastLocation.longitude);
-			zoomLevel = mapData.lastLocation.zoomLevel;
+		if (mapData && mapData.viewport) {
+			var viewport = mapData.viewport;
+
+			// Map viewport can be defined as either by bounds (ne / sw) OR lat, lng, zoom
+			if (viewport.southWest && viewport.northEast) {
+				// Map options don't have a way of specifying bounds right off the bat, so set them on the next event loop
+				$timeout(function() {
+					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
+					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
+					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
+				});
+			} else if (viewport.latitude && viewport.longitude && viewport.zoomLevel) {
+				centerLatLng = new google.maps.LatLng(viewport.latitude, viewport.longitude);
+				zoomLevel = viewport.zoomLevel;
+			}
+			if (mapData.formattedLocationString) {
+				$scope.formattedLocationString = mapData.formattedLocationString;
+			}
 		}
 
 		// else if we can guess the user's location, zoom into this location
@@ -130,11 +166,23 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		};
 	};
 
-	var initSocketIo = function() {
-		socket = io.connect(config.socketIoPath);
-		socket.on("get-hikes-in-bounds", function (data) {
+	var handleIncomingSocketData = function(data) {
+		$scope.$apply(function() {
+			if (data.length === 0) {
+				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
+					$scope.showBanner = true;
+				}
+			} else {
+				$scope.showBanner = false;
+				$scope.doneShowingBanner = true;
+			}
 			mergeMarkers(data);
 		});
+	};
+
+	var initSocketIo = function() {
+		socket = io.connect(config.socketIoPath);
+		socket.on("get-hikes-in-bounds", handleIncomingSocketData);
 	};
 
 	var compareLatLng = function(a, b) {

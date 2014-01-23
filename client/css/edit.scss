@@ -2,8 +2,6 @@
 @import "_mixins";
 @import "compass/css3/user-interface";
 
-$edit-banner-height: 50px;
-
 .entry-edit-page {
 	.header-landscape {
 		h1 {
@@ -13,30 +11,6 @@ $edit-banner-height: 50px;
 
 	img, .img-div {
 		cursor: pointer;
-	}
-
-	.edit-banner {
-		width: 100%;
-		height: $edit-banner-height;
-		background-color: $accent-color;
-		text-align: center;
-		position: relative;
-
-		h3 {
-			color: white;
-			line-height: $edit-banner-height;
-			margin-left: 10px;
-			display: inline;
-			font-size: 18px;
-			font-weight: bold;
-		}
-
-		div {
-			position: absolute;
-			right: 0px;
-			padding: 8px 8px;
-			margin-top: -$edit-banner-height;
-		}
 	}
 
 	.delete-photo-icon {
@@ -110,7 +84,7 @@ $edit-banner-height: 50px;
 	}
 
 	@media all and (max-width: $mobile-width) {
-		.edit-banner {
+		.banner {
 			text-align: left;
 		}
 		.edit-banner-review {

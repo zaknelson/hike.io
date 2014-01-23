@@ -238,6 +238,30 @@ html.touch a:hover {
 	@include experimental('animation-timing-function', linear, webkit, moz, o, ms, not khtml);
 }
 
+.banner {
+	width: 100%;
+	height: $banner-height;
+	background-color: $accent-color;
+	text-align: center;
+	position: relative;
+
+	h3 {
+		color: white;
+		line-height: $banner-height;
+		margin-left: 10px;
+		display: inline;
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.buttons {
+		position: absolute;
+		right: 0px;
+		padding: 8px 8px;
+		margin-top: -$banner-height;
+	}
+}
+
 @media all and (max-width: $mobile-width) {
 	footer {
 		padding-right: 10px;
