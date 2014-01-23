@@ -1,13 +1,13 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("search", ["$http", "$log", "$q", "$rootScope", "navigation", "persistentStorage", "resourceCache", function($http, $log, $q, $rootScope, navigation, persistentStorage, resourceCache) {
+	factory("search", ["$http", "$log", "$q", "$rootScope", "$window", "navigation", "persistentStorage", "resourceCache", function($http, $log, $q, $rootScope, $window, navigation, persistentStorage, resourceCache) {
 
 		var SEARCH_RELEVANCE_THRESHOLD = 0.7;
 
 		// Sometimes geocoding just doesn't work that well, here is a list of special cases
 		var GEOCODING_SPECIAL_CASES = {
-			"washington": { formattedAddress: "Washington, USA", viewport: { northEast: { latitude: 49.0024305, longitude: -116.91558 }, southWest: { latitude: 45.5485987, longitude: -124.7857167 }}}
+			"washington": { formattedAddress: "Washington, USA", viewport: { latitude: 47.27, longitude: -120.85, zoomLevel: 7 } }
 		};
 
 		var SearchService = function() {
@@ -42,17 +42,41 @@ angular.module("hikeio").
 			}
 		};
 
+		// http://stackoverflow.com/questions/6048975/google-maps-v3-how-to-calculate-the-zoom-level-for-a-given-bounds
+		var getBoundsZoomLevel = function(bounds) {
+			var WORLD_DIM = { height: 256, width: 256 };
+			var ZOOM_MAX = 21;
+
+			var latRad = function(lat) {
+				var sin = Math.sin(lat * Math.PI / 180);
+				var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+				return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+			}
+
+			var zoom = function (mapPx, worldPx, fraction) {
+				return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+			}
+
+			var ne = bounds.getNorthEast();
+			var sw = bounds.getSouthWest();
+			var latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+			var lngDiff = ne.lng() - sw.lng();
+			var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+			var latZoom = zoom($($window).height() - $("header").height(), WORLD_DIM.height, latFraction);
+			var lngZoom = zoom($($window).width(), WORLD_DIM.width, lngFraction);
+			return Math.min(latZoom, lngZoom, ZOOM_MAX);
+		};
+
 		var getMapViewportFromGeocodeResult = function(result) {
 			var viewport = result.geometry.viewport;
+			var southWest = new google.maps.LatLng(viewport.southwest.lat, viewport.southwest.lng);
+			var northEast = new google.maps.LatLng(viewport.northeast.lat, viewport.northeast.lng);
+			var bounds = new google.maps.LatLngBounds(southWest, northEast);
+			var center = bounds.getCenter();
 			return {
-				northEast: {
-					latitude: viewport.northeast.lat,
-					longitude: viewport.northeast.lng
-				},
-				southWest: {
-					latitude: viewport.southwest.lat,
-					longitude: viewport.southwest.lng
-				}
+				latitude: center.lat(),
+				longitude: center.lng(),
+				zoomLevel: getBoundsZoomLevel(bounds)
 			};
 		};
 

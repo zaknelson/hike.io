@@ -14,6 +14,8 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	$scope.showBanner = false;
 	$scope.doneShowingBanner = false;
 	$scope.formattedLocationString = null;
+	$scope.center = null;
+	$scope.zoomLevel = 0;
 
 	var doDeactivateMarker = function(marker) {
 		var tooltip = marker.tooltips.pop();
@@ -36,22 +38,28 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		$scope.activeMarker = marker;
 	};
 
-	$scope.$on("resetMapViewport", function() {
-		// TODO could use some refactoring
+	var updateViewportFromStoredValues = function() {
 		var mapData = persistentStorage.get("/map");
-		if (mapData) {
-			if (mapData.viewport) {
-				var viewport = mapData.viewport;
-				if (viewport.southWest && viewport.northEast) {
-					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
-					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
-					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
-				}
-			}
-			if (mapData.formattedLocationString) {
-				$scope.formattedLocationString = mapData.formattedLocationString;
-			}
+		if (!mapData) return;
+
+		var viewport = mapData.viewport;
+		if (viewport &&
+			viewport.latitude && 
+			viewport.longitude &&
+			viewport.zoomLevel) {
+			$scope.center = new google.maps.LatLng(viewport.latitude, viewport.longitude);
+			$scope.zoomLevel = viewport.zoomLevel;
 		}
+		if (mapData.formattedLocationString) {
+			$scope.formattedLocationString = mapData.formattedLocationString;
+		}	
+	}
+
+	$scope.$on("resetMapViewport", function() {
+		updateViewportFromStoredValues();
+		$scope.doneShowingBanner = false;
+		$scope.map.setCenter($scope.center);
+		$scope.map.setZoom($scope.zoomLevel);
 	});
 
 	$scope.markerActivate = function(marker) {
@@ -126,45 +134,24 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	};
 
 	var initMapOptions = function() {
-		// Default to a central view of the US
-		var centerLatLng = new google.maps.LatLng(15, -90); // Center over the Americas since they have the most hikes currently.
-		var zoomLevel = 3;
+		// First, attempt to zoom into the last location viewed.
+		updateViewportFromStoredValues();
 
-		// Attempt to zoom into the last location viewed.
-		var mapData = persistentStorage.get("/map");
-		if (mapData && mapData.viewport) {
-			var viewport = mapData.viewport;
-
-			// Map viewport can be defined as either by bounds (ne / sw) OR lat, lng, zoom
-			if (viewport.southWest && viewport.northEast) {
-				// Map options don't have a way of specifying bounds right off the bat, so set them on the next event loop
-				$timeout(function() {
-					var southWest = new google.maps.LatLng(viewport.southWest.latitude, viewport.southWest.longitude);
-					var northEast = new google.maps.LatLng(viewport.northEast.latitude, viewport.northEast.longitude);
-					$scope.map.fitBounds(new google.maps.LatLngBounds(southWest, northEast));
-					$timeout(function() {
-						$scope.doneShowingBanner = false;
-					});
-				});
-			} else if (viewport.latitude && viewport.longitude && viewport.zoomLevel) {
-				centerLatLng = new google.maps.LatLng(viewport.latitude, viewport.longitude);
-				zoomLevel = viewport.zoomLevel;
-			}
-			if (mapData.formattedLocationString) {
-				$scope.formattedLocationString = mapData.formattedLocationString;
+		// If that didn't work, try to zoom into the user's current location
+		if (!$scope.center) {
+			if (google.loader.ClientLocation) {
+				var clientLocation = google.loader.ClientLocation;
+				$scope.center = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
+				$scope.zoomLevel = 5;
+			} else {
+				// Default to a central view of the US
+				$scope.center = new google.maps.LatLng(15, -90); // Center over the Americas since they have the most hikes currently.
+				$scope.zoomLevel = 3;
 			}
 		}
-
-		// else if we can guess the user's location, zoom into this location
-		else if (google.loader.ClientLocation) {
-			var clientLocation = google.loader.ClientLocation;
-			centerLatLng = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
-			zoomLevel = 5;
-		}
-
 		$scope.mapOptions = {
-			zoom: zoomLevel,
-			center: centerLatLng,
+			zoom: $scope.zoomLevel,
+			center: $scope.center,
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		};
 	};
