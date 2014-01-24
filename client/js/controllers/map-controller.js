@@ -48,7 +48,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 			viewport.longitude &&
 			viewport.zoomLevel) {
 			$scope.center = new google.maps.LatLng(viewport.latitude, viewport.longitude);
-			$scope.zoomLevel = viewport.zoomLevel;
+			$scope.zoomLevel = Math.min(11, viewport.zoomLevel);
 		}
 		if (mapData.formattedLocationString) {
 			$scope.formattedLocationString = mapData.formattedLocationString;
@@ -110,7 +110,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 			viewport: {
 				latitude: center.lat(),
 				longitude: center.lng(),
-				zoomLevel: Math.min(zoomLevel, 9)
+				zoomLevel: Math.min(zoomLevel, 11)
 			}
 		});
 		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
