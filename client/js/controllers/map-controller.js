@@ -58,6 +58,9 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	$scope.$on("resetMapViewport", function() {
 		updateViewportFromStoredValues();
 		$scope.doneShowingBanner = false;
+		if ($scope.activeMarker) {
+			doDeactivateMarker($scope.activeMarker)
+		}
 		$scope.map.setCenter($scope.center);
 		$scope.map.setZoom($scope.zoomLevel);
 	});
