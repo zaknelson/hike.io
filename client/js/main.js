@@ -88,7 +88,7 @@ angular.module("hikeio", ["seo", "ui"]).
 			$http.get("/partials/photo_stream.html",	{ cache: $templateCache });
 			$http.get("/partials/map.html",				{ cache: $templateCache });
 			$http.get("/partials/search.html",			{ cache: $templateCache });
-			$http.get("/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_preview,string_id", { cache: resourceCache} );
+			$http.get("/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_landscape,photo_preview,string_id", { cache: resourceCache} );
 		}, 1000);
 
 		// IE 9 does its own caching, and requests are not hitting the server

@@ -70,6 +70,7 @@ angular.module("hikeio").
 							}
 							$timeout(function() {
 								var previews = element.find(".preview:not(.masonry-brick)");
+								if (previews.length === 0) return;
 								var images = previews.children("div").children("img");
 								setupLoadHandlerForPreviewImages(images);
 								element.masonry("appended", previews);
