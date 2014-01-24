@@ -236,7 +236,7 @@ var EntryController = function($filter, $http, $log, $rootScope, $routeParams, $
 			viewport: {
 				latitude: $scope.hike.location.latitude,
 				longitude: $scope.hike.location.longitude,
-				zoomLevel: 12
+				zoomLevel: 11
 			}
 		});
 	};
