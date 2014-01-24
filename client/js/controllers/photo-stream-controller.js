@@ -1,12 +1,11 @@
 "use strict";
 var PhotoStreamController = function($scope, $http, $log, $timeout, analytics, resourceCache) {
 
-	$http({method: "GET", url: "/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_landscape,photo_preview,string_id", cache: resourceCache}).
+	$http({method: "GET", url: "/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_preview,string_id", cache: resourceCache}).
 		success(function(data, status, headers, config) {
+			// Only show the hikes that have photo previews or facts photo, which is a backup option
 			var hikes = jQuery.grep(data, function(hike){
-				// Quick and dirty way of checking whether the entry is good enough to show on the /discover page,
-				// Maybe want them to go through a curation process some day.
-				return hike.photo_landscape && hike.photo_facts;
+				return hike.photo_preview || hike.photo_facts;
 			});
 			$scope.hikes = hikes;
 		}).
