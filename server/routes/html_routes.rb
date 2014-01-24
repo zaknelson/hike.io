@@ -131,7 +131,7 @@ class HikeApp < Sinatra::Base
 	["/discover", "/partials/photo_stream.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
-				preload_resource "/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_landscape,photo_preview,string_id", array_as_json(Hike.order(:id).all, [:distance, :locality, :name, :photo_facts, :photo_preview, :string_id])
+				preload_resource "/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_preview,string_id", array_as_json(Hike.order(:id).all, [:distance, :locality, :name, :photo_facts, :photo_preview, :string_id])
 			end
 			render_template :photo_stream
 		end
