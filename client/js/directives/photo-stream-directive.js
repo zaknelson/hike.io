@@ -26,7 +26,7 @@ angular.module("hikeio").
 										"<h4 class='preview-location'>{{hike.locality}}</h4>" +
 									"</div>" +
 									"<div>" +
-										"<h4 class='preview-distance'>{{hike.distance | conversion:\"kilometers\":\"" + units + "\":1}} <span class='units'>" + unitsAbbreviated + "</span></h4>" +
+										"<h4 class='preview-distance' data-conversion='true' data-value='{{hike.distance}}' data-units='km.' data-truncate-to='1'><span class='value'></span> <span class='units'></span></h4>" +
 									"</div>" +
 								"</div>" +
 							"</div>" +
@@ -166,13 +166,6 @@ angular.module("hikeio").
 						});
 					});
 				}, true);
-
-				var useMetric = preferences.useMetric;
-				$rootScope.$watch("preferences.useMetric", function() {
-					if (preferences.useMetric !== useMetric) {
-						$compile(element)(scope);
-					}
-				});
 			}
 		};
 	}]);

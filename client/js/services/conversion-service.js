@@ -3,21 +3,43 @@
 angular.module("hikeio").
 	factory("conversion", function() {
 
-		var CORRESPONDING_UNITS = {
-			meters: "feet",
-			feet: "meters",
-			kilometers: "miles",
-			miles: "kilometers"
+		var CONVERT_UNITS = {
+			"meters": "feet",
+			"feet": "meters",
+			"kilometers": "miles",
+			"miles": "kilometers",
+			
+			"m.": "ft.",
+			"ft.": "m.",
+			"km.": "mi.",
+			"mi.": "km."
+		};
+
+		var EXPAND_UNITS = {
+			"m.": "meters",
+			"ft.": "feet",
+			"km.": "kilometers",
+			"mi.": "miles"
 		};
 
 		var conversionService = function() {
 		};
 
 		conversionService.prototype.getCorrespondingUnits = function(units) {
-			return CORRESPONDING_UNITS[units];
+			return CONVERT_UNITS[units];
 		};
 
 		conversionService.prototype.convert = function(value, from, to, truncateTo) {
+			// Cleanup input
+			if (typeof value !== "number") {
+				value = parseFloat(value);
+			}
+			if (typeof truncateTo !== "number") {
+				truncateTo = parseFloat(truncateTo);
+			}
+			from = EXPAND_UNITS[from] || from;
+			to = EXPAND_UNITS[to] || to;
+
 			var result = value;
 			if (from === "meters" && to === "feet") {
 				result = value * 3.28084;
