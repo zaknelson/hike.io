@@ -72,7 +72,7 @@
 								<td data-redirect-focus=".hike-distance">Distance</td>
 								<td>
 									<div itemprop="distance" itemtype="http://schema.org/Distance">
-										<div class="hike-distance" data-content-editable="isEditing" data-model="hike.distance" data-use-metric="preferences.useMetric" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-positive="true" data-change="isDirty = true" data-single-line="true"></div>
+										<div class="hike-distance" data-content-editable="isEditing" data-model="hike.distance" data-use-metric="preferences.useMetric" data-filter-view="conversion:kilometers:miles:1" data-filter-model="conversion:miles:kilometers:5" data-type="numeric" data-positive="true" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'km.' || 'mi.'}}</span>
 									</div>
 								</td>
@@ -81,7 +81,7 @@
 								<td data-redirect-focus=".hike-elevation-gain">Elev. Gain</td>
 								<td>
 									<div itemprop="elevationGain" itemtype="http://schema.org/Distance">
-										<div class="hike-elevation-gain" data-content-editable="isEditing" data-model="hike.elevation_gain" data-use-metric="preferences.useMetric" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<div class="hike-elevation-gain" data-content-editable="isEditing" data-model="hike.elevation_gain" data-use-metric="preferences.useMetric" data-filter-view="conversion:meters:feet:0" data-filter-model="conversion:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'm.' || 'ft.'}}</span>
 									</div>
 								</td>
@@ -90,7 +90,7 @@
 								<td>Elev. Max</td>
 								<td>
 									<div itemprop="elevationMax" itemtype="http://schema.org/Distance">
-										<div class="hike-elevation-max" data-content-editable="isEditing" data-model="hike.elevation_max" data-use-metric="preferences.useMetric" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<div class="hike-elevation-max" data-content-editable="isEditing" data-model="hike.elevation_max" data-use-metric="preferences.useMetric" data-filter-view="conversion:meters:feet:0" data-filter-model="conversion:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
 										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'm.' || 'ft.'}}</span>
 									</div>
 								</td>

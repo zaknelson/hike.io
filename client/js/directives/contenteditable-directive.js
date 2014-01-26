@@ -37,7 +37,7 @@ angular.module("hikeio").
 					// HACKY. Ideally I would like to add an expression to the existing filter attributes. But changes aren't detected unless we're watching them
 					// and then Angular gets upset about seeing ":" in the watched attribute. So we could change the filter value to be some other delimeter, but
 					// at that point it's getting pretty hacky. This is a less hacky alternative in which we just modify the distance filter if we see useMetric.
-					if (scope.useMetric && filterString.indexOf("distance:") === 0) {
+					if (scope.useMetric && filterString.indexOf("conversion:") === 0) {
 						var splitFilterString = filterString.split(":");
 						splitFilterString[1] = null;
 						splitFilterString[2] = null;
