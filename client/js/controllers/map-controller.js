@@ -161,7 +161,6 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 
 	var handleIncomingSocketData = function(data) {
 		$scope.$apply(function() {
-			console.log(data, $scope.formattedLocationString, !$scope.doneShowingBanner);
 			if (data.length === 0) {
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
 					$scope.showBanner = true;
