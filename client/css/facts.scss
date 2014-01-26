@@ -85,6 +85,7 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		.hike-name, .hike-locality, .hike-distance, .hike-elevation-gain, .hike-elevation-max, .hike-latitude, .hike-longitude, .hike-permit {
+			min-height: 16px;
 			min-width: 10px;
 			display: block;
 			float: left;
@@ -92,6 +93,7 @@ $facts-external-link-svg-size: 12px;
 		}
 
 		.hike-name, .hike-locality, .hike-latitude-and-longitude, .hike-permit {
+			min-height: 16px;
 			min-width: 120px;
 		}
 
@@ -109,13 +111,13 @@ $facts-external-link-svg-size: 12px;
 			float:left;
 		}
 
-		a:not(.disabled) {
+		a {
 			div,span {
 				color: $link-color;
 			}
 		}
 
-		a:not(.disabled):hover {
+		a:hover {
 			div,span {
 				color: $link-hover-color;
 				text-decoration: underline;
@@ -125,6 +127,7 @@ $facts-external-link-svg-size: 12px;
 		.unit-label {
 			float: left;
 			margin-left: 5px;
+			cursor: pointer;
 		}
 	}
 }

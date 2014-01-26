@@ -1,17 +1,21 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("contenteditable", ["$timeout", "$window", "capabilities", "filterParser", "selection", function($timeout, $window, capabilities, filterParser, selection) {
-
+	directive("contentEditable", ["$timeout", "$window", "capabilities", "filterParser", "selection", function($timeout, $window, capabilities, filterParser, selection) {
 		return {
-			require: "ngModel",
+			scope: {
+				model: "=",
+				useMetric: "=",
+				contentEditable: "="
+			},
 			link: function(scope, element, attributes, controller) {
+				var updatingModel = false;
 
 				var setAnchorHandler = function() {
 					var handleAnchorClick = function() {
 						return false;
 					};
-					if (attributes.contenteditable === "true") {
+					if (scope.contentEditable) {
 						element.find("a").on("click", handleAnchorClick);
 					} else {
 						element.find("a").off("click", handleAnchorClick);
@@ -26,6 +30,20 @@ angular.module("hikeio").
 					element.html(html);
 					if (!capabilities.contentEditableSupportsInput) {
 						storeViewValueInModel();
+					}
+				};
+
+				var getFilterString = function(filterString) {
+					// HACKY. Ideally I would like to add an expression to the existing filter attributes. But changes aren't detected unless we're watching them
+					// and then Angular gets upset about seeing ":" in the watched attribute. So we could change the filter value to be some other delimeter, but
+					// at that point it's getting pretty hacky. This is a less hacky alternative in which we just modify the distance filter if we see useMetric.
+					if (scope.useMetric && filterString.indexOf("distance:") === 0) {
+						var splitFilterString = filterString.split(":");
+						splitFilterString[1] = null;
+						splitFilterString[2] = null;
+						return splitFilterString.join(":");
+					} else {
+						return filterString;
 					}
 				};
 
@@ -51,15 +69,41 @@ angular.module("hikeio").
 						}
 
 						if (attributes.filterModel) {
-							viewValue = filterParser.filter(attributes.filterModel, viewValue);
+							viewValue = filterParser.filter(getFilterString(attributes.filterModel), viewValue);
 						}
-
-						controller.$setViewValue(viewValue);
+						updatingModel = true;
+						scope.model = viewValue;
+						$timeout(function() {
+							updatingModel = false;
+						});
 					});
 
 					if (attributes.change) {
-						scope.$apply(attributes.change);
+						// Since directive has an isolated scope, apply change to the $parent.
+						scope.$parent.$apply(attributes.change);
 					}
+				};
+
+				var renderView = function() {
+					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
+					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
+					var viewValue = scope.model;
+					$timeout(function() {
+						if (attributes.filterView) {
+							viewValue = filterParser.filter(getFilterString(attributes.filterView), viewValue);
+						}
+						element.html(viewValue);
+						setAnchorHandler();
+
+						// Workaround for issue with medium-editor
+						if (viewValue && viewValue.length > 0) {
+							if (element.hasClass("medium-editor-placeholder")) {
+								element.removeClass("medium-editor-placeholder");
+							} else if (element.hasClass("medium-editor-placeholder-ie")) {
+								element.removeClass("medium-editor-placeholder-ie");
+							}
+						}
+					});
 				};
 
 				// view -> model
@@ -157,34 +201,20 @@ angular.module("hikeio").
 				}
 
 				// model -> view
-				controller.$render = function() {
-					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
-					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
-					$timeout(function() {
-						var viewValue = controller.$viewValue;
-						if (attributes.filterView) {
-							viewValue = filterParser.filter(attributes.filterView, viewValue);
-						}
-						element.html(viewValue);
-						setAnchorHandler();
-
-						// Workaround for issue with medium-editor
-						if (viewValue && viewValue.length > 0) {
-							if (element.hasClass("medium-editor-placeholder")) {
-								element.removeClass("medium-editor-placeholder");
-							} else if (element.hasClass("medium-editor-placeholder-ie")) {
-								element.removeClass("medium-editor-placeholder-ie");
-							}
-						}
-					});
-				};
-
-				scope.$watch(attributes.contenteditable, function(isEditing) {
-					setAnchorHandler();
+				scope.$watch("model", function() {
+					if (!updatingModel) {
+						renderView();
+					}
 				});
 
-				// Load init value from DOM
-				controller.$setViewValue(element.html());
+				scope.$watch("useMetric", function() {
+					renderView();
+				});
+
+				scope.$watch("contentEditable", function(value) {
+					element.attr("contenteditable", "" + value);
+					setAnchorHandler();
+				});
 			}
 		};
 	}]);

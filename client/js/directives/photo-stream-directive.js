@@ -1,31 +1,38 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("photoStream", ["$rootScope", "$timeout", "$window", "capabilities", "config", function($rootScope, $timeout, $window, capabilities, config) {
-		var template = "<div class='preview-list'>" +
-			"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes | limitTo:hikesToShow'>" +
-				"<div class='preview preview-fade-in'>" +
-					"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
-						"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
-						"<div class='preview-footer'>" +
-							"<div>" +
-								"<h4 class='preview-title'>{{hike.name}}</h4>" +
-								"<h4 class='preview-location'>{{hike.locality}}</h4>" +
-							"</div>" +
-							"<div>" +
-								"<h4 class='preview-distance'>{{hike.distance | distance:\"kilometers\":\"miles\":1}} mi.</h4>" +
-							"</div>" +
-						"</div>" +
-					"</div>" +
-				"</div>" +
-			"</a>";
+	directive("photoStream", ["$compile", "$rootScope", "$timeout", "$window", "capabilities", "config", "preferences", function($compile, $rootScope, $timeout, $window, capabilities, config, preferences) {
+		
 
 		return {
-			replace: true,
 			scope: {
 				hikes: "="
 			},
-			template: template,
+			template: function(element, attrs) {
+				var units = "miles";
+				var unitsAbbreviated = "mi.";
+				if (preferences.useMetric) {
+					units = "kilometers";
+					unitsAbbreviated = "km.";
+				}
+				return "<div class='preview-list'>" +
+					"<a href='/hikes/{{hike.string_id}}' data-ng-repeat='hike in hikes | limitTo:hikesToShow'>" +
+						"<div class='preview preview-fade-in'>" +
+							"<div data-ng-class='{\"featured-box\": isFeatured(hike, $index)}' >" +
+								"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
+								"<div class='preview-footer'>" +
+									"<div>" +
+										"<h4 class='preview-title'>{{hike.name}}</h4>" +
+										"<h4 class='preview-location'>{{hike.locality}}</h4>" +
+									"</div>" +
+									"<div>" +
+										"<h4 class='preview-distance'>{{hike.distance | distance:\"kilometers\":\"" + units + "\":1}} <span class='units'>" + unitsAbbreviated + "</span></h4>" +
+									"</div>" +
+								"</div>" +
+							"</div>" +
+						"</div>" +
+					"</a>";
+			},
 			link: function (scope, element) {
 				var gutterWidth = 2;
 				var maxColumnWidth = 400;
@@ -33,7 +40,6 @@ angular.module("hikeio").
 				var infiniteScrollDistance = 3; // 3x the height of the window
 				var doneScrolling = false;
 				scope.hikesToShow = 5;
-
 				var isInViewport = function(element) {
 					return element.offset().top < $($window).height();
 				};
@@ -123,7 +129,6 @@ angular.module("hikeio").
 				scope.$watch("hikes", function(newValue, oldValue) {
 					if (newValue.length === 0) return;
 					$timeout(function() {
-
 						var previews = element.find(".preview");
 						var previewTitles = element.find(".preview-title");
 						var previewDivs = previews.children("div");
@@ -161,6 +166,13 @@ angular.module("hikeio").
 						});
 					});
 				}, true);
+
+				var useMetric = preferences.useMetric;
+				$rootScope.$watch("preferences.useMetric", function() {
+					if (preferences.useMetric !== useMetric) {
+						$compile(element)(scope);
+					}
+				});
 			}
 		};
 	}]);

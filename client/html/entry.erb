@@ -31,8 +31,8 @@
 				<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC" />
 			</div>
 		</div>
-		<div>
-			<h1 data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape}" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
+		<div data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape}">
+			<h1 data-content-editable="isEditing" data-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></h1>
 		</div>
 	</div>
 	<div class="content">
@@ -57,32 +57,32 @@
 							<tr data-redirect-focus=".hike-name">
 								<td>Hike</td>
 								<td>
-									<div class="hike-name" itemprop="name" contenteditable="{{isEditing}}" data-ng-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+									<div class="hike-name" itemprop="name" data-content-editable="isEditing" data-model="hike.name" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
 								</td>
 							</tr>
 							<tr data-ng-show="hike.locality != null || isEditing" data-redirect-focus=".hike-locality">
 								<td>Location</td>
 								<td>
 									<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-										<div class="hike-locality" itemprop="addressRegion" contenteditable="{{isEditing}}" data-ng-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
+										<div class="hike-locality" itemprop="addressRegion" data-content-editable="isEditing" data-model="hike.locality" data-type="text" data-single-line="true" data-change="isDirty = true"></div>
 									</div>
 								</td>
 							</tr>
-							<tr data-ng-show="hike.distance != null || isEditing" data-redirect-focus=".hike-distance">
-								<td>Distance</td>
+							<tr data-ng-show="hike.distance != null || isEditing">
+								<td data-redirect-focus=".hike-distance">Distance</td>
 								<td>
 									<div itemprop="distance" itemtype="http://schema.org/Distance">
-										<div class="hike-distance" contenteditable="{{isEditing}}" data-ng-model="hike.distance" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-positive="true" data-change="isDirty = true" data-single-line="true"></div>
-										<span class="unit-label">mi.</span>
+										<div class="hike-distance" data-content-editable="isEditing" data-model="hike.distance" data-use-metric="preferences.useMetric" data-filter-view="distance:kilometers:miles:1" data-filter-model="distance:miles:kilometers:5" data-type="numeric" data-positive="true" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'km.' || 'mi.'}}</span>
 									</div>
 								</td>
 							</tr>
-							<tr data-ng-show="hike.elevation_gain != null || isEditing" data-redirect-focus=".hike-elevation-gain">
-								<td>Elev. Gain</td>
+							<tr data-ng-show="hike.elevation_gain != null || isEditing">
+								<td data-redirect-focus=".hike-elevation-gain">Elev. Gain</td>
 								<td>
 									<div itemprop="elevationGain" itemtype="http://schema.org/Distance">
-										<div class="hike-elevation-gain" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_gain" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
-										<span class="unit-label">ft.</span>
+										<div class="hike-elevation-gain" data-content-editable="isEditing" data-model="hike.elevation_gain" data-use-metric="preferences.useMetric" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'm.' || 'ft.'}}</span>
 									</div>
 								</td>
 							</tr>
@@ -90,8 +90,8 @@
 								<td>Elev. Max</td>
 								<td>
 									<div itemprop="elevationMax" itemtype="http://schema.org/Distance">
-										<div class="hike-elevation-max" contenteditable="{{isEditing}}" data-ng-model="hike.elevation_max" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
-										<span class="unit-label">ft.</span>
+										<div class="hike-elevation-max" data-content-editable="isEditing" data-model="hike.elevation_max" data-use-metric="preferences.useMetric" data-filter-view="distance:meters:feet:0" data-filter-model="distance:feet:meters:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div>
+										<span class="unit-label" data-ng-click="preferences.toggleUseMetric()">{{preferences.useMetric &amp;&amp; 'm.' || 'ft.'}}</span>
 									</div>
 								</td>
 							</tr>
@@ -99,12 +99,18 @@
 								<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
 								<td>
 									<div class="hike-latitude-and-longitude" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-										<a data-ng-class="{disabled: isEditing}" href="/map" data-ng-click="mapLinkClicked()" rel="nofollow" itemprop="map">
+										<a href="/map" data-ng-click="mapLinkClicked()" rel="nofollow" itemprop="map" data-ui-if="!isEditing">
 											<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
-												<div class="hike-latitude" itemprop="latitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.latitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || capabilities.isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
+												<div class="hike-latitude" itemprop="latitude" data-ng-bind="hike.location.latitude | number:1"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
 											<div class="hike-longitude-and-label">
-												<div class="hike-longitude" itemprop="longitude" contenteditable="{{isEditing}}" data-ng-model="hike.location.longitude" data-filter-view="number:{{isEditing &amp;&amp; 5 || capabilities.isMobile &amp;&amp; 1 || 2}}" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
+												<div class="hike-longitude" itemprop="longitude" data-ng-bind="hike.location.longitude | number:1"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
 										</a>
+										<div data-ui-if="isEditing">
+											<div style="float:left" class="hike-latitude-and-label">
+												<div class="hike-latitude" itemprop="latitude" data-content-editable="isEditing" data-model="hike.location.latitude" data-filter-view="number:5" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
+											<div class="hike-longitude-and-label">
+												<div class="hike-longitude" itemprop="longitude" data-content-editable="isEditing" data-model="hike.location.longitude" data-filter-view="number:5" data-filter-model="number:5" data-type="numeric" data-change="isDirty = true" data-single-line="true"></div><span style="float:left" data-redirect-focus=".hike-longitude">°</span></div>
+										</div>
 										<a data-ng-show="!isEditing" href="http://maps.google.com/?q={{hike.location.latitude}},{{hike.location.longitude}}"><span><%= render_svg("#{@img_dir}/external-link.svg") %><img class="external-link" data-ui-if="!Modernizr.svg" data-ng-src="/images/external-link.png" /></span></a>
 									</div>
 								</td>
@@ -113,14 +119,16 @@
 								<td>Permits</td>
 								<td>
 									<div itemprop="permit" itemscope itemtype="http://schema.org/Permit">
-										<div class="hike-permit" itemprop="name" contenteditable="{{isEditing}}" data-ng-model="hike.permit" data-single-line="true" data-change="isDirty = true"></div>
+										<div class="hike-permit" itemprop="name" data-content-editable="isEditing" data-model="hike.permit" data-single-line="true" data-change="isDirty = true"></div>
 									</div>
 								</td>
 							</tr>
 						</table>
 					</div>
 				</div>
-				<div class="overview-description" data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null || hike.description == ''" contenteditable="{{isEditing}}" data-ng-model="hike.description" data-change="isDirty = true"></div>
+				<div data-ng-show="isEditing || hike.description" data-give-focus="hike.description == null || hike.description == ''">
+					<div class="overview-description" data-content-editable="isEditing" data-model="hike.description" data-change="isDirty = true"></div>
+				</div>
 				<div class="overview-description" data-ng-show="hike &amp;&amp; !hike.description &amp;&amp; !isEditing">
 					<p>Uh oh, this hike doesn't yet have a description, but you can fix that by <a href="/hikes/{{hike.string_id}}/edit">editing this page</a>.</p>
 				</div>

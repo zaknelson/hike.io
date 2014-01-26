@@ -9,7 +9,9 @@ angular.module("hikeio").
 			value = parseFloat(value);
 		}
 
-		if (from === "meters" && to === "feet") {
+		if (to === from) {
+			result = value;
+		} else if (from === "meters" && to === "feet") {
 			result = value * 3.28084;
 		} else if (from === "feet" && to === "meters") {
 			result = value * 0.30480;

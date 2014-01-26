@@ -54,7 +54,7 @@ angular.module("hikeio", ["seo", "ui"]).
 				}
 			});
 	}]).
-	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "capabilities", "config", "navigation", "resourceCache", function($http, $location, $rootScope, $templateCache, $timeout, $window, capabilities, config, navigation, resourceCache) {
+	run(["$http", "$location", "$rootScope", "$templateCache", "$timeout", "$window", "capabilities", "config", "navigation", "preferences", "resourceCache", function($http, $location, $rootScope, $templateCache, $timeout, $window, capabilities, config, navigation, preferences, resourceCache) {
 		// HACK, if url parameters include _escaped_fragment_ this request is being made by a crawler and the html is already rendered.
 		// If angular starts to render again, things won't look right, so throw an exception to essentially disable angular
 		if ($location.search()._escaped_fragment_ !== undefined) {
@@ -62,11 +62,12 @@ angular.module("hikeio", ["seo", "ui"]).
 		}
 		$rootScope.config = config;
 		$rootScope.capabilities = capabilities;
+		$rootScope.isProduction = $location.absUrl().indexOf("hike.io") > -1;
 		$rootScope.location = $location;
 		$rootScope.metaImage = config.landingPageImagesPath + "/the-narrows-thumb.jpg";
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
-		$rootScope.isProduction = $location.absUrl().indexOf("hike.io") > -1;
+		$rootScope.preferences = preferences;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			$rootScope.metaCanonical = "http://hike.io" + ($location.path() === "/" ? ""  : $location.path());
 			if (current && current.$$route && current.$$route.title) {

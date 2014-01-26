@@ -76,23 +76,27 @@ $header-landscape-aspect-ratio: 3;
 		}
 
 		.header-hike-name {
-			padding-left: 10px;
-			position: relative;
-			margin-top: 10px;
-			margin-bottom: -10px;
-			color: $title-text-color;
+			h1 {
+				padding-left: 10px;
+				position: relative;
+				margin-top: 10px;
+				margin-bottom: -10px;
+				color: $title-text-color;
+			}			
 		}
 
 		.header-hike-name-with-image {
-			color: $title-text-color-inverse;
-			padding-left: 10px;
-			position: absolute;
-			bottom: 10px;
-			width: 100%;
-			background-color:rgba(0, 0, 0, 0.5);
-			@include ie-opaque-black-background();
-			margin-top: -$header-landscape-footer-height;
-			height: $header-landscape-footer-height;
+			h1 {
+				color: $title-text-color-inverse;
+				padding-left: 10px;
+				position: absolute;
+				bottom: 10px;
+				width: 100%;
+				background-color:rgba(0, 0, 0, 0.5);
+				@include ie-opaque-black-background();
+				margin-top: -$header-landscape-footer-height;
+				height: $header-landscape-footer-height;
+			}	
 		}
 
 		@media all and (max-width: $mobile-width) {
