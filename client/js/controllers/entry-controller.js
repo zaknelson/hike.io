@@ -205,8 +205,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			success(function(data, status, headers, config) {
 				$scope.isJustAdded = false;
 				$scope.isSaving = false;
+				$scope.hike = data;
 				if (status === 200) {
-					$scope.hike = data;
 					resourceCache.put("/api/v1/hikes/" + $scope.hike.string_id, jQuery.extend(true, {}, $scope.hike));
 					resourceCache.removeAllWithRoot("/api/v1/hikes");
 					resourceCache.removeAllWithRoot("/api/v1/hikes/search");
