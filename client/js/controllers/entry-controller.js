@@ -155,7 +155,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			if (!haveSetMetaDescription) {
-				var distance = conversion.convert($scope.hike.distance, "kilometers", "miles", 1);
+				var distance = conversion.convert($scope.hike.distance, "kilometers", "miles", 1, true);
 				var elevationGain = conversion.convert($scope.hike.elevation_gain, "meters", "feet", 0);
 				var elevationMax = conversion.convert($scope.hike.elevation_max, "meters", "feet", 0);
 				$rootScope.metaDescription = $scope.hike.name + " is a " + distance +  " mile hike in " + $scope.hike.locality + ". " +

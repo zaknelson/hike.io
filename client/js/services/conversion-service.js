@@ -8,6 +8,11 @@ angular.module("hikeio").
 			"feet": "meters",
 			"kilometers": "miles",
 			"miles": "kilometers",
+
+			"meter": "foots",
+			"foot": "meters",
+			"kilometer": "miles",
+			"mile": "kilometers",
 			
 			"m.": "ft.",
 			"ft.": "m.",
@@ -15,21 +20,38 @@ angular.module("hikeio").
 			"mi.": "km."
 		};
 
-		var EXPAND_UNITS = {
+		var CANONICAL_UNITS = {
 			"m.": "meters",
 			"ft.": "feet",
 			"km.": "kilometers",
-			"mi.": "miles"
+			"mi.": "miles",
+
+			"meter": "meters",
+			"foot": "feet",
+			"kilometer": "kilometers",
+			"mile": "miles"
 		};
 
-		var conversionService = function() {
+		var METRIC_UNITS = {
+			"km.": true,
+			"kilometers": true,
+			"meters": true,
+			"kilometer": true,
+			"meter": true
 		};
 
-		conversionService.prototype.getCorrespondingUnits = function(units) {
+		var ConversionService = function() {
+		};
+
+		ConversionService.prototype.getCorrespondingUnits = function(units) {
 			return CONVERT_UNITS[units];
 		};
 
-		conversionService.prototype.convert = function(value, from, to, truncateTo) {
+		ConversionService.prototype.isMetric = function(units) {
+			return METRIC_UNITS[units] === true;
+		};
+
+		ConversionService.prototype.convert = function(value, from, to, truncateTo, showTrailingZeroes) {
 			// Cleanup input
 			if (typeof value !== "number") {
 				value = parseFloat(value);
@@ -37,8 +59,8 @@ angular.module("hikeio").
 			if (typeof truncateTo !== "number") {
 				truncateTo = parseFloat(truncateTo);
 			}
-			from = EXPAND_UNITS[from] || from;
-			to = EXPAND_UNITS[to] || to;
+			from = CANONICAL_UNITS[from] || from;
+			to = CANONICAL_UNITS[to] || to;
 
 			var result = value;
 			if (from === "meters" && to === "feet") {
@@ -50,14 +72,17 @@ angular.module("hikeio").
 			} else if (from === "miles" && to === "kilometers") {
 				result = value * 1.60934;
 			}
-
+			var stringResult = null;
 			if (truncateTo) {
-				result = result.toFixed(truncateTo);
+				stringResult = result.toFixed(truncateTo);
 			} else {
-				result = Math.round(result);
+				stringResult = Math.round(result).toString();
 			}
-			return result;
+			if (!showTrailingZeroes) {
+				stringResult = parseFloat(stringResult, 10).toString();
+			}
+			return stringResult;
 		};
 
-		return new conversionService();
+		return new ConversionService();
 	});
