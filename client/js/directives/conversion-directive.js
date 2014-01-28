@@ -13,8 +13,8 @@ angular.module("hikeio").
 						convertedUnits = conversion.getCorrespondingUnits(units);
 					}
 					var convertedValue = conversion.convert(value, units, convertedUnits, truncateTo);
-					element.find(".units").html(convertedUnits);
-					element.find(".value").html(convertedValue);
+					element.find("[data-units]").html(convertedUnits);
+					element.find("[data-value]").html(convertedValue);
 				});
 			}
 		};

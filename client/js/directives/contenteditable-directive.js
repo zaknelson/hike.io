@@ -1,12 +1,14 @@
 "use strict";
 
+// TODO this really needs som refactoring
 angular.module("hikeio").
-	directive("contentEditable", ["$timeout", "$window", "capabilities", "filterParser", "selection", function($timeout, $window, capabilities, filterParser, selection) {
+	directive("contentEditable", ["$compile", "$timeout", "$window", "capabilities", "filterParser", "preferences", "selection", function($compile, $timeout, $window, capabilities, filterParser, preferences, selection) {
 		return {
 			scope: {
 				model: "=",
-				useMetric: "=",
-				contentEditable: "="
+				renderView: "=",
+				contentEditable: "=",
+				compile: "="
 			},
 			link: function(scope, element, attributes, controller) {
 				var updatingModel = false;
@@ -36,8 +38,8 @@ angular.module("hikeio").
 				var getFilterString = function(filterString) {
 					// HACKY. Ideally I would like to add an expression to the existing filter attributes. But changes aren't detected unless we're watching them
 					// and then Angular gets upset about seeing ":" in the watched attribute. So we could change the filter value to be some other delimeter, but
-					// at that point it's getting pretty hacky. This is a less hacky alternative in which we just modify the distance filter if we see useMetric.
-					if (scope.useMetric && filterString.indexOf("conversion:") === 0) {
+					// at that point it's getting pretty hacky. This is a less hacky alternative in which we just modify the filter if we see useMetric.
+					if (preferences.useMetric && filterString.indexOf("conversion:") === 0) {
 						var splitFilterString = filterString.split(":");
 						splitFilterString[1] = null;
 						splitFilterString[2] = null;
@@ -85,6 +87,7 @@ angular.module("hikeio").
 				};
 
 				var renderView = function() {
+				if (updatingModel) return;
 					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
 					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
 					var viewValue = scope.model;
@@ -93,6 +96,7 @@ angular.module("hikeio").
 							viewValue = filterParser.filter(getFilterString(attributes.filterView), viewValue);
 						}
 						element.html(viewValue);
+						compileSubElementsIfNeccessary();
 						setAnchorHandler();
 
 						// Workaround for issue with medium-editor
@@ -104,6 +108,11 @@ angular.module("hikeio").
 							}
 						}
 					});
+				};
+
+				var compileSubElementsIfNeccessary = function() {
+					if (!scope.compile) return;
+					$compile(element.find(scope.compile))(scope);
 				};
 
 				// view -> model
@@ -202,12 +211,15 @@ angular.module("hikeio").
 
 				// model -> view
 				scope.$watch("model", function() {
-					if (!updatingModel) {
-						renderView();
-					}
+					renderView();
 				});
 
-				scope.$watch("useMetric", function() {
+				var ignoringFirstRenderView = true;
+				scope.$watch("renderView", function() {
+					if (ignoringFirstRenderView) {
+						ignoringFirstRenderView = false;
+						return;
+					}
 					renderView();
 				});
 
