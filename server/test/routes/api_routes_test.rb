@@ -220,6 +220,21 @@ class ApiRoutesTest < HikeAppTestCase
 		assert_equal 404, last_response.status
 	end
 
+	def test_put_malicious_html
+		data = get_put_json
+		data["description"] = "<script src='http://evil.com></script>"
+		response_data = data.clone
+		response_data["description"] = '<p></p>'
+		put_and_validate data, 200, response_data
+	end
+
+	def test_put_distance_in_description
+		data = get_put_json
+		data["description"] = "200 miles"
+		response_data = data.clone
+		response_data["description"] = '<p><span data-conversion="true" data-value="200" data-truncate-to="1" data-units="miles"><span data-value="true">200</span> <span data-units="true">miles</span></span></p>'
+		put_and_validate data, 200, response_data
+	end
 
 	#
 	# DELETE /api/v1/hikes/:id
@@ -244,12 +259,13 @@ class ApiRoutesTest < HikeAppTestCase
 	# Helpers
 	#
 
-	def put_and_validate data, response_code
+	def put_and_validate put_data, response_code, response_data=nil
 		set_admin_cookie
-		put "/api/v1/hikes/empty", data.to_json
+		put "/api/v1/hikes/empty", put_data.to_json
 		if response_code == 200
-			string_id = data["string_id"] || "empty"
-			validate data, string_id
+			string_id = put_data["string_id"] || "empty"
+			response_data = response_data || put_data
+			validate response_data, string_id
 		else
 			assert_equal response_code, last_response.status
 		end
