@@ -111,7 +111,7 @@ class Hike < Sequel::Model
 			end
 		end
 
-		Sanitize.clean(cleaned_html, 
+		cleaned_html = Sanitize.clean(cleaned_html, 
 			:add_attributes => {
 				"a" => {"rel" => "nofollow"}
 			},
@@ -129,6 +129,23 @@ class Hike < Sequel::Model
 				})
 				{ :node_whitelist => [node] }
 			end)
+
+		cleaned_html.gsub! /(\d+(?:\.\d+)? (miles|mile|mi\.|feet|foot|ft.|kilometers|kilometer|km\.|meters|meter|m.))/i do |match|
+			arr = match.split(" ")
+			value = arr[0]
+			units = arr[1]
+			truncate_to = 0;
+			if (units == "kilometers" ||
+				units == "kilometer" ||
+				units == "km." ||
+				units == "miles" ||
+				units == "mile" ||
+				units == "mi.")
+				truncate_to = 1;
+			end
+			"<span data-conversion=\"true\" data-value=\"#{value}\" data-truncate-to=\"#{truncate_to}\" data-units=\"#{units}\"><span data-value=\"true\" >#{value}</span> <span data-units=\"true\" >#{units}</span></span>"
+		end
+		cleaned_html
 	end
 
 	def update_from_json json
