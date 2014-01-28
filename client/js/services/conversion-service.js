@@ -13,7 +13,7 @@ angular.module("hikeio").
 			"foot": "meters",
 			"kilometer": "miles",
 			"mile": "kilometers",
-			
+
 			"m.": "ft.",
 			"ft.": "m.",
 			"km.": "mi.",

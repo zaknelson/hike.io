@@ -15,7 +15,6 @@ angular.module("hikeio").
 		} else {
 			self.useMetric = useMetricStoredValue;
 		}
-		
 		self.toggleUseMetric = function() {
 			self.useMetric = !self.useMetric;
 			persistentStorage.set("/preferences/useMetric", self.useMetric);

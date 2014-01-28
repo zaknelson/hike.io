@@ -2,8 +2,6 @@
 
 angular.module("hikeio").
 	directive("photoStream", ["$compile", "$rootScope", "$timeout", "$window", "capabilities", "config", "preferences", function($compile, $rootScope, $timeout, $window, capabilities, config, preferences) {
-		
-
 		return {
 			scope: {
 				hikes: "="

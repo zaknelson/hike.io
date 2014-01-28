@@ -87,7 +87,7 @@ angular.module("hikeio").
 				};
 
 				var renderView = function() {
-				if (updatingModel) return;
+					if (updatingModel) return;
 					// Delay reading of attributes.filterView, otherwise it will appear to be undefined
 					// http://stackoverflow.com/questions/14547425/angularjs-cant-read-dynamically-set-attributes
 					var viewValue = scope.model;
