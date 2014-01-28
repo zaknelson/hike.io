@@ -143,7 +143,7 @@ class Hike < Sequel::Model
 				units == "mi.")
 				truncate_to = 1;
 			end
-			"<span data-conversion=\"true\" data-value=\"#{value}\" data-truncate-to=\"#{truncate_to}\" data-units=\"#{units}\"><span data-value=\"true\" >#{value}</span> <span data-units=\"true\" >#{units}</span></span>"
+			"<span data-conversion=\"true\" data-value=\"#{value}\" data-truncate-to=\"#{truncate_to}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>"
 		end
 		cleaned_html
 	end
