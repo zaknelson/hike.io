@@ -14,6 +14,7 @@ class HtmlRoutesTest < HikeAppTestCase
 
 	def test_get_pages_return_200
 		get_and_assert_status "/", 200
+		get_and_assert_status "/about", 200
 		get_and_assert_status "/map", 200
 		get_and_assert_status "/discover", 200
 		get_and_assert_status "/discover?page=1", 200
