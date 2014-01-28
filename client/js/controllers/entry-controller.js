@@ -119,6 +119,10 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		});
 	}
 
+	var makeUnitsClickable = function(str) {
+		return str.replace('data-units="true"', 'data-units="true" data-ng-click="$parent.preferences.toggleUseMetric()" style="cursor:pointer"');
+	};
+
 	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
 	$http({method: "GET", url: "/api/v1/hikes/" + $routeParams.hikeId, cache:resourceCache}).
 		success(function(data, status, headers, config) {
@@ -143,6 +147,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			$scope.hike = hike;
+			if (!$scope.isEditing) {
+				$scope.hike.description = makeUnitsClickable($scope.hike.description)
+			}
 			$rootScope.title = $scope.hike.name + " - hike.io";
 			$rootScope.metaImage = getMetaImageFromHike(hike);
 			var haveSetMetaDescription = false;
