@@ -130,9 +130,9 @@ class Hike < Sequel::Model
 				{ :node_whitelist => [node] }
 			end)
 
-		cleaned_html.gsub! /(\d+(?:\.\d+)? (miles|mile|mi\.|feet|foot|ft.|kilometers|kilometer|km\.|meters|meter|m.))/i do |match|
+		cleaned_html.gsub! /([\d,]+(?:\.\d+)? (miles|mile|mi\.|feet|foot|ft\.|kilometers|kilometer|km\.|meters|meter|m\.))/i do |match|
 			arr = match.split(" ")
-			value = arr[0]
+			value = arr[0].gsub(",", "")
 			units = arr[1]
 			truncate_to = 0;
 			if (units == "kilometers" ||
