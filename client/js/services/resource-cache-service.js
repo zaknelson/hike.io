@@ -8,7 +8,7 @@ angular.module("hikeio").
 		var superRemoveAll = cacheFactory.removeAll;
 		var allKeys = {};
 		cacheFactory.put = function(key, value) {
-			allKeys[key] = value;
+			allKeys[key] = angular.copy(value);
 			superPut(key, value);
 		};
 		cacheFactory.remove = function(key) {
