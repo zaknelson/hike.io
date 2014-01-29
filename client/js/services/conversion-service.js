@@ -90,7 +90,7 @@ angular.module("hikeio").
 				result = value * 1.60934;
 			}
 			var stringResult = null;
-			if (truncateTo) {
+			if (truncateTo && result < 100) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
 				if (result < 10) {
