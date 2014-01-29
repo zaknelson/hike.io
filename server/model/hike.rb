@@ -154,7 +154,7 @@ class Hike < Sequel::Model
 			value = arr[0].gsub(",", "").to_f
 			units = SINGULAR_MAPPING[arr[1]] || arr[1]
 			if (IMPERIAL_TO_METRIC[units])
-				value = value * IMPERIAL_TO_METRIC[units]["ratio"]
+				value = (value * IMPERIAL_TO_METRIC[units]["ratio"]).round(5)
 				units = IMPERIAL_TO_METRIC[units]["units"]
 			end
 			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>#{trailing_bit}"
