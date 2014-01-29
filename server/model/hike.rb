@@ -39,9 +39,9 @@ class Hike < Sequel::Model
 		"ft" => 
 			{ "units" => "m", "ratio" => 0.30480 },
 		"miles" => 
-			{ "units" => "kilometers", "ratio" => 1.60934 },
+			{ "units" => "kilometers", "ratio" => 1.609344 },
 		"mi" => 
-			{ "units" => "km", "ratio" => 1.60934 },
+			{ "units" => "km", "ratio" => 1.609344 },
 	}
 
 	def as_json fields=nil

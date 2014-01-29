@@ -81,16 +81,16 @@ angular.module("hikeio").
 
 			var result = value;
 			if (from === "meters" && to === "feet") {
-				result = value * 3.28084;
+				result = value * 3.28083989501;
 			} else if (from === "feet" && to === "meters") {
-				result = value * 0.30480;
+				result = value * 0.30480; // exact
 			} else if (from === "kilometers" && to === "miles") {
-				result = value * 0.62137;
+				result = value * 0.62137119223;
 			} else if (from === "miles" && to === "kilometers") {
-				result = value * 1.60934;
+				result = value * 1.609344; // exact
 			}
 			var stringResult = null;
-			if (truncateTo && result < 100) {
+			if (truncateTo && result) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
 				if (result < 10) {
