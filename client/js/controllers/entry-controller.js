@@ -120,7 +120,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	}
 
 	var makeUnitsClickable = function(str) {
-		return str.replace("data-units=\"true\"", "data-units=\"true\" data-ng-click=\"$parent.preferences.toggleUseMetric()\" style=\"cursor:pointer\"");
+		return str.replace(/data-units="true"/g, "data-units=\"true\" data-ng-click=\"$parent.preferences.toggleUseMetric()\" style=\"cursor:pointer\"");
 	};
 
 	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
