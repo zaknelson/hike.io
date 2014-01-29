@@ -147,7 +147,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			$scope.hike = angular.copy(hike);
-			if (!$scope.isEditing) {
+			if (!$scope.isEditing && $scope.hike.description) {
 				$scope.hike.description = makeUnitsClickable($scope.hike.description);
 			}
 			$rootScope.title = $scope.hike.name + " - hike.io";
