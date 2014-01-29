@@ -68,13 +68,16 @@ angular.module("hikeio").
 			}
 		};
 
-		ConversionService.prototype.convert = function(value, from, to, truncateTo, showTrailingZeroes) {
+		ConversionService.prototype.convert = function(value, from, to, truncateTo, hideDecimalAt, showTrailingZeroes) {
 			// Cleanup input
 			if (typeof value !== "number") {
 				value = parseFloat(value);
 			}
 			if (typeof truncateTo !== "number") {
 				truncateTo = parseFloat(truncateTo);
+			}
+			if (typeof hideDecimalAt !== "number") {
+				hideDecimalAt = parseFloat(hideDecimalAt);
 			}
 			from = CANONICAL_UNITS[from] || from;
 			to = CANONICAL_UNITS[to] || to;
@@ -90,7 +93,9 @@ angular.module("hikeio").
 				result = value * 1.609344; // exact
 			}
 			var stringResult = null;
-			if (truncateTo && result) {
+			if (hideDecimalAt && result >= hideDecimalAt) {
+				stringResult = Math.round(result).toString();
+			} else if (truncateTo) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
 				if (result < 10) {

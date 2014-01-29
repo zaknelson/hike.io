@@ -7,13 +7,14 @@ angular.module("hikeio").
 				var value = attrs.value;
 				var units = attrs.units;
 				var truncateTo = attrs.truncateTo;
+				var hideDecimalAt = attrs.hideDecimalAt;
 				var showTrailingZeroes = attrs.showTrailingZeroes;
 				$rootScope.$watch("preferences.useMetric", function(useMetric) {
 					var convertedUnits = units;
 					if (useMetric !== conversion.isMetric(units)) {
 						convertedUnits = conversion.getCorrespondingUnits(units);
 					}
-					var convertedValue = conversion.convert(value, units, convertedUnits, truncateTo, showTrailingZeroes);
+					var convertedValue = conversion.convert(value, units, convertedUnits, truncateTo, hideDecimalAt, showTrailingZeroes);
 					if (convertedValue === "1") {
 						convertedUnits = conversion.getSingularUnits(convertedUnits);
 					}
