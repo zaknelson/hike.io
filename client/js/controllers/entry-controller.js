@@ -1,5 +1,5 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, resourceCache, selection) {
+var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -119,8 +119,15 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		});
 	}
 
+	$scope.unitsClicked = function(event) {
+		// Ignore the click if the units are inside a link.
+		if ($(event.target).parents("a").length === 0) {
+			preferences.toggleUseMetric();
+		}
+	};
+
 	var makeUnitsClickable = function(str) {
-		return str.replace(/data-units="true"/g, "data-units=\"true\" data-ng-click=\"$parent.preferences.toggleUseMetric()\" style=\"cursor:pointer\"");
+		return str.replace(/data-units="true"/g, "data-units=\"true\" data-ng-click=\"$parent.unitsClicked($event)\" style=\"cursor:pointer\"");
 	};
 
 	var routeId = "/api/v1/hikes/" + $routeParams.hikeId;
@@ -494,4 +501,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	});
 };
 
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "resourceCache", "selection"];
+EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection"];
