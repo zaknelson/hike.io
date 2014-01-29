@@ -157,8 +157,6 @@ class Hike < Sequel::Model
 				value = value * IMPERIAL_TO_METRIC[units]["ratio"]
 				units = IMPERIAL_TO_METRIC[units]["units"]
 			end
-			puts "'#{"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>#{trailing_bit}"
-}'"
 			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>#{trailing_bit}"
 		end
 		cleaned_html
