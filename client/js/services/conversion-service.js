@@ -40,6 +40,13 @@ angular.module("hikeio").
 			"meter": true
 		};
 
+		var SINGULAR_UNITS = {
+			"feet": "foot",
+			"meters": "meter",
+			"miles" : "mile",
+			"kilometers": "kilometer"
+		};
+
 		var ConversionService = function() {
 		};
 
@@ -49,6 +56,15 @@ angular.module("hikeio").
 
 		ConversionService.prototype.isMetric = function(units) {
 			return METRIC_UNITS[units] === true;
+		};
+
+		ConversionService.prototype.getSingularUnits = function(units) {
+			var singular = SINGULAR_UNITS[units];
+			if (singular) {
+				return singular;
+			} else {
+				return units;
+			}
 		};
 
 		ConversionService.prototype.convert = function(value, from, to, truncateTo, showTrailingZeroes) {
@@ -73,7 +89,7 @@ angular.module("hikeio").
 				result = value * 1.60934;
 			}
 			var stringResult = null;
-			if (truncateTo) {
+			if (truncateTo && result) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
 				stringResult = Math.round(result).toString();

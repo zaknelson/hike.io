@@ -14,6 +14,9 @@ angular.module("hikeio").
 						convertedUnits = conversion.getCorrespondingUnits(units);
 					}
 					var convertedValue = conversion.convert(value, units, convertedUnits, truncateTo, showTrailingZeroes);
+					if (convertedValue === "1") {
+						convertedUnits = conversion.getSingularUnits(convertedUnits);
+					}
 					element.find("[data-units]").html(convertedUnits);
 					element.find("[data-value]").html(convertedValue);
 				});
