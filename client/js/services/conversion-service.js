@@ -93,9 +93,7 @@ angular.module("hikeio").
 				result = value * 1.609344; // exact
 			}
 			var stringResult = null;
-			if (hideDecimalAt && result >= hideDecimalAt) {
-				stringResult = Math.round(result).toString();
-			} else if (truncateTo) {
+			if (truncateTo) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
 				if (result < 10) {
@@ -106,6 +104,9 @@ angular.module("hikeio").
 			}
 			if (!showTrailingZeroes) {
 				stringResult = parseFloat(stringResult, 10).toString();
+			}
+			if (hideDecimalAt && parseFloat(stringResult, 10) >= hideDecimalAt) {
+				stringResult = Math.round(result).toString();
 			}
 			return stringResult;
 		};
