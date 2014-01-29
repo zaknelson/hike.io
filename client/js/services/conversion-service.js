@@ -9,22 +9,22 @@ angular.module("hikeio").
 			"kilometers": "miles",
 			"miles": "kilometers",
 
-			"meter": "foots",
+			"meter": "feet",
 			"foot": "meters",
 			"kilometer": "miles",
 			"mile": "kilometers",
 
-			"m.": "ft.",
-			"ft.": "m.",
-			"km.": "mi.",
-			"mi.": "km."
+			"m": "ft",
+			"ft": "m",
+			"km": "mi",
+			"mi": "km"
 		};
 
 		var CANONICAL_UNITS = {
-			"m.": "meters",
-			"ft.": "feet",
-			"km.": "kilometers",
-			"mi.": "miles",
+			"m": "meters",
+			"ft": "feet",
+			"km": "kilometers",
+			"mi": "miles",
 
 			"meter": "meters",
 			"foot": "feet",
@@ -33,10 +33,11 @@ angular.module("hikeio").
 		};
 
 		var METRIC_UNITS = {
-			"km.": true,
+			"km": true,
 			"kilometers": true,
-			"meters": true,
 			"kilometer": true,
+			"m": true,
+			"meters": true,
 			"meter": true
 		};
 

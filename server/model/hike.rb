@@ -36,12 +36,12 @@ class Hike < Sequel::Model
 	IMPERIAL_TO_METRIC = {
 		"feet" => 
 			{ "units" => "meters", "ratio" => 0.30480 },
-		"ft." => 
-			{ "units" => "m.", "ratio" => 0.30480 },
+		"ft" => 
+			{ "units" => "m", "ratio" => 0.30480 },
 		"miles" => 
 			{ "units" => "kilometers", "ratio" => 1.60934 },
-		"mi." => 
-			{ "units" => "km.", "ratio" => 1.60934 },
+		"mi" => 
+			{ "units" => "km", "ratio" => 1.60934 },
 	}
 
 	def as_json fields=nil
@@ -148,7 +148,8 @@ class Hike < Sequel::Model
 				})
 				{ :node_whitelist => [node] }
 			end)
-		cleaned_html.gsub! /([\d,]+(?:\.\d+)? (miles|mile|mi\.|feet|foot|ft\.|kilometers|kilometer|km\.|meters|meter|m\.))/i do |match|
+		cleaned_html.gsub! /((\.|,|\d)*\d+(\.|,|\d)* (miles|mile|mi|feet|foot|ft|kilometers|kilometer|km|meters|meter|m)\W)/ do |match|
+			trailing_bit = match.slice!(-1)
 			arr = match.split(" ")
 			value = arr[0].gsub(",", "").to_f
 			units = SINGULAR_MAPPING[arr[1]] || arr[1]
@@ -156,7 +157,9 @@ class Hike < Sequel::Model
 				value = value * IMPERIAL_TO_METRIC[units]["ratio"]
 				units = IMPERIAL_TO_METRIC[units]["units"]
 			end
-			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>"
+			puts "'#{"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>#{trailing_bit}"
+}'"
+			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>#{trailing_bit}"
 		end
 		cleaned_html
 	end
