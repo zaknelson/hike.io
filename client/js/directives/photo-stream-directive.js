@@ -18,7 +18,7 @@ angular.module("hikeio").
 										"<h4 class='preview-location'>{{hike.locality}}</h4>" +
 									"</div>" +
 									"<div>" +
-										"<h4 class='preview-distance' data-conversion='true' data-value='{{hike.distance}}' data-units='km' data-show-trailing-zeroes='true'><span data-value='true' class='value'></span> <span data-units='true' class='units'></span></h4>" +
+										"<h4 class='preview-distance' data-conversion='true' data-value='{{hike.distance}}' data-units='km'><span data-value='true' class='value'></span> <span data-units='true' class='units'></span></h4>" +
 									"</div>" +
 								"</div>" +
 							"</div>" +
