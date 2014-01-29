@@ -8,6 +8,42 @@ class Hike < Sequel::Model
 	many_to_one  :photo_preview, :class => :Photo
 	many_to_many :photos_generic, :class => :Photo, :left_key => :hike_id, :right_key => :photo_id, :join_table => :hikes_photos
 
+	INPUT_TO_REPLACE_MAPPING = {
+		"<div>"		=> "\n",
+		"</div>"	=> "\n",
+		"<br>"		=> "\n",
+		"<br/>"		=> "\n",
+		"</br>"		=> "\n",
+		"<p>"		=> "\n",
+		"</p>"		=> "\n",
+		"<strong>"	=> "<b>",
+		"</strong>"	=> "</b>",
+		"<em>"		=> "<i>",
+		"</em>"		=> "</i>",
+		"&nbsp;"	=> " ",
+
+		'href="http://hike.io'	=> 'href="',
+		'href="hike.io'			=> 'href="'
+	}
+
+	SINGULAR_MAPPING = {
+		"mile"			=> "miles",
+		"foot"			=> "feet",
+		"meter"			=> "meters",
+		"kilometer"		=> "kilometers"
+	}
+
+	IMPERIAL_TO_METRIC = {
+		"feet" => 
+			{ "units" => "meters", "ratio" => 0.30480 },
+		"ft." => 
+			{ "units" => "m.", "ratio" => 0.30480 },
+		"miles" => 
+			{ "units" => "kilometers", "ratio" => 1.60934 },
+		"mi." => 
+			{ "units" => "km.", "ratio" => 1.60934 },
+	}
+
 	def as_json fields=nil
 		if fields
 			options = {:only => fields}
@@ -79,25 +115,8 @@ class Hike < Sequel::Model
 	def self.clean_html_input html
 		return html if not html
 		# The html that comes in from contenteditable is pretty unweidly, try to clean it up
-		inputToReplaceMapping = {
-			"<div>"		=> "\n",
-			"</div>"	=> "\n",
-			"<br>"		=> "\n",
-			"<br/>"		=> "\n",
-			"</br>"		=> "\n",
-			"<p>"		=> "\n",
-			"</p>"		=> "\n",
-			"<strong>"	=> "<b>",
-			"</strong>"	=> "</b>",
-			"<em>"		=> "<i>",
-			"</em>"		=> "</i>",
-			"&nbsp;"	=> " ",
-
-			'href="http://hike.io'	=> 'href="',
-			'href="hike.io'			=> 'href="'
-		}
 		html.gsub! /(<div>|<\/div>|<div\/>|<br>|<br\/>|<\/br>|<p>|<\/p>|<p\/>|<strong>|<\/strong>|<em>|<\/em>|&nbsp;|href="http:\/\/hike\.io|href="hike\.io)/i do |match|
-			inputToReplaceMapping[match.to_s]
+			INPUT_TO_REPLACE_MAPPING[match.to_s]
 		end
 		cleaned_html = ""
 		html_elements = html.split("\n")
@@ -129,11 +148,14 @@ class Hike < Sequel::Model
 				})
 				{ :node_whitelist => [node] }
 			end)
-
 		cleaned_html.gsub! /([\d,]+(?:\.\d+)? (miles|mile|mi\.|feet|foot|ft\.|kilometers|kilometer|km\.|meters|meter|m\.))/i do |match|
 			arr = match.split(" ")
-			value = arr[0].gsub(",", "")
-			units = arr[1]
+			value = arr[0].gsub(",", "").to_f
+			units = SINGULAR_MAPPING[arr[1]] || arr[1]
+			if (IMPERIAL_TO_METRIC[units])
+				value = value * IMPERIAL_TO_METRIC[units]["ratio"]
+				units = IMPERIAL_TO_METRIC[units]["units"]
+			end
 			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>"
 		end
 		cleaned_html
