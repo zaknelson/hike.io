@@ -134,16 +134,7 @@ class Hike < Sequel::Model
 			arr = match.split(" ")
 			value = arr[0].gsub(",", "")
 			units = arr[1]
-			truncate_to = 0;
-			if (units == "kilometers" ||
-				units == "kilometer" ||
-				units == "km." ||
-				units == "miles" ||
-				units == "mile" ||
-				units == "mi.")
-				truncate_to = 1;
-			end
-			"<span data-conversion=\"true\" data-value=\"#{value}\" data-truncate-to=\"#{truncate_to}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>"
+			"<span data-conversion=\"true\" data-value=\"#{value}\" data-units=\"#{units}\"><span data-value=\"true\">#{value}</span> <span data-units=\"true\">#{units}</span></span>"
 		end
 		cleaned_html
 	end

@@ -232,7 +232,7 @@ class ApiRoutesTest < HikeAppTestCase
 		data = get_put_json
 		data["description"] = "200 miles"
 		response_data = data.clone
-		response_data["description"] = '<p><span data-conversion="true" data-value="200" data-truncate-to="1" data-units="miles"><span data-value="true">200</span> <span data-units="true">miles</span></span></p>'
+		response_data["description"] = '<p><span data-conversion="true" data-value="200" data-units="miles"><span data-value="true">200</span> <span data-units="true">miles</span></span></p>'
 		put_and_validate data, 200, response_data
 	end
 

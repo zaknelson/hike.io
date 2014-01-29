@@ -89,10 +89,14 @@ angular.module("hikeio").
 				result = value * 1.60934;
 			}
 			var stringResult = null;
-			if (truncateTo && result) {
+			if (truncateTo) {
 				stringResult = result.toFixed(truncateTo);
 			} else {
-				stringResult = Math.round(result).toString();
+				if (result < 10) {
+					stringResult = result.toFixed(1);
+				} else {
+					stringResult = Math.round(result).toString();
+				}
 			}
 			if (!showTrailingZeroes) {
 				stringResult = parseFloat(stringResult, 10).toString();
