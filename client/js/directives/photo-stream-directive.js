@@ -59,14 +59,14 @@ angular.module("hikeio").
 					var windowBottom = $($window).height() + $($window).scrollTop();
 					var elementBottom = element.offset().top + element.height();
 					var remaining = elementBottom - windowBottom;
-					var shouldScroll = remaining <= $($window).height() * infiniteScrollDistance;
-					console.log("should scroll: " + shouldScroll);
-					if (shouldScroll) {
+					var shouldLoadMoreHikes = remaining <= $($window).height() * infiniteScrollDistance;
+					console.log("should load more hikes: " + shouldLoadMoreHikes);
+					if (shouldLoadMoreHikes) {
 						scope.$apply(function() {
 							scope.hikesToShow += previewsToLoadAtATime;
 							console.log(scope.hikesToShow);
 							if (scope.hikesToShow >= scope.hikes.length) {
-								console.log("done scrolling");
+								console.log("done scrolling", scope.hikesToShow, scope.hikes.length);
 								doneScrolling = true;
 							}
 							$timeout(function() {
