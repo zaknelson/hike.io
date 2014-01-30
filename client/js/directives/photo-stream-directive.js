@@ -54,41 +54,40 @@ angular.module("hikeio").
 					});
 				};
 
-				var scrollHandler = function() {
-					if (doneScrolling) return;
+				var showMoreHikes = function() {
+					if (scope.hikes.length === 0 || doneScrolling) return;
 					var windowBottom = $($window).height() + $($window).scrollTop();
 					var elementBottom = element.offset().top + element.height();
 					var remaining = elementBottom - windowBottom;
 					var shouldLoadMoreHikes = remaining <= $($window).height() * infiniteScrollDistance;
 					console.log("should load more hikes: " + shouldLoadMoreHikes);
 					if (shouldLoadMoreHikes) {
-						scope.$apply(function() {
-							scope.hikesToShow += previewsToLoadAtATime;
-							console.log(scope.hikesToShow);
-							if (scope.hikesToShow >= scope.hikes.length) {
-								console.log("done scrolling", scope.hikesToShow, scope.hikes.length);
-								doneScrolling = true;
-							}
-							$timeout(function() {
-								var previews = element.find(".preview:not(.masonry-brick)");
-								if (previews.length === 0) return;
-								var images = previews.children("div").children("img");
-								setupLoadHandlerForPreviewImages(images);
-								element.masonry("appended", previews);
-								element.masonry("reload");
-								scrollHandler(); // We might still not have a bottom, continue scrolling
-							});
+						scope.hikesToShow += previewsToLoadAtATime;
+						console.log(scope.hikesToShow);
+						if (scope.hikesToShow >= scope.hikes.length) {
+							console.log("done scrolling", scope.hikesToShow, scope.hikes.length);
+							doneScrolling = true;
+						}
+						$timeout(function() {
+							var previews = element.find(".preview:not(.masonry-brick)");
+							if (previews.length === 0) return;
+							var images = previews.children("div").children("img");
+							setupLoadHandlerForPreviewImages(images);
+							element.masonry("appended", previews);
+							element.masonry("reload");
+							showMoreHikes(); // We might still not have a bottom, continue scrolling
 						});
 					}
 				};
 
-				$($window).on("scroll", scrollHandler);
-				scope.$on("$destroy", function() {
-					return $($window).off("scroll", scrollHandler);
+				$($window).on("scroll", function() {
+					scope.$apply(function() {
+						showMoreHikes();
+					});
 				});
-				$timeout(function() {
-					scrollHandler();
-				}, 100);
+				scope.$on("$destroy", function() {
+					return $($window).off("scroll", showMoreHikes);
+				});
 
 				scope.isFeatured = function(hike, index) {
 					if (index === 0) {
@@ -159,6 +158,7 @@ angular.module("hikeio").
 								return boxWidth;
 							}
 						});
+						showMoreHikes();
 					});
 				}, true);
 			}
