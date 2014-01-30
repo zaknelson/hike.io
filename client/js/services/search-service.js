@@ -91,12 +91,20 @@ angular.module("hikeio").
 			return result;
 		};
 
+		var openMapToViewport = function(viewport, formattedLocationString) {
+			persistentStorage.set("/map", { viewport: viewport, formattedLocationString: formattedLocationString });
+			if (navigation.onMap()) {
+				$rootScope.$broadcast("resetMapViewport", viewport);
+			} else {
+				navigation.toMap();
+			}
+		};
+
 		var searchByLocation = function(query) {
 			var specialCaseGeoCode = GEOCODING_SPECIAL_CASES[query.toLowerCase()];
 			if (specialCaseGeoCode) {
 				var deferred = $q.defer();
-				persistentStorage.set("/map", { viewport: specialCaseGeoCode.viewport, formattedLocationString: specialCaseGeoCode.formattedAddress });
-				navigation.toMap();
+				openMapToViewport(specialCaseGeoCode.viewport, specialCaseGeoCode.formattedAddress);
 				deferred.resolve();
 				return deferred.promise;
 			}
@@ -107,12 +115,8 @@ angular.module("hikeio").
 					var result = getBestGeocodeResult(data);
 					if (result) {
 						var viewport = getMapViewportFromGeocodeResult(result);
-						persistentStorage.set("/map", { viewport: viewport, formattedLocationString: cleanupFormattedAddress(result.formatted_address)});
-						if (navigation.onMap()) {
-							$rootScope.$broadcast("resetMapViewport", viewport);
-						} else {
-							navigation.toMap();
-						}
+						var formattedLocationString = cleanupFormattedAddress(result.formatted_address);
+						openMapToViewport(viewport, formattedLocationString);
 					}
 				}).error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
