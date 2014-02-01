@@ -33,18 +33,27 @@ task :static do
 	if not $?.success?
 		puts "----- jshint errors -----"
 		puts output
-		exit
+		fail
 	end
 	output = `roodi --config=config/roodi.yml server/**/**/**/**/**/**/**/**/**/**/*.rb`
 	if not $?.success?
 		puts "----- roodi errors -----"
 		puts output
-		exit
+		fail
 	end
 end
 
-task :test => [:build] do
+task :test_client do
+	system "node_modules/karma/bin/karma start config/karma.conf.js"
+	fail if not $?.success?
+end
+
+task :test_server => [:build] do
 	Rake::TestTask.new do |t|
 		t.test_files = FileList["server/test/**/*.rb"]
 	end
+end
+
+task :test => [:test_server, :test_client] do
+
 end

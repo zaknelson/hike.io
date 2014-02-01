@@ -111,6 +111,8 @@ class HikeApp < Sinatra::Base
 		serve "/css",    from: "css"
 		serve "/images", from: "images"
 
+		ignore "/js/test"
+
 		js :app, "/js/app.js", [
 			"/js/main.js",
 			"/js/*/*.js"
