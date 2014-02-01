@@ -1,4 +1,5 @@
 "use strict";
+/* global beforeEach: false, describe: false, expect: false, it: false, inject: false */
 
 describe("conversion", function() {
 	beforeEach(module("hikeio"));
@@ -14,7 +15,7 @@ describe("conversion", function() {
 		}));
 
 		it("should show one decimal if less than 10", inject(function(conversion) {
-			expect(conversion.convert(.2, "mi", "km")).toEqual("0.3");
+			expect(conversion.convert(0.2, "mi", "km")).toEqual("0.3");
 			expect(conversion.convert(2, "mi", "km")).toEqual("3.2");
 			expect(conversion.convert(20, "mi", "km")).toEqual("32");
 			expect(conversion.convert(200, "mi", "km")).toEqual("322");

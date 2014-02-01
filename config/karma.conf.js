@@ -1,5 +1,7 @@
+"use strict";
+
 module.exports = function(config){
-		config.set({
+	config.set({
 		basePath: "../client/js",
 		files: [
 			/* External dependencies from layout.erb */
@@ -16,5 +18,5 @@ module.exports = function(config){
 		frameworks: ["jasmine"],
 		browsers : ["PhantomJS"],
 		plugins: ["karma-jasmine", "karma-phantomjs-launcher"]
-
-})}
+	});
+};
