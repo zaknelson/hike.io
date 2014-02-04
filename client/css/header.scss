@@ -67,27 +67,31 @@ header > .search-dropdown {
 	height: $header-height;
 	z-index: $header-z-index - 1;
 
-	div {
+	.header-right {
+		display: inline-block;
 		background-color: #fff;
 		padding: 13px 9px 9px 9px;
 		@include border-radius(0px 0px 0px 5px);
+	}
 
+	.search-bar {
+		.search-type.short {
+			display:inline;
+		}
+	}
+	.search-bar.search-by-location {
 		input {
-			border: 1px solid rgba(1, 1, 1, 0.3);
-			@include border-radius(2px, 2px);
-			height: 30px;
-			padding-left: 4px;
-			font-size: 16px;
-			font-weight: 300;
+			width: 210px;
+		}
+	}
+	.search-bar.search-by-name {
+		input {
+			width: 230px;
 		}
 	}
 }
 
 @media all and (max-width: $mobile-width) {
-	header > .search-dropdown > div > input {
-		height: 36px;
-		font-size: 24px;
-	}
 }
 
 @media all and (max-width: $mobile-width) {

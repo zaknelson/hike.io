@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($scope, $timeout, analytics, config, mapTooltipFactory, navigation, persistentStorage) {
+var MapController = function($location, $scope, $timeout, analytics, config, mapTooltipFactory, navigation) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100;
 
@@ -7,6 +7,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	var hoverMarker = null;
 	var lastMarkerUpdateTime = null;
 	var socket = null;
+	var markerInitialized = false;
 
 	$scope.mapOptions = null;
 	$scope.markers = [];
@@ -14,6 +15,7 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	$scope.showBanner = false;
 	$scope.doneShowingBanner = false;
 	$scope.formattedLocationString = null;
+	$scope.searchQuery = null;
 	$scope.center = null;
 	$scope.zoomLevel = 0;
 
@@ -38,26 +40,43 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		$scope.activeMarker = marker;
 	};
 
-	var updateViewportFromStoredValues = function() {
-		var mapData = persistentStorage.get("/map");
-		if (!mapData) return;
-
-		var viewport = mapData.viewport;
-		if (viewport &&
-			viewport.latitude &&
-			viewport.longitude &&
-			viewport.zoomLevel) {
-			$scope.center = new google.maps.LatLng(viewport.latitude, viewport.longitude);
-			$scope.zoomLevel = Math.min(11, viewport.zoomLevel);
-		}
-		if (mapData.formattedLocationString) {
-			$scope.formattedLocationString = mapData.formattedLocationString;
+	var updateViewportToDefault = function() {
+		if (google.loader.ClientLocation) {
+			var clientLocation = google.loader.ClientLocation;
+			$scope.center = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
+			$scope.zoomLevel = 5;
+		} else {
+			// Default to a central view of the US
+			$scope.center = new google.maps.LatLng(15, -90); // Center over the Americas since they have the most hikes currently.
+			$scope.zoomLevel = 3;
 		}
 	};
 
-	$scope.$on("resetMapViewport", function() {
-		updateViewportFromStoredValues();
+	var updateViewportFromUrlParams = function(urlParams) {
+		$scope.formattedLocationString = urlParams.address;
+		$scope.searchQuery = urlParams.q;
+
+		if (urlParams.lat && urlParams.lng) {
+			$scope.center = new google.maps.LatLng(parseFloat(urlParams.lat), parseFloat(urlParams.lng));
+			$scope.zoomLevel = parseInt(urlParams.zoom, 10) || 11;
+		}
+
+		if ($scope.searchQuery) {
+			$scope.bannerString = "Unable to find location: " + $scope.searchQuery;
+			$scope.showBanner = true;
+		}
+	};
+
+	$scope.$on("resetMapViewport", function(event, urlParams) {
+		$scope.formattedLocationString = null;
+		$scope.searchQuery = null;
+		$scope.center = null;
+		$scope.zoom = 0;
 		$scope.doneShowingBanner = false;
+		updateViewportFromUrlParams(urlParams);
+		if (!$scope.center) {
+			updateViewportToDefault();
+		}
 		if ($scope.activeMarker) {
 			doDeactivateMarker($scope.activeMarker);
 		}
@@ -109,13 +128,16 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 			longitude: southWest.lng()
 		};
 
-		persistentStorage.set("/map", {
-			viewport: {
-				latitude: center.lat(),
-				longitude: center.lng(),
-				zoomLevel: Math.min(zoomLevel, 11)
-			}
-		});
+		if (markerInitialized && $scope.showBanner) {
+			// Map is being moved, hide banner
+			$scope.showBanner = false;
+		}
+
+		if (event.type === "map-idle") {
+			markerInitialized = true;
+			$location.search({lat: center.lat().toFixed(3), lng: center.lng().toFixed(3), zoom: zoomLevel}).replace();
+		}
+
 		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
 	};
 
@@ -137,20 +159,9 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	};
 
 	var initMapOptions = function() {
-		// First, attempt to zoom into the last location viewed.
-		updateViewportFromStoredValues();
-
-		// If that didn't work, try to zoom into the user's current location
+		updateViewportFromUrlParams($location.search());
 		if (!$scope.center) {
-			if (google.loader.ClientLocation) {
-				var clientLocation = google.loader.ClientLocation;
-				$scope.center = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
-				$scope.zoomLevel = 5;
-			} else {
-				// Default to a central view of the US
-				$scope.center = new google.maps.LatLng(15, -90); // Center over the Americas since they have the most hikes currently.
-				$scope.zoomLevel = 3;
-			}
+			updateViewportToDefault();
 		}
 		$scope.mapOptions = {
 			zoom: $scope.zoomLevel,
@@ -163,11 +174,9 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 		$scope.$apply(function() {
 			if (data.length === 0) {
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
+					$scope.bannerString = "Unable to find hike near: " + $scope.formattedLocationString;
 					$scope.showBanner = true;
 				}
-			} else {
-				$scope.showBanner = false;
-				$scope.doneShowingBanner = true;
 			}
 			mergeMarkers(data);
 		});
@@ -236,4 +245,4 @@ var MapController = function($scope, $timeout, analytics, config, mapTooltipFact
 	$scope.htmlReady();
 };
 
-MapController.$inject = ["$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "persistentStorage"];
+MapController.$inject = ["$location", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation"];

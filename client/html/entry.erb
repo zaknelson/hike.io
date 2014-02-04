@@ -9,8 +9,8 @@
 		<h3 data-ng-show="!error &amp;&amp; !isBeingReviewed">You are editing this page.</h3>
 		<h3 data-ng-show="!error &amp;&amp; isBeingReviewed">Nice! Your change is being reviewed<span class="live-soon-msg"> and will be live soon</span>.</h3>
 		<div class="buttons">
-			<button class="save-button btn loading" data-ng-disabled="!isDirty || isSaving || numPhotosUploading != 0" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || (numPhotosUploading != 0 &amp;&amp; 'Uploading...' || 'Save')}}</button>
-			<button class="done-button btn" data-ng-click="done()">Done</button>
+			<button class="save-button btn btn-default loading" data-ng-disabled="!isDirty || isSaving || numPhotosUploading != 0" data-ng-click="save()">{{isSaving &amp;&amp; 'Saving...' || (numPhotosUploading != 0 &amp;&amp; 'Uploading...' || 'Save')}}</button>
+			<button class="done-button btn btn-default" data-ng-click="done()">Done</button>
 		</div>
 	</div>
 	<div class="header-landscape" data-ng-class="{'header-landscape-with-image' : !local_photo_landscape}">
@@ -99,7 +99,7 @@
 								<td data-redirect-focus=".hike-latitude">Lat. / Lng.</td>
 								<td>
 									<div class="hike-latitude-and-longitude" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-										<a href="/map" data-ng-click="mapLinkClicked()" rel="nofollow" itemprop="map" data-ui-if="!isEditing">
+										<a href="/map?lat={{hike.location.latitude}}&amp;lng={{hike.location.longitude}}" rel="nofollow" itemprop="map" data-ui-if="!isEditing">
 											<div style="float:left" data-ng-class="{'hike-latitude-and-label': isEditing}">
 												<div class="hike-latitude" itemprop="latitude" data-ng-bind="hike.location.latitude | number:1"></div><span style="float:left" data-redirect-focus=".hike-latitude">°,&nbsp;</span></div>
 											<div class="hike-longitude-and-label">

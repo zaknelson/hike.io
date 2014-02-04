@@ -33,8 +33,8 @@ angular.module("hikeio").
 			return $location.path() === "/map";
 		};
 
-		NavigationService.prototype.toMap = function(id) {
-			return $location.url("/map");
+		NavigationService.prototype.toMap = function(urlParams) {
+			return $location.url("/map").search(urlParams);
 		};
 
 		NavigationService.prototype.toEntry = function(id) {

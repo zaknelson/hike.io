@@ -27,6 +27,7 @@ angular.module("hikeio", ["seo", "ui"]).
 			when("/map", {
 				controller: "MapController",
 				templateUrl: "/partials/map.html",
+				reloadOnSearch: false,
 				title: "Map - hike.io"
 			}).
 			when("/search", {

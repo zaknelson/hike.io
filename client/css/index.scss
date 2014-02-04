@@ -1,9 +1,6 @@
 @import "_vars";
 @import "_mixins";
 @import "compass/css3/background-size";
-@import "compass/css3/border-radius";
-@import "compass/css3/box-sizing";
-@import "compass/css3/text-shadow";
 
 .container.index-container {
 	min-height: 600px;
@@ -59,80 +56,10 @@
 	}
 
 	.content {
-		position: absolute;
-		top: 30%;
-		left: 50%;
-		text-align: right;
-		width: 520px;
-		margin-left: -260px;
-
-		.search-box {
-			@include border-radius(2px, 2px);
-			border: 1px solid rgba(1, 1, 1, 0.3);
-			background-color: white;
-
-			input {
-				border: none;
-				border-color: transparent;
-				color: $text-color;
-				font-size: 18px;
-				font-weight: 300;
-				height: 41px;
-				padding: 9px;
-				width: 100%;
-			}
-			.search-input-button {
-				position: absolute;
-				top: -1px;
-				right: -1px;
-				cursor: pointer;
-				padding: 15px 12px;
-				opacity: .65;
-				background-color: rgba(1, 1, 1, 0.001); /* Hack for IE 10, otherwise, it doesn't register clicks to the transparent parts of the svg  */
-				svg, img {
-					width: 16px;
-					height: 16px;
-				}
-			}
-			.search-input-button:hover {
-				opacity: .9;
-			}
-
-			.loading-spinner {
-				position: absolute;
-				top: 10px;
-				right: 7px;
-				width: 22px;
-				height: 22px;
-				opacity: .65;
-				background-image: url('/images/spinner.png?embed');
-				background-size: 22px 22px;
-			}
-		}
-	}
-
-	@media all and (max-width: $mobile-width) { 
-		.content {
-			width: 80%;
-			margin-left: -40%;
-			input {
-				height: 50px;
-				font-size: 24px;
-			}
-			.search-input-button {
-				padding: 16px 12px;
-				svg, img {
-					width: 20px;
-					height: 20px;
-				}
-			}
-
-			.loading-spinner {
-				right: 10px;
-				width: 28px;
-				height: 28px;
-				background-size: 28px 28px;
-			}
+		margin-top: 270px;
+		text-align: center;
+		.search-bar {
+			display: inline-block;
 		}
 	}
 }

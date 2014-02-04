@@ -4,12 +4,16 @@
 		<h2>Find beautiful hikes</h2>
 	</div>
 	<div class="content">
-		<div class="search-box shadow-light">
-			<input class="hide-ie-input-close" type="text" placeholder="Hike name or location..." spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
-			<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
-				<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
+		<div class="search-bar" data-ng-class="{'search-by-location':preferences.searchBy == 'location','search-by-name':preferences.searchBy == 'name'}">
+			<button class="btn search-type" data-ng-bind="'Search by ' + preferences.searchBy" data-ng-click="preferences.toggleSearchBy()" data-redirect-focus="input"></button>
+			<button class="btn search-type short" data-ng-bind="preferences.searchBy|capitalize" data-ng-click="preferences.toggleSearchBy()" data-redirect-focus="input"></button>
+			<div class="input-box">
+				<input class="hide-ie-input-close" type="text" placeholder="{{preferences.searchBy == 'location' &amp;&amp; 'Utah, USA' || 'The Narrows'}}" spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
+				<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
+					<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
+				</div>
+				<div data-ui-if="isSearching" class="loading-spinner rotate"></div>
 			</div>
-			<div data-ui-if="isSearching" class="loading-spinner rotate"></div>
 		</div>
 	</div>
 </article>

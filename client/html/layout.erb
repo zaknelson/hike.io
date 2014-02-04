@@ -107,7 +107,7 @@ https://github.com/zaknelson/hike.io/
 					<div data-header-entry data-label="Discover" data-url="/discover" data-align="left"><%= render_svg("#{@img_dir}/photo-stream.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/photo-stream.png" /></div>
 				</div>
 
-				<div>
+				<div data-ng-click="ignoreClickIfOnMap($event)">
 					<div data-header-entry data-label="Map" data-url="/map" data-align="left"><%= render_svg("#{@img_dir}/map.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png" /></div>
 				</div>
 
@@ -128,7 +128,16 @@ https://github.com/zaknelson/hike.io/
 			</div>
 			<div class="search-dropdown" data-ng-show="isSearchBoxActive" >
 				<div class="header-right shadow-light">
-					 <input type="text" placeholder="Hike name or location..." data-ui-keypress="{'enter': ' searchQuery.length &amp;&amp; hideSearchBox(); searchQuery.length &amp;&amp; search($event);'}" spellcheck="false" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" />
+					<div class="search-bar" data-ng-class="{'search-by-location':preferences.searchBy == 'location','search-by-name':preferences.searchBy == 'name'}">
+						<button class="btn search-type short" data-ng-bind="preferences.searchBy|capitalize" data-ng-click="preferences.toggleSearchBy()" data-redirect-focus="input"></button>
+						<div class="input-box">
+							<input class="hide-ie-input-close" type="text" placeholder="{{preferences.searchBy == 'location' &amp;&amp; 'Utah, USA' || 'The Narrows'}}" spellcheck="false" data-give-focus="isSearchBoxActive" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
+							<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
+								<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
+							</div>
+							<div data-ui-if="isSearching" class="loading-spinner rotate"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>

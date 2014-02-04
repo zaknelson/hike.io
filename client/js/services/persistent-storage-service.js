@@ -15,7 +15,14 @@ angular.module("hikeio").
 			if (value === null) {
 				return null;
 			}
-			return JSON.parse(value);
+			try {
+				return JSON.parse(value);
+			} catch (e) {
+				// Would like to not use try/catch here but I don't see a clean way of 
+				// detecting whether something is valid JSON without just parsing it.
+				// http://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try
+				return value;
+			}
 		};
 
 		PersistentStorageService.prototype.set = function(key, value) {

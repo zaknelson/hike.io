@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("search", ["$http", "$log", "$q", "$rootScope", "$window", "navigation", "persistentStorage", "resourceCache", function($http, $log, $q, $rootScope, $window, navigation, persistentStorage, resourceCache) {
+	factory("search", ["$http", "$location", "$log", "$q", "$rootScope", "$window", "navigation", "persistentStorage", "resourceCache", function($http, $location, $log, $q, $rootScope, $window, navigation, persistentStorage, resourceCache) {
 
 		var SEARCH_RELEVANCE_THRESHOLD = 0.7;
 
@@ -91,16 +91,33 @@ angular.module("hikeio").
 			return result;
 		};
 
-		var openMapToViewport = function(viewport, formattedLocationString) {
-			persistentStorage.set("/map", { viewport: viewport, formattedLocationString: formattedLocationString });
+		var openMapToViewport = function(viewport, formattedLocationString, searchQuery) {
+			var urlParams = {};
+			if (viewport) {
+				if (viewport.latitude) {
+					urlParams.lat = viewport.latitude;
+				}
+				if (viewport.longitude) {
+					urlParams.lng = viewport.longitude;
+				}
+				if (viewport.zoomLevel) {
+					urlParams.zoom = viewport.zoomLevel;
+				}
+			}
+			if (formattedLocationString) {
+				urlParams.address = formattedLocationString;
+			}
+			if (searchQuery) {
+				urlParams.q = searchQuery;
+			}
 			if (navigation.onMap()) {
-				$rootScope.$broadcast("resetMapViewport", viewport);
+				$rootScope.$broadcast("resetMapViewport", urlParams);
 			} else {
-				navigation.toMap();
+				navigation.toMap(urlParams);
 			}
 		};
 
-		var searchByLocation = function(query) {
+		SearchService.prototype.searchByLocation = function(query) {
 			var specialCaseGeoCode = GEOCODING_SPECIAL_CASES[query.toLowerCase()];
 			if (specialCaseGeoCode) {
 				var deferred = $q.defer();
@@ -117,23 +134,15 @@ angular.module("hikeio").
 						var viewport = getMapViewportFromGeocodeResult(result);
 						var formattedLocationString = cleanupFormattedAddress(result.formatted_address);
 						openMapToViewport(viewport, formattedLocationString);
+					} else {
+						openMapToViewport(null, null, query);
 					}
 				}).error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
 				});
 		};
 
-		var hasRelevantSearchResults = function(searchData) {
-			for (var i = 0; i < searchData.length; i++) {
-				var result = searchData[i];
-				if (result.relevance > SEARCH_RELEVANCE_THRESHOLD) {
-					return true;
-				}
-			}
-			return false;
-		};
-
-		var searchByName = function(query) {
+		SearchService.prototype.searchByName = function(query) {
 			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
 					if (data.length === 1 && data[0].relevance > SEARCH_RELEVANCE_THRESHOLD) {
@@ -141,45 +150,12 @@ angular.module("hikeio").
 						resourceCache.put("/api/v1/hikes/" + hike.string_id, jQuery.extend(true, {}, hike));
 						navigation.toEntry(hike.string_id);
 					} else {
-						// If any of the results are of high enough relevance, then we want to see those results first
-						// If they're low quality matches, try searching by location.
-						if (hasRelevantSearchResults(data)){
-							navigation.toSearch(query);
-						}
+						navigation.toSearch(query);
 					}
 				}).
 				error(function(data, status, headers, config) {
 					$log.error(data, status, headers, config);
 				});
-		};
-
-		SearchService.prototype.search = function(query) {
-			var deferred = $q.defer();
-			var promise = deferred.promise;
-
-			// Secret feature, allow user to force searching by location if they prepend their query with a !
-			if (query[0] === "!") {
-				searchByLocation(query.slice(1)).then(function() {
-					deferred.resolve();
-				});
-				return promise;
-			}
-
-			// Otherwise, first check to see if there is a hike with this name
-			searchByName(query).then(function(result) {
-				if (!hasRelevantSearchResults(result.data)) {
-					// Unable to find good match name, try by location
-					searchByLocation(query).then(function(result) {
-						if (result && !getBestGeocodeResult(result.data)) {
-							navigation.toSearch(query);
-						}
-						deferred.resolve();
-					});
-				} else {
-					deferred.resolve();
-				}
-			});
-			return promise;
 		};
 
 		return new SearchService();

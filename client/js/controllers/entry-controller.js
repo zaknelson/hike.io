@@ -243,17 +243,6 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		navigation.toEntry($scope.hike.string_id);
 	};
 
-	$scope.mapLinkClicked = function() {
-		// Set last location so that map is zoomed into that spot
-		persistentStorage.set("/map", {
-			viewport: {
-				latitude: $scope.hike.location.latitude,
-				longitude: $scope.hike.location.longitude,
-				zoomLevel: 11
-			}
-		});
-	};
-
 	$scope.$on("photoDetailsUpdated", function(event, photo) {
 		$scope.isDirty = true;
 		if (uploadedPhotoIdMap[photo.id]) {

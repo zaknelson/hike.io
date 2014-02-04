@@ -1,0 +1,165 @@
+@import "_vars";
+@import "_mixins";
+@import "compass/css3/box-shadow";
+
+.search-bar {
+	.search-type {
+		display: inline;
+		float: left;
+		height: 41px;
+		background-color: #eee;
+		padding: 0px;
+		font-size: 14px;
+		border: 0px;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+		@include box-shadow(1px 1px 3px rgba(34, 25, 25, 0.4));
+	}
+
+	.search-type.short {
+		display: none;
+		height: 41px;
+	}
+
+	.search-type:hover {
+		background-position: 0% 0%; /* Override default bootstrap style for buttons */
+	}
+
+	.input-box {
+		float: left;
+		@include box-shadow(1px 1px 3px rgba(34, 25, 25, 0.4));
+		background-color: white;
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+
+		input {
+			float: left;
+			border: none;
+			border-color: transparent;
+			border-left: 1px solid rgba(1, 1, 1, 0.3);
+			color: $text-color;
+			font-size: 18px;
+			font-weight: 300;
+			height: 41px;
+			padding: 9px;
+			padding-right: 0px;
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+		}
+		.search-input-button {
+			float: left;
+			vertical-align: middle;
+			padding: 12px 10px 10px 10px;
+			cursor: pointer;
+			opacity: .65;
+			background-color: rgba(1, 1, 1, 0.001); /* Hack for IE 10, otherwise, it doesn't register clicks to the transparent parts of the svg  */
+			svg, img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+		.search-input-button:hover {
+			opacity: .9;
+		}
+
+		.loading-spinner {
+			position: absolute;
+			top: 10px;
+			right: 7px;
+			width: 22px;
+			height: 22px;
+			opacity: .65;
+			background-image: url('/images/spinner.png?embed');
+			background-size: 22px 22px;
+		}
+	}
+}
+
+.search-bar.search-by-location {
+	.search-type {
+		width: 154px;
+	}
+	.search-type.short {
+		width: 90px;
+	}
+	input {
+		width: 380px;
+	}
+}
+
+.search-bar.search-by-name {
+	.search-type {
+		width: 134px;
+	}
+	.search-type.short {
+		width: 70px;
+	}
+	input {
+		width: 400px;
+	}
+}
+
+@media all and (max-width: $mobile-width) { 
+	.search-bar {
+		.search-type {
+			display: none;
+		}
+		.search-type.short {
+			display: inline;
+			height: 50px;
+		}
+		.input-box {
+			input {
+				height: 50px;
+				font-size: 24px;
+				padding-right: 40px;
+			}
+			.search-input-button {
+				padding: 15px 12px 13px 12px;
+				svg, img {
+					width: 20px;
+					height: 20px;
+				}
+			}
+		}
+
+		.loading-spinner {
+			right: 10px;
+			width: 28px;
+			height: 28px;
+			background-size: 28px 28px;
+		}
+	}
+
+	.search-bar.search-by-location {
+		input {
+			width: 350px;
+		}
+	}
+
+	.search-bar.search-by-name {
+		input {
+			width: 370px;
+		}
+	}
+}
+
+@media all and (max-width: 550px) { 
+	.search-bar.search-by-location {
+		input {
+			width: 240px;
+		}
+	}
+
+	.search-bar.search-by-name {
+		input {
+			width: 260px;
+		}
+	}
+}

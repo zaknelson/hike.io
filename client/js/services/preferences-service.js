@@ -19,4 +19,19 @@ angular.module("hikeio").
 			self.useMetric = !self.useMetric;
 			persistentStorage.set("/preferences/useMetric", self.useMetric);
 		};
+
+		var searchByValue = persistentStorage.get("/preferences/searchBy");
+		if (!searchByValue) {
+			self.searchBy = "location";
+		} else {
+			self.searchBy = searchByValue;
+		}
+		self.toggleSearchBy = function() {
+			if (self.searchBy === "location") {
+				self.searchBy = "name";
+			} else {
+				self.searchBy = "location";
+			}
+			persistentStorage.set("/preferences/searchBy", self.searchBy);
+		};
 	}]);
