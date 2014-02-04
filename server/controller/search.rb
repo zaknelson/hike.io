@@ -30,11 +30,6 @@ class SearchExecutor < Executor
 			search_for_keyword keyword
 		end
 		sort_search_results
-
-		@logger.info "Search results for '#{@query}'"
-		@search_results.each do |search_result|
-			@logger.info "  #{search_result.hike.string_id} : #{search_result.relevance}"
-		end
 	end
 
 	def output
