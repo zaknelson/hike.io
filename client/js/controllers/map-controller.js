@@ -7,7 +7,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	var hoverMarker = null;
 	var lastMarkerUpdateTime = null;
 	var socket = null;
-	var markerInitialized = false;
+	var mapStabilized = false;
 
 	$scope.mapOptions = null;
 	$scope.markers = [];
@@ -68,6 +68,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
+		console.log("Resetting map viewport");
 		$scope.formattedLocationString = null;
 		$scope.searchQuery = null;
 		$scope.center = null;
@@ -112,6 +113,8 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			return;
 		}
 
+		console.log("Receiving map event: " + event.type);
+
 		lastMarkerUpdateTime = event.timestamp;
 
 		var bounds = $scope.map.getBounds();
@@ -129,14 +132,14 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			longitude: southWest.lng()
 		};
 
-		if (markerInitialized && $scope.showBanner) {
+		if (mapStabilized && $scope.showBanner) {
+			console.log("Map moved after stabilizing remove banner");
 			// Map is being moved, hide banner
 			$scope.showBanner = false;
 			$scope.doneShowingBanner = true;
 		}
-		console.log(event.type)
 		if (event.type === "map-idle") {
-			markerInitialized = true;
+			mapStabilized = true;
 			$location.search({lat: center.lat().toFixed(3), lng: center.lng().toFixed(3), zoom: zoomLevel}).replace();
 		}
 
@@ -173,9 +176,10 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	var handleIncomingSocketData = function(data) {
+		console.log("Receiving socket data");
 		$scope.$apply(function() {
-			console.log("socket.data: " + data.length)
 			if (data.length === 0) {
+				console.log("No hikes in socket data. Formatted location string: " + $scope.formattedLocationString + ". Done showing banner: " + $scope.doneShowingBanner);
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
 					$scope.bannerString = "Unable to find hike near " + $scope.formattedLocationString + ". Try zooming out.";
 					$scope.showBanner = true;
