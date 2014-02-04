@@ -97,6 +97,8 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			$scope.bannerString = "Unable to find location " + searchQuery;
 			showBanner = true;
 		}
+		console.log("Updating viewport ");
+		console.log(urlParams);
 	};
 
 	var updateViewport = function(urlParams) {
@@ -109,6 +111,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	var incomingSocketDataArrived = function(data) {
 		$scope.$apply(function() {
 			if (data.length === 0) {
+				console.log(formattedLocationString, doneShowingBanner, showBanner);
 				if (formattedLocationString && !doneShowingBanner) {
 					$scope.bannerString = "Unable to find hikes near " + formattedLocationString + ". Try zooming out.";
 					showBanner = true;
@@ -170,6 +173,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
+		console.log("Resetting viewport");
 		if (activeMarker) {
 			deactivateMarker(activeMarker);
 			activeMarker = null;
@@ -230,8 +234,9 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			latitude: southWest.lat(),
 			longitude: southWest.lng()
 		};
-
-		if (event.type !== "map-idle" && mapStabilized && showBanner) {
+		console.log(event.type, mapStabilized, showBanner, doneShowingBanner);
+		if (event.type !== "map-idle" && mapStabilized) {
+			console.log("Map moving, stop showing banner");
 			showBanner = false; // Map is being moved, hide banner
 			doneShowingBanner = true;
 			mapStabilized = false;
