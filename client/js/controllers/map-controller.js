@@ -68,7 +68,6 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
-		console.log("Resetting map viewport");
 		$scope.formattedLocationString = null;
 		$scope.searchQuery = null;
 		$scope.center = null;
@@ -114,8 +113,6 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			return;
 		}
 
-		console.log("Receiving map event: " + event.type);
-
 		lastMarkerUpdateTime = event.timestamp;
 
 		var bounds = $scope.map.getBounds();
@@ -134,7 +131,6 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		};
 
 		if (mapStabilized && $scope.showBanner) {
-			console.log("Map moved after stabilizing remove banner");
 			// Map is being moved, hide banner
 			$scope.showBanner = false;
 			$scope.doneShowingBanner = true;
@@ -178,10 +174,8 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	var handleIncomingSocketData = function(data) {
-		console.log("Receiving socket data");
 		$scope.$apply(function() {
 			if (data.length === 0) {
-				console.log("No hikes in socket data. Formatted location string: " + $scope.formattedLocationString + ". Done showing banner: " + $scope.doneShowingBanner);
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
 					$scope.bannerString = "Unable to find hike near " + $scope.formattedLocationString + ". Try zooming out.";
 					$scope.showBanner = true;
