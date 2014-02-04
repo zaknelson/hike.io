@@ -10,6 +10,6 @@
 	<div class="banner">
 		<h3>{{bannerString}}</h3>
 	</div>
-	<div class="map-container" data-ui-map="map" data-ui-options="mapOptions" data-ui-event="{'map-idle': 'updateMarkers($event)', 'map-zoom_changed': 'updateMarkers($event)', 'map-center_changed': 'updateMarkers($event)'}"></div>
-	<div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'markerClicked(marker)', 'map-mouseover': 'markerActivate(marker)', 'map-mouseout': 'markerDeactivate(marker)'}"></div>
+	<div class="map-container" data-ui-map="map" data-ui-options="mapOptions" data-ui-event="{'map-idle': 'mapMoved($event)', 'map-zoom_changed': 'mapMoved($event)', 'map-center_changed': 'mapMoved($event)'}"></div>
+	<div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'markerClicked(marker)', 'map-mouseover': 'markerMousedOver(marker)', 'map-mouseout': 'markerMousedOut(marker)'}"></div>
 </article>
