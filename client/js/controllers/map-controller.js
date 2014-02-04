@@ -75,6 +75,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		$scope.zoom = 0;
 		$scope.doneShowingBanner = false;
 		$scope.showBanner = false;
+		mapStabilized = false;
 		updateViewportFromUrlParams(urlParams);
 		if (!$scope.center) {
 			updateViewportToDefault();
@@ -137,6 +138,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			// Map is being moved, hide banner
 			$scope.showBanner = false;
 			$scope.doneShowingBanner = true;
+			mapStabilized = false;
 		}
 		if (event.type === "map-idle") {
 			mapStabilized = true;
