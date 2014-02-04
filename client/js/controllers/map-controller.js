@@ -231,7 +231,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			longitude: southWest.lng()
 		};
 
-		if (event.type !== "map-idle" && mapStabilized) {
+		if (event.type !== "map-idle" && mapStabilized && showBanner) {
 			showBanner = false; // Map is being moved, hide banner
 			doneShowingBanner = true;
 			mapStabilized = false;
