@@ -62,7 +62,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		}
 
 		if ($scope.searchQuery) {
-			$scope.bannerString = "Unable to find location: " + $scope.searchQuery;
+			$scope.bannerString = "Unable to find location " + $scope.searchQuery;
 			$scope.showBanner = true;
 		}
 	};
@@ -73,6 +73,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		$scope.center = null;
 		$scope.zoom = 0;
 		$scope.doneShowingBanner = false;
+		$scope.showBanner = false;
 		updateViewportFromUrlParams(urlParams);
 		if (!$scope.center) {
 			updateViewportToDefault();
@@ -131,6 +132,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		if (markerInitialized && $scope.showBanner) {
 			// Map is being moved, hide banner
 			$scope.showBanner = false;
+			$scope.doneShowingBanner = true;
 		}
 
 		if (event.type === "map-idle") {
@@ -174,7 +176,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		$scope.$apply(function() {
 			if (data.length === 0) {
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
-					$scope.bannerString = "Unable to find hike near: " + $scope.formattedLocationString;
+					$scope.bannerString = "Unable to find hike near " + $scope.formattedLocationString + ". Try zooming out.";
 					$scope.showBanner = true;
 				}
 			}
