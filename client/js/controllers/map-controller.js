@@ -134,7 +134,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			$scope.showBanner = false;
 			$scope.doneShowingBanner = true;
 		}
-
+		console.log(event.type)
 		if (event.type === "map-idle") {
 			markerInitialized = true;
 			$location.search({lat: center.lat().toFixed(3), lng: center.lng().toFixed(3), zoom: zoomLevel}).replace();
@@ -174,6 +174,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 
 	var handleIncomingSocketData = function(data) {
 		$scope.$apply(function() {
+			console.log("socket.data: " + data.length)
 			if (data.length === 0) {
 				if ($scope.formattedLocationString && !$scope.doneShowingBanner) {
 					$scope.bannerString = "Unable to find hike near " + $scope.formattedLocationString + ". Try zooming out.";
