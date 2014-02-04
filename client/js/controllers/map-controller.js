@@ -10,7 +10,6 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	var activeMarker = null;
 	var lastMarkerUpdateTime = null;
 	var mapStabilized = false;
-	var showBanner = false;
 	var doneShowingBanner = false;
 	var formattedLocationString = null;
 	var searchQuery = null;
@@ -19,6 +18,9 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 
 	$scope.mapOptions = null;
 	$scope.markers = [];
+	$scope.bannerString = null;
+	$scope.showBanner = false;
+
 
 	var initIcons = function() {
 		defaultMarker = {
@@ -95,7 +97,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 
 		if (searchQuery) {
 			$scope.bannerString = "Unable to find location " + searchQuery;
-			showBanner = true;
+			$scope.showBanner = true;
 		}
 		console.log("Updating viewport ");
 		console.log(urlParams);
@@ -111,10 +113,10 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	var incomingSocketDataArrived = function(data) {
 		$scope.$apply(function() {
 			if (data.length === 0) {
-				console.log(formattedLocationString, doneShowingBanner, showBanner);
+				console.log(formattedLocationString, doneShowingBanner, $scope.showBanner);
 				if (formattedLocationString && !doneShowingBanner) {
 					$scope.bannerString = "Unable to find hikes near " + formattedLocationString + ". Try zooming out.";
-					showBanner = true;
+					$scope.showBanner = true;
 				}
 			}
 			mergeMarkers(data);
@@ -181,7 +183,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		center = null;
 		zoomLevel = 0;
 		doneShowingBanner = false;
-		showBanner = false;
+		$scope.showBanner = false;
 		mapStabilized = false;
 		formattedLocationString = null;
 		searchQuery = null;
@@ -234,10 +236,10 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			latitude: southWest.lat(),
 			longitude: southWest.lng()
 		};
-		console.log(event.type, mapStabilized, showBanner, doneShowingBanner);
+		console.log(event.type, mapStabilized, $scope.showBanner, doneShowingBanner);
 		if (event.type !== "map-idle" && mapStabilized) {
 			console.log("Map moving, stop showing banner");
-			showBanner = false; // Map is being moved, hide banner
+			$scope.showBanner = false; // Map is being moved, hide banner
 			doneShowingBanner = true;
 			mapStabilized = false;
 		}
