@@ -67,7 +67,7 @@
 @media all and (max-width: $mobile-width) {
 	.index-page {
 		.content {
-			margin-top: 170px;
+			margin-top: 200px;
 		}
 		background: url("http://assets.hike.io/landing-page-images/the-narrows-mobile.jpg") no-repeat center bottom fixed;
 		@include background-size(cover);
