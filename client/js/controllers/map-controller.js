@@ -96,7 +96,7 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		}
 
 		if (searchQuery) {
-			$scope.bannerString = "Unable to find location " + searchQuery;
+			$scope.bannerString = "Unable to find \"" + searchQuery + "\"";
 			$scope.showBanner = true;
 		}
 	};
