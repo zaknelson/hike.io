@@ -59,38 +59,38 @@
 			padding-bottom: 5px;
 		}
 	}
+}
 
-	@media all and (max-width: 900px) {
-		.edit-banner-review {
-			text-align: left;
+@media all and (max-width: 900px) {
+	.banner.edit-banner-review {
+		text-align: left;
+	}
+}
+
+@media all and (max-width: 700px) {
+	.banner.edit-banner-review {
+		text-align: left;
+		h3 {
+			font-size: 15px;
 		}
 	}
+}
 
-	@media all and (max-width: 700px) {
-		.edit-banner-review {
-			text-align: left;
-			h3 {
-				font-size: 15px;
-			}
+@media all and (max-width: 600px) {
+	.banner.metadata-section {
+		.image-container, .placeholder-img {
+			width: 33%;
 		}
 	}
+}
 
-	@media all and (max-width: 600px) {
-		.metadata-section {
-			.image-container, .placeholder-img {
-				width: 33%;
-			}
-		}
+@media all and (max-width: $mobile-width) {
+	.banner.edit-banner {
+		text-align: left;
 	}
-
-	@media all and (max-width: $mobile-width) {
-		.banner {
-			text-align: left;
-		}
-		.edit-banner-review {
-			.live-soon-msg {
-				display: none;
-			}
+	.banner.edit-banner-review {
+		.live-soon-msg {
+			display: none;
 		}
 	}
 }
