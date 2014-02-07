@@ -25,18 +25,16 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	var initIcons = function() {
 		defaultMarker = {
-			path: google.maps.SymbolPath.CIRCLE,
-			fillOpacity: 1,
-			fillColor: "#EB593C",
-			strokeWeight: 1.0,
-			scale: 5
+			url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAVFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADrWTwAAADpWDsnDwqEMiHFSzLkVjoGAgGIMyOrQSwIAwKLNCOsQSytQiw4iv+eAAAADnRSTlMA56+UiVsDVO4GreOoB+a9iu8AAACKSURBVBjTdZFZDsMgDEQdwmKalGHvdv97VqIoAom+zydZ9oypYc3JwHEaSxdmQ2czXWkJhJhyTjEAUjcp8Xx51/C1QLZZlLe7eBQYIsuobqCCLSkEP0ofoOiG6CYiBDHSLBOYgDzLDKzlsRhfLlqetDr+3mJ+5pj/CiG9j9Xtel1yxyrBAAv1e8cXV0kSmGSl8t0AAAAASUVORK5CYII=",
+			anchor: new google.maps.Point(5, 5),
+			scaledSize: new google.maps.Size(10, 10),
+			size: new google.maps.Size(20, 20)
 		};
 		hoverMarker = {
-			path: google.maps.SymbolPath.CIRCLE,
-			fillOpacity: 1,
-			fillColor: "#FFFF33",
-			strokeWeight: 1.0,
-			scale: 6
+			url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAS1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//zMAAAAFBQHh4S1TUxCqqiGJiRv6+jLa2itbWxLy8jBQUBCIiBswpy9yAAAADHRSTlMAV6dZ8alwHr53TuKCjDZsAAAApklEQVQoz3WSWRKDIBBER4OiiY/FNfc/aaJlASXwPuliBrpbbvQ4KPgMo5YU3RJoE+kNxnm77Kt3Bl5y08OxTjfrAb1cNJh5SpgNzTUfrvPIF849LW564OjOC8Y+BWvQMrJNGRujDPhc8AyisLlgUQJLLiwgsJcFxVocVV1efW79g9IVLSmaOIOu2R6CcjEoB30a7faPdrF+u6IN6I5AF8sQ66NifX4aJRcT7izi8QAAAABJRU5ErkJggg==",
+			anchor: new google.maps.Point(5, 5),
+			scaledSize: new google.maps.Size(10, 10),
+			size: new google.maps.Size(20, 20)
 		};
 	};
 
@@ -237,7 +235,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					var googleOptions = {
 						strokeColor: "#EB593C",
 						strokeWeight: 3,
-						strokeOpacity: 0.8
+						strokeOpacity: 0.9
 					};
 					var geoJson = new GeoJSON(data.route, googleOptions);
 					marker.geoJson = geoJson;
