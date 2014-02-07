@@ -1,5 +1,5 @@
 "use strict";
-var MapController = function($location, $scope, $timeout, analytics, config, mapTooltipFactory, navigation) {
+var MapController = function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100; // .1 seconds
 
@@ -7,7 +7,8 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	var defaultMarker = null;
 	var hoverMarker = null;
 
-	var activeMarker = null;
+	var mousedOverMarker = null;
+	var clickedMarker = false;
 	var lastMarkerUpdateTime = null;
 	var mapStabilized = false;
 	var doneShowingBanner = false;
@@ -28,14 +29,14 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 			fillOpacity: 1,
 			fillColor: "#EB593C",
 			strokeWeight: 1.0,
-			scale: 4
+			scale: 5
 		};
 		hoverMarker = {
 			path: google.maps.SymbolPath.CIRCLE,
 			fillOpacity: 1,
 			fillColor: "#FFFF33",
 			strokeWeight: 1.0,
-			scale: 5
+			scale: 6
 		};
 	};
 
@@ -63,15 +64,40 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		}
 	};
 
-	var activateMarker = function(marker) {
-		if (activeMarker && activeMarker !== marker) {
-			deactivateMarker(activeMarker);
-			activeMarker = null;
+	var deactivateMousedOverMarker = function() {
+		if (!mousedOverMarker) return;
+		deactivateMarker(mousedOverMarker);
+		mousedOverMarker = null;
+	};
+
+	var deactivateClickedMarker = function() {
+		if (!clickedMarker) return;
+		deactivateMarker(clickedMarker);
+		if (clickedMarker.geoJson) {
+			clickedMarker.geoJson.polyline.setMap(null);
 		}
+		clickedMarker = null;
+	};
+
+	var activateMarker = function(marker) {
 		var tooltip = mapTooltipFactory.create(marker);
 		marker.tooltips.push(tooltip);
 		marker.setIcon(hoverMarker);
-		activeMarker = marker;
+	};
+
+	var activateMousedOverMarker = function(marker) {
+		activateMarker(marker);
+		mousedOverMarker = marker;
+	};
+
+	var activateClickedMarker = function(marker) {
+		deactivateClickedMarker();
+		activateMarker(marker);
+		if (marker.geoJson) {
+			marker.geoJson.polyline.setMap($scope.map);
+			$scope.map.fitBounds(marker.geoJson.bounds);
+		}
+		clickedMarker = marker;
 	};
 
 	var updateViewportToDefault = function() {
@@ -172,10 +198,8 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
-		if (activeMarker) {
-			deactivateMarker(activeMarker);
-			activeMarker = null;
-		}
+		deactivateMousedOverMarker();
+		deactivateClickedMarker();
 		center = null;
 		zoomLevel = 0;
 		doneShowingBanner = false;
@@ -191,22 +215,42 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	});
 
 	$scope.markerMousedOver = function(marker) {
-		activateMarker(marker);
+		activateMousedOverMarker(marker);
 	};
 
 	$scope.markerMousedOut = function(marker) {
-		$timeout(function() {
-			deactivateMarker(marker);
-		}, 300);
+		deactivateMousedOverMarker();
 	};
 
 	$scope.markerClicked = function(marker) {
-		if (Modernizr.touch && marker !== activeMarker) {
-			activateMarker(marker);
-			// Link to the entry will be on the tooltip itself.
-		} else {
-			navigation.toEntry(marker.hikeData.string_id);
+		if (clickedMarker) {
+			if (marker !== clickedMarker) {
+				deactivateClickedMarker();
+			} else {
+				navigation.toEntry(marker.hikeData.string_id);
+			}
 		}
+		$http({method: "GET", url: "/api/v1/hikes/" + marker.hikeData.string_id + "?fields=distance,elevation_gain,photo_facts,route", cache:resourceCache}).
+			success(function(data, status, headers, config) {
+				/* global GeoJSON: true */
+				if (data.route) {
+					var googleOptions = {
+						strokeColor: "#EB593C",
+						strokeWeight: 3,
+						strokeOpacity: 0.8
+					};
+					var geoJson = new GeoJSON(data.route, googleOptions);
+					marker.geoJson = geoJson;
+				}
+				activateClickedMarker(marker);
+			}).
+			error(function(data, status, headers, config) {
+				$log.error(data, status, headers, config);
+			});
+	};
+
+	$scope.mapClicked = function(event) {
+		deactivateClickedMarker();
 	};
 
 	$scope.mapMoved = function(event) {
@@ -244,6 +288,15 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
 	};
 
+	/* Having issues with testing socket on localhost, so in order to easily test, just call this function */
+	/*
+	var seedWithTestData = function() {
+		setTimeout(function() {
+			incomingSocketDataArrived([{"string_id":"scotchman-peak","name":"Scotchman Peak","latitude":48.188865,"longitude":-116.081728}, {"string_id":"the-narrows","name":"The Narrows","latitude":44.188865,"longitude":-112.081728}])
+		});
+	};
+	*/
+
 	// Init
 	initIcons();
 	initMapOptions();
@@ -251,4 +304,4 @@ var MapController = function($location, $scope, $timeout, analytics, config, map
 	$scope.htmlReady();
 };
 
-MapController.$inject = ["$location", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation"];
+MapController.$inject = ["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache"];

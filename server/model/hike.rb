@@ -12,7 +12,19 @@ class Hike < Sequel::Model
 
 	def as_json fields=nil
 		if fields
+			has_route_field = fields.delete("route")
 			options = {:only => fields}
+			result = to_json(options)
+			# Ugly, but have to specical case route field since it is stored as json
+			if (has_route_field && self.route)
+				field_separator = ""
+				if (result.length != 2)
+					# If the result is longer than 2, then that means there are multiple fields being returned, and we need a comma, did I mention this was ugly?
+					field_separator = ","
+				end
+				result = result.chomp("}") + field_separator + '"route":' + self.route + "}"
+			end
+			result
 		else
 			options = {
 				:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id],
@@ -24,8 +36,8 @@ class Hike < Sequel::Model
 					:photos_generic => {}
 				}
 			}
+			to_json(options)
 		end
-		to_json(options)
 	end
 
 	def self.get_hike_from_id hike_id

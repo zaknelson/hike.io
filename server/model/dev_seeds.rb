@@ -18,6 +18,8 @@ migration "seed scotchman peak" do
 		:longitude => -116.089783
 	)
 
+	hike.route = '{"type": "LineString", "coordinates": [[-116.081728, 48.188865], [-116.662076494242413, 48.72749414542243],[-116.662196794397431, 48.62626481357232],[-116.664238981504525, 48.51175532632963]]}'
+	
 	hike.photo_landscape = Photo.create(:string_id => "scotchman-peak/landscape", :width => 2400, :height => 800, :attribution_link => "http://wikipedia.org")
 	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/preview", :width => 2400, :height => 2400, :attribution_link => "http://flickr.com")
 	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594, :attribution_link => "http://google.com")

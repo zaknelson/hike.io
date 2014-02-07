@@ -58,6 +58,7 @@ migration "create hikes table" do
 		String :description 				#optional
 		String :locality,					:null => false
 		String :permit						#optional
+		#String :route						#optional
 		Float :distance, 					:null => false
 		Float :elevation_gain				#optional
 		Float :elevation_max				#optional
@@ -114,5 +115,11 @@ migration "create reviews table" do
 		foreign_key :reviewee, :users, :key => :id, :type => String
 
 		index :id
+	end
+end
+
+migration "add permits column 2/6/2014" do
+	database.alter_table :hikes do
+		add_column :route, String
 	end
 end

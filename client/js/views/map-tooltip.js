@@ -26,18 +26,15 @@ angular.module("hikeio").
 			var buffer = 10;
 			var width = this.html.outerWidth();
 			var height = this.html.outerHeight();
-
 			var overlayProjection = this.getProjection();
-			var markerPosition = overlayProjection.fromLatLngToContainerPixel(this.marker.getPosition());
+			var markerPosition = overlayProjection.fromLatLngToDivPixel(this.marker.getPosition());
 
 			// The default location of the tooltip is anchored to the bottom-right of the marker. If that
 			// location would render the tooltip off the screen, relocate it.
-			var containerOffset = $(this.map.getDiv()).offset();
 			var tooltipOffset = {
-				top: containerOffset.top + markerPosition.y + buffer,
-				left: containerOffset.left + markerPosition.x + buffer
+				top: markerPosition.y + buffer,
+				left: markerPosition.x + buffer
 			};
-
 			if (tooltipOffset.top + height + buffer > $($window.document).height()) {
 				tooltipOffset.top = tooltipOffset.top - height - buffer * 2;
 			}
@@ -49,7 +46,8 @@ angular.module("hikeio").
 				this.html.attr("href", "/hikes/" + this.hikeData.string_id);
 			}
 			this.html.css("display", "block");
-			this.html.offset(tooltipOffset);
+			this.html[0].style.left = tooltipOffset.left + "px";
+			this.html[0].style.top = tooltipOffset.top + "px";
 			this.html.css("opacity", "1");
 		};
 
