@@ -14,7 +14,7 @@ angular.module("hikeio").
 								"<img class='preview-img' data-ng-src='{{getPreviewImageSrc(hike, $index)}}' data-aspect-ratio='{{getPreviewImageAspectRatio(hike, $index)}}' alt='{{hike.photo_preview.alt}}' />" +
 								"<div class='preview-footer'>" +
 									"<div>" +
-										"<h4 class='preview-title'>{{hike.name}}</h4>" +
+										"<h4 class='preview-title' data-ng-bind='hike.name'></h4>" +
 										"<h4 class='preview-location'>{{hike.locality}}</h4>" +
 									"</div>" +
 									"<div>" +

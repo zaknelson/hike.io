@@ -117,6 +117,6 @@ class Sanitizer
 	end
 
 	def self.clean_string(str)
-		Sanitize.clean(str)
+		Sanitize.clean(str).gsub("&amp;","&")
 	end
 end
