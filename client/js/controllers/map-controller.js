@@ -293,6 +293,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			incomingSocketDataArrived([{"string_id":"scotchman-peak","name":"Scotchman Peak","latitude":48.188865,"longitude":-116.081728}, {"string_id":"the-narrows","name":"The Narrows","latitude":44.188865,"longitude":-112.081728}])
 		});
 	};
+	seedWithTestData();
 	*/
 
 	// Init
