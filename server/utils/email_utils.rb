@@ -38,6 +38,20 @@ class EmailUtils
 		route == nil || route.length == 0 ? "" : "Hash=#{route.hash}"
 	end
 
+	def self.get_link_from_photo photo
+		return photo if !photo
+		"http://assets.hike.io/hike-images/" + photo["string_id"] + "-large.jpg"
+	end
+
+	def self.add_links_to_all_photos json
+		Hike.each_special_photo_key do |key|
+			json[key]["string_id"] = get_link_from_photo(json[key])
+		end
+		json["photos_generic"].each do |photo|
+			photo["string_id"] = get_link_from_photo(photo)
+		end
+	end
+
 	def self.send_diff_review(json, string_id, base_url, review=nil)
 		hike = Hike[:string_id => string_id]
 		title = "Update for #{string_id}"
@@ -49,6 +63,9 @@ class EmailUtils
 		# Diffy has a hard time handling routes since they can be quite large, so truncate them
 		before_json["route"] = shorten_route_string(before_json["route"])
 		json["route"] = shorten_route_string(json["route"])
+
+		add_links_to_all_photos(before_json)
+		add_links_to_all_photos(after_json)
 
 		before_str = before_json ? JSON.pretty_generate(before_json) : ""
 		after_str = JSON.pretty_generate(json)
