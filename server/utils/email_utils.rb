@@ -29,19 +29,30 @@ class EmailUtils
 			:html => Premailer.new(html, :with_html_string => true).to_inline_css
 	end
 
-	def self.send_new_review(json_str, string_id, base_url, review=nil)
-		new_json = JSON.pretty_generate(JSON.parse(json_str))
+	def self.send_new_review(json, string_id, base_url, review=nil)
+		new_json = JSON.pretty_generate(json)
 		send_review(string_id, new_json, base_url, "New hike", review)
 	end
 
-	def self.send_diff_review(json_str, string_id, base_url, review=nil)
+	def self.shorten_route_string route
+		route == nil || route.length == 0 ? "" : "Hash=#{route.hash}"
+	end
+
+	def self.send_diff_review(json, string_id, base_url, review=nil)
 		hike = Hike[:string_id => string_id]
 		title = "Update for #{string_id}"
 		# Because the review process allows users to perform updates on hikes that haven't been
 		# created yet, there might not yet be a before.
-		before = hike ? JSON.pretty_generate(JSON.parse(hike.as_json)) : ""
-		after = JSON.pretty_generate(JSON.parse(json_str))
-		html = Diffy::Diff.new(before, after).to_s(:html)
+		before_json = hike ? JSON.parse(hike.as_json) : nil
+		after_json = json
+
+		# Diffy has a hard time handling routes since they can be quite large, so truncate them
+		before_json["route"] = shorten_route_string(before_json["route"])
+		json["route"] = shorten_route_string(json["route"])
+
+		before_str = before_json ? JSON.pretty_generate(before_json) : ""
+		after_str = JSON.pretty_generate(json)
+		html = Diffy::Diff.new(before_str, after_str).to_s(:html)
 		send_review(string_id, html, base_url, title, review)
 	end
 
