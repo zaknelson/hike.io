@@ -115,6 +115,12 @@ end
 			end
 			# TODO update the static_html and review tables?
 		end
+
+		if json["route"]
+			self.route = Hike.clean_string_input(json["route"].to_json)
+		else
+			self.route = nil
+		end
 		
 		removed_photos = []
 		Hike.each_special_photo_key do |photo_key|
