@@ -90,12 +90,12 @@ class HikeApp < Sinatra::Base
 				:hike_string_id => hike_id,
 				:reviewee => current_user_id
 			})
-			Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url, review) }
+			Thread.new { EmailUtils.send_diff_review(json, hike_id, request.base_url, review) }
 			json["description"] = Hike.clean_html_input(json["description"])
 			return 202, json.to_json
 		end
 		return err_409("Update conflicts with another change.") if hike.edit_time.to_s != json["edit_time"]
-		Thread.new { EmailUtils.send_diff_review(json_str, hike_id, request.base_url) }
+		Thread.new { EmailUtils.send_diff_review(json, hike_id, request.base_url) }
 		hike.update_from_json(json)
 		hike.as_json
 	end
