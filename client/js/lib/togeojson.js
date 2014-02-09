@@ -62,6 +62,7 @@ toGeoJSON = (function() {
     function xml2str(str) { return serializer.serializeToString(str); }
 
     var t = {
+        /*
         kml: function(doc, o) {
             o = o || {};
 
@@ -162,7 +163,7 @@ toGeoJSON = (function() {
                 }];
             }
             return gj;
-        },
+        },*/
         gpx: function(doc, o) {
             var i,
                 tracks = get(doc, 'trk'),
@@ -177,7 +178,8 @@ toGeoJSON = (function() {
                 gj.features.push(getLinestring(routes[i], 'rtept'));
             }
             for (i = 0; i < waypoints.length; i++) {
-                gj.features.push(getPoint(waypoints[i]));
+                //hike.io: ignore waypoints
+                //gj.features.push(getPoint(waypoints[i]));
             }
             function getLinestring(node, pointname) {
                 var j, pts = get(node, pointname), line = [];
@@ -193,6 +195,7 @@ toGeoJSON = (function() {
                     }
                 };
             }
+            /*
             function getPoint(node) {
                 var prop = getProperties(node);
                 prop.ele = nodeVal(get1(node, 'ele'));
@@ -205,7 +208,7 @@ toGeoJSON = (function() {
                         coordinates: coordPair(node)
                     }
                 };
-            }
+            }*/
             function getProperties(node) {
                 var meta = ['name', 'desc', 'author', 'copyright', 'link',
                             'time', 'keywords'],

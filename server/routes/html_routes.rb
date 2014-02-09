@@ -170,6 +170,10 @@ class HikeApp < Sinatra::Base
 		end
 	end
 
+	get "/hikes/:hike_id/gpx", :provides => "xml" do
+		return 200, {"Content-Disposition" => "attachment; filename=\"#{params[:hike_id]}.gpx\""}, "<gpx></gpx>"
+	end
+
 	# Temporary, need a better way of setting admin status than in a cookie
 	get "/cookie", :provides => "html" do
 		params.each do |key, value|

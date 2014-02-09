@@ -9,11 +9,15 @@
 		}
 	}
 
+	.dashed-border {
+		border: 4px dashed #999;
+	}
+
 	img, .img-div {
 		cursor: pointer;
 	}
 
-	.delete-photo-icon {
+	.delete-photo-icon,.delete-map-icon {
 		position: absolute;
 		right: 0px;
 		top: 0px;
@@ -57,6 +61,12 @@
 		}
 		.discover-explanation {
 			padding-bottom: 5px;
+		}
+	}
+
+	.map-section {
+		.dashed-border.map-container {
+			padding-bottom: 50%;
 		}
 	}
 }

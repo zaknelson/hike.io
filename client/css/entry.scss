@@ -10,10 +10,6 @@ $header-landscape-aspect-ratio: 3;
 	width: $container-width;
 	@include center();
 
-	.placeholder-img {
-		border: 4px dashed #999;
-	}
-
 	.header-landscape.header-landscape-with-image {
 		height: auto;
 		padding-bottom: 0px;
@@ -125,7 +121,7 @@ $header-landscape-aspect-ratio: 3;
 		}
 
 		section {
-			margin: 10px 0px 30px 0px;
+			margin: 10px 0px 10px 0px;
 		}
 	}
 
@@ -196,6 +192,27 @@ $header-landscape-aspect-ratio: 3;
 				.photo-thumb {
 					width: 33.333%;
 				}
+			}
+		}
+	}
+	.map-section {
+		float: left;
+		width: 100%;
+		.map-container {
+			width: 100%;
+			height: 0;
+			padding-bottom: 75%;
+		}
+
+		.download-gpx {
+			float: right;
+		}
+	}
+
+	@media all and (max-width: $mobile-width) {
+		.map-section {
+			.map-container {
+				padding-bottom: 100%;
 			}
 		}
 	}

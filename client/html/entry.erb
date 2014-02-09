@@ -27,8 +27,8 @@
 				<div data-ui-if="!local_photo_landscape.string_id" data-ng-click="openPhotoDetails(local_photo_landscape)" data-ng-class="{'img-div':true, 'flipped':local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270 }" data-ng-style="{'background-image' : 'url(' + local_photo_landscape.src + ')', 'transform' : 'rotate(' + local_photo_landscape.rotation + 'deg)'}"></div>
 				<div class="flipped-placeholder" data-ui-if="local_photo_landscape.rotation == 90 || local_photo_landscape.rotation == 270"></div>
 			</div>
-			<div data-file-uploader="uploadPhotos(files, 'landscape')" data-enabled="isEditing">
-				<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC" />
+			<div data-file-uploader="uploadPhotos(files, 'landscape')" data-accept="image/png, image/jpeg" data-enabled="isEditing">
+				<img class="placeholder-img dashed-border" data-ui-if="isLoaded &amp;&amp; !local_photo_landscape &amp;&amp; isEditing" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABAQAAAAAzmykZAAAAAnRSTlMAAQGU/a4AAAAKSURBVAjXY3gAAADiAOG/+FxCAAAAAElFTkSuQmCC" />
 			</div>
 		</div>
 		<div data-ng-class="{'header-hike-name':true, 'header-hike-name-with-image':local_photo_landscape}">
@@ -50,8 +50,8 @@
 							</div>
 							<div data-ui-if="!local_photo_facts.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_facts)" data-ng-style="{'background-image' : 'url(' + local_photo_facts.src + ')', 'transform' : 'rotate(' + local_photo_facts.rotation + 'deg)' }"></div>
 						</div>
-						<div data-file-uploader="uploadPhotos(files, 'facts')" data-enabled="isEditing">
-							<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+						<div data-file-uploader="uploadPhotos(files, 'facts')" data-accept="image/png, image/jpeg" data-enabled="isEditing">
+							<img class="placeholder-img dashed-border" data-ui-if="isLoaded &amp;&amp;!local_photo_facts &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
 						</div>
 						<table>
 							<tr data-redirect-focus=".hike-name">
@@ -153,10 +153,21 @@
 						</div>
 					</div>
 				</div>
-				<div data-file-uploader="uploadPhotos(files, 'generic')" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
-					<img class="placeholder-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+				<div data-file-uploader="uploadPhotos(files, 'generic')" data-accept="image/png, image/jpeg" data-enabled="isEditing" data-multiple="true"><div class="photo-thumb" data-ui-if="isLoaded &amp;&amp; isEditing">
+					<img class="placeholder-img dashed-border" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
 				</div></div>
 			</div>
+		</section>
+		<section class="map-section" data-ng-show="hike.route || isEditing">
+			<h2 data-ui-if="isEditing">Route</h2>
+			<div style="position:relative" data-ng-show="hike.route">
+				<div class="map-container" data-ui-map="map" data-ui-options="mapOptions" data-ng-style="{'opacity': mapRefreshing &amp;&amp; '0' || '1'}"></div>
+				<div data-ng-click="removeRoute()" class="delete-map-icon" data-ng-show="isEditing">×</div>
+			</div>
+			<div data-file-uploader="uploadRoute(files)" data-accept=".gpx, .geojson" data-enabled="isEditing">
+				<div class="map-container dashed-border" data-ng-show="!hike.route"></div>
+			</div>
+			<!--<h3 class="download-gpx"><a href="/hikes/{{hike.string_id}}/gpx" target="_self" data-ng-show="!isEditing">Download GPX</a></h3>-->
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
 			<h2>Preview photo</h2>
@@ -166,8 +177,8 @@
 						<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
 						<div data-ui-if="!local_photo_preview.string_id" class="img-div" data-ng-click="openPhotoDetails(local_photo_preview)" data-ng-style="{'background-image' : 'url(' + local_photo_preview.src + ')', 'transform' : 'rotate(' + local_photo_preview.rotation + 'deg)' }"></div>
 				</div>
-				<div data-file-uploader="uploadPhotos(files, 'preview')" data-enabled="isEditing">
-					<img class="placeholder-img" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+				<div data-file-uploader="uploadPhotos(files, 'preview')" data-accept="image/png, image/jpeg" data-enabled="isEditing">
+					<img class="placeholder-img dashed-border" data-ui-if="isLoaded &amp;&amp; !local_photo_preview &amp;&amp; isEditing" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
 				</div>
 		</section>
 	</div>

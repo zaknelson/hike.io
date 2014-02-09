@@ -10,19 +10,24 @@ class Hike < Sequel::Model
 	many_to_one  :photo_preview, :class => :Photo
 	many_to_many :photos_generic, :class => :Photo, :left_key => :hike_id, :right_key => :photo_id, :join_table => :hikes_photos
 
+	def jsonify_route_field json
+		return json if not self.route
+		field_separator = ""
+		if (json.length != 2)
+			# If the result is longer than 2, then that means there are multiple fields being returned, and we need a comma, did I mention this was ugly?
+			field_separator = ","
+		end
+		json.chomp("}") + field_separator + '"route":' + self.route + "}"
+end
+
 	def as_json fields=nil
 		if fields
 			has_route_field = fields.delete("route")
 			options = {:only => fields}
 			result = to_json(options)
 			# Ugly, but have to specical case route field since it is stored as json
-			if (has_route_field && self.route)
-				field_separator = ""
-				if (result.length != 2)
-					# If the result is longer than 2, then that means there are multiple fields being returned, and we need a comma, did I mention this was ugly?
-					field_separator = ","
-				end
-				result = result.chomp("}") + field_separator + '"route":' + self.route + "}"
+			if (has_route_field)
+				result = jsonify_route_field(result)
 			end
 			result
 		else
@@ -36,7 +41,8 @@ class Hike < Sequel::Model
 					:photos_generic => {}
 				}
 			}
-			to_json(options)
+			result = to_json(options)
+			jsonify_route_field(result)
 		end
 	end
 

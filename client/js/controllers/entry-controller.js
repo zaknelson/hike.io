@@ -14,6 +14,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isJustAdded = false;
 	$scope.isBeingReviewed = false;
 	$scope.numPhotosUploading = 0;
+	$scope.mapOptions = { mapTypeId: google.maps.MapTypeId.TERRAIN, scrollwheel: false, streetViewControl: false, mapTypeControl: false, draggable: !Modernizr.touch, disableDefaultUI: Modernizr.touch } ;
+	$scope.mapRefreshing = false;
 
 	// A little tricky, maintain two versions of the photo data, the "local" version (data uri encoded, for instant preview), 
 	// and the "real" version (on the $scope.hike object) which takes some time to process on the backend.
@@ -158,6 +160,10 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				$scope.hike.description = makeUnitsClickable($scope.hike.description);
 			}
 			$rootScope.title = $scope.hike.name + " - hike.io";
+			if ($scope.hike.route) {
+				initMap();
+			}
+
 			$rootScope.metaImage = getMetaImageFromHike(hike);
 			var haveSetMetaDescription = false;
 			if ($scope.hike.description) {
@@ -429,6 +435,33 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		arrayBufferReader.readAsArrayBuffer(file);
 	};
 
+	var initMap = function() {
+		/* global GeoJSON: true */
+		var geoJson = new GeoJSON($scope.hike.route, {
+			strokeColor: "#EB593C",
+			strokeWeight: 3,
+			strokeOpacity: 0.9
+		});
+		var polylines = geoJson.polylines;
+		if (!polylines) {
+			$log.error("Unable to get polylines from GeoJSON library");
+			return;
+		}
+		for (var i = 0; i < polylines.length; i++) {
+			polylines[i].setMap($scope.map);
+		}
+		$scope.mapRefreshing = true;
+		$timeout(function() {
+			google.maps.event.trigger($scope.map, "resize");
+			$scope.map.fitBounds(geoJson.bounds);
+			$timeout(function() {
+				// This variable is used to temporarily hide the map as it is refreshing, so that we don't see a flash of stale content.
+				$scope.mapRefreshing = false;
+			});
+		});
+	};
+
+
 	$scope.uploadPhotos = function(files, type) {
 		$scope.$apply(function() {
 			for (var i = 0; i < Math.min(MAX_PHOTOS_TO_UPLOAD_AT_ONCE, files.length); i++) {
@@ -483,6 +516,47 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		} else {
 			$scope.isDirty = true;
 		}
+	};
+
+	var parseXml = function(xmlStr) {
+		if (typeof window.DOMParser !== "undefined") {
+			return (new window.DOMParser()).parseFromString(xmlStr, "text/xml");
+		} else if (typeof window.ActiveXObject !== "undefined" && new window.ActiveXObject("Microsoft.XMLDOM")) {
+			var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+			xmlDoc.async = "false";
+			xmlDoc.loadXML(xmlStr);
+			return xmlDoc;
+		} else {
+			return null;
+		}
+	};
+
+	$scope.uploadRoute = function(files) {
+		var file = files[0];
+		var routeReader = new FileReader();
+		routeReader.onload = function (e) {
+			$scope.$apply(function() {
+				/* global toGeoJSON: true */
+				var name = file.name || "";
+				var routeString = e.target.result;
+				if (name.endsWith(".geojson")) {
+					$scope.hike.route = JSON.parse(routeString);
+				} else if (name.endsWith(".gpx")) {
+					var doc = parseXml(routeString);
+					$scope.hike.route = toGeoJSON.gpx(doc);
+				} else {
+					// TODO
+				}
+				initMap();
+				$scope.isDirty = true;
+			});
+		};
+		routeReader.readAsText(file);
+	};
+
+	$scope.removeRoute = function() {
+		$scope.hike.route = null;
+		$scope.isDirty = true;
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {

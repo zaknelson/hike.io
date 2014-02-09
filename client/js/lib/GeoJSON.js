@@ -9,15 +9,13 @@ https://github.com/JasonSanford/geojson-google-maps
 
 var GeoJSON = function( geojson, options ){
 
-	var _geometryToGoogleMaps = function( geojsonGeometry, options, geojsonProperties ){
+	var _geometryToGoogleMaps = function( geojsonGeometry, opts, geojsonProperties ){
 		
-		var googleObj, opts = _copy(options);
-		var bounds = new google.maps.LatLngBounds();; // hike.io addtion
+		var googleObj = null;
+		var bounds = new google.maps.LatLngBounds();
 		
 		switch ( geojsonGeometry.type ){
 			/*
-			hike.io removal
-
 			case "Point":
 				opts.position = new google.maps.LatLng(geojsonGeometry.coordinates[1], geojsonGeometry.coordinates[0]);
 				googleObj = new google.maps.Marker(opts);
@@ -38,13 +36,13 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				*/
+			*/
 			case "LineString":
 				var path = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
 					var coord = geojsonGeometry.coordinates[i];
 					var ll = new google.maps.LatLng(coord[1], coord[0]);
-					bounds.extend(ll); // hike.io addition
+					bounds.extend(ll);
 					path.push(ll);
 				}
 				opts.path = path;
@@ -74,8 +72,6 @@ var GeoJSON = function( geojson, options ){
 				}
 				break;
 			/*
-			hike.io removal
-
 			case "Polygon":
 				var paths = [];
 				var exteriorDirection;
@@ -110,7 +106,7 @@ var GeoJSON = function( geojson, options ){
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
 				break;
-				
+			
 			case "MultiPolygon":
 				googleObj = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
@@ -150,7 +146,7 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+			
 			case "GeometryCollection":
 				googleObj = [];
 				if (!geojsonGeometry.geometries){
@@ -161,17 +157,19 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+			*/
 			default:
-				googleObj = _error("Invalid GeoJSON object: Geometry object must be one of \"Point\", \"LineString\", \"Polygon\" or \"MultiPolygon\".");
-		*/
+				//googleObj = _error("Invalid GeoJSON object: Geometry object must be one of \"Point\", \"LineString\", \"Polygon\" or \"MultiPolygon\".");
+				console.log("Ignoring GeoJSON object");
+			
 		}
-		
-		return {polyline: googleObj, bounds:bounds};
-		
+		if (googleObj && bounds) {
+			return {googleObj: googleObj, bounds:bounds};
+		} else {
+			return null;
+		}
 	};
 	/*
-	hike.io removal
 	var _error = function( message ){
 	
 		return {
@@ -180,6 +178,7 @@ var GeoJSON = function( geojson, options ){
 		};
 	
 	};
+
 
 	var _ccw = function( path ){
 		var isCCW;
@@ -195,7 +194,7 @@ var GeoJSON = function( geojson, options ){
 		}
 		return isCCW;
 	};
-  */
+
   var _copy = function(obj){
     var newObj = {};
     for(var i in obj){
@@ -204,57 +203,66 @@ var GeoJSON = function( geojson, options ){
       }
     }
     return newObj;
-  };
+  };*/
 		
-	var obj;
-	
+	var obj = [];
 	var opts = options || {};
+	var bounds = new google.maps.LatLngBounds();
 	
 	switch ( geojson.type ){
-	/*
-	hike.io removal
 		case "FeatureCollection":
 			if (!geojson.features){
-				obj = _error("Invalid GeoJSON object: FeatureCollection object missing \"features\" member.");
+				console.log("Invalid GeoJSON object: FeatureCollection object missing \"features\" member.");
 			}else{
-				obj = [];
 				for (var i = 0; i < geojson.features.length; i++){
-					obj.push(_geometryToGoogleMaps(geojson.features[i].geometry, opts, geojson.features[i].properties));
+					var subObj = _geometryToGoogleMaps(geojson.features[i].geometry, opts, geojson.features[i].properties);
+					if (!subObj) continue;
+					bounds.union(subObj.bounds);
+					obj.push(subObj.googleObj);
 				}
 			}
 			break;
 		
 		case "GeometryCollection":
 			if (!geojson.geometries){
-				obj = _error("Invalid GeoJSON object: GeometryCollection object missing \"geometries\" member.");
+				console.log("Invalid GeoJSON object: GeometryCollection object missing \"geometries\" member.");
 			}else{
-				obj = [];
 				for (var i = 0; i < geojson.geometries.length; i++){
-					obj.push(_geometryToGoogleMaps(geojson.geometries[i], opts));
+					var subObj = _geometryToGoogleMaps(geojson.geometries[i], opts);
+					if (!subObj) continue;
+					bounds.union(subObj.bounds);
+					obj.push(subObj.googleObj);
 				}
 			}
 			break;
 		
 		case "Feature":
 			if (!( geojson.properties && geojson.geometry )){
-				obj = _error("Invalid GeoJSON object: Feature object missing \"properties\" or \"geometry\" member.");
+				console.log("Invalid GeoJSON object: Feature object missing \"properties\" or \"geometry\" member.");
 			}else{
-				obj = _geometryToGoogleMaps(geojson.geometry, opts, geojson.properties);
+				var subObj = _geometryToGoogleMaps(geojson.geometry, opts, geojson.properties);
+				if (subObj) {
+					bounds = subObj.bounds;
+					obj.push(subObj.googleObj);
+				}
 			}
 			break;
 	
-		case "Point": case "MultiPoint": */case "LineString": case "MultiLineString": /*case "Polygon": case "MultiPolygon":*/
-			obj = geojson.coordinates
-				? obj = _geometryToGoogleMaps(geojson, opts)
-				: _error("Invalid GeoJSON object: Geometry object missing \"coordinates\" member.");
+		case "Point": case "MultiPoint": case "LineString": case "MultiLineString": case "Polygon": case "MultiPolygon":
+			if (!geojson.coordinates) {
+				console.log("Invalid GeoJSON object: Geometry object missing \"coordinates\" member.");
+			}else{
+				var subObj = _geometryToGoogleMaps(geojson, opts);
+				if (subObj) {
+					bounds = subObj.bounds;
+					obj.push(subObj.googleObj);
+				}
+			}
 			break;
-	/*	
-	hike.io removal
 		default:
-			obj = _error("Invalid GeoJSON object: GeoJSON object must be one of \"Point\", \"LineString\", \"Polygon\", \"MultiPolygon\", \"Feature\", \"FeatureCollection\" or \"GeometryCollection\".");
-	*/
+			console.log("Invalid GeoJSON object: GeoJSON object must be one of \"Point\", \"LineString\", \"Polygon\", \"MultiPolygon\", \"Feature\", \"FeatureCollection\" or \"GeometryCollection\".");
 	}
 	
-	return obj;
+	return {polylines: obj, bounds:bounds};
 	
 };
