@@ -43,6 +43,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		$scope.mapOptions = {
 			zoom: zoomLevel,
 			center: center,
+			scaleControl: true,
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		};
 	};
