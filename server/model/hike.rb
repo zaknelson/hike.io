@@ -32,7 +32,7 @@ end
 			result
 		else
 			options = {
-				:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id],
+				:except => [:location_id, :photo_facts_id, :photo_landscape_id, :photo_preview_id, :route],
 				:include => { 
 					:location => {},
 					:photo_facts => {},
