@@ -154,7 +154,6 @@ $facts-external-link-svg-size: 12px;
 				width: $facts-mobile-image-width;
 				height: $facts-mobile-image-width;
 				float: left;
-				margin-right: 15px;
 			}
 		}
 
@@ -187,6 +186,7 @@ $facts-external-link-svg-size: 12px;
 
 			tr td:first-child {
 				text-align: left;
+				margin-left: 15px;
 			}
 
 			tr td:nth-child(2) {

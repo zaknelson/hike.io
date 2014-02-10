@@ -32,6 +32,8 @@
 	}
 
 	.metadata-section {
+		float: left;
+		width: 100%;
 		padding-top: 10px;
 		.image-container {
 			position: relative;
@@ -53,13 +55,8 @@
 			background-size:cover;
 		}
 
-		[data-file-uploader] {
-			display: inline;
-			img {
-				display: inline;
-			}
-		}
 		.discover-explanation {
+			font-size: 14px;
 			padding-bottom: 5px;
 		}
 	}
@@ -67,6 +64,14 @@
 	.map-section {
 		.dashed-border.map-container {
 			padding-bottom: 50%;
+		}
+	}
+
+	@media all and (max-width: 600px) {
+		.metadata-section {
+			.image-container, .placeholder-img {
+				width: 33.333%;
+			}
 		}
 	}
 }
@@ -82,14 +87,6 @@
 		text-align: left;
 		h3 {
 			font-size: 15px;
-		}
-	}
-}
-
-@media all and (max-width: 600px) {
-	.banner.metadata-section {
-		.image-container, .placeholder-img {
-			width: 33%;
 		}
 	}
 }

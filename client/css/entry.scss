@@ -90,8 +90,6 @@ $header-landscape-aspect-ratio: 3;
 				width: 100%;
 				background-color:rgba(0, 0, 0, 0.5);
 				@include ie-opaque-black-background();
-				margin-top: -$header-landscape-footer-height;
-				height: $header-landscape-footer-height;
 			}	
 		}
 
@@ -103,7 +101,7 @@ $header-landscape-aspect-ratio: 3;
 
 			h1 {
 				font-size: $header-landscape-footer-height-mobile - 5;
-				line-height: $header-landscape-footer-height-mobile;
+				line-height: $header-landscape-footer-height-mobile + 1;
 			}
 		}
 	}
@@ -160,6 +158,34 @@ $header-landscape-aspect-ratio: 3;
 		}
 	}
 
+	.photo-thumb-list {
+		overflow-x: hidden;
+		overflow-y: hidden;
+
+		.photo-thumb {
+			padding: 2px;
+			float: left;
+			width: 25%;
+
+			img, .img-div {
+				width: 100%;
+			}
+			.img-div {
+				/* Tricky way to get div's width=height http://stackoverflow.com/questions/14088200/how-can-i-make-a-divs-height-and-width-the-same-using-responsive-design */
+				height: 0;
+				padding-bottom: 100%;
+				background-position: center center;
+				background-size:cover;
+			}
+		}
+
+		@media all and (max-width: 600px) {
+			.photo-thumb {
+				width: 33.333%;
+			}
+		}
+	}
+
 	.photos-section {
 		width: 100%;
 
@@ -167,33 +193,7 @@ $header-landscape-aspect-ratio: 3;
 			margin-bottom: 20px;
 		}
 
-		.photo-thumb-list {
-			overflow-x: hidden;
-			overflow-y: hidden;
-
-			.photo-thumb {
-				padding: 2px;
-				float: left;
-				width: 25%;
-
-				img, .img-div {
-					width: 100%;
-				}
-				.img-div {
-					/* Tricky way to get div's width=height http://stackoverflow.com/questions/14088200/how-can-i-make-a-divs-height-and-width-the-same-using-responsive-design */
-					height: 0;
-					padding-bottom: 100%;
-					background-position: center center;
-					background-size:cover;
-				}
-			}
-
-			@media all and (max-width: 600px) {
-				.photo-thumb {
-					width: 33.333%;
-				}
-			}
-		}
+		
 	}
 	.map-section {
 		float: left;
