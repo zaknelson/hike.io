@@ -73,7 +73,10 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		if (!clickedMarker) return;
 		deactivateMarker(clickedMarker);
 		if (clickedMarker.geoJson) {
-			clickedMarker.geoJson.polyline.setMap(null);
+			var polylines = clickedMarker.geoJson.polylines;
+			for (var i = 0 ; i < polylines.length; i++) {
+				polylines[i].setMap(null);
+			}
 		}
 		clickedMarker = null;
 	};
@@ -93,7 +96,10 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		deactivateClickedMarker();
 		activateMarker(marker);
 		if (marker.geoJson) {
-			marker.geoJson.polyline.setMap($scope.map);
+			var polylines = marker.geoJson.polylines;
+			for (var i = 0 ; i < polylines.length; i++) {
+				polylines[i].setMap($scope.map);
+			}
 			$scope.map.fitBounds(marker.geoJson.bounds);
 		}
 		clickedMarker = marker;
