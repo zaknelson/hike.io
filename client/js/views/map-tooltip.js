@@ -13,11 +13,7 @@ angular.module("hikeio").
 		MapTooltip.prototype = new google.maps.OverlayView();
 
 		MapTooltip.prototype.onAdd = function() {
-			if (Modernizr.touch) {
-				this.html = $(".touch-tooltip").clone();
-			} else {
-				this.html = $(".tooltip").clone();
-			}
+			this.html = $(".tooltip").clone();
 			this.getPanes().floatShadow.appendChild(this.html[0]);
 		};
 
@@ -42,9 +38,7 @@ angular.module("hikeio").
 			if (tooltipOffset.left + width + buffer > $($window.document).width()) {
 				tooltipOffset.left = markerPosition.x - width - buffer;
 			}
-			if (Modernizr.touch) {
-				this.html.attr("href", "/hikes/" + this.hikeData.string_id);
-			}
+			this.html.attr("href", "/hikes/" + this.hikeData.string_id);
 			this.html.css("display", "block");
 			this.html[0].style.left = tooltipOffset.left + "px";
 			this.html[0].style.top = tooltipOffset.top + "px";
