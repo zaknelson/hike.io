@@ -29,8 +29,8 @@ class EmailUtils
 			:html => Premailer.new(html, :with_html_string => true).to_inline_css
 	end
 
-	def self.send_new_review(json, string_id, base_url, review=nil)
-		new_json = JSON.pretty_generate(json)
+	def self.send_new_review(json_str, string_id, base_url, review=nil)
+		new_json = JSON.pretty_generate(JSON.parse(json_str))
 		send_review(string_id, new_json, base_url, "New hike", review)
 	end
 
@@ -52,13 +52,13 @@ class EmailUtils
 		end
 	end
 
-	def self.send_diff_review(json, string_id, base_url, review=nil)
+	def self.send_diff_review(json_str, string_id, base_url, review=nil)
 		hike = Hike[:string_id => string_id]
 		title = "Update for #{string_id}"
 		# Because the review process allows users to perform updates on hikes that haven't been
 		# created yet, there might not yet be a before.
 		before_json = hike ? JSON.parse(hike.as_json) : nil
-		after_json = json
+		after_json = JSON.parse(json_str)
 
 		# Diffy has a hard time handling routes since they can be quite large, so truncate them
 		before_json["route"] = shorten_route_string(before_json["route"])
