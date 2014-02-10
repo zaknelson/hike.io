@@ -114,6 +114,7 @@ class HikeApp < Sinatra::Base
 		ignore "/js/test"
 
 		js :app, "/js/app.js", [
+			"/js/lib/*.js",
 			"/js/main.js",
 			"/js/*/*.js"
 		]
