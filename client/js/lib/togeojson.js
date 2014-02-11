@@ -171,6 +171,9 @@ toGeoJSON = (function() {
                 waypoints = get(doc, 'wpt'),
                 // a feature collection
                 gj = fc();
+            if (tracks.length === 0 && routes.length === 0) {
+                return null;
+            }
             for (i = 0; i < tracks.length; i++) {
                 gj.features.push(getLinestring(tracks[i], 'trkpt'));
             }

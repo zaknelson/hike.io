@@ -160,9 +160,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				$scope.hike.description = makeUnitsClickable($scope.hike.description);
 			}
 			$rootScope.title = $scope.hike.name + " - hike.io";
-			if ($scope.hike.route) {
-				initMap();
-			}
+			initMap();
 
 			$rootScope.metaImage = getMetaImageFromHike(hike);
 			var haveSetMetaDescription = false;
@@ -436,6 +434,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	var initMap = function() {
+		if (!$scope.hike.route) return;
 		/* global GeoJSON: true */
 		var geoJson = new GeoJSON($scope.hike.route, {
 			strokeColor: "#EB593C",
@@ -544,6 +543,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				} else if (name.endsWith(".gpx")) {
 					var doc = parseXml(routeString);
 					$scope.hike.route = toGeoJSON.gpx(doc);
+					if (!$scope.hike.route) {
+						$window.alert("Unable to find tracks or routes in GPX.");
+					}
 				} else {
 					// TODO
 				}
