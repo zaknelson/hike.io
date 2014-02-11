@@ -175,7 +175,7 @@
 					<div class="map-container dashed-border" data-ng-show="!hike.route"></div>
 				</div>
 			</div>
-			<h5 class="map-attribution" data-ui-if="mapAttribution"><a rel="nofollow" href="{{mapAttribution.license_link}}" data-ng-bind="mapAttribution.author"></a></h5>
+			<h5 class="map-attribution" data-ui-if="mapAttribution"><a rel="nofollow" href="{{mapAttribution.license_link}}" data-ng-bind="'Route data ' + mapAttribution.author"></a></h5>
 			<!--<h3 class="download-gpx"><a href="/hikes/{{hike.string_id}}/gpx" target="_self" data-ng-show="!isEditing">Download GPX</a></h3>-->
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
