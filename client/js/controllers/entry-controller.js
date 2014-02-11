@@ -433,8 +433,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	var initMap = function() {
-		if (!$scope.hike.route) return;
 		/* global GeoJSON: true */
+		if (!$scope.hike.route) return;
 		var geoJson = new GeoJSON($scope.hike.route, {
 			strokeColor: "#EB593C",
 			strokeWeight: 3,
@@ -456,6 +456,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$timeout(function() {
 				// This variable is used to temporarily hide the map as it is refreshing, so that we don't see a flash of stale content.
 				$scope.mapRefreshing = false;
+				$scope.mapAttribution = geoJson.attribution ? geoJson.attribution : null;
 			});
 		});
 	};
@@ -558,6 +559,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 	$scope.removeRoute = function() {
 		$scope.hike.route = null;
+		$scope.mapAttribution = null;
 		$scope.isDirty = true;
 	};
 

@@ -208,6 +208,7 @@ var GeoJSON = function( geojson, options ){
 	var obj = [];
 	var opts = options || {};
 	var bounds = new google.maps.LatLngBounds();
+	var attribution = null;
 	
 	switch ( geojson.type ){
 		case "FeatureCollection":
@@ -215,8 +216,12 @@ var GeoJSON = function( geojson, options ){
 				console.log("Invalid GeoJSON object: FeatureCollection object missing \"features\" member.");
 			}else{
 				for (var i = 0; i < geojson.features.length; i++){
-					var subObj = _geometryToGoogleMaps(geojson.features[i].geometry, opts, geojson.features[i].properties);
+					var feature = geojson.features[i];
+					var subObj = _geometryToGoogleMaps(feature.geometry, opts, geojson.features[i].properties);
 					if (!subObj) continue;
+					if (!attribution && feature.properties && feature.properties.attribution) {
+						attribution = feature.properties.attribution;
+					}
 					bounds.union(subObj.bounds);
 					obj.push(subObj.googleObj);
 				}
@@ -240,6 +245,9 @@ var GeoJSON = function( geojson, options ){
 			if (!( geojson.properties && geojson.geometry )){
 				console.log("Invalid GeoJSON object: Feature object missing \"properties\" or \"geometry\" member.");
 			}else{
+				if (geojson.properties.attribution) {
+					attribution = feature.properties.attribution;
+				}
 				var subObj = _geometryToGoogleMaps(geojson.geometry, opts, geojson.properties);
 				if (subObj) {
 					bounds = subObj.bounds;
@@ -263,6 +271,6 @@ var GeoJSON = function( geojson, options ){
 			console.log("Invalid GeoJSON object: GeoJSON object must be one of \"Point\", \"LineString\", \"Polygon\", \"MultiPolygon\", \"Feature\", \"FeatureCollection\" or \"GeometryCollection\".");
 	}
 	
-	return {polylines: obj, bounds:bounds};
+	return {polylines: obj, bounds:bounds, attribution:attribution};
 	
 };

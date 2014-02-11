@@ -171,9 +171,11 @@
 				<div data-ng-click="removeRoute()" class="delete-map-icon" data-ng-show="isEditing">×</div>
 			</div>
 			<div data-ui-if="isEditing &amp;&amp; !hike.route">
-			<div data-file-uploader="uploadRoute(files)" data-accept=".gpx, .geojson" data-enabled="isEditing" data-description="Upload GPX or GeoJSON..." data-description-font-size="18">
-				<div class="map-container dashed-border" data-ng-show="!hike.route"></div>
+				<div data-file-uploader="uploadRoute(files)" data-accept=".gpx, .geojson" data-enabled="isEditing" data-description="Upload GPX or GeoJSON..." data-description-font-size="18">
+					<div class="map-container dashed-border" data-ng-show="!hike.route"></div>
+				</div>
 			</div>
+			<h5 class="map-attribution" data-ui-if="mapAttribution"><a rel="nofollow" href="{{mapAttribution.license_link}}" data-ng-bind="mapAttribution.author"></a></h5>
 			<!--<h3 class="download-gpx"><a href="/hikes/{{hike.string_id}}/gpx" target="_self" data-ng-show="!isEditing">Download GPX</a></h3>-->
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
