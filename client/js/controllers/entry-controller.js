@@ -330,6 +330,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					$scope.hike.photo_preview = data;
 					break;
 				case "generic":
+					if (!$scope.hike.photos_generic) $scope.hike.photos_generic = [];
 					$scope.hike.photos_generic.push(data);
 					break;
 				}
@@ -405,6 +406,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 					$scope.local_photo_preview = photo;
 					break;
 				case "generic":
+					if (!$scope.local_photos_generic) $scope.local_photos_generic = [];
 					$scope.local_photos_generic.push(photo);
 					break;
 				}
