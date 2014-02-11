@@ -1,3 +1,4 @@
+/* https://github.com/mapbox/togeojson */
 toGeoJSON = (function() {
     'use strict';
 
@@ -213,6 +214,24 @@ toGeoJSON = (function() {
                 };
             }*/
             function getProperties(node) {
+                // hike.io addition
+                var copyright = get1(node, "copyright");
+                if (!copyright) {
+                    return {};
+                }
+
+                var author = nodeVal(get1(copyright, "author"));
+                var license = nodeVal(get1(copyright, "license"));
+                if (!author || !license) {
+                    return {};
+                }
+                return {
+                    attribution: {
+                        author: author,
+                        license_link: license
+                    }
+                };
+                /*
                 var meta = ['name', 'desc', 'author', 'copyright', 'link',
                             'time', 'keywords'],
                     prop = {},
@@ -221,6 +240,7 @@ toGeoJSON = (function() {
                     prop[meta[k]] = nodeVal(get1(node, meta[k]));
                 }
                 return clean(prop);
+                */
             }
             return gj;
         }
