@@ -442,8 +442,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			strokeOpacity: 0.9
 		});
 		var polylines = geoJson.polylines;
-		if (!polylines) {
-			$log.error("Unable to get polylines from GeoJSON library");
+		if (!polylines || polylines.length === 0) {
+			$scope.hike.route = null;
+			$window.alert("Unable to parse route.");
 			return;
 		}
 		for (var i = 0; i < polylines.length; i++) {
