@@ -160,8 +160,6 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				$scope.hike.description = makeUnitsClickable($scope.hike.description);
 			}
 			$rootScope.title = $scope.hike.name + " - hike.io";
-			initMap();
-
 			$rootScope.metaImage = getMetaImageFromHike(hike);
 			var haveSetMetaDescription = false;
 			if ($scope.hike.description) {
@@ -181,6 +179,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			}
 
 			cloneToLocalPhotos();
+			initMap();
 			$scope.isLoaded = true;
 			$scope.htmlReady();
 		}).
