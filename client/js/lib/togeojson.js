@@ -43,7 +43,14 @@ toGeoJSON = (function() {
         }
         return o;
     }
-    function coordPair(x) { return [attrf(x, 'lon'), attrf(x, 'lat')]; }
+    function coordTriple(x) {
+        var result = [attrf(x, 'lon'), attrf(x, 'lat')];
+        var elevationNode = get1(x, 'ele');
+        if (elevationNode) {
+            result.push(parseFloat(nodeVal(elevationNode)))
+        }
+        return result;
+    }
 
     // create a new feature collection parent object
     function fc() {
@@ -188,7 +195,7 @@ toGeoJSON = (function() {
             function getLinestring(node, pointname) {
                 var j, pts = get(node, pointname), line = [];
                 for (j = 0; j < pts.length; j++) {
-                    line.push(coordPair(pts[j]));
+                    line.push(coordTriple(pts[j]));
                 }
                 return {
                     type: 'Feature',
@@ -209,7 +216,7 @@ toGeoJSON = (function() {
                     properties: prop,
                     geometry: {
                         type: 'Point',
-                        coordinates: coordPair(node)
+                        coordinates: coordTriple(node)
                     }
                 };
             }*/
