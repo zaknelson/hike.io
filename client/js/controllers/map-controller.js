@@ -100,7 +100,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			for (var i = 0 ; i < polylines.length; i++) {
 				polylines[i].setMap($scope.map);
 			}
-			//$scope.map.fitBounds(marker.geoJson.bounds);
+			$scope.map.fitBounds(marker.geoJson.bounds);
 		}
 		clickedMarker = marker;
 	};
@@ -235,7 +235,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 				navigation.toEntry(marker.hikeData.string_id);
 			}
 		}
-		$http({method: "GET", url: "/api/v1/hikes/" + marker.hikeData.string_id + "?fields=distance,elevation_gain,photo_facts,route", cache:resourceCache}).
+		$http({method: "GET", url: "/api/v1/hikes/" + marker.hikeData.string_id + "?fields=route", cache:resourceCache}).
 			success(function(data, status, headers, config) {
 				/* global GeoJSON: true */
 				if (data.route) {
@@ -246,6 +246,8 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					};
 					var geoJson = new GeoJSON(data.route, googleOptions);
 					marker.geoJson = geoJson;
+				} else {
+					navigation.toEntry(marker.hikeData.string_id);
 				}
 				activateClickedMarker(marker);
 				deactivateMousedOverMarker(marker);
