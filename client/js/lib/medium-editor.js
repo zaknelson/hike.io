@@ -342,7 +342,7 @@ function MediumEditor(elements, options) {
 
         setFirstAndLastItems: function (buttons) {
             buttons[0].className += ' medium-editor-button-first';
-            buttons[4].className += ' medium-editor-button-last'; // edit: this is the expediant fix
+            buttons[4].className += ' medium-editor-button-last'; // edit: this is the expedient fix
             return this;
         },
 
