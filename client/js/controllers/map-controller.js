@@ -246,7 +246,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					};
 					var geoJson = new GeoJSON(data.route, googleOptions);
 					marker.geoJson = geoJson;
-				} else {
+				} else if (!Modernizr.touch) {
 					navigation.toEntry(marker.hikeData.string_id);
 				}
 				activateClickedMarker(marker);
