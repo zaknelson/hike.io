@@ -44,11 +44,15 @@ class EmailUtils
 	end
 
 	def self.add_links_to_all_photos json
+		return if not json
 		Hike.each_special_photo_key do |key|
+			next if not json[key]
 			json[key]["string_id"] = get_link_from_photo(json[key])
 		end
-		json["photos_generic"].each do |photo|
-			photo["string_id"] = get_link_from_photo(photo)
+		if (json["photos_generic"])
+			json["photos_generic"].each do |photo|
+				photo["string_id"] = get_link_from_photo(photo)
+			end
 		end
 	end
 
@@ -61,14 +65,14 @@ class EmailUtils
 		after_json = JSON.parse(json_str)
 
 		# Diffy has a hard time handling routes since they can be quite large, so truncate them
-		before_json["route"] = shorten_route_string(before_json["route"])
-		json["route"] = shorten_route_string(json["route"])
+		before_json["route"] = shorten_route_string(before_json["route"]) if before_json
+		after_json["route"] = shorten_route_string(after_json["route"])
 
 		add_links_to_all_photos(before_json)
 		add_links_to_all_photos(after_json)
 
 		before_str = before_json ? JSON.pretty_generate(before_json) : ""
-		after_str = JSON.pretty_generate(json)
+		after_str = JSON.pretty_generate(after_json)
 		html = Diffy::Diff.new(before_str, after_str).to_s(:html)
 		send_review(string_id, html, base_url, title, review)
 	end
