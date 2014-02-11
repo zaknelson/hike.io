@@ -100,7 +100,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			for (var i = 0 ; i < polylines.length; i++) {
 				polylines[i].setMap($scope.map);
 			}
-			$scope.map.fitBounds(marker.geoJson.bounds);
+			//$scope.map.fitBounds(marker.geoJson.bounds);
 		}
 		clickedMarker = marker;
 	};
@@ -248,6 +248,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					marker.geoJson = geoJson;
 				}
 				activateClickedMarker(marker);
+				deactivateMousedOverMarker(marker);
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
@@ -297,7 +298,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	/*
 	var seedWithTestData = function() {
 		setTimeout(function() {
-			incomingSocketDataArrived([{"string_id":"scotchman-peak","name":"Scotchman Peak","latitude":48.188865,"longitude":-116.081728}, {"string_id":"the-narrows","name":"The Narrows","latitude":44.188865,"longitude":-112.081728}])
+			incomingSocketDataArrived([{"string_id":"scotchman-peak","name":"Scotchman Peak","latitude":48.188865,"longitude":-116.081728,"distance":12.87472}, {"string_id":"the-narrows","name":"The Narrows","latitude":37.30669,"longitude":-112.94745,"distance":24.94477}])
 		});
 	};
 	seedWithTestData();

@@ -16,16 +16,18 @@
 
 	.tooltip {
 		display: none;
-		opacity: 0;
-		padding: 5px 10px;
-		max-width: 300px;
+		cursor: pointer;
+		padding: 8px;
+		min-width: 80px;
 		position: absolute;
 		background-color: #fefefe;
 		z-index: 100;
+		border: 1px solid rgba(1, 1, 1, 0.3);
 		@include border-radius(2px, 2px);
 		h3 {
 			font-weight: normal;
 			white-space: nowrap;
+			line-height: 22px;
 		}
 	}
 

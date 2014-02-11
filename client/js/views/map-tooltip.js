@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("hikeio").
-	factory("mapTooltipFactory", ["$window", function($window) {
+	factory("mapTooltipFactory", ["$window", "conversion", "navigation", "preferences", function($window, conversion, navigation, preferences) {
 
 		var MapTooltip = function(marker) {
 			this.hikeData = marker.hikeData;
@@ -15,13 +15,18 @@ angular.module("hikeio").
 		MapTooltip.prototype.onAdd = function() {
 			this.html = $(".tooltip").clone();
 			this.getPanes().floatShadow.appendChild(this.html[0]);
+			var self = this;
+			this.html.click(function() {
+				navigation.toEntry(self.hikeData.string_id);
+			});
 		};
 
 		MapTooltip.prototype.draw = function() {
+			// Ideally would like to use $compile and our custom conversion directive to do this work, but map tooltip decides to draw / add at strange times
+			// making it hard to tell when to compile. Doing it by hand is the expedient solution.
 			this.html.find(".name").text(this.hikeData.name);
+			this.html.find(".distance").text(conversion.convert(this.hikeData.distance, "km", preferences.useMetric ? "km" : "mi", 1, 10, true));
 			var buffer = 10;
-			var width = this.html.outerWidth();
-			var height = this.html.outerHeight();
 			var overlayProjection = this.getProjection();
 			var markerPosition = overlayProjection.fromLatLngToDivPixel(this.marker.getPosition());
 
@@ -31,18 +36,20 @@ angular.module("hikeio").
 				top: markerPosition.y + buffer,
 				left: markerPosition.x + buffer
 			};
-			if (tooltipOffset.top + height + buffer > $($window.document).height()) {
+			/*
+			var width = this.html.outerWidth();
+			var height = this.html.outerHeight();
+			TODO: this logic no longer works since we're now getting the marker position with fromLatLngToDivPixel. Will need to revisit.
+			if (this.html.offset().top + height + buffer > $($window.document).height()) {
 				tooltipOffset.top = tooltipOffset.top - height - buffer * 2;
 			}
 
 			if (tooltipOffset.left + width + buffer > $($window.document).width()) {
 				tooltipOffset.left = markerPosition.x - width - buffer;
-			}
-			this.html.attr("href", "/hikes/" + this.hikeData.string_id);
+			}*/
 			this.html.css("display", "block");
 			this.html[0].style.left = tooltipOffset.left + "px";
 			this.html[0].style.top = tooltipOffset.top + "px";
-			this.html.css("opacity", "1");
 		};
 
 		MapTooltip.prototype.onRemove = function() {

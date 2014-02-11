@@ -1,9 +1,8 @@
 <article class="map-page" data-meta-description="Find hikes nearby and around the world using the full screen map." data-ng-class="{'showBanner': showBanner }">
-	<a class="tooltip">
-		<div>
-			<h3 class="name"></h3>
-		</div>
-	</a>
+	<div class="tooltip">
+		<h3 class="name"></h3>
+		<h4><span class="distance"></span> <span class="units" data-ng-bind="preferences.useMetric &amp;&amp; 'km.' || 'mi.'"></span></h4>
+	</div>
 	<div class="banner">
 		<h3>{{bannerString}}</h3>
 	</div>
