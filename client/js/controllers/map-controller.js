@@ -273,7 +273,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	$scope.mapClicked = function(event) {
 		if (Modernizr.touch) {
-			deactivateMarker(activateMarker);
+			deactivateMarker(activeMarker);
 		}
 	};
 
