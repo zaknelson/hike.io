@@ -5,7 +5,6 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	var socket = null;
 	var defaultMarker = null;
-	var hoverMarker = null;
 
 	var activeMarker = null;
 	var lastMarkerUpdateTime = null;
@@ -23,17 +22,18 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 
 	var initIcons = function() {
+		// Workflow to generate this base64 url.
+		// Go into Photoshop create a document that is 28 by 28px.
+		// Create a circle that is 24 with stroke of 1px and put it in the top left corner
+		// Create a drop shadow (opacity: .75, distance: 2, spread: 0, size: 4)
+		// Save and the minimize - https://tinypng.com/
+		// Convert to base64 - http://webcodertools.com/imagetobase64converter
+		var base64Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA9lBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgJBlQHhQAAAAAAABYIRcAAAAAAAAyEw1RHxU+FxAVCAVCGRFeIxg6Fg9sKRxpKBwjDQldIxgpDwtqKBxBGREWCQYTBwVVIBYWCAZMHRRMHRRjJhphJRpeJBlGGxNoKBtlJxtrKRxVIRdkJhrrWTxtKR11LB59LyDFSzKiPirdUzipQCzkVjrpWDvWUTbdVDnRTzVmJxvlVzquQi2dPClwKh2zcEuFAAAAQHRSTlMAOicbBAoCASAQBnCEDRmWWQc0SjFVj2VtFkBDhylhdPRLd83u2qDPdpz2sGDNUsY1k7Hksn2tV2Ljscq46JnU8NToMgAAAW1JREFUKM9tk+d2gkAQhVk6gopSbKDG3k3vhQUUAcXw/i8TWBKO0b1/vzOzM3fuEqk4ljaN9QzCj7VxLTA0yxG5ONqc2xt360eBu7HfU8zlrPAUHyPrV9ExnpSKBTZjbGXiBNaJAsfghQqb1T07ofVPofPAC4W0M23Ge+tM+3jFF9N3mblnXchbVktM0ti0d5dwZy9IISk1vi2MNo+AYjjizcVB9+UqKSVmIQ6GB1lt0AT0cdCHNUBVCBjhYb3JMwQM8G3FVgK/8AN1EfzErzJGbVd4E0ZoIHWJs28goVXIBcZ4OOogEygwvTxZX2oj+wRSeT0/9lAXFWQ8U6pqU+jt8lk82C/3tOxkdJEHsnSHAuZvk4ANbvWeDLJjcwWBB5p4M+4eIDx0h/dlSdQAigkKmMBXlXZH0suJdKnTVqp/AUtriyUSKHKtLor1mnwFSBTNPNSMQJEqaLZaTaCSVBbqnLIJblB8Iqpx8h1+AKPEga5R6DIyAAAAAElFTkSuQmCC";
 		defaultMarker = {
-			url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAVFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADrWTwAAADpWDsnDwqEMiHFSzLkVjoGAgGIMyOrQSwIAwKLNCOsQSytQiw4iv+eAAAADnRSTlMA56+UiVsDVO4GreOoB+a9iu8AAACKSURBVBjTdZFZDsMgDEQdwmKalGHvdv97VqIoAom+zydZ9oypYc3JwHEaSxdmQ2czXWkJhJhyTjEAUjcp8Xx51/C1QLZZlLe7eBQYIsuobqCCLSkEP0ofoOiG6CYiBDHSLBOYgDzLDKzlsRhfLlqetDr+3mJ+5pj/CiG9j9Xtel1yxyrBAAv1e8cXV0kSmGSl8t0AAAAASUVORK5CYII=",
-			anchor: new google.maps.Point(5, 5),
-			scaledSize: new google.maps.Size(10, 10),
-			size: new google.maps.Size(20, 20)
-		};
-		hoverMarker = {
-			url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAS1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//zMAAAAFBQHh4S1TUxCqqiGJiRv6+jLa2itbWxLy8jBQUBCIiBswpy9yAAAADHRSTlMAV6dZ8alwHr53TuKCjDZsAAAApklEQVQoz3WSWRKDIBBER4OiiY/FNfc/aaJlASXwPuliBrpbbvQ4KPgMo5YU3RJoE+kNxnm77Kt3Bl5y08OxTjfrAb1cNJh5SpgNzTUfrvPIF849LW564OjOC8Y+BWvQMrJNGRujDPhc8AyisLlgUQJLLiwgsJcFxVocVV1efW79g9IVLSmaOIOu2R6CcjEoB30a7faPdrF+u6IN6I5AF8sQ66NifX4aJRcT7izi8QAAAABJRU5ErkJggg==",
-			anchor: new google.maps.Point(5, 5),
-			scaledSize: new google.maps.Size(10, 10),
-			size: new google.maps.Size(20, 20)
+			url: base64Icon,
+			anchor: new google.maps.Point(6, 6), // Not directly in the center of the icon, because the circle itself isn't in the center
+			scaledSize: new google.maps.Size(14, 14),
+			size: new google.maps.Size(28, 28)
 		};
 	};
 
@@ -75,7 +75,6 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		fetchRouteForActiveMarker();
 		var tooltip = mapTooltipFactory.create(activeMarker);
 		activeMarker.tooltips.push(tooltip);
-		activeMarker.setIcon(hoverMarker);
 		showRoute(activeMarker);
 	};
 
