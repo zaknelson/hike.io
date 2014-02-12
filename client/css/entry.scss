@@ -203,11 +203,9 @@ $header-landscape-aspect-ratio: 3;
 			height: 0;
 			padding-bottom: 75%;
 		}
-
 		.download-gpx {
-			float: right;
+			margin-top: 10px;
 		}
-
 		.map-attribution {
 			font-family: Roboto, Arial, sans-serif; /* Matches google maps attribution style */
 			font-size: 10px;

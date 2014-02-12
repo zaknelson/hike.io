@@ -28,4 +28,6 @@ angular.module("hikeio").
             (-o-min-device-pixel-ratio: 3/2),\
             (min-resolution: 1.5dppx)";
 		this.hidpiSupported = (window.devicePixelRatio > 1) || (window.matchMedia && window.matchMedia(mediaQuery).matches);
+
+		this.canDownloadFiles = userAgent.os.name !== "iOS";
 	}]);
