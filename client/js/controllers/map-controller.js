@@ -7,8 +7,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	var defaultMarker = null;
 	var hoverMarker = null;
 
-	var mousedOverMarker = null;
-	var clickedMarker = false;
+	var activeMarker = null;
 	var lastMarkerUpdateTime = null;
 	var mapStabilized = false;
 	var doneShowingBanner = false;
@@ -61,48 +60,42 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		if (marker.tooltips.length === 0) {
 			marker.setIcon(defaultMarker);
 		}
+		hideRoute(marker);
 	};
 
-	var deactivateMousedOverMarker = function() {
-		if (!mousedOverMarker) return;
-		deactivateMarker(mousedOverMarker);
-		mousedOverMarker = null;
-	};
-
-	var deactivateClickedMarker = function() {
-		if (!clickedMarker) return;
-		deactivateMarker(clickedMarker);
-		if (clickedMarker.geoJson) {
-			var polylines = clickedMarker.geoJson.polylines;
-			for (var i = 0 ; i < polylines.length; i++) {
-				polylines[i].setMap(null);
-			}
-		}
-		clickedMarker = null;
+	var deactivateActiveMarker = function() {
+		deactivateMarker(activeMarker);
+		activeMarker = null;
 	};
 
 	var activateMarker = function(marker) {
-		var tooltip = mapTooltipFactory.create(marker);
-		marker.tooltips.push(tooltip);
-		marker.setIcon(hoverMarker);
+		if (activeMarker) {
+			deactivateActiveMarker();
+		}
+		activeMarker = marker;
+		fetchRouteForActiveMarker();
+		var tooltip = mapTooltipFactory.create(activeMarker);
+		activeMarker.tooltips.push(tooltip);
+		activeMarker.setIcon(hoverMarker);
+		showRoute(activeMarker);
 	};
 
-	var activateMousedOverMarker = function(marker) {
-		activateMarker(marker);
-		mousedOverMarker = marker;
-	};
-
-	var activateClickedMarker = function(marker) {
-		deactivateClickedMarker();
-		activateMarker(marker);
+	var showRoute = function(marker) {
 		if (marker.geoJson) {
 			var polylines = marker.geoJson.polylines;
 			for (var i = 0 ; i < polylines.length; i++) {
 				polylines[i].setMap($scope.map);
 			}
-			$scope.map.fitBounds(marker.geoJson.bounds);
 		}
-		clickedMarker = marker;
+	};
+
+	var hideRoute = function(marker) {
+		if (marker.geoJson) {
+			var polylines = marker.geoJson.polylines;
+			for (var i = 0 ; i < polylines.length; i++) {
+				polylines[i].setMap(null);
+			}
+		}
 	};
 
 	var updateViewportToDefault = function() {
@@ -203,8 +196,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
-		deactivateMousedOverMarker();
-		deactivateClickedMarker();
+		deactivateMarker();
 		center = null;
 		zoomLevel = 0;
 		doneShowingBanner = false;
@@ -219,22 +211,9 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		$scope.map.setZoom(zoomLevel);
 	});
 
-	$scope.markerMousedOver = function(marker) {
-		activateMousedOverMarker(marker);
-	};
-
-	$scope.markerMousedOut = function(marker) {
-		deactivateMousedOverMarker();
-	};
-
-	$scope.markerClicked = function(marker) {
-		if (clickedMarker) {
-			if (marker !== clickedMarker) {
-				deactivateClickedMarker();
-			} else {
-				navigation.toEntry(marker.hikeData.string_id);
-			}
-		}
+	var fetchRouteForActiveMarker = function() {
+		var marker = activeMarker;
+		if (marker.geoJson) return;
 		$http({method: "GET", url: "/api/v1/hikes/" + marker.hikeData.string_id + "?fields=route", cache:resourceCache}).
 			success(function(data, status, headers, config) {
 				/* global GeoJSON: true */
@@ -246,19 +225,47 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					};
 					var geoJson = new GeoJSON(data.route, googleOptions);
 					marker.geoJson = geoJson;
-				} else if (!Modernizr.touch) {
-					navigation.toEntry(marker.hikeData.string_id);
+					if (marker === activeMarker) {
+						showRoute(marker);
+					}
 				}
-				activateClickedMarker(marker);
-				deactivateMousedOverMarker(marker);
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
 			});
 	};
 
+	$scope.markerMousedOver = function(marker) {
+		if (!Modernizr.touch) {
+			activateMarker(marker);
+		}
+	};
+
+	$scope.markerMousedOut = function(marker) {
+		if (!Modernizr.touch) {
+			deactivateActiveMarker();
+		}
+	};
+
+	$scope.markerClicked = function(marker) {
+		if (!Modernizr.touch) {
+			navigation.toEntry(marker.hikeData.string_id);
+			return;
+		}
+
+		if (activeMarker) {
+			if (marker === activeMarker) {
+				navigation.toEntry(marker.hikeData.string_id);
+				return;
+			} else {
+				deactivateActiveMarker();
+			}
+		}
+		activateMarker(marker);
+	};
+
 	$scope.mapClicked = function(event) {
-		deactivateClickedMarker();
+		deactivateActiveMarker();
 	};
 
 	$scope.mapMoved = function(event) {
