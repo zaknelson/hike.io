@@ -30,6 +30,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	var canceledUploadedPhotoIdMap = {}; // photos that havent finished uploading and are already removed
 	var descriptionMediumEditor = null;
 	var permitMediumEditor = null;
+	var polylines = null;
 
 	var cloneToLocalPhotos = function() {
 		$scope.local_photo_landscape = $scope.hike.photo_landscape;
@@ -442,7 +443,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			strokeWeight: 3,
 			strokeOpacity: 0.9
 		});
-		var polylines = geoJson.polylines;
+		removeMapPolylines();
+		polylines = geoJson.polylines;
 		if (!polylines || polylines.length === 0) {
 			$scope.hike.route = null;
 			$window.alert("Unable to parse route.");
@@ -560,9 +562,17 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	};
 
 	$scope.removeRoute = function() {
+		removeMapPolylines();
 		$scope.hike.route = null;
 		$scope.mapAttribution = null;
 		$scope.isDirty = true;
+	};
+
+	var removeMapPolylines = function() {
+		if (!polylines) return;
+		for (var i = 0; i < polylines.length; i++) {
+			polylines[i].setMap(null);
+		}
 	};
 
 	$scope.$on("keyboardEventSave", function(event) {
