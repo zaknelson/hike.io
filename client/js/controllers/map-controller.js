@@ -53,6 +53,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	};
 
 	var deactivateMarker = function(marker) {
+		if (!marker) return;
 		var tooltip = marker.tooltips.pop();
 		if (tooltip) {
 			tooltip.destroy();
@@ -61,19 +62,15 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			marker.setIcon(defaultMarker);
 		}
 		hideRoute(marker);
-	};
-
-	var deactivateActiveMarker = function() {
-		deactivateMarker(activeMarker);
-		activeMarker = null;
+		if (marker === activeMarker) {
+			activeMarker = null;
+		}
 	};
 
 	var activateMarker = function(marker) {
 		marker.activationCount++;
 		if (activeMarker === marker) return;
-		if (activeMarker) {
-			deactivateActiveMarker();
-		}
+		deactivateMarker(activeMarker);
 		activeMarker = marker;
 		fetchRouteForActiveMarker();
 		var tooltip = mapTooltipFactory.create(activeMarker);
@@ -199,7 +196,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	};
 
 	$scope.$on("resetMapViewport", function(event, urlParams) {
-		deactivateMarker();
+		deactivateMarker(activeMarker);
 		center = null;
 		zoomLevel = 0;
 		doneShowingBanner = false;
@@ -268,14 +265,16 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 				navigation.toEntry(marker.hikeData.string_id);
 				return;
 			} else {
-				deactivateActiveMarker();
+				deactivateMarker(marker);
 			}
 		}
 		activateMarker(marker);
 	};
 
 	$scope.mapClicked = function(event) {
-		deactivateActiveMarker();
+		if (Modernizr.touch) {
+			deactivateMarker(activateMarker);
+		}
 	};
 
 	$scope.mapMoved = function(event) {
