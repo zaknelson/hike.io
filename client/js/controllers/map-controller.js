@@ -69,6 +69,8 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	};
 
 	var activateMarker = function(marker) {
+		marker.activationCount++;
+		if (activeMarker === marker) return;
 		if (activeMarker) {
 			deactivateActiveMarker();
 		}
@@ -177,6 +179,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 					map: $scope.map,
 					position: newLatLng,
 					hikeData: newMarkers[i],
+					activationCount: 0,
 					tooltips: []
 				});
 				mergedMarkers.push(marker);
@@ -243,7 +246,14 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	$scope.markerMousedOut = function(marker) {
 		if (!Modernizr.touch) {
-			deactivateActiveMarker();
+			// Give the marker some time before deactivating it, otherwise with jitery mouses the tooltip / route can flicker.
+			// Also, make sure the mouse hasn't reactivated again in the meantime.
+			var previousActivationCount = marker.activationCount;
+			$timeout(function() {
+				if (previousActivationCount === marker.activationCount) {
+					deactivateActiveMarker();
+				}
+			}, 350);	
 		}
 	};
 
