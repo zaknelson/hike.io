@@ -253,7 +253,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 				if (previousActivationCount === marker.activationCount) {
 					deactivateActiveMarker();
 				}
-			}, 350);	
+			}, 350);
 		}
 	};
 
