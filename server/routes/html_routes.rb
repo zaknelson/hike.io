@@ -171,7 +171,12 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/hikes/:hike_id/gpx", :provides => "xml" do
-		return 200, {"Content-Disposition" => "attachment; filename=\"#{params[:hike_id]}.gpx\""}, "<gpx></gpx>"
+		hike = Hike[:string_id => params[:hike_id]]
+		return 404 if not hike
+		return 404 if not hike.route
+		geojson = JSON.parse hike.route rescue return 400
+		@route = GeoJSONParser.parse(geojson)
+		return 200, {"Content-Disposition" => "attachment; filename=\"#{params[:hike_id]}.gpx\""}, erb(:gpx, :layout => false)
 	end
 
 	# Temporary, need a better way of setting admin status than in a cookie

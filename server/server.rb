@@ -17,6 +17,7 @@ require "uglifier"
 require "will_paginate"
 require "will_paginate/sequel"
 
+require_relative "controller/geojson_parser"
 require_relative "controller/search"
 require_relative "controller/sanitizer"
 require_relative "model/cache"

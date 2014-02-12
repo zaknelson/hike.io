@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="hike.io">
+	<metadata>
+		<author>
+			<name>hike.io</name>
+		</author>
+		<copyright author="<%= @route[:attribution_author] %>">
+			<license><%= @route[:attribution_license_link] %></license>
+		</copyright>
+		<link href="http://hike.io"></link>
+	</metadata><% if @route[:track_points] && @route[:track_points].length > 0 %>
+	<trk>
+		<trkseg><% for track_point in @route[:track_points] %>
+			<trkpt lat="<%= track_point[:latitude] %>" lon="<%= track_point[:longitude] %>"><% if track_point[:elevation] %>
+				<ele><%= track_point[:elevation] %></ele><% end %>
+			</trkpt><% end %>
+		</trkseg>
+	</trk><% end %>
+</gpx>
