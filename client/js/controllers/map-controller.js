@@ -251,7 +251,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			var previousActivationCount = marker.activationCount;
 			$timeout(function() {
 				if (previousActivationCount === marker.activationCount) {
-					deactivateActiveMarker();
+					deactivateMarker(marker);
 				}
 			}, 350);
 		}
