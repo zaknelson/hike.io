@@ -35,4 +35,8 @@ class HikeApp < Sinatra::Base
 	get "/hikes/w-circuit-torres-del-paine", :provides => "html" do
 		redirect "/hikes/w-circuit", 301
 	end
+
+	get "/hikes/waimanu-valley-trail", :provides => "html" do
+		redirect "/hikes/muliwai-trail", 301
+	end	
 end
