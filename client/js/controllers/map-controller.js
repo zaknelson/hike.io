@@ -5,6 +5,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	var socket = null;
 	var defaultMarker = null;
+	var hoverMarker = null;
 
 	var activeMarker = null;
 	var lastMarkerUpdateTime = null;
@@ -22,18 +23,21 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 
 	var initIcons = function() {
-		// Workflow to generate this base64 url.
-		// Go into Photoshop create a document that is 28 by 28px.
-		// Create a circle that is 24 with stroke of 1px and put it in the top left corner
-		// Create a drop shadow (opacity: .75, distance: 2, spread: 0, size: 4)
-		// Save and the minimize - https://tinypng.com/
-		// Convert to base64 - http://webcodertools.com/imagetobase64converter
-		var base64Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA9lBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgJBlQHhQAAAAAAABYIRcAAAAAAAAyEw1RHxU+FxAVCAVCGRFeIxg6Fg9sKRxpKBwjDQldIxgpDwtqKBxBGREWCQYTBwVVIBYWCAZMHRRMHRRjJhphJRpeJBlGGxNoKBtlJxtrKRxVIRdkJhrrWTxtKR11LB59LyDFSzKiPirdUzipQCzkVjrpWDvWUTbdVDnRTzVmJxvlVzquQi2dPClwKh2zcEuFAAAAQHRSTlMAOicbBAoCASAQBnCEDRmWWQc0SjFVj2VtFkBDhylhdPRLd83u2qDPdpz2sGDNUsY1k7Hksn2tV2Ljscq46JnU8NToMgAAAW1JREFUKM9tk+d2gkAQhVk6gopSbKDG3k3vhQUUAcXw/i8TWBKO0b1/vzOzM3fuEqk4ljaN9QzCj7VxLTA0yxG5ONqc2xt360eBu7HfU8zlrPAUHyPrV9ExnpSKBTZjbGXiBNaJAsfghQqb1T07ofVPofPAC4W0M23Ge+tM+3jFF9N3mblnXchbVktM0ti0d5dwZy9IISk1vi2MNo+AYjjizcVB9+UqKSVmIQ6GB1lt0AT0cdCHNUBVCBjhYb3JMwQM8G3FVgK/8AN1EfzErzJGbVd4E0ZoIHWJs28goVXIBcZ4OOogEygwvTxZX2oj+wRSeT0/9lAXFWQ8U6pqU+jt8lk82C/3tOxkdJEHsnSHAuZvk4ANbvWeDLJjcwWBB5p4M+4eIDx0h/dlSdQAigkKmMBXlXZH0suJdKnTVqp/AUtriyUSKHKtLor1mnwFSBTNPNSMQJEqaLZaTaCSVBbqnLIJblB8Iqpx8h1+AKPEga5R6DIyAAAAAElFTkSuQmCC";
+		// Source PSD is in /assets/marker.psd
+		var defaultBase64Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA9lBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAgEAAAAAAAAAAAAAAAAAAAAAAABQHhQHAgEAAAAAAAAAAABpKBtjJhoAAABoKBsAAAAAAAAAAABsKRwAAAAAAABRHxUUBwVBGRE+FxBlJhpeIxhXIRdCGREpDwtdIxg6Fg8AAABJHBMyEw0yEw0UCAVhJRpkJhpjJhoZCQZVIBYAAAAjDglVIRdYIRcjDQlMHRRaIhjrWTxtKR12LR/dVDjlVjrFSzKiPirWUTapQCzpWDt8LyDRTzV+MCFmJxtuKh2dPCnjVjquQi1GQCvOAAAAQHRSTlMAAgM6IBAaAQkFbwcnDZNZFnU0SjEpmGVAQ8eEYbNVgkv2KYbusjXa5nb2z1LNnI2vz8qkYtRXhuRUYJmOYH3v/l4HBQAAAY1JREFUOMu9k1d2wjAQRWPLapZxwfSaAqGX9J7YmF4c2P9mIkCHqu/cX92jGc08XfwrGKuUEQ6jKsbnxwqNZzNXoV/NZG8hocqJgtV4vjccBJP+aDDs5bmiHhmYPYervifor8IaijBlf66w2nzkHTCaf2pwb2D2OA28I4LpNzfwrn44806YhU0tIvpQSH7snTFuRRHZFME03lueC8veuwEpXgsk++tJGHYBImtBhZmBTBhULw2ocoHaV4FMCBZWzKZcYMifyISJnwSIcYFofl8u6CmNbIWRvISeFsKTvMmfnfAhf2ZDlGCoKR9UQjRJ7VhLNupSUTxThcaXbFkPjhgUJgi0z9d9f5MTo8YUGm73NDAVU3evIcXbdaNooR2Ol7v+xuGd6RTW6xaBiWjAenndhHYS8NCWyqZjAREYDmZQA2+62agvfH9Rr5QTN3oBbCInULgRdXNOsWMmEman6OTc6C604o4IMoBrJXVO0roE1wexF30QiIwYSKXTKRAzkPg4x1+PQBtpHGQffL0/Uk2Cqs6KqoAAAAAASUVORK5CYII=";
+		var hoverBase64Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA8FBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwXBUVEgRIOg0AAABvWhReTRFzXhZtWRRaShE1KwpXRxBCNgxjURMsJAglHgdcSxFGOg1VRhBfThJOQA5oVRNyXhVpVhRWRhAYFARqVxRoVRNpVhQaFQU5LwtEOA0YFAX/1kfwyUF1YRb40ER+aBnVsjeFbhtxXRWvkirowj62mC381EZtWRT2z0SpjCi7nC/ivT3hvTzux0HgAlxVAAAARXRSTlMAOhsHIAIQAQkEJwZKcQ0ZllkWNIQxdVWPZW1AQ8etM2Gz9PZ8J83u2s1SYJTPeOSvhuiGKZPUYleGoJib//////////p9C9ZCAAABjklEQVQ4y72TV2LCMBBEI1lWMTZgY3oJvbf0akQJNZT73yY2iGp9Z371NFrtzt79qwhhTKGuFMYI8R+rrFLOljh/zD7dY8rUG4SwSmE0He8Ww9l4Oip4yBVBAu98PXSEhmveDQUD6vlcVcqTmXOh2aSNsKKe779NBs6VBpMuwgFyfP+Zb50bbXkTBUUdKi3MHZ/mjUiIqgeD+9HKD6xGLQ3vLQh9+HUkmvYBpB7AcHYsA8Y93bXwAKs0kAGDpRm1PECBfCEDFjwJoOICFPGhHEilEd0DPzP5E0ZGAK/yIosnoC3/Zkc8ocCmvFHfokhmRRuyVtds8U2GtRbf3J5veC4mGkUoBF/+cVftvGg1cS30/m1g6gnDMyCHcYci8U8+X53qm/NqOBYX4/YsggiYH719aBc7N7S1XCJmAi8wx8hhBOKpl05xyfmyWM+FbSMOROREaDGK6HnDToRdJexYXo+cQis8giEN6GYyZRippKkD7SL2og6KoRYF6UwmDaIa9BbHt3oUWxC5gtbF6v0B+WB9k6T4OT8AAAAASUVORK5CYII=";
+
 		defaultMarker = {
-			url: base64Icon,
-			anchor: new google.maps.Point(6, 6), // Not directly in the center of the icon, because the circle itself isn't in the center
-			scaledSize: new google.maps.Size(14, 14),
-			size: new google.maps.Size(28, 28)
+			url: defaultBase64Icon,
+			anchor: new google.maps.Point(8, 8),
+			scaledSize: new google.maps.Size(16, 16),
+			size: new google.maps.Size(32, 32)
+		};
+		hoverMarker = {
+			url: hoverBase64Icon,
+			anchor: new google.maps.Point(8, 8),
+			scaledSize: new google.maps.Size(16, 16),
+			size: new google.maps.Size(32, 32)
 		};
 	};
 
@@ -74,6 +78,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		activeMarker = marker;
 		fetchRouteForActiveMarker();
 		var tooltip = mapTooltipFactory.create(activeMarker);
+		activeMarker.setIcon(hoverMarker);
 		activeMarker.tooltips.push(tooltip);
 		showRoute(activeMarker);
 	};
