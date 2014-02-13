@@ -205,12 +205,13 @@ $header-landscape-aspect-ratio: 3;
 		}
 		.download-gpx {
 			margin-top: 10px;
+			float: right;
 		}
 		.map-attribution {
 			font-family: Roboto, Arial, sans-serif; /* Matches google maps attribution style */
 			font-size: 10px;
 			padding: 4px;
-			float: right;
+			float: left;
 			a {
 				color: #444;
 			}
