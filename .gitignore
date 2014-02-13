@@ -1,7 +1,6 @@
 .DS_Store
 .sass-cache
 *.log
-assets/
 config/config.yml
 development.db
 node_modules
