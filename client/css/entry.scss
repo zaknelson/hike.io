@@ -57,12 +57,6 @@ $header-landscape-aspect-ratio: 3;
 			padding-bottom: (100% / $header-landscape-aspect-ratio);
 		}
 
-		.attribution-link {
-			top: 8px;
-			right: 8px;
-			left: auto;
-		}
-
 		h1 {
 			font-size: $header-landscape-footer-height - 10;
 			line-height: $header-landscape-footer-height;	

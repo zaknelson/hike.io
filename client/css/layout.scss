@@ -181,7 +181,7 @@ img {
 }
 
 .attribution-link {
-	display: none; /* Is only displayed when fancybox is open */
+	display: none;
 	position: absolute;
 	top: 8px;
 	left: 8px;
@@ -195,6 +195,26 @@ img {
 
 .attribution-link.active {
 	display: inline;
+}
+
+.attribution-string {
+	float: right;
+	text-align: right;
+	font-size: 10px;
+	line-height: 12px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	margin-bottom: -20px;
+	a, span {
+		color: $title-text-color-inverse;
+	}
+	.separator {
+		display: inline;
+	}
+	br {
+		display: none;
+	}
 }
 
 html.touch a:hover {
@@ -272,5 +292,15 @@ html.touch a:hover {
 			}
 		}
 	}
+	.attribution-string {
+		margin-bottom: -30px;
+		.separator {
+			display: none;
+		}
+		br {
+			display: inline;
+		}
+	}
+
 }
 
