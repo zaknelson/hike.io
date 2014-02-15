@@ -37,7 +37,7 @@ angular.module("hikeio").
 										var separator = $("<span class='separator'> • </span>");
 										var br = $("<br>");
 										var licenseName = flickrLicenses[data.photo.license].short || flickrLicenses[data.photo.license].name;
-										var licenseAnchor = $("<a href='" + flickrLicenses[data.photo.license].url + "'> • " + licenseName + "<a/>");
+										var licenseAnchor = $("<span> • </span><a href='" + flickrLicenses[data.photo.license].url + "'>" + licenseName + "<a/>");
 										var modified = $("<span> Resized from original </span>");
 										attributionDiv.append(nameAndTitleAnchor);
 										attributionDiv.append(br);
