@@ -201,8 +201,8 @@ img {
 .attribution-string {
 	float: right;
 	text-align: right;
-	font-size: 10px;
-	line-height: 13px;
+	font-size: 12px;
+	line-height: 14px;
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
@@ -282,6 +282,13 @@ html.touch a:hover {
 		right: 0px;
 		padding: 8px 8px;
 		margin-top: -$banner-height;
+	}
+}
+
+@media all and (max-width: 800px) {
+	.attribution-string {
+		font-size: 10px;
+		line-height: 13px;
 	}
 }
 
