@@ -2,6 +2,7 @@
 @import "_mixins";
 @import "compass/css3/box-shadow";
 @import "compass/css3/box-sizing";
+@import "compass/css3/transition";
 
 * {
 	@include box-sizing(border-box);
@@ -201,11 +202,12 @@ img {
 	float: right;
 	text-align: right;
 	font-size: 10px;
-	line-height: 12px;
+	line-height: 13px;
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
 	margin-bottom: -20px;
+	opacity: 0;
 	a, span {
 		color: $title-text-color-inverse;
 	}
@@ -215,6 +217,7 @@ img {
 	br {
 		display: none;
 	}
+	@include transition(opacity 0.5s ease-in-out);
 }
 
 html.touch a:hover {
@@ -293,7 +296,7 @@ html.touch a:hover {
 		}
 	}
 	.attribution-string {
-		margin-bottom: -30px;
+		margin-bottom: -31px;
 		.separator {
 			display: none;
 		}

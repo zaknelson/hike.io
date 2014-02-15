@@ -1,20 +1,19 @@
 "use strict";
 
 angular.module("hikeio").
-	directive("fancybox", ["$http", "$log", "$rootScope", "resourceCache", function($http, $log, $rootScope, resourceCache) {
+	directive("fancybox", ["$http", "$log", "$rootScope", "$timeout", "resourceCache", function($http, $log, $rootScope, $timeout, resourceCache) {
 		return {
 			link: function (scope, element, attrs) {
-
 				var flickrLicenses = {
 					"0": {"name":"All Rights Reserved", "url":"" },
-					"1": {"name":"Attribution-NonCommercial-ShareAlike License", "url":"http:\/\/creativecommons.org\/licenses\/by-nc-sa\/2.0\/"},
-					"2": {"name":"Attribution-NonCommercial License", "url":"http:\/\/creativecommons.org\/licenses\/by-nc\/2.0\/"},
-					"3": {"name":"Attribution-NonCommercial-NoDerivs License", "url":"http:\/\/creativecommons.org\/licenses\/by-nc-nd\/2.0\/"},
-					"4": {"name":"Attribution License", "url":"http:\/\/creativecommons.org\/licenses\/by\/2.0\/"},
-					"5": {"name":"Attribution-ShareAlike License", "url":"http:\/\/creativecommons.org\/licenses\/by-sa\/2.0\/"},
-					"6": {"name":"Attribution-NoDerivs License", "url":"http:\/\/creativecommons.org\/licenses\/by-nd\/2.0\/"},
-					"7": {"name":"No known copyright restrictions", "url":"http:\/\/www.flickr.com\/commons\/usage\/"},
-					"8": {"name":"United States Government Work", "url":"http:\/\/www.usa.gov\/copyright.shtml"}
+					"1": {"name":"Attribution-NonCommercial-ShareAlike License", "url":"http://creativecommons.org/licenses/by-nc-sa/2.0/"},
+					"2": {"name":"Attribution-NonCommercial License", "url":"http://creativecommons.org/licenses/by-nc/2.0/"},
+					"3": {"name":"Attribution-NonCommercial-NoDerivs License", "url":"http://creativecommons.org/licenses/by-nc-nd/2.0/"},
+					"4": {"name":"Attribution License", "url":"http://creativecommons.org/licenses/by/2.0/"},
+					"5": {"name":"Attribution-ShareAlike License", "url":"http://creativecommons.org/licenses/by-sa/2.0/"},
+					"6": {"name":"Attribution-NoDerivs License", "url":"http://creativecommons.org/licenses/by-nd/2.0/"},
+					"7": {"name":"No known copyright restrictions", "url":"http://www.flickr.com/commons/usage/"},
+					"8": {"name":"United States Government Work", "url":"http://www.usa.gov/copyright.shtml"}
 				};
 				var context = {
 					beforeLoad: function() {
@@ -45,6 +44,9 @@ angular.module("hikeio").
 										attributionDiv.append(licenseAnchor);
 										attributionDiv.append(modified);
 										$(".fancybox-inner").append(attributionDiv);
+										$timeout(function() {
+											attributionDiv.css("opacity", "1");
+										});
 									}
 								}).
 								error(function(data, status, headers, config) {
