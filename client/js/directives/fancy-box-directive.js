@@ -33,7 +33,7 @@ angular.module("hikeio").
 								success(function(data, status, headers, config) {
 									if (data.stat === "ok") {
 										var attributionDiv = $("<div class='attribution-string'></div>");
-										var authorName = data.photo.owner.realname ? data.photo.owner.realname || data.photo.owner.username;
+										var authorName = data.photo.owner.realname ? data.photo.owner.realname : data.photo.owner.username;
 										var nameAndTitleAnchor = $("<a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + data.photo.title._content + "\" by " + authorName + "<a/>");
 										var separator = $("<span class='separator'> • </span>");
 										var br = $("<br>");
