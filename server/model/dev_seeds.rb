@@ -77,6 +77,10 @@ migration "seed the narrows" do
 		:longitude => -112.94745
 	)
 
+	
+	hike.route = '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"attribution":{"author":"© OpenStreetMap contributors","license_link":"http://www.openstreetmap.org/copyright"}},"geometry":{"type": "LineString", "coordinates": [[-116.081728, 48.188865, 123], [-116.662076494242413, 48.72749414542243, 124],[-116.662196794397431, 48.62626481357232, 125],[-116.664238981504525, 48.51175532632963, 126]]}}]}'
+
+
 	hike.photo_preview = Photo.create(:string_id => "the-narrows/preview", :width => 1594, :height => 2400)
 
 	hike.add_keyword(Keyword.find_or_create(:keyword => "the"))

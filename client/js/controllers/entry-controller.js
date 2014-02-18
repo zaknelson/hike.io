@@ -175,8 +175,9 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				var distance = conversion.convert($scope.hike.distance, "kilometers", "miles", 1, true);
 				var elevationGain = conversion.convert($scope.hike.elevation_gain, "meters", "feet", 0);
 				var elevationMax = conversion.convert($scope.hike.elevation_max, "meters", "feet", 0);
+				var routeString = $scope.hike.route ? " Download a free GPX route." : "";
 				$rootScope.metaDescription = $scope.hike.name + " is a " + distance +  " mile hike in " + $scope.hike.locality + ". " +
-					"The hike gains " + elevationGain + " feet and reaches a maximum elevation of " + elevationMax + " feet. It doesn't yet have a description, but you can fix that by editing the page.";
+					"The hike gains " + elevationGain + " feet and reaches a maximum elevation of " + elevationMax + " feet." + routeString + " It doesn't yet have a description, but you can fix that by editing the page.";
 			}
 
 			cloneToLocalPhotos();
