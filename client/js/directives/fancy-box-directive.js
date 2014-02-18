@@ -19,7 +19,9 @@ angular.module("hikeio").
 					beforeLoad: function() {
 						var fancyboxElement = this.element;
 						var attributionLink = fancyboxElement.attr("data-attribution-link");
-						if (attributionLink.indexOf("flickr.com") === -1) {
+						if (!attributionLink) {
+							return;
+						} else if (attributionLink.indexOf("flickr.com") === -1) {
 							$log.error("Unable to fetch attribution data for: " + attributionLink);
 							return;
 						}
