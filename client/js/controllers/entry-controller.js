@@ -583,7 +583,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			$(".map-container").on("touchstart", ".gmnoprint div[title^=Pan]", function () {
 				$(this).trigger("click");
 				return false;
-			});	
+			});
 		}
 	};
 	bugWithMapsPanControlWorkaround();
