@@ -1,7 +1,16 @@
 <article class="all-page" data-meta-description="All hikes on hike.io listed in alphabetical order.">
 	<ul>
 		<li data-ng-repeat='hike in hikes | orderBy:"name"'>
-			<a href='/hikes/{{hike.string_id}}'><h2>{{hike.name}}</h2></a>
+			<a href='/hikes/{{hike.string_id}}'>
+				<div class="entry">
+					<img data-ui-if="hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}-thumb-tiny.jpg" />
+					<div data-ui-if="!hike.photo_facts" class="img-placeholder"></div>
+					<div class="text">
+						<h2>{{hike.name}}</h2>
+						<h3>{{hike.locality}}</h3>
+					</div>
+				</div>
+			</a>
 		</li>
 	</ul>
 </article>

@@ -122,7 +122,7 @@ class HikeApp < Sinatra::Base
 	["/hikes", "/partials/all.html"].each do |path|
 		get path, :provides => "html" do
 			if not @is_partial
-				preload_resource "/api/v1/hikes?fields=locality,name,string_id", array_as_json(Hike.order(:id).all, [:locality, :name, :string_id])
+				preload_resource "/api/v1/hikes?fields=locality,name,photo_facts,string_id", array_as_json(Hike.order(:id).all, [:locality, :name, :photo_facts, :string_id])
 			end
 			render_template :all
 		end
