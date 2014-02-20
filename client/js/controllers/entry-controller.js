@@ -14,7 +14,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.isJustAdded = false;
 	$scope.isBeingReviewed = false;
 	$scope.numPhotosUploading = 0;
-	$scope.mapOptions = { mapTypeId: google.maps.MapTypeId.TERRAIN, scrollwheel: false, streetViewControl: false, mapTypeControl: false, scaleControl: true, draggable: !Modernizr.touch, disableDefaultUI: Modernizr.touch } ;
+	$scope.mapOptions = { mapTypeId: google.maps.MapTypeId.TERRAIN, scrollwheel: false, streetViewControl: false, mapTypeControl: false, scaleControl: true, panControl: Modernizr.touch, draggable: !Modernizr.touch, disableDoubleClickZoom: Modernizr.touch } ;
 	$scope.mapRefreshing = false;
 
 	// A little tricky, maintain two versions of the photo data, the "local" version (data uri encoded, for instant preview), 
@@ -575,6 +575,18 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			polylines[i].setMap(null);
 		}
 	};
+
+	// The panning controls are not working for touch
+	// See: https://code.google.com/p/gmaps-api-issues/issues/detail?id=4598
+	var bugWithMapsPanControlWorkaround = function() {
+		if (Modernizr.touch) {
+			$(".map-container").on("touchstart", ".gmnoprint div[title^=Pan]", function () {
+				$(this).trigger("click");
+				return false;
+			});	
+		}
+	};
+	bugWithMapsPanControlWorkaround();
 
 	$scope.$on("keyboardEventSave", function(event) {
 		$scope.save();
