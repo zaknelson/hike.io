@@ -31,7 +31,7 @@ class HikeApp < Sinatra::Base
 
 		if review.api_verb == "put"
 			hike = Hike[:string_id => review.hike_string_id]
-			return err_409("Hike no longer exists.") if not hike
+			return err_409("Hike does not exist.") if not hike
 			return err_409("Hike has been edited since review's creation.") if hike.edit_time > review.creation_time
 			hike.update_from_json(JSON.parse(review.api_body))
 			hike.edit_time = review.creation_time
@@ -45,7 +45,7 @@ class HikeApp < Sinatra::Base
 			redirect_url = "/hikes/#{hike.string_id}"
 		elsif review.api_verb == "delete"
 			hike = Hike[:string_id => review.hike_string_id]
-			return err_409("Hike no longer exists.") if not hike
+			return err_409("Hike does not exist.") if not hike
 			hike.cascade_destroy
 			redirect_url = "/"
 		end
