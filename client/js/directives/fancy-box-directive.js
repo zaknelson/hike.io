@@ -38,12 +38,10 @@ angular.module("hikeio").
 										var authorName = data.photo.owner.realname ? data.photo.owner.realname : data.photo.owner.username;
 										var nameAndTitleAnchor = $("<a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + data.photo.title._content + "\" by " + authorName + "<a/>");
 										var separator = $("<span class='separator'> • </span>");
-										var br = $("<br>");
 										var licenseName = flickrLicenses[data.photo.license].short || flickrLicenses[data.photo.license].name;
 										var licenseAnchor = $("<span> • </span><a href='" + flickrLicenses[data.photo.license].url + "'>" + licenseName + "<a/>");
 										var modified = $("<span> Resized from original </span>");
 										attributionDiv.append(nameAndTitleAnchor);
-										attributionDiv.append(br);
 										attributionDiv.append(separator);
 										attributionDiv.append(modified);
 										attributionDiv.append(licenseAnchor);
