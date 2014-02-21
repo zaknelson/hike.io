@@ -49,6 +49,8 @@ angular.module("hikeio").
 										$timeout(function() {
 											attributionDiv.css("opacity", "1");
 										});
+									} else {
+										$log.error(data);
 									}
 								}).
 								error(function(data, status, headers, config) {
