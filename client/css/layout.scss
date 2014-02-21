@@ -217,6 +217,9 @@ img {
 	br {
 		display: none;
 	}
+	span {
+		float:right;
+	}
 	@include transition(opacity 0.5s ease-in-out);
 }
 

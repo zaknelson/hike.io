@@ -36,17 +36,20 @@ angular.module("hikeio").
 									if (data.stat === "ok") {
 										var attributionDiv = $("<div class='attribution-string'></div>");
 										var authorName = data.photo.owner.realname ? data.photo.owner.realname : data.photo.owner.username;
-										var nameAndTitleAnchor = $("<a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + data.photo.title._content + "\" by " + authorName + "</a>");
-										var separator = $("<span class='separator'> • </span>");
+										var nameAndTitleAnchor = $("<span><a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + data.photo.title._content + "\" by " + authorName + "</a></span>");
+										var separator = $("<span class='separator'>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
 										var br = $("<br>");
 										var licenseName = flickrLicenses[data.photo.license].short || flickrLicenses[data.photo.license].name;
-										var licenseAnchor = $("<span> • </span><a href='" + flickrLicenses[data.photo.license].url + "'><span>" + licenseName + "</span><a/>");
+										var licenseAnchor = $("<span><a href='" + flickrLicenses[data.photo.license].url + "'>" + licenseName + "<a/></span><span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
 										var modified = $("<span> Resized from original </span>");
-										attributionDiv.append(nameAndTitleAnchor);
-										attributionDiv.append(br);
-										attributionDiv.append(separator);
-										attributionDiv.append(modified);
+
 										attributionDiv.append(licenseAnchor);
+										attributionDiv.append(modified);
+										attributionDiv.append(separator);
+										attributionDiv.append(br);
+
+										attributionDiv.append(nameAndTitleAnchor);
+
 										$(".fancybox-inner").append(attributionDiv);
 										$timeout(function() {
 											attributionDiv.css("opacity", "1");
