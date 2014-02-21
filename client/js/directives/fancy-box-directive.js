@@ -39,7 +39,7 @@ angular.module("hikeio").
 										var nameAndTitleAnchor = $("<a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + data.photo.title._content + "\" by " + authorName + "<a/>");
 										var separator = $("<span class='separator'> • </span>");
 										var licenseName = flickrLicenses[data.photo.license].short || flickrLicenses[data.photo.license].name;
-										var licenseAnchor = $("<span> • </span><a href='" + flickrLicenses[data.photo.license].url + "'>" + licenseName + "<a/>");
+										var licenseAnchor = $("<span> • </span><a href='" + flickrLicenses[data.photo.license].url + "'><span>" + licenseName + "</span><a/>");
 										var modified = $("<span> Resized from original </span>");
 										attributionDiv.append(nameAndTitleAnchor);
 										attributionDiv.append(separator);
