@@ -12,23 +12,23 @@ describe("dateTime", function() {
 		};
 
 		it("should return correctly handle two properly formatted dates", inject(function(dateTime) {
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000", 
-											 "2001-01-01 01:00:00 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2001-01-01 01:00:00 +0000");
 
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000",
-											 "2000-02-01 01:00:00 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2000-02-01 01:00:00 +0000");
 
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000",
-											 "2000-01-02 01:00:00 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2000-01-02 01:00:00 +0000");
 
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000",
-											 "2000-01-01 02:00:00 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2000-01-01 02:00:00 +0000");
 
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000",
-											 "2000-01-01 01:01:00 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2000-01-01 01:01:00 +0000");
 
-			validateBeforeAndAfter(dateTime, "2000-01-01 01:00:00 +0000",
-											 "2000-01-01 01:00:01 +0000");
+			validateBeforeAndAfter(dateTime,"2000-01-01 01:00:00 +0000",
+											"2000-01-01 01:00:01 +0000");
 		}));
 
 		it("should return true if there is no second parameter", inject(function(dateTime) {
