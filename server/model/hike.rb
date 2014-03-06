@@ -94,17 +94,25 @@ end
 		Sanitizer.clean_html(html)
 	end
 
+	def self.clean_json json
+		json["name"] = Hike.clean_string_input(json["name"])
+		json["description"] = Hike.clean_html_input(json["description"])
+		json["locality"] = Hike.clean_string_input(json["locality"])
+		json["permit"] = Hike.clean_anchor_input(json["permit"])
+	end
+
 	def update_from_json json
 		previous_name = self.name
 
-		self.name = Hike.clean_string_input(json["name"])
+		Hike.clean_json(json)
+		self.name = json["name"]
 		self.update_keywords if json["name"] != previous_name
-		self.description = Hike.clean_html_input(json["description"])
+		self.description = json["description"]
 		self.distance = json["distance"]
 		self.elevation_gain = json["elevation_gain"]
 		self.elevation_max = json["elevation_max"]
-		self.locality = Hike.clean_string_input(json["locality"])
-		self.permit = Hike.clean_anchor_input(json["permit"])
+		self.locality = json["locality"]
+		self.permit = json["permit"]
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
 

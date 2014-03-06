@@ -63,6 +63,7 @@ class EmailUtils
 		# created yet, there might not yet be a before.
 		before_json = hike ? JSON.parse(hike.as_json) : nil
 		after_json = JSON.parse(json_str)
+		Hike.clean_json(after_json)
 
 		# Diffy has a hard time handling routes since they can be quite large, so truncate them
 		before_json["route"] = shorten_route_string(before_json["route"]) if before_json
