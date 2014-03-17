@@ -186,7 +186,7 @@ class HikeApp < Sinatra::Base
 				:value => value,
 				:httponly => true })
 		end
-		redirect "/"
+		redirect "/admin"
 	end
 
 	# Workaround for bug in sinatra-assetpack, https://github.com/rstacruz/sinatra-assetpack/pull/147
