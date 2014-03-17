@@ -177,7 +177,7 @@
 		</section>
 		<section class="metadata-section" data-ui-if="isEditing">
 			<h2>Preview photo</h2>
-			<p class="discover-explanation">This photo will show up on the Discover tab</p>
+			<p class="discover-explanation">This photo will show up on the Discover tab. If no photo is provided, then the photo in the facts box will be used.</p>
 			<div class="image-container" data-ui-if="isLoaded &amp;&amp; local_photo_preview">
 					<div data-ui-if="isEditing" data-ng-click="removePhoto('preview')" class="delete-photo-icon">×</div>
 					<img data-ui-if="local_photo_preview.string_id" data-ng-src="{{config.hikeImagesPath}}/{{local_photo_preview.string_id}}-thumb-{{capabilities.isMobile &amp;&amp; 'tiny' || 'small'}}.jpg" alt="{{local_photo_preview.alt}}" data-ng-click="openPhotoDetails(local_photo_preview)" />
