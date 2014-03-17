@@ -38,5 +38,8 @@ class HikeApp < Sinatra::Base
 
 	get "/hikes/waimanu-valley-trail", :provides => "html" do
 		redirect "/hikes/muliwai-trail", 301
-	end	
+	end
+	get "/hikes/jobs-peak-to-fayluther", :provides => "html" do
+		redirect "/hikes/jobs-peak-to-fay-luther", 301
+	end
 end
