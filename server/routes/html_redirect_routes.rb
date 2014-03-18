@@ -42,4 +42,7 @@ class HikeApp < Sinatra::Base
 	get "/hikes/jobs-peak-to-fayluther", :provides => "html" do
 		redirect "/hikes/jobs-peak-to-fay-luther", 301
 	end
+	get "/hikes/etna-vulcan", :provides => "html" do
+		redirect "/hikes/mount-etna", 301
+	end
 end
