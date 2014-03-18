@@ -159,9 +159,9 @@
 				</div>
 			</div>
 		</section>
-		<section class="map-section" data-ng-show="hike.route || isEditing">
+		<section class="map-section">
 			<h2 data-ui-if="isEditing">Route</h2>
-			<div style="position:relative" data-ng-show="hike.route">
+			<div style="position:relative" data-ng-show="hike.route || !isEditing">
 				<div class="map-container" data-ui-map="map" data-ui-options="mapOptions" data-ng-style="{'opacity': mapRefreshing &amp;&amp; '0' || '1'}"></div>
 				<div data-ng-click="removeRoute()" class="delete-map-icon" data-ng-show="isEditing">×</div>
 			</div>

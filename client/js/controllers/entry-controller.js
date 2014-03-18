@@ -438,32 +438,38 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 
 	var initMap = function() {
 		/* global GeoJSON: true */
-		if (!$scope.hike.route) return;
-		var geoJson = new GeoJSON($scope.hike.route, {
-			strokeColor: "#EB593C",
-			strokeWeight: 3,
-			strokeOpacity: 0.9
-		});
-		removeMapPolylines();
-		polylines = geoJson.polylines;
-		if (!polylines || polylines.length === 0) {
-			$scope.hike.route = null;
-			$window.alert("Unable to parse route.");
-			return;
-		}
-		for (var i = 0; i < polylines.length; i++) {
-			polylines[i].setMap($scope.map);
-		}
-		$scope.mapRefreshing = true;
-		$timeout(function() {
-			google.maps.event.trigger($scope.map, "resize");
-			$scope.map.fitBounds(geoJson.bounds);
-			$timeout(function() {
-				// This variable is used to temporarily hide the map as it is refreshing, so that we don't see a flash of stale content.
-				$scope.mapRefreshing = false;
-				$scope.mapAttribution = geoJson.attribution ? geoJson.attribution : null;
+		if ($scope.hike.route) {
+			var geoJson = new GeoJSON($scope.hike.route, {
+				strokeColor: "#EB593C",
+				strokeWeight: 3,
+				strokeOpacity: 0.9
 			});
-		});
+			removeMapPolylines();
+			polylines = geoJson.polylines;
+			if (!polylines || polylines.length === 0) {
+				$scope.hike.route = null;
+				$window.alert("Unable to parse route.");
+				return;
+			}
+			for (var i = 0; i < polylines.length; i++) {
+				polylines[i].setMap($scope.map);
+			}
+			$scope.mapRefreshing = true;
+			$timeout(function() {
+				google.maps.event.trigger($scope.map, "resize");
+				$scope.map.fitBounds(geoJson.bounds);
+				$timeout(function() {
+					// This variable is used to temporarily hide the map as it is refreshing, so that we don't see a flash of stale content.
+					$scope.mapRefreshing = false;
+					$scope.mapAttribution = geoJson.attribution ? geoJson.attribution : null;
+				});
+			});
+		} else {
+			$timeout(function() {
+				$scope.map.setCenter(new google.maps.LatLng($scope.hike.location.latitude, $scope.hike.location.longitude));
+				$scope.map.setZoom(13);
+			});
+		}
 	};
 
 
