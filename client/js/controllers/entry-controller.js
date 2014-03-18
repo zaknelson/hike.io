@@ -466,6 +466,7 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 			});
 		} else {
 			$timeout(function() {
+				google.maps.event.trigger($scope.map, "resize");
 				$scope.map.setCenter(new google.maps.LatLng($scope.hike.location.latitude, $scope.hike.location.longitude));
 				$scope.map.setZoom(13);
 			});
