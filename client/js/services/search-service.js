@@ -143,7 +143,7 @@ angular.module("hikeio").
 		};
 
 		SearchService.prototype.searchByName = function(query) {
-			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query }, cache: resourceCache}).
+			return $http({method: "GET", url: "/api/v1/hikes/search", params: { q: query, fields: "locality,name,photo_facts,string_id" }, cache: resourceCache}).
 				success(function(data, status, headers, config) {
 					if (data.length === 1 && data[0].relevance > SEARCH_RELEVANCE_THRESHOLD) {
 						var hike = data[0].hike;

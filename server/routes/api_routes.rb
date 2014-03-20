@@ -52,7 +52,7 @@ class HikeApp < Sinatra::Base
 		search_results = search_executor.execute
 
 		if (search_executor.has_best_result) 
-			array_as_json([search_results[0]], get_fields_filter) 
+			array_as_json([search_results[0]]) 
 		else
 			array_as_json(search_results, get_fields_filter)
 		end
