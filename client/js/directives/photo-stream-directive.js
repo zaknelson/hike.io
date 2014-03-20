@@ -24,6 +24,7 @@ angular.module("hikeio").
 							"</div>" +
 						"</div>" +
 					"</a>" +
+					"<div data-ui-if='!doneScrolling' class='loading-spinner rotate'></div>" +
 				"</div>";
 			},
 			link: function (scope, element) {
@@ -31,7 +32,7 @@ angular.module("hikeio").
 				var maxColumnWidth = 400;
 				var previewsToLoadAtATime = 5;
 				var infiniteScrollDistance = 3; // 3x the height of the window
-				var doneScrolling = false;
+				scope.doneScrolling = false;
 				scope.hikesToShow = 5;
 				var isInViewport = function(element) {
 					return element.offset().top < $($window).height();
@@ -56,7 +57,7 @@ angular.module("hikeio").
 				};
 
 				var showMoreHikes = function() {
-					if (scope.hikes.length === 0 || doneScrolling) return;
+					if (scope.hikes.length === 0 || scope.doneScrolling) return;
 					var windowBottom = $($window).height() + $($window).scrollTop();
 					var elementBottom = element.offset().top + element.height();
 					var remaining = elementBottom - windowBottom;
@@ -64,7 +65,7 @@ angular.module("hikeio").
 					if (shouldLoadMoreHikes) {
 						scope.hikesToShow += previewsToLoadAtATime;
 						if (scope.hikesToShow >= scope.hikes.length) {
-							doneScrolling = true;
+							scope.doneScrolling = true;
 						}
 						$timeout(function() {
 							var previews = element.find(".preview:not(.masonry-brick)");

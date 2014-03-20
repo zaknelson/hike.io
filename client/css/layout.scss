@@ -264,6 +264,14 @@ html.touch a:hover {
 	@include experimental('animation-timing-function', linear, webkit, moz, o, ms, not khtml);
 }
 
+.loading-spinner {
+	width: 22px;
+	height: 22px;
+	opacity: .65;
+	background-image: url('/images/spinner.png?embed');
+	background-size: 22px 22px;
+}
+
 .banner {
 	width: 100%;
 	height: $banner-height;
