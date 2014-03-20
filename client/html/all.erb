@@ -3,7 +3,7 @@
 		<li data-ng-repeat='hike in hikes | orderBy:"name"'>
 			<a href='/hikes/{{hike.string_id}}'>
 				<div class="entry">
-					<img data-ui-if="hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}-thumb-tiny.jpg" />
+					<img data-ui-if="hike.photo_facts" data-ng-src="{{config.hikeImagesPath}}/{{hike.photo_facts.string_id}}-thumb-tiny.jpg" alt="{{hike.photo_facts.alt}}" />
 					<div data-ui-if="!hike.photo_facts" class="img-placeholder"></div>
 					<div class="text">
 						<h2>{{hike.name}}</h2>
