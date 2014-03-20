@@ -23,7 +23,8 @@ angular.module("hikeio").
 								"</div>" +
 							"</div>" +
 						"</div>" +
-					"</a>";
+					"</a>" +
+				"</div>";
 			},
 			link: function (scope, element) {
 				var gutterWidth = 2;
