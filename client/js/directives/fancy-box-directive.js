@@ -64,6 +64,9 @@ angular.module("hikeio").
 								});
 						}
 					},
+					beforeShow: function() {
+						$(".fancybox-image").attr("alt", this.element.find("img").attr("alt"));
+					},
 					afterLoad: function() {
 						$rootScope.$broadcast("fancyboxLoaded");
 						var attributionLink = this.element.attr("data-attribution-link");
