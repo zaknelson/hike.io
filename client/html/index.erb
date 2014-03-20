@@ -9,7 +9,7 @@
 			<button class="btn search-type short" type="button" data-ng-bind="preferences.searchBy|capitalize" data-ng-click="preferences.toggleSearchBy()" data-redirect-focus="input"></button>
 			<div class="input-box">
 				<input class="hide-ie-input-close" type="text" placeholder="{{preferences.searchBy == 'location' &amp;&amp; 'Utah, USA' || 'The Narrows'}}" spellcheck="false" data-give-focus="!Modernizr.touch" data-ng-model="searchQuery" data-ui-keypress="{enter: 'search()'}" >
-				<div data-ui-if="!isSearching" class="search-input-button" data-ng-click="search()">
+				<div class="search-input-button" data-ng-click="search()" data-ng-style="{'opacity': isSearching &amp;&amp; '0', 'cursor': isSearching &amp;&amp; 'auto'} ">
 					<%= render_svg("#{@img_dir}/search.svg") %><img data-ui-if="!Modernizr.svg" data-ng-src="/images/search.png" style="display:inline" />
 				</div>
 				<div data-ui-if="isSearching" class="loading-spinner rotate"></div>

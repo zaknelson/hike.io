@@ -28,6 +28,7 @@
 	}
 
 	.input-box {
+		position: relative;
 		float: left;
 		@include box-shadow(1px 1px 3px rgba(34, 25, 25, 0.4));
 		background-color: white;

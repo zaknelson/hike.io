@@ -3,6 +3,7 @@ var IndexController = function($scope, $window, analytics, navigation, preferenc
 	$scope.searchQuery = "";
 	$scope.isSearching = false;
 	$scope.search = function() {
+		$scope.isSearching = true;
 		if ($scope.searchQuery.trim().length !== 0) {
 			$window.document.activeElement.blur();
 			if (preferences.searchBy === "location") {
