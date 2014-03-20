@@ -83,8 +83,17 @@ https://github.com/zaknelson/hike.io/
 				}
 			};
 
+			var removeHashBang = function() {
+				// Should never get in this case but Google's mobile index somehow has #!'s which break Angular,
+				// hence the workaround.
+				if (window.location.hash.indexOf("#!") > -1) {
+					window.location.hash = window.location.hash.replace("#!", "");
+				}
+			};
+
 			redirectIfOnStatic();
 			updateViewport();
+			removeHashBang();
 		})();
 	</script>
 	<!-- TODO, consider removing typekit for mobile browsers to speed up load time -->
