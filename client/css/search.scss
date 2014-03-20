@@ -2,22 +2,22 @@
 @import "_mixins";
 
 .search-page {
-	padding: 15px;
+
+	.did-you-mean {
+		padding: 15px;
+		border-bottom: 1px solid #DDD;
+	}
 
 	.add-link {
 		cursor: pointer;
 	}
 
+	.no-results {
+		padding: 15px;
+	}
+
 	.unable-to-find {
 		font-size: 36px;
 		margin-bottom: 10px;
-	}
-
-	ul {
-		padding: 20px;
-
-		li {
-			padding: 3px;
-		}
 	}
 }
