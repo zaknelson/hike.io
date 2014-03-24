@@ -165,7 +165,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			var oldLatLng = null;
 
 			if (i < newMarkers.length) {
-				newLatLng = new google.maps.LatLng(newMarkers[i].latitude, newMarkers[i].longitude);
+				newLatLng = new google.maps.LatLng(newMarkers[i].location.latitude, newMarkers[i].location.longitude);
 			}
 
 			if (j < $scope.markers.length) {
@@ -313,7 +313,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			mapStabilized = true;
 			$location.search({lat: center.lat().toFixed(3), lng: center.lng().toFixed(3), zoom: zoomLevel}).replace();
 		}
-		socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
+		//socket.emit("get-hikes-in-bounds", { ne: northEastLatLng, sw: southWestLatLng });
 	};
 
 	/* Having issues with testing socket on localhost, so in order to easily test, just call this function */
@@ -326,10 +326,22 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	seedWithTestData();
 	*/
 
+	// Seeing issue with socket.io on mobile and over VPN, so for now, fetch all the data over AJAX
+	var initStaticData = function() {
+		$http({method: "GET", url: "/api/v1/hikes", params: { fields: "distance,location,name,string_id" }, cache:resourceCache}).
+			success(function(data, status, headers, config) {
+				mergeMarkers(data)
+			}).
+			error(function(data, status, headers, config) {
+				$log.error(data, status, headers, config);
+			});	
+	};
+
 	// Init
 	initIcons();
 	initMapOptions();
-	initSocketIo();
+	//initSocketIo();
+	initStaticData();
 	$scope.htmlReady();
 };
 
