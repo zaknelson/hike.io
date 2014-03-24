@@ -3,7 +3,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 
 	var MIN_TIME_BETWEEN_UPDATES = 100; // .1 seconds
 
-	var socket = null;
+//	var socket = null;
 	var defaultMarker = null;
 	var hoverMarker = null;
 
@@ -51,10 +51,11 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		};
 	};
 
-	var initSocketIo = function() {
+/*	var initSocketIo = function() {
 		socket = io.connect(config.socketIoPath);
 		socket.on("get-hikes-in-bounds", incomingSocketDataArrived);
 	};
+*/
 
 	var deactivateMarker = function(marker) {
 		if (!marker) return;
@@ -135,7 +136,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		}
 	};
 
-	var incomingSocketDataArrived = function(data) {
+/*	var incomingSocketDataArrived = function(data) {
 		$scope.$apply(function() {
 			if (data.length === 0) {
 				if (formattedLocationString && !doneShowingBanner) {
@@ -146,6 +147,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			mergeMarkers(data);
 		});
 	};
+*/
 
 	var compareLatLng = function(a, b) {
 		if		(a.lat() < b.lat())		{	return -1;	}
@@ -290,11 +292,11 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		}
 		lastMarkerUpdateTime = event.timestamp;
 
-		var bounds = $scope.map.getBounds();
+		//var bounds = $scope.map.getBounds();
 		var center = $scope.map.getCenter();
 		var zoomLevel = $scope.map.getZoom();
 
-		var northEast = bounds.getNorthEast();
+/*		var northEast = bounds.getNorthEast();
 		var northEastLatLng = {
 			latitude: northEast.lat(),
 			longitude: northEast.lng()
@@ -304,6 +306,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			latitude: southWest.lat(),
 			longitude: southWest.lng()
 		};
+*/
 		if (event.type !== "map-idle" && mapStabilized) {
 			$scope.showBanner = false; // Map is being moved, hide banner
 			doneShowingBanner = true;
@@ -330,11 +333,11 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	var initStaticData = function() {
 		$http({method: "GET", url: "/api/v1/hikes", params: { fields: "distance,location,name,string_id" }, cache:resourceCache}).
 			success(function(data, status, headers, config) {
-				mergeMarkers(data)
+				mergeMarkers(data);
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
-			});	
+			});
 	};
 
 	// Init
