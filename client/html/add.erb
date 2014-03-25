@@ -25,8 +25,8 @@
 				</div>
 				<div class="latitude-and-longitude">
 					<label for="latitude">Lat. / Lng.</label>
-					<input id="latitude" type="number" step="any" min="-90" max="90" required="true" autocomplete="off" data-ng-model="hike.location.latitude" placeholder="{{capabilities.isMobile &amp;&amp; '37.3066' || '37.30669'}}" />
-					<input id="longitude" type="number" step="any" min="-180" max="180" required="true" autocomplete="off" data-ng-model="hike.location.longitude" placeholder="{{capabilities.isMobile &amp;&amp; '-112.9474' || '-112.94745'}}" />
+					<input id="latitude" type="number" step="any" min="-90" max="90" autocomplete="off" data-paste-lat-lng="lat" data-ng-model="hike.location.latitude" placeholder="{{capabilities.isMobile &amp;&amp; '37.3066' || '37.30669'}}" />
+					<input id="longitude" type="number" step="any" min="-180" max="180" autocomplete="off" data-paste-lat-lng="lng" data-ng-model="hike.location.longitude" placeholder="{{capabilities.isMobile &amp;&amp; '-112.9474' || '-112.94745'}}" />
 					<button type="button" class="locate-btn btn" data-ng-click="locateLatLng()">
 						<%= render_svg("#{@img_dir}/map.svg") %>
 						<img data-ui-if="!Modernizr.svg" data-ng-src="/images/map.png" />
