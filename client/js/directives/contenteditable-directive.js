@@ -83,6 +83,7 @@ angular.module("hikeio").
 					if (attributes.change) {
 						// Since directive has an isolated scope, apply change to the $parent.
 						scope.$parent.$apply(attributes.change);
+						scope.$parent.$parent.$apply(attributes.change);
 					}
 				};
 
