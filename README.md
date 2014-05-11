@@ -14,6 +14,7 @@ Setup
 1. Install [ruby](www.ruby-lang.org)
 2. Install [node](http://nodejs.org) & [npm](https://npmjs.org/)
 3. Install and open [Postgres.app](http://postgresapp.com)
-4. `npm install`
-5. `bundle install`
-6. `rake`
+4. `brew install postgresql`
+5. `npm install`
+6. `bundle install`
+7. `rake`
