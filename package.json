@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"dependencies": {
 		"jshint": "1.1.0",
-		"karma": "0.10.9",
+		"karma": "0.12.0",
 		"phantomjs": "1.9.1-0"
 	},
 	"engines": {
