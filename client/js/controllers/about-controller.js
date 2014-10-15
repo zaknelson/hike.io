@@ -1,5 +1,7 @@
 "use strict";
-var AboutController = function($scope, $window, analytics) {
+angular.module("hikeio").controller("AboutController", 
+	["$scope", "$window", "analytics", function($scope, $window, analytics) {
+		
 	$scope.triggerShootingStar = false;
 	var lastScrollY = 0;
 	$window.onscroll = function() {
@@ -20,6 +22,4 @@ var AboutController = function($scope, $window, analytics) {
 		lastScrollY = $window.pageYOffset;
 	};
 	$scope.htmlReady();
-};
-
-AboutController.$inject = ["$scope", "$window", "analytics"];
+}]);

@@ -1,5 +1,8 @@
 "use strict";
-var IndexController = function($scope, $window, analytics, navigation, preferences, search) {
+angular.module("hikeio").controller("IndexController", 
+	["$scope", "$window", "analytics", "navigation", "preferences", "search",
+	function($scope, $window, analytics, navigation, preferences, search) {
+	
 	$scope.searchQuery = "";
 	$scope.isSearching = false;
 	$scope.search = function() {
@@ -18,6 +21,4 @@ var IndexController = function($scope, $window, analytics, navigation, preferenc
 		}
 	};
 	$scope.htmlReady();
-};
-
-IndexController.$inject = ["$scope", "$window", "analytics", "navigation", "preferences", "search"];
+}]);

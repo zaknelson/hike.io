@@ -1,5 +1,7 @@
 "use strict";
-var MapController = function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
+angular.module("hikeio").controller("MapController", 
+	["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache",
+	function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100; // .1 seconds
 
@@ -346,6 +348,4 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	//initSocketIo();
 	initStaticData();
 	$scope.htmlReady();
-};
-
-MapController.$inject = ["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache"];
+}]);

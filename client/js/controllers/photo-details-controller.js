@@ -1,5 +1,7 @@
 "use strict";
-var PhotoDetailsController = function($rootScope, $scope) {
+angular.module("hikeio").controller("PhotoDetailsController", 
+	["$rootScope", "$scope", function($rootScope, $scope) {
+	
 	$scope.isLoaded = false;
 
 	$scope.$on("setPhotoDetailsPhoto", function(event, photo) {
@@ -14,6 +16,4 @@ var PhotoDetailsController = function($rootScope, $scope) {
 		$rootScope.$broadcast("photoDetailsUpdated", $scope.originalPhoto);
 		$.fancybox.close();
 	};
-};
-
-PhotoDetailsController.$inject = ["$rootScope", "$scope"];
+}]);

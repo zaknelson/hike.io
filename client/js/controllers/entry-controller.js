@@ -1,5 +1,7 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
+angular.module("hikeio").controller("EntryController", 
+	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection", 
+	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -598,6 +600,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.$on("keyboardEventSave", function(event) {
 		$scope.save();
 	});
-};
-
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection"];
+}]);

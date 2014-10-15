@@ -1,5 +1,7 @@
 "use strict";
-var PhotoStreamController = function($scope, $http, $log, $timeout, analytics, resourceCache) {
+angular.module("hikeio").controller("PhotoStreamController", 
+	["$scope", "$http", "$log", "$timeout", "analytics", "resourceCache",
+	function($scope, $http, $log, $timeout, analytics, resourceCache) {
 
 	$http({method: "GET", url: "/api/v1/hikes?fields=distance,locality,name,photo_facts,photo_landscape,photo_preview,string_id", cache: resourceCache}).
 		success(function(data, status, headers, config) {
@@ -16,6 +18,4 @@ var PhotoStreamController = function($scope, $http, $log, $timeout, analytics, r
 
 	$scope.hikes = [];
 	$scope.htmlReady();
-};
-
-PhotoStreamController.$inject = ["$scope", "$http", "$log", "$timeout", "analytics", "resourceCache"];
+}]);
