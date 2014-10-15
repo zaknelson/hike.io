@@ -578,6 +578,10 @@ angular.module("hikeio").controller("EntryController",
 		$scope.isDirty = true;
 	};
 
+	$scope.getGpxUrl = function(hikeId) {
+		return "/hikes/" + hikeId + "/gpx";
+	};
+
 	var removeMapPolylines = function() {
 		if (!polylines) return;
 		for (var i = 0; i < polylines.length; i++) {
