@@ -1,8 +1,11 @@
 "use strict";
 
-angular.module("hikeio", ["seo", "ui"]).
+angular.module("hikeio", ["seo", "ui", "ngRoute"]).
 	config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
-		$locationProvider.html5Mode(true);
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		});
 		$routeProvider.
 			when("/", {
 				controller: "IndexController",
