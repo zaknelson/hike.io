@@ -551,16 +551,16 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				/* global toGeoJSON: true */
 				var name = file.name || "";
 				var routeString = e.target.result;
-				if (name.endsWith(".geojson")) {
+				if (name.toLowerCase().endsWith(".geojson")) {
 					$scope.hike.route = JSON.parse(routeString);
-				} else if (name.endsWith(".gpx")) {
+				} else if (name.toLowerCase().endsWith(".gpx")) {
 					var doc = parseXml(routeString);
 					$scope.hike.route = toGeoJSON.gpx(doc);
 					if (!$scope.hike.route) {
 						$window.alert("Unable to find tracks or routes in GPX.");
 					}
 				} else {
-					// TODO
+					$window.alert("Unsupported format, try .gpx or .geojson");
 				}
 				initMap();
 				$scope.isDirty = true;
