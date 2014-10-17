@@ -145,7 +145,7 @@ angular.module("hikeio").controller("MapController",
 			// Check to see if there are any markers in this viewport, call on next event loop so that bounds are given a chance to update.
 			var foundMarker = false;
 			for (var i = 0; i< $scope.markers.length; i++){
-				if($scope.map.getBounds().contains($scope.markers[i].getPosition())) {
+				if($scope.map.getBounds() && $scope.map.getBounds().contains($scope.markers[i].getPosition())) {
 					foundMarker = true;
 					break;
 				}
