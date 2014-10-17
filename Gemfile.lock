@@ -39,7 +39,7 @@ GEM
     puma (2.4.0)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
-    rack-protection (1.5.0)
+    rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -56,15 +56,15 @@ GEM
     sass (3.2.9)
     sequel (3.39.0)
     sexp_processor (4.2.1)
-    sinatra (1.4.3)
+    sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    sinatra-assetpack (0.2.7)
+    sinatra-assetpack (0.3.3)
       jsmin
       rack-test
       sinatra
-      tilt (>= 1.3.0)
+      tilt (>= 1.3.0, < 2.0)
     sinatra-contrib (1.4.0)
       backports (>= 2.0)
       eventmachine
@@ -103,8 +103,8 @@ DEPENDENCIES
   sanitize (= 2.0.4)
   sass (= 3.2.9)
   sequel (= 3.39.0)
-  sinatra (= 1.4.3)
-  sinatra-assetpack (= 0.2.7)
+  sinatra (= 1.4.5)
+  sinatra-assetpack (= 0.3.3)
   sinatra-contrib (= 1.4.0)
   sinatra-partial (= 0.3.2)
   uglifier (= 2.1.1)
