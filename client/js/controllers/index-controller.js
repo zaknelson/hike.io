@@ -6,8 +6,8 @@ angular.module("hikeio").controller("IndexController",
 	$scope.searchQuery = "";
 	$scope.isSearching = false;
 	$scope.search = function() {
-		$scope.isSearching = true;
 		if ($scope.searchQuery.trim().length !== 0) {
+			$scope.isSearching = true;
 			$window.document.activeElement.blur();
 			if (preferences.searchBy === "location") {
 				search.searchByLocation($scope.searchQuery).then(function() {
