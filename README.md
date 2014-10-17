@@ -15,6 +15,7 @@ Setup
 2. Install [node](http://nodejs.org) & [npm](https://npmjs.org/)
 3. Install and open [Postgres.app](http://postgresapp.com)
 4. `brew install postgresql`
-5. `npm install`
-6. `bundle install`
-7. `rake`
+5. `brew install imagemagick`
+6. `npm install`
+7. `bundle install`
+8. `rake`
