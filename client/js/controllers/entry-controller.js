@@ -300,10 +300,8 @@ angular.module("hikeio").controller("EntryController",
 				method: "POST",
 				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos?type=" + type,
 				data: formData,
-				headers: { "Content-Type": false },
-				transformRequest: function(data) {
-					return data;
-				}
+				headers: { "Content-Type": undefined },
+				transformRequest: angular.identity
 			}).
 			success(function(data, status, headers, config) {
 				if (canceledUploadedPhotoIdMap[id]) {
