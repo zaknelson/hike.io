@@ -129,6 +129,23 @@ angular.module("hikeio").controller("MapController",
 			$scope.bannerString = "Unable to find \"" + searchQuery + "\"";
 			$scope.showBanner = true;
 		}
+
+
+		$timeout(function() {
+			// Check to see if there are any markers in this viewport, call on next event loop so that bounds are given a chance to update.
+			var foundMarker = false;
+			for (var i = 0; i< $scope.markers.length; i++){
+				if($scope.map.getBounds().contains($scope.markers[i].getPosition())) {
+					foundMarker = true;
+					break;
+				}
+			}
+
+			if (formattedLocationString && !foundMarker) {
+				$scope.bannerString = "Unable to find hikes near " + formattedLocationString + ". Try zooming out.";
+				$scope.showBanner = true;
+			}		
+		});		
 	};
 
 	var updateViewport = function(urlParams) {
