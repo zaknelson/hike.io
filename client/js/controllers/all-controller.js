@@ -1,5 +1,7 @@
 "use strict";
-var AllController = function($scope, $http, $log, analytics, resourceCache) {
+angular.module("hikeio").controller("AllController", 
+	["$scope", "$http", "$log", "analytics", "resourceCache", function($scope, $http, $log, analytics, resourceCache) {
+	
 	$scope.hikes = [];
 
 	$http({method: "GET", url: "/api/v1/hikes?fields=locality,name,photo_facts,string_id", cache: resourceCache}).
@@ -10,6 +12,4 @@ var AllController = function($scope, $http, $log, analytics, resourceCache) {
 		error(function(data, status, headers, config) {
 			$log.error(config);
 		});
-};
-
-AllController.$inject = ["$scope", "$http", "$log", "analytics", "resourceCache"];
+}]);

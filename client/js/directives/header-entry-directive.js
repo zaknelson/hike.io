@@ -25,7 +25,8 @@ angular.module("hikeio").
 			template: "<a href='{{url}}'>" +
 				"<div data-ng-style='{float:align}' >" +
 					"<div class='header-separator' data-ng-show='align == \"right\"'></div>" +
-					"<div class='header-entry' data-ng-transclude>" +
+					"<div class='header-entry'>" +
+						"<span data-ng-transclude></span>" +
 						"<span class='label' data-ng-show='label' data-ng-bind='label'></span>" +
 					"</div>" +
 					"<div class='header-separator' data-ng-show='align == \"left\"'></div>" +

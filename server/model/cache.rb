@@ -10,7 +10,7 @@ class Cache
 	end
 
 	def set key, value
-		@cache[key] = value
+		#@cache[key] = value
 	end
 
 	def remove key, and_those_with_prefix=false

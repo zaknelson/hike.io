@@ -1,5 +1,7 @@
 "use strict";
-var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
+angular.module("hikeio").controller("EntryController", 
+	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection", 
+	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -298,10 +300,8 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 				method: "POST",
 				url: "/api/v1/hikes/" + $scope.hike.string_id + "/photos?type=" + type,
 				data: formData,
-				headers: { "Content-Type": false },
-				transformRequest: function(data) {
-					return data;
-				}
+				headers: { "Content-Type": undefined },
+				transformRequest: angular.identity
 			}).
 			success(function(data, status, headers, config) {
 				if (canceledUploadedPhotoIdMap[id]) {
@@ -576,6 +576,10 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 		$scope.isDirty = true;
 	};
 
+	$scope.getGpxUrl = function(hikeId) {
+		return "/hikes/" + hikeId + "/gpx";
+	};
+
 	var removeMapPolylines = function() {
 		if (!polylines) return;
 		for (var i = 0; i < polylines.length; i++) {
@@ -598,6 +602,4 @@ var EntryController = function($http, $log, $rootScope, $routeParams, $scope, $t
 	$scope.$on("keyboardEventSave", function(event) {
 		$scope.save();
 	});
-};
-
-EntryController.$inject = ["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection"];
+}]);

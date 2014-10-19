@@ -1,5 +1,7 @@
 "use strict";
-var MapController = function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
+angular.module("hikeio").controller("MapController", 
+	["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache",
+	function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
 
 	var MIN_TIME_BETWEEN_UPDATES = 100; // .1 seconds
 
@@ -20,6 +22,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	$scope.markers = [];
 	$scope.bannerString = null;
 	$scope.showBanner = false;
+	$scope.fetchedMarkers = false;
 
 
 	var initIcons = function() {
@@ -127,6 +130,7 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 			$scope.bannerString = "Unable to find \"" + searchQuery + "\"";
 			$scope.showBanner = true;
 		}
+		updateBanner();
 	};
 
 	var updateViewport = function(urlParams) {
@@ -134,6 +138,24 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		if (!center) {
 			updateViewportToDefault();
 		}
+	};
+
+	var updateBanner = function() {
+		$timeout(function() {
+			// Check to see if there are any markers in this viewport, call on next event loop so that bounds are given a chance to update.
+			var foundMarker = false;
+			for (var i = 0; i< $scope.markers.length; i++){
+				if($scope.map.getBounds() && $scope.map.getBounds().contains($scope.markers[i].getPosition())) {
+					foundMarker = true;
+					break;
+				}
+			}
+
+			if (formattedLocationString && $scope.fetchedMarkers && !foundMarker) {
+				$scope.bannerString = "Unable to find hikes near " + formattedLocationString + ". Try zooming out.";
+				$scope.showBanner = true;
+			}		
+		});
 	};
 
 /*	var incomingSocketDataArrived = function(data) {
@@ -334,6 +356,8 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 		$http({method: "GET", url: "/api/v1/hikes", params: { fields: "distance,location,name,string_id" }, cache:resourceCache}).
 			success(function(data, status, headers, config) {
 				mergeMarkers(data);
+				$scope.fetchedMarkers = true;
+				updateBanner();
 			}).
 			error(function(data, status, headers, config) {
 				$log.error(data, status, headers, config);
@@ -346,6 +370,4 @@ var MapController = function($http, $location, $log, $scope, $timeout, analytics
 	//initSocketIo();
 	initStaticData();
 	$scope.htmlReady();
-};
-
-MapController.$inject = ["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache"];
+}]);

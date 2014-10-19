@@ -1,5 +1,7 @@
 "use strict";
-var AddController = function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache) {
+angular.module("hikeio").controller("AddController", 
+	["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache", 
+	function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache) {
 
 	var capitalizeWords = function(str) {
 		var result = "";
@@ -138,6 +140,4 @@ var AddController = function($http, $log, $rootScope, $scope, $timeout, $window,
 		$scope.hike.location.latitude = $event.latLng.lat();
 		$scope.hike.location.longitude = $event.latLng.lng();
 	};
-};
-
-AddController.$inject = ["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache"];
+}]);

@@ -1,5 +1,7 @@
 "use strict";
-var SearchController = function($http, $location, $log, $rootScope, $scope, analytics, resourceCache) {
+angular.module("hikeio").controller("SearchController",
+	["$http", "$location", "$log", "$rootScope", "$scope", "analytics", "resourceCache",
+	function($http, $location, $log, $rootScope, $scope, analytics, resourceCache) {
 
 	$scope.results = null;
 	$scope.query = $location.search().q;
@@ -17,6 +19,4 @@ var SearchController = function($http, $location, $log, $rootScope, $scope, anal
 	}
 
 	$scope.htmlReady();
-};
-
-SearchController.$inject = ["$http", "$location", "$log", "$rootScope", "$scope", "analytics", "resourceCache"];
+}]);

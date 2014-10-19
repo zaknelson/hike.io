@@ -30,15 +30,10 @@ class HikeApp < Sinatra::Base
 	end
 
 	def render_template template_id
-		cache_key = request.fullpath
-		cached_template = $cache.get(cache_key)
-		return cached_template if cached_template
-
 		html = partial(template_id)
 		if !@is_partial
 			html = erb("<script type='text/ng-template' id='/partials/#{template_id}.html'>#{html}</script>")
 		end
-		$cache.set(cache_key, html)
 		html
 	end
 

@@ -9,13 +9,7 @@ require_relative "../utils/string_utils"
 class HikeApp < Sinatra::Base
 
 	get "/api/v1/hikes", :provides => "json" do
-		cache_key = request.fullpath
-		cached_json = $cache.get(cache_key)
-		return cached_json if cached_json
-
-		json = array_as_json(Hike.order(:id).all, get_fields_filter)
-		$cache.set(cache_key, json)
-		json
+		array_as_json(Hike.order(:id).all, get_fields_filter)
 	end
 
 	post "/api/v1/hikes", :provides => "json" do
@@ -59,19 +53,13 @@ class HikeApp < Sinatra::Base
 	end
 
 	get "/api/v1/hikes/:hike_id", :provides => "json" do
-		cache_key = request.fullpath
-		cached_json = $cache.get(cache_key)
-		return cached_json if cached_json
-
 		before = Time.now
 		hike = Hike.get_hike_from_id params[:hike_id]
 		if not hike
 			return 202 if Review[:status => Review::STATUS_UNREVIEWED, :hike_string_id => params[:hike_id], :api_verb => "post"]
 			return err_404
 		end
-		json = hike.as_json get_fields_filter
-		$cache.set(cache_key, json)
-		json
+		hike.as_json get_fields_filter
 	end
 
 	put "/api/v1/hikes/:hike_id", :provides => "json" do

@@ -1,8 +1,11 @@
 "use strict";
 
-angular.module("hikeio", ["seo", "ui"]).
+angular.module("hikeio", ["seo", "ui", "ngRoute"]).
 	config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
-		$locationProvider.html5Mode(true);
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		});
 		$routeProvider.
 			when("/", {
 				controller: "IndexController",
@@ -69,11 +72,19 @@ angular.module("hikeio", ["seo", "ui"]).
 		$rootScope.Modernizr = Modernizr;
 		$rootScope.navigation = navigation;
 		$rootScope.preferences = preferences;
+		var haveLoadedOnePage = false;
 		$rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
 			$rootScope.metaCanonical = "http://hike.io" + ($location.path() === "/" ? ""  : $location.path());
 			if (current && current.$$route && current.$$route.title) {
 				$rootScope.title = current.$$route.title;
 			}
+			// Fix firefox issue where navigating between pages remembers the scroll position of previous page.
+			if (haveLoadedOnePage) {
+				$window.document.body.scrollTop = 0;
+				$window.document.documentElement.scrollTop = 0;		
+			}
+			haveLoadedOnePage = true;
+
 		});
 		$rootScope.$on("$locationChangeStart", function(event, next, current) {
 			var isOnEntryEditPage = /\/hikes\/.*?\/edit/.test(next);

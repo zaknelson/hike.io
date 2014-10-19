@@ -1,5 +1,8 @@
 "use strict";
-var HeaderController = function($scope, $window, navigation, preferences, search) {
+angular.module("hikeio").controller("HeaderController", 
+	["$scope", "$window", "navigation", "preferences", "search", 
+	function($scope, $window, navigation, preferences, search) {
+	
 	$scope.searchQuery = "";
 
 	$scope.search = function() {
@@ -24,6 +27,4 @@ var HeaderController = function($scope, $window, navigation, preferences, search
 			return false;
 		}
 	};
-};
-
-HeaderController.$inject = ["$scope", "$window", "navigation", "preferences", "search"];
+}]);
