@@ -172,7 +172,6 @@ end
 		self.edit_time = Time.now
 		self.location.save_changes
 		self.save_changes
-		invalidate_cache
 		
 		removed_photos.each do |photo|
 			photo.destroy_and_move_on_s3
@@ -219,16 +218,6 @@ end
 		end
 
 		self.destroy
-		invalidate_cache
-	end
-
-	def invalidate_cache
-		$cache.remove("/discover")
-		$cache.remove("/hikes")
-		$cache.remove("/hikes/#{self.string_id}")
-		$cache.remove("/api/v1/hikes", true)
-		$cache.remove("/api/v1/hikes/#{self.string_id}", true)
-		$cache.remove("/api/v1/hikes/#{self.id}", true)
 	end
 
 	def self.each_special_photo_key

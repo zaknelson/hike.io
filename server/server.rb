@@ -20,7 +20,6 @@ require "will_paginate/sequel"
 require_relative "controller/geojson_parser"
 require_relative "controller/search"
 require_relative "controller/sanitizer"
-require_relative "model/cache"
 require_relative "model/database"
 require_relative "model/hike"
 require_relative "model/keyword"
@@ -97,12 +96,7 @@ class HikeApp < Sinatra::Base
 	configure :production, :development do
 		enable :logging
 	end
-
-	# persistent cache
-	configure do
-		$cache = Cache.new
-	end
-
+	
 	assets {
 		prebuild true
 
