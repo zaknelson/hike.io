@@ -1,6 +1,6 @@
 "use strict";
-angular.module("hikeio").controller("EntryController", 
-	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "route", "selection", 
+angular.module("hikeio").controller("EntryController",
+	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "route", "selection",
 	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, route, selection) {
 	// TODO this file really needs to be cleaned up
 

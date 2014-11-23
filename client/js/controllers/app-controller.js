@@ -1,7 +1,7 @@
 "use strict";
-angular.module("hikeio").controller("AppController", 
+angular.module("hikeio").controller("AppController",
 	["$scope", "$window", function($scope, $window) {
-	
+
 	$scope.isSearchBoxActive = false;
 
 	$scope.hideSearchBox = function() {

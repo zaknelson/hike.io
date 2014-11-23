@@ -1,5 +1,5 @@
 "use strict";
-angular.module("hikeio").controller("PhotoStreamController", 
+angular.module("hikeio").controller("PhotoStreamController",
 	["$scope", "$http", "$log", "$timeout", "analytics", "resourceCache",
 	function($scope, $http, $log, $timeout, analytics, resourceCache) {
 

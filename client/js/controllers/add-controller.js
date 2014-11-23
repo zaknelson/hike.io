@@ -1,6 +1,6 @@
 "use strict";
-angular.module("hikeio").controller("AddController", 
-	["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache", "route", 
+angular.module("hikeio").controller("AddController",
+	["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache", "route",
 	function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache, route) {
 
 	var capitalizeWords = function(str) {
@@ -93,7 +93,7 @@ angular.module("hikeio").controller("AddController",
 			}, function(error) {
 				$window.alert(error);
 			});
-			promise.finally(function() {
+			promise["finally"](function() {
 				$window.document.body.removeChild(input);
 			});
 		});

@@ -81,7 +81,7 @@ angular.module("hikeio", ["seo", "ui", "ngRoute"]).
 			// Fix firefox issue where navigating between pages remembers the scroll position of previous page.
 			if (haveLoadedOnePage) {
 				$window.document.body.scrollTop = 0;
-				$window.document.documentElement.scrollTop = 0;		
+				$window.document.documentElement.scrollTop = 0;
 			}
 			haveLoadedOnePage = true;
 

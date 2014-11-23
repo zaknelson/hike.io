@@ -1,7 +1,7 @@
 "use strict";
-angular.module("hikeio").controller("PhotoDetailsController", 
+angular.module("hikeio").controller("PhotoDetailsController",
 	["$rootScope", "$scope", function($rootScope, $scope) {
-	
+
 	$scope.isLoaded = false;
 
 	$scope.$on("setPhotoDetailsPhoto", function(event, photo) {

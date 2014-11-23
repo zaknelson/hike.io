@@ -1,8 +1,8 @@
 "use strict";
-angular.module("hikeio").controller("IndexController", 
+angular.module("hikeio").controller("IndexController",
 	["$scope", "$window", "analytics", "navigation", "preferences", "search",
 	function($scope, $window, analytics, navigation, preferences, search) {
-	
+
 	$scope.searchQuery = "";
 	$scope.isSearching = false;
 	$scope.search = function() {

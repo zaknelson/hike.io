@@ -1,5 +1,5 @@
 "use strict";
-angular.module("hikeio").controller("MapController", 
+angular.module("hikeio").controller("MapController",
 	["$http", "$location", "$log", "$scope", "$timeout", "analytics", "config", "mapTooltipFactory", "navigation", "resourceCache",
 	function($http, $location, $log, $scope, $timeout, analytics, config, mapTooltipFactory, navigation, resourceCache) {
 
@@ -154,7 +154,7 @@ angular.module("hikeio").controller("MapController",
 			if (formattedLocationString && $scope.fetchedMarkers && !foundMarker) {
 				$scope.bannerString = "Unable to find hikes near " + formattedLocationString + ". Try zooming out.";
 				$scope.showBanner = true;
-			}		
+			}
 		});
 	};
 

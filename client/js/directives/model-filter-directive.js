@@ -9,7 +9,7 @@ angular.module("hikeio").
 			for (var i = 0; i < segments.length - 1; i++) {
 				currentObject = currentObject[segments[i]];
 			}
-		    currentObject[segments[segments.length - 1]] = value;
+			currentObject[segments[segments.length - 1]] = value;
 		};
 
 		var getScopeVariable = function(scope, key) {
@@ -18,7 +18,7 @@ angular.module("hikeio").
 			for (var i = 0; i < segments.length - 1; i++) {
 				currentObject = currentObject[segments[i]];
 			}
-		    return currentObject[segments[segments.length - 1]];
+			return currentObject[segments[segments.length - 1]];
 		};
 
 		return {
@@ -29,7 +29,7 @@ angular.module("hikeio").
 					if (updatingModel) return;
 					var convertedValue = filterParser.filter(attributes.viewFilter, value);
 					element.val(convertedValue);
-				}
+				};
 				scope.$watch(attributes.model, function(value) {
 					updateView(value);
 				});

@@ -1,7 +1,7 @@
 "use strict";
-angular.module("hikeio").controller("AdminController", 
+angular.module("hikeio").controller("AdminController",
 	["$http", "$scope", function($http, $scope) {
-	
+
 	$scope.reviews = [];
 	$http({method: "GET", url: "/admin/v1/reviews?status=unreviewed"}).
 		success(function(data, status, headers, config) {
