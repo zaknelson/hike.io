@@ -26,13 +26,18 @@ angular.module("hikeio").
 					Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
 					Math.sin(dLon / 2) * Math.sin(dLon / 2);
 			var c = 2 * Math.asin(Math.sqrt(a));
-			var d = radius * c;
+			var horizontalDistance = radius * c;
 
 			// Modification from classic Haversine. Take into account elevation and use the Pythagorean theorem
 			// to calculate the real distance traveled (i.e. the hypotenuse). This is what tools like Adze use.
-			var elevationGain = Math.abs(elv1 - elv2) / 1000.0;
-			var realDistanceTraveled = Math.sqrt(d * d + elevationGain * elevationGain);
-			return realDistanceTraveled;
+			if (elv1 && elv2) {
+				var elevationGain = Math.abs(elv1 - elv2) / 1000.0;
+				var realDistanceTraveled = Math.sqrt(d * d + elevationGain * elevationGain);
+				return realDistanceTraveled;		
+			} else {
+				return horizontalDistance;
+			}
+
 		};
 
 		var RouteService = function() {
@@ -64,6 +69,7 @@ angular.module("hikeio").
 		};
 
 		RouteService.prototype.getAggregateDataFromGeoJSON = function(geoJSON) {
+			console.log(geoJSON)
 			var result = {};
 			if (!geoJSON.features ||
 				!geoJSON.features[0] ||
