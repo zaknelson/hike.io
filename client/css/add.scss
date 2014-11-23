@@ -36,6 +36,17 @@
 		cursor: pointer;
 	}
 
+	.gpx {
+		margin-top: 10px;
+		font-size: 13px;
+		width: 100%;
+		text-align: center;
+
+		a {
+			cursor: pointer;
+		}
+	}
+
 	.error {
 		font-weight: bold;
 		font-size: 13px;

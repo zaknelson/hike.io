@@ -1,7 +1,7 @@
 "use strict";
 angular.module("hikeio").controller("EntryController", 
-	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "selection", 
-	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, selection) {
+	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "route", "selection", 
+	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, route, selection) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -530,43 +530,15 @@ angular.module("hikeio").controller("EntryController",
 		}
 	};
 
-	var parseXml = function(xmlStr) {
-		if (typeof window.DOMParser !== "undefined") {
-			return (new window.DOMParser()).parseFromString(xmlStr, "text/xml");
-		} else if (typeof window.ActiveXObject !== "undefined" && new window.ActiveXObject("Microsoft.XMLDOM")) {
-			var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
-			xmlDoc.async = "false";
-			xmlDoc.loadXML(xmlStr);
-			return xmlDoc;
-		} else {
-			return null;
-		}
-	};
-
 	$scope.uploadRoute = function(files) {
-		var file = files[0];
-		var routeReader = new FileReader();
-		routeReader.onload = function (e) {
-			$scope.$apply(function() {
-				/* global toGeoJSON: true */
-				var name = file.name || "";
-				var routeString = e.target.result;
-				if (name.toLowerCase().endsWith(".geojson")) {
-					$scope.hike.route = JSON.parse(routeString);
-				} else if (name.toLowerCase().endsWith(".gpx")) {
-					var doc = parseXml(routeString);
-					$scope.hike.route = toGeoJSON.gpx(doc);
-					if (!$scope.hike.route) {
-						$window.alert("Unable to find tracks or routes in GPX.");
-					}
-				} else {
-					$window.alert("Unsupported format, try .gpx or .geojson");
-				}
-				initMap();
-				$scope.isDirty = true;
-			});
-		};
-		routeReader.readAsText(file);
+		var promise = route.fileToGeoJSON(files[0]);
+		promise.then(function(geoJSON) {
+			$scope.hike.route = geoJSON;
+			initMap();
+			$scope.isDirty = true;
+		}, function(errorMessage) {
+			$window.alert(errorMessage);
+		});
 	};
 
 	$scope.removeRoute = function() {

@@ -1,7 +1,7 @@
 "use strict";
 angular.module("hikeio").controller("AddController", 
-	["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache", 
-	function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache) {
+	["$http", "$log", "$rootScope", "$scope", "$timeout", "$window", "capabilities", "navigation", "persistentStorage", "resourceCache", "route", 
+	function($http, $log, $rootScope, $scope, $timeout, $window, capabilities, navigation, persistentStorage, resourceCache, route) {
 
 	var capitalizeWords = function(str) {
 		var result = "";
@@ -25,8 +25,6 @@ angular.module("hikeio").controller("AddController",
 		$scope.prepopulatedName = null;
 		$scope.error = null;
 		$scope.locatingLatLng = false;
-		$scope.latitude = null;
-		$scope.longitude = null;
 		$scope.mapMarker = null;
 		$scope.mapOptions = {
 			center: new google.maps.LatLng(39.833333, -98.583333),
@@ -37,7 +35,7 @@ angular.module("hikeio").controller("AddController",
 	};
 	resetScope();
 
-	$rootScope.$on("$locationChangeStart", function (event, next, current) {
+	$rootScope.$on("$locationChangeStart", function(event, next, current) {
 		resetScope();
 	});
 	$scope.$on("prepopulateAddHikeName", function(event, name) {
@@ -64,6 +62,43 @@ angular.module("hikeio").controller("AddController",
 
 	$scope.attemptSubmit = function() {
 		$scope.isSubmitted  = true;
+	};
+
+	$scope.readGPX = function() {
+		var input = $window.document.createElement("input");
+		input.type = "file";
+		input.style.display = "none";
+		input.addEventListener("change", function(file) {
+			var promise = route.fileToGeoJSON(input.files[0]);
+			promise.then(function(geoJSON) {
+				var aggregateData = route.getAggregateDataFromGeoJSON(geoJSON);
+				if (aggregateData.error) {
+					$window.alert(aggregateData.error);
+				} else {
+					if (aggregateData.distance) {
+						$scope.hike.distance = aggregateData.distance;
+					}
+					if (aggregateData.elevationGain) {
+						$scope.hike.elevation_gain = aggregateData.elevationGain;
+					}
+					if (aggregateData.elevationMax) {
+						$scope.hike.elevation_max = aggregateData.elevationMax;
+					}
+					if (aggregateData.firstLatLng) {
+						$scope.hike.location.latitude = aggregateData.firstLatLng.latitude;
+						$scope.hike.location.longitude = aggregateData.firstLatLng.longitude;
+					}
+				}
+				$scope.hike.route = geoJSON;
+			}, function(error) {
+				$window.alert(error);
+			});
+			promise.finally(function() {
+				$window.document.body.removeChild(input);
+			});
+		});
+		$window.document.body.appendChild(input);
+		input.click();
 	};
 
 	$scope.add = function() {

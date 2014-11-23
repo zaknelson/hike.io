@@ -49,6 +49,10 @@ input, textarea, button {
 	font-family: "facitweb", sans-serif;
 }
 
+button:focus {
+	outline: 0 !important;
+}
+
 textarea {
 	height: 112px;
 }
@@ -58,6 +62,10 @@ input::-webkit-inner-spin-button {
 	display: none;
 	-webkit-appearance: none;
 	margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
 }
 
 input {
