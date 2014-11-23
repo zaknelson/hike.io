@@ -65,7 +65,8 @@ end
 			:elevation_gain => json["elevation_gain"],
 			:elevation_max => json["elevation_max"],
 			:creation_time => Time.now,
-			:edit_time => Time.now
+			:edit_time => Time.now,
+			:route => json["route"] ? Hike.clean_string_input(json["route"].to_json) : nil # Route is optional at creation time
 			);
 		hike.location = Location.create(
 			:latitude => json["location"]["latitude"],
