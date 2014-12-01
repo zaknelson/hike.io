@@ -31,7 +31,7 @@ angular.module("hikeio").
 						var splitAttributionLink = attributionLink.split("/");
 						var photoId = splitAttributionLink[splitAttributionLink.length - 1];
 						if (photoId) {
-							$http({method: "GET", url: "http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=d99915ff009f20c36657c94263e52674&photo_id=" + photoId + "&format=json&nojsoncallback=1", cache: resourceCache}).
+							$http({method: "GET", url: "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=d99915ff009f20c36657c94263e52674&photo_id=" + photoId + "&format=json&nojsoncallback=1", cache: resourceCache}).
 								success(function(data, status, headers, config) {
 									if (data.stat === "ok") {
 										var attributionDiv = $("<div class='attribution-string'></div>");
