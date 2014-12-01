@@ -32,8 +32,8 @@ angular.module("hikeio").
 			// to calculate the real distance traveled (i.e. the hypotenuse). This is what tools like Adze use.
 			if (elv1 && elv2) {
 				var elevationGain = Math.abs(elv1 - elv2) / 1000.0;
-				var realDistanceTraveled = Math.sqrt(d * d + elevationGain * elevationGain);
-				return realDistanceTraveled;		
+				var realDistanceTraveled = Math.sqrt(horizontalDistance * horizontalDistance + elevationGain * elevationGain);
+				return realDistanceTraveled;
 			} else {
 				return horizontalDistance;
 			}
@@ -69,7 +69,6 @@ angular.module("hikeio").
 		};
 
 		RouteService.prototype.getAggregateDataFromGeoJSON = function(geoJSON) {
-			console.log(geoJSON)
 			var result = {};
 			if (!geoJSON.features ||
 				!geoJSON.features[0] ||
