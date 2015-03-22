@@ -122,6 +122,12 @@
 									</div>
 								</td>
 							</tr>
+							<tr data-ng-show="isEditing &amp;&amp; canSetHikeIsFeatured()" data-static-html-hidden="true">
+								<td>Featured</td>
+								<td>
+									<input type="checkbox" ng-model="hike.is_featured" ng-change="isDirty = true">
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>

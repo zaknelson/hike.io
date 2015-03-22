@@ -48,6 +48,10 @@ https://github.com/zaknelson/hike.io/
 	</style>
 	<script>
 		(function() {
+			var setupNamespace = function() {
+				window.hikeio = {};
+			};
+
 			var doUpdateViewport = function() {
 				var minWidth = 450;
 				var width = screen.width
@@ -91,9 +95,15 @@ https://github.com/zaknelson/hike.io/
 				}
 			};
 
+			var setPrivileges = function() {
+				window.hikeio.userPrivileges = <%= user_privileges().to_json %>
+			}
+
+			setupNamespace();
 			redirectIfOnStatic();
 			updateViewport();
 			removeHashBang();
+			setPrivileges();
 		})();
 	</script>
 	<!-- TODO, consider removing typekit for mobile browsers to speed up load time -->

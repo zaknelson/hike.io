@@ -129,8 +129,16 @@ class HikeApp < Sinatra::Base
 			"#{File.dirname(__FILE__)}/../client"
 		end
 
+		def user_privileges
+			is_super_admin = cookies["user_id"] == Digest::SHA1.hexdigest(User.first.id);
+			privileges = {};
+			privileges[:set_hike_is_featured] = is_super_admin
+			privileges[:submit_without_review] = is_super_admin
+			privileges
+		end
+
 		def user_needs_changes_reviewed?
-			cookies["user_id"] != Digest::SHA1.hexdigest(User.first.id)
+			return !user_privileges()[:submit_without_review]
 		end
 
 		def current_user_id

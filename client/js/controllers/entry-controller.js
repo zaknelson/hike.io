@@ -1,7 +1,7 @@
 "use strict";
 angular.module("hikeio").controller("EntryController",
-	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "route", "selection",
-	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, route, selection) {
+	["$http", "$log", "$rootScope", "$routeParams", "$scope", "$timeout", "$window", "analytics", "config", "conversion", "dateTime", "isEditing", "navigation", "persistentStorage", "preferences", "resourceCache", "route", "selection", "userPrivileges",
+	function($http, $log, $rootScope, $routeParams, $scope, $timeout, $window, analytics, config, conversion, dateTime, isEditing, navigation, persistentStorage, preferences, resourceCache, route, selection, userPrivileges) {
 	// TODO this file really needs to be cleaned up
 
 	var MAX_PHOTOS_TO_UPLOAD_AT_ONCE = 4;
@@ -551,6 +551,10 @@ angular.module("hikeio").controller("EntryController",
 	$scope.getGpxUrl = function(hikeId) {
 		return "/hikes/" + hikeId + "/gpx";
 	};
+
+	$scope.canSetHikeIsFeatured = function() {
+		return userPrivileges.canSetHikeIsFeatured();
+	}
 
 	var removeMapPolylines = function() {
 		if (!polylines) return;

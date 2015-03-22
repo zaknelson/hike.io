@@ -116,6 +116,7 @@ end
 		self.permit = json["permit"]
 		self.location.latitude = json["location"]["latitude"]
 		self.location.longitude = json["location"]["longitude"]
+		self.is_featured = json["is_featured"]
 
 		if json["string_id"] && self.string_id != json["string_id"]
 			self.string_id = json["string_id"]

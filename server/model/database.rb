@@ -123,3 +123,9 @@ migration "add permits column 2/6/2014" do
 		add_column :route, String
 	end
 end
+
+migration "add is_featured column 3/21/2015" do
+	database.alter_table :hikes do
+		add_column :is_featured, TrueClass
+	end
+end
