@@ -10,7 +10,8 @@ migration "seed scotchman peak" do
 		:elevation_max => 1000,
 		:elevation_gain => 550,
 		:creation_time => Time.now,
-		:edit_time => Time.now
+		:edit_time => Time.now,
+		:is_featured => true
 	)
 
 	hike.location = Location.create(
@@ -44,7 +45,8 @@ migration "seed nakoa trail" do
 		:elevation_gain => 550,
 		:creation_time => Time.now,
 		:edit_time => Time.now,
-		:permit => '<a href="http://wikipedia.org">Hawaiian Permit</a>'
+		:permit => '<a href="http://wikipedia.org">Hawaiian Permit</a>',
+		:is_featured => true
 	)
 
 	hike.location = Location.create(
@@ -69,7 +71,8 @@ migration "seed the narrows" do
 		:elevation_max => 5000,
 		:elevation_gain => 550,
 		:creation_time => Time.now,
-		:edit_time => Time.now
+		:edit_time => Time.now,
+		:is_featured => true
 	)
 
 	hike.location = Location.create(
@@ -99,7 +102,8 @@ migration "seed empty hike" do
 		:elevation_max => 3500,
 		:elevation_gain => 550,
 		:creation_time => Time.now,
-		:edit_time => Time.now
+		:edit_time => Time.now,
+		:is_featured => false
 	)
 	
 	hike.location = Location.create(
