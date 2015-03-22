@@ -53,7 +53,7 @@ angular.module("hikeio").
 		};
 
 		ConversionService.prototype.convert = function(value, from, to, truncateTo, hideDecimalAt, showTrailingZeroes) {
-			if (!value) return null;
+			if (value === null) return null;
 			value = parseFloat(value);
 			from = this.parseUnits(from);
 			to = this.parseUnits(to);
