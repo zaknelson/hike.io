@@ -6,8 +6,7 @@ angular.module("hikeio").controller("PhotoStreamController",
 	$http({method: "GET", url: "/api/v1/hikes?fields=distance,is_featured,locality,name,photo_facts,photo_landscape,photo_preview,string_id", cache: resourceCache}).
 		success(function(data, status, headers, config) {
 			var hikes = jQuery.grep(data, function(hike) {
-				// TODO, add is_featured as a requirement, once the featured hikes have been picked.
-				return hike.photo_landscape && hike.photo_facts;
+				return (hike.photo_preview || hike.photo_facts) && hike.is_featured;
 			});
 			$scope.hikes = hikes;
 		}).
