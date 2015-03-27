@@ -206,7 +206,7 @@ img {
 	display: inline;
 }
 
-.attribution-string {
+.photo-metadata-string {
 	float: right;
 	text-align: right;
 	font-size: 12px;
@@ -305,7 +305,7 @@ html.touch a:hover {
 }
 
 @media all and (max-width: 800px) {
-	.attribution-string {
+	.photo-metadata-string {
 		font-size: 10px;
 		line-height: 13px;
 	}
@@ -321,7 +321,7 @@ html.touch a:hover {
 			}
 		}
 	}
-	.attribution-string {
+	.photo-metadata-string {
 		margin-bottom: -31px;
 		.separator {
 			display: none;

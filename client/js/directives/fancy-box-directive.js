@@ -9,33 +9,40 @@ angular.module("hikeio").
 					beforeLoad: function() {
 						var fancyboxElement = this.element;
 						var attributionLink = fancyboxElement.attr("data-attribution-link");
-						if (!attributionLink) {
-							return;
-						}
-						attribution.getAttribution(attributionLink).
-							then(function(attributionObject) {
-								var attributionDiv = $("<div class='attribution-string'></div>");
-								var title = $("<span><a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + attributionObject.title + "\"</a>");
-								var name = $("<span>&nbsp;by " + attributionObject.author + "</span>");
-								var separator = $("<span class='separator'>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
-								var br = $("<br>");
-								var licenseAnchor = $("<span><a href='" + attributionObject.licenseUrl + "'>" + attributionObject.license + "<a/></span><span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
-								var modified = $("<span> Resized from original </span>");
+						var altText = fancyboxElement.find("img").attr("alt");
+						if (attributionLink) {
+							attribution.getAttribution(attributionLink).
+								then(function(attributionObject) {
+									var attributionDiv = $("<div class='photo-metadata-string'></div>");
+									var title = $("<span><a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + attributionObject.title + "\"</a>");
+									var name = $("<span>&nbsp;by " + attributionObject.author + "</span>");
+									var separator = $("<span class='separator'>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
+									var br = $("<br>");
+									var licenseAnchor = $("<span><a href='" + attributionObject.licenseUrl + "'>" + attributionObject.license + "<a/></span><span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
+									var modified = $("<span> Resized from original </span>");
 
-								attributionDiv.append(licenseAnchor);
-								attributionDiv.append(modified);
-								attributionDiv.append(separator);
-								attributionDiv.append(br);
-								attributionDiv.append(name);
-								attributionDiv.append(title);
+									attributionDiv.append(licenseAnchor);
+									attributionDiv.append(modified);
+									attributionDiv.append(separator);
+									attributionDiv.append(br);
+									attributionDiv.append(name);
+									attributionDiv.append(title);
 
-								$(".fancybox-inner").append(attributionDiv);
-								$timeout(function() {
-									attributionDiv.css("opacity", "1");
+									$(".fancybox-inner").append(attributionDiv);
+									$timeout(function() {
+										attributionDiv.css("opacity", "1");
+									});
+								}, function(err) {
+									$log.error(err);
 								});
-							}, function(err) {
-								$log.error(err);
+						} else if (altText) {
+							$timeout(function() {
+								var attributionDiv = $("<div class='photo-metadata-string'></div>");
+								attributionDiv.append($("<span>" + altText + "</span>"));
+								$(".fancybox-inner").append(attributionDiv);
+								attributionDiv.css("opacity", "1");
 							});
+						}
 					},
 					beforeShow: function() {
 						$(".fancybox-image").attr("alt", this.element.find("img").attr("alt"));
