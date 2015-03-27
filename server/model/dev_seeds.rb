@@ -23,8 +23,8 @@ migration "seed scotchman peak" do
 	
 	hike.photo_landscape = Photo.create(:string_id => "scotchman-peak/landscape", :width => 2400, :height => 800, :attribution_link => "http://www.flickr.com/photos/96151552@N06/11105027134/")
 	hike.photo_preview = Photo.create(:string_id => "scotchman-peak/preview", :width => 2400, :height => 2400, :attribution_link => "http://www.flickr.com/photos/96151552@N06/11105027134")
-	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594, :attribution_link => "http://www.flickr.com/photos/96151552@N06/11105027134", :alt => "Facts photo alt text")
-	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo1", :width => 2400, :height => 812, :attribution_link => "http://www.flickr.com/photos/96151552@N06/11105027134"))
+	hike.photo_facts = Photo.create(:string_id => "scotchman-peak/facts", :width => 2400, :height => 1594, :alt => "Facts photo alt text")
+	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo1", :width => 2400, :height => 812, :attribution_link => "http://en.wikipedia.org/wiki/Black_Butte_%28Oregon%29#/media/File:BlackButtePeakPanorama2012_2.jpg"))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo2", :width => 1594, :height => 2400, :attribution_link => "http://example.com"))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo3", :width => 1594, :height => 2400))
 	hike.add_photos_generic(Photo.create(:string_id => "scotchman-peak/photo4", :width => 2400, :height => 2400))

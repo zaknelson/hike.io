@@ -15,7 +15,8 @@ angular.module("hikeio").
 						attribution.getAttribution(attributionLink).
 							then(function(attributionObject) {
 								var attributionDiv = $("<div class='attribution-string'></div>");
-								var nameAndTitleAnchor = $("<span><a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + attributionObject.title + "\" by " + attributionObject.author + "</a></span>");
+								var title = $("<span><a href='" + fancyboxElement.attr("data-attribution-link") + "'>\"" + attributionObject.title + "\"</a>");
+								var name = $("<span>&nbsp;by " + attributionObject.author + "</span>");
 								var separator = $("<span class='separator'>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
 								var br = $("<br>");
 								var licenseAnchor = $("<span><a href='" + attributionObject.licenseUrl + "'>" + attributionObject.license + "<a/></span><span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>");
@@ -25,8 +26,8 @@ angular.module("hikeio").
 								attributionDiv.append(modified);
 								attributionDiv.append(separator);
 								attributionDiv.append(br);
-
-								attributionDiv.append(nameAndTitleAnchor);
+								attributionDiv.append(name);
+								attributionDiv.append(title);
 
 								$(".fancybox-inner").append(attributionDiv);
 								$timeout(function() {

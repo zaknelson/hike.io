@@ -45,10 +45,40 @@ angular.module("hikeio").
 			}
 		};
 
+		var getWikipediaAttribution = function(deferred, link) {
+			var splitLink = link.split("File:");
+			var photoId = splitLink[splitLink.length - 1];
+			if (photoId) {
+				$http({method: "JSONP", url: "http://en.wikipedia.org/w/api.php?action=query&format=json&prop=imageinfo&titles=File:" + photoId + "&iiprop=extmetadata&iiextmetadatafilter=Artist|LicenseShortName|LicenseUrl|ObjectName&callback=JSON_CALLBACK", cache: resourceCache}).
+					success(function(data, status, headers, config) {
+						if (data.query &&
+							data.query.pages &&
+							data.query.pages["-1"] &&
+							data.query.pages["-1"].imageinfo &&
+							data.query.pages["-1"].imageinfo[0] &&
+							data.query.pages["-1"].imageinfo[0].extmetadata) {
+							deferred.resolve({
+								author: data.query.pages["-1"].imageinfo[0].extmetadata.Artist.value,
+								title: data.query.pages["-1"].imageinfo[0].extmetadata.ObjectName.value,
+								license: data.query.pages["-1"].imageinfo[0].extmetadata.LicenseShortName.value,
+								licenseUrl: data.query.pages["-1"].imageinfo[0].extmetadata.LicenseUrl.value,
+							});
+						} else {
+							deferred.reject(data);
+						}
+					}).
+					error(function(data, status, headers, config) {
+						deferred.reject(config);
+					});
+			}
+		};
+
 		AttributionService.prototype.getAttribution = function(link) {
 			var deferred = $q.defer();
 			if (link.indexOf("flickr.com") !== -1) {
 				getFlickrAttribution(deferred, link);
+			} else if (link.indexOf("wikipedia.org") !== -1) {
+				getWikipediaAttribution(deferred, link);
 			} else {
 				deferred.reject("Unable to fetch attribution data for: " + link);
 			}
