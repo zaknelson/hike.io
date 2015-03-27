@@ -554,7 +554,7 @@ angular.module("hikeio").controller("EntryController",
 
 	$scope.canSetHikeIsFeatured = function() {
 		return userPrivileges.canSetHikeIsFeatured();
-	}
+	};
 
 	var removeMapPolylines = function() {
 		if (!polylines) return;
