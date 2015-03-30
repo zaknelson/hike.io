@@ -73,6 +73,10 @@ input {
 	box-shadow: none;
 }
 
+input[type=checkbox] {
+	-webkit-appearance: checkbox;
+}
+
 a {
 	color: $link-color;
 	text-decoration: none;
