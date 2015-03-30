@@ -91,7 +91,11 @@ https://github.com/zaknelson/hike.io/
 				// Should never get in this case but Google's mobile index somehow has #!'s which break Angular,
 				// hence the workaround.
 				if (window.location.hash.indexOf("#!") > -1) {
-					window.location.hash = window.location.hash.replace("#!", "");
+					if ("replaceState" in window.history) {
+						window.history.replaceState("", document.title, window.location.pathname + window.location.search);
+					} else {
+						window.location.hash = window.location.hash.replace("#!", "");
+					}
 				}
 			};
 
